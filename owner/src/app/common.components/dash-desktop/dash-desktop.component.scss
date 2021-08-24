@@ -16,7 +16,8 @@
                 list-style: none; margin: 0; padding: 0;
                 li {
                     cursor: pointer; text-align: center;
-                    &:hover {font-weight: bold;}
+                    &.active {font-weight: bold;}
+                    &:hover {text-decoration: underline;}                    
                 }                
             }
         }

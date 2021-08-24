@@ -10,7 +10,7 @@
                 <div class="ddl-title">{{currentLang.shorttitle}}</div>
                 <div class="ddl-panel" [class.active]="langPanelActive">
                     <ul>
-                        <li *ngFor="let l of langs" (click)="setLang(l);">{{l.shorttitle}}</li>
+                        <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
                     </ul>
                 </div>
             </div>                    
