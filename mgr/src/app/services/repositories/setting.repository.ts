@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Repository } from './_repository';
 import { Setting } from '../../model/orm/setting.model';
 import { DataService } from '../data.service';
-import { IGetchunkDTO } from '../../model/dto/getchunk.dto';
-import { IGetallDTO } from 'src/app/model/dto/getall.dto';
+import { IGetChunk } from '../../model/dto/getchunk.interface';
+import { IGetAll } from 'src/app/model/dto/getall.interface';
 
 @Injectable()
 export class SettingRepository extends Repository<Setting> {
@@ -20,7 +20,7 @@ export class SettingRepository extends Repository<Setting> {
     
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetallDTO = {
+            const dto: IGetAll = {
                 sortBy: this.allSortBy,
                 sortDir: this.allSortDir,                    
             };
@@ -39,7 +39,7 @@ export class SettingRepository extends Repository<Setting> {
     
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const dto: IGetchunkDTO = {
+            const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { Router, RouterEvent, NavigationStart } from '@angular/router';
+import { Router, RouterEvent, NavigationStart, NavigationEnd } from '@angular/router';
 import { filter } from "rxjs/operators";
 
 import { URL } from '../../model/url';
@@ -21,7 +21,7 @@ export class SidebarComponent implements AfterViewInit {
 	public password: string = "";
 	public errorEmail: boolean = false;
 	public errorPassword: boolean = false;	
-	public subActive: boolean[] = [false, false, false, false];
+	public subActive: boolean[] = [false, false];
 
 	constructor(
 		private authService: AuthService,
@@ -40,9 +40,9 @@ export class SidebarComponent implements AfterViewInit {
 		await this.appService.pause(1);
 		this.buildSub();
 		this.router.events
-			.pipe(filter((event: RouterEvent) => event instanceof NavigationStart))
+			.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
 			.subscribe(event => {								
-					this.buildSub();
+				this.buildSub();
 			});		
 	}
 

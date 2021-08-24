@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Repository } from './_repository';
 import { Mailtemplate } from '../../model/orm/mailtemplate.model';
-import { IGetchunkDTO } from '../../model/dto/getchunk.dto';
+import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MailtemplateRepository extends Repository<Mailtemplate> {
     
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetchunkDTO = {
+            const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,

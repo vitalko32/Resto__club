@@ -5,10 +5,10 @@ import { Repository } from "typeorm";
 import { Setting } from "src/model/orm/setting.entity";
 import { APIService } from "../../common/api.service";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
-import { ISettingCreateDTO } from "./dto/setting.create.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
+import { ISettingCreate } from "./dto/setting.create.interface";
 import { Sortdir } from "src/model/sortdir.type";
-import { IGetallDTO } from "src/model/dto/getall.dto";
+import { IGetAll } from "src/model/dto/getall.interface";
 
 @Injectable()
 export class SettingsService extends APIService {
@@ -16,7 +16,7 @@ export class SettingsService extends APIService {
         super();
     }   
     
-    public async all(dto: IGetallDTO): Promise<IAnswer<Setting[]>> {
+    public async all(dto: IGetAll): Promise<IAnswer<Setting[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let filter: Object = dto.filter;
@@ -31,7 +31,7 @@ export class SettingsService extends APIService {
         }
     }
 
-    public async chunk(dto: IGetchunkDTO): Promise<IAnswer<Setting[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Setting[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let from: number = dto.from;
@@ -71,7 +71,7 @@ export class SettingsService extends APIService {
         }
     }
 
-    public async create(dto: ISettingCreateDTO): Promise<IAnswer<void>> {        
+    public async create(dto: ISettingCreate): Promise<IAnswer<void>> {        
         try {                        
             let x: Setting = this.settingRepository.create(dto);
             await this.settingRepository.save(x);

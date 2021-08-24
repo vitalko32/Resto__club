@@ -4,11 +4,11 @@ import * as fs from "fs";
 import { extname } from 'path';
 import { IPathable } from 'src/model/pathable.interface';
 import { IAnswer } from 'src/model/answer.interface';
-import { IImgUploadDTO } from 'src/model/dto/imgupload.dto';
+import { IImgUpload } from 'src/model/dto/imgupload.interface';
 
 @Injectable()
 export class FilesService {
-    public async uploadImg(file: Express.Multer.File, dto: IImgUploadDTO): Promise<IAnswer<IPathable>> {        
+    public async uploadImg(file: Express.Multer.File, dto: IImgUpload): Promise<IAnswer<IPathable>> {        
         try {
             const diskFolder: string = `../static/images/${dto.folder}`;
             const diskSubfolder: string = `${new Date ().getFullYear ()}-${new Date().getMonth() + 1}`;

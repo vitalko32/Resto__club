@@ -5,10 +5,10 @@ import { Not, Repository } from "typeorm";
 import { APIService } from "../../common/api.service";
 import { Lang } from "../../model/orm/lang.entity";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
-import { ILangCreateDTO } from "./dto/lang.create.dto";
-import { ILangUpdateDTO } from "./dto/lang.update.dto";
-import { IGetallDTO } from "src/model/dto/getall.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
+import { ILangCreate } from "./dto/lang.create.interface";
+import { ILangUpdate } from "./dto/lang.update.interface";
+import { IGetAll } from "src/model/dto/getall.interface";
 import { Word } from "src/model/orm/word.entity";
 import { WordTranslation } from "src/model/orm/word.translation.entity";
 import { Sortdir } from "src/model/sortdir.type";
@@ -27,7 +27,7 @@ export class LangsService extends APIService {
         super();
     } 
     
-    public async all(dto: IGetallDTO): Promise<IAnswer<Lang[]>> {
+    public async all(dto: IGetAll): Promise<IAnswer<Lang[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let filter: Object = dto.filter;
@@ -42,7 +42,7 @@ export class LangsService extends APIService {
         }
     }  
 
-    public async chunk(dto: IGetchunkDTO): Promise<IAnswer<Lang[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Lang[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let from: number = dto.from;
@@ -93,7 +93,7 @@ export class LangsService extends APIService {
         }
     }
 
-    public async create(dto: ILangCreateDTO): Promise<IAnswer<void>> {        
+    public async create(dto: ILangCreate): Promise<IAnswer<void>> {        
         try {            
             if (!dto.slug) {
                 return {statusCode: 400, error: "required field is empty"};
@@ -111,7 +111,7 @@ export class LangsService extends APIService {
         }        
     }
     
-    public async update(dto: ILangUpdateDTO): Promise<IAnswer<void>> {
+    public async update(dto: ILangUpdate): Promise<IAnswer<void>> {
         try {
             if (!dto.slug) {
                 return {statusCode: 400, error: "required field is empty"};

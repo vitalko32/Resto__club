@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Repository } from './_repository';
 import { Wordbook } from '../../model/orm/wordbook.model';
-import { IGetchunkDTO } from '../../model/dto/getchunk.dto';
+import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { Word } from 'src/app/model/orm/word.model';
 
@@ -19,7 +19,7 @@ export class WordbookRepository extends Repository<Wordbook> {
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetchunkDTO = {
+            const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,

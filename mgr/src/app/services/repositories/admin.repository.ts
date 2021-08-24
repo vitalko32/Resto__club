@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Repository } from './_repository';
 import { Admin } from '../../model/orm/admin.model';
 import { DataService } from '../data.service';
-import { IGetchunkDTO } from '../../model/dto/getchunk.dto';
+import { IGetChunk } from '../../model/dto/getchunk.interface';
 
 @Injectable()
 export class AdminRepository extends Repository<Admin> {
@@ -15,7 +15,7 @@ export class AdminRepository extends Repository<Admin> {
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const dto: IGetchunkDTO = {
+            const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,

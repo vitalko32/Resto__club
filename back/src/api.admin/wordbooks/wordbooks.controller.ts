@@ -1,12 +1,12 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { AuthGuard } from "../../common/auth.guard";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { WordbooksService } from "./wordbooks.service";
 import { Wordbook } from "../../model/orm/wordbook.entity";
-import { IWordbookUpdateDTO } from "./dto/wordbook.update.dto";
-import { IWordbookCreateDTO } from "./dto/wordbook.create.dto";
+import { IWordbookUpdate } from "./dto/wordbook.update.interface";
+import { IWordbookCreate } from "./dto/wordbook.create.interface";
 
 @Controller('api/admin/wordbooks')
 export class WordbooksController {
@@ -15,7 +15,7 @@ export class WordbooksController {
     // get fragment
     @UseGuards(AuthGuard)
     @Post("chunk")
-    public chunk(@Body() dto: IGetchunkDTO): Promise<IAnswer<Wordbook[]>> {
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Wordbook[]>> {
         return this.wordbooksService.chunk(dto);
     }
     
@@ -29,14 +29,14 @@ export class WordbooksController {
     // create
     @UseGuards(AuthGuard)
     @Post("create")
-    public create(@Body() dto: IWordbookCreateDTO): Promise<IAnswer<void>> {
+    public create(@Body() dto: IWordbookCreate): Promise<IAnswer<void>> {
         return this.wordbooksService.create(dto);
     }
 
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IWordbookUpdateDTO): Promise<IAnswer<void>> {
+    public update(@Body() dto: IWordbookUpdate): Promise<IAnswer<void>> {
         return this.wordbooksService.update(dto);
     }
     

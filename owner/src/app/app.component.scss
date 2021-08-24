@@ -1,0 +1,55 @@
+@import "./styles/var.scss";
+
+html {
+	height: 100%;
+	body {
+		margin: 0; padding: 0; font-size: 14px; overscroll-behavior: none; font-family: "mont", Arial, Helvetica, sans-serif; height: 100%; 	
+		&.noselect {user-select: none;}
+		&.no-scroll {overflow: hidden;}		
+
+		* {box-sizing: border-box; outline: none; overflow-anchor: none; overscroll-behavior: none;}
+		img {vertical-align: top;}	
+		a {cursor: pointer;}	
+				
+		.hidden {display: none;}
+		.flex {display: flex;}		
+		.align-left {text-align: left;}
+		.align-center {text-align: center;}
+		.nowrap {white-space: nowrap;}
+	
+		.wrap {
+			&.modern {
+				--color-txt: #{$modern-color-txt};
+				--color-bg: #{$modern-color-bg};
+				--color-bg-light: #{$modern-color-bg-light};
+				--color-bg-datalist: #{$modern-color-bg-datalist};
+				--color-red: #{$modern-color-red};
+				--block-shadow: #{$modern-block-shadow};
+			}
+			&.classic {
+				--color-txt: #{$classic-color-txt};
+				--color-bg: #{$classic-color-bg};
+				--color-bg-light: #{$classic-color-bg-light};
+				--color-bg-datalist: #{$classic-color-bg-datalist};
+				--color-red: #{$classic-color-red};
+				--block-shadow: #{$classic-block-shadow};
+			}
+			
+			background-color: var(--color-bg); color: var(--color-txt); padding: 30px; font-size: 14px; min-height: 100%;
+			input, select, textarea {font-size: 16px;}
+			.win {
+				border-radius: 60px; background-image: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); padding: 45px; box-shadow: var(--block-shadow);
+				main {
+					display: flex; 					 
+					.left {width: 20%; padding-top: 105px;}
+					.center {
+						&.compact {width: 80%;}							
+						.dash {height: 105px; display: flex; justify-content: space-between;}
+					}					
+					@import "./styles/buttons.scss";
+					@import "./styles/data.scss";
+				}
+			}
+		}
+	}
+}

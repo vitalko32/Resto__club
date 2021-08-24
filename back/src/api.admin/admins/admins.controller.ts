@@ -1,14 +1,14 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { AuthGuard } from "../../common/auth.guard";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { AdminsService } from "./admins.service";
 import { Admin } from "../../model/orm/admin.entity";
-import { IAdminCreateDTO } from "./dto/admin.create.dto";
-import { IAdminUpdateDTO } from "./dto/admin.update.dto";
-import { IAdminLoginDTO } from "./dto/admin.login.dto";
-import { IAdminAuthDataDTO } from "./dto/admin.authdata.dto";
+import { IAdminCreate } from "./dto/admin.create.interface";
+import { IAdminUpdate } from "./dto/admin.update.interface";
+import { IAdminLogin } from "./dto/admin.login.interface";
+import { IAdminAuthData } from "./dto/admin.authdata.interface";
 
 @Controller('api/admin/admins')
 export class AdminsController {
@@ -17,7 +17,7 @@ export class AdminsController {
     // get fragment
     @UseGuards(AuthGuard)
     @Post("chunk")
-    public chunk(@Body() dto: IGetchunkDTO): Promise<IAnswer<Admin[]>> {
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Admin[]>> {
         return this.adminsService.chunk(dto);
     }
 
@@ -45,20 +45,20 @@ export class AdminsController {
     // create
     @UseGuards(AuthGuard)
     @Post("create")
-    public create(@Body() dto: IAdminCreateDTO): Promise<IAnswer<void>> {
+    public create(@Body() dto: IAdminCreate): Promise<IAnswer<void>> {
         return this.adminsService.create(dto);
     }
 
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IAdminUpdateDTO): Promise<IAnswer<void>> {
+    public update(@Body() dto: IAdminUpdate): Promise<IAnswer<void>> {
         return this.adminsService.update(dto);
     }
 
     // authentication by email and password
     @Post("login")
-    public login(@Body() dto: IAdminLoginDTO): Promise<IAnswer<IAdminAuthDataDTO>> {                        
+    public login(@Body() dto: IAdminLogin): Promise<IAnswer<IAdminAuthData>> {                        
         return this.adminsService.login(dto);
     } 
 }

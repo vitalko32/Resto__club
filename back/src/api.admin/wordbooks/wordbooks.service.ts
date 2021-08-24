@@ -5,9 +5,9 @@ import { DeleteResult, IsNull, Not, Repository } from "typeorm";
 import { APIService } from "../../common/api.service";
 import { Wordbook } from "../../model/orm/wordbook.entity";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
-import { IWordbookUpdateDTO } from "./dto/wordbook.update.dto";
-import { IWordbookCreateDTO } from "./dto/wordbook.create.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
+import { IWordbookUpdate } from "./dto/wordbook.update.interface";
+import { IWordbookCreate } from "./dto/wordbook.create.interface";
 import { Sortdir } from "src/model/sortdir.type";
 import { Word } from "src/model/orm/word.entity";
 
@@ -20,7 +20,7 @@ export class WordbooksService extends APIService {
         super();
     }    
 
-    public async chunk(dto: IGetchunkDTO): Promise<IAnswer<Wordbook[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Wordbook[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let from: number = dto.from;
@@ -56,7 +56,7 @@ export class WordbooksService extends APIService {
         }
     }
 
-    public async create(dto: IWordbookCreateDTO): Promise<IAnswer<void>> {        
+    public async create(dto: IWordbookCreate): Promise<IAnswer<void>> {        
         try {            
             let x: Wordbook = this.wordbookRepository.create(dto);
             await this.wordbookRepository.save(x);
@@ -68,7 +68,7 @@ export class WordbooksService extends APIService {
         }        
     }
 
-    public async update(dto: IWordbookUpdateDTO): Promise<IAnswer<void>> {
+    public async update(dto: IWordbookUpdate): Promise<IAnswer<void>> {
         try {                
             let x: Wordbook = this.wordbookRepository.create(dto);
             await this.wordbookRepository.save(x);            

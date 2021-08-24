@@ -7,12 +7,12 @@ import { JwtService } from "@nestjs/jwt";
 import { APIService } from "../../common/api.service";
 import { Admin } from "../../model/orm/admin.entity";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
-import { IAdminCreateDTO } from "./dto/admin.create.dto";
-import { IAdminUpdateDTO } from "./dto/admin.update.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
+import { IAdminCreate } from "./dto/admin.create.interface";
+import { IAdminUpdate } from "./dto/admin.update.interface";
 import { Sortdir } from "src/model/sortdir.type";
-import { IAdminLoginDTO } from "./dto/admin.login.dto";
-import { IAdminAuthDataDTO } from "./dto/admin.authdata.dto";
+import { IAdminLogin } from "./dto/admin.login.interface";
+import { IAdminAuthData } from "./dto/admin.authdata.interface";
 
 @Injectable()
 export class AdminsService extends APIService {
@@ -23,7 +23,7 @@ export class AdminsService extends APIService {
         super();
     }    
 
-    public async chunk(dto: IGetchunkDTO): Promise<IAnswer<Admin[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Admin[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let from: number = dto.from;
@@ -74,7 +74,7 @@ export class AdminsService extends APIService {
         }
     }
 
-    public async create(dto: IAdminCreateDTO): Promise<IAnswer<void>> {        
+    public async create(dto: IAdminCreate): Promise<IAnswer<void>> {        
         try {            
             if (!dto.name || !dto.password || !dto.email) {
                 return {statusCode: 400, error: "required field is empty"};
@@ -91,7 +91,7 @@ export class AdminsService extends APIService {
         }        
     }
     
-    public async update(dto: IAdminUpdateDTO): Promise<IAnswer<void>> {
+    public async update(dto: IAdminUpdate): Promise<IAnswer<void>> {
         try {
             if (!dto.name || !dto.email) {
                 return {statusCode: 400, error: "required field is empty"};
@@ -114,7 +114,7 @@ export class AdminsService extends APIService {
         } 
     }   
     
-    public async login(dto: IAdminLoginDTO): Promise<IAnswer<IAdminAuthDataDTO>> {
+    public async login(dto: IAdminLogin): Promise<IAnswer<IAdminAuthData>> {
         try {            
             let admin: Admin | null = await this.validateUser(dto.email, dto.password);
 

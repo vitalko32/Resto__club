@@ -1,12 +1,12 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { AuthGuard } from "../../common/auth.guard";
-import { IGetchunkDTO } from "../../model/dto/getchunk.dto";
+import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { MailtemplatesService } from "./mailtemplates.service";
 import { Mailtemplate } from "../../model/orm/mailtemplate.entity";
-import { IMailtemplateUpdateDTO } from "./dto/mailtemplate.update.dto";
-import { IMailtemplateCreateDTO } from "./dto/mailtemplate.create.dto";
+import { IMailtemplateUpdate } from "./dto/mailtemplate.update.interface";
+import { IMailtemplateCreate } from "./dto/mailtemplate.create.interface";
 
 @Controller('api/admin/mailtemplates')
 export class MailtemplatesController {
@@ -15,7 +15,7 @@ export class MailtemplatesController {
     // get fragment
     @UseGuards(AuthGuard)
     @Post("chunk")
-    public chunk(@Body() dto: IGetchunkDTO): Promise<IAnswer<Mailtemplate[]>> {
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Mailtemplate[]>> {
         return this.mailtemplatesService.chunk(dto);
     }
     
@@ -29,14 +29,14 @@ export class MailtemplatesController {
     // create
     @UseGuards(AuthGuard)
     @Post("create")
-    public create(@Body() dto: IMailtemplateCreateDTO): Promise<IAnswer<void>> {
+    public create(@Body() dto: IMailtemplateCreate): Promise<IAnswer<void>> {
         return this.mailtemplatesService.create(dto);
     }
 
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IMailtemplateUpdateDTO): Promise<IAnswer<void>> {
+    public update(@Body() dto: IMailtemplateUpdate): Promise<IAnswer<void>> {
         return this.mailtemplatesService.update(dto);
     }
     

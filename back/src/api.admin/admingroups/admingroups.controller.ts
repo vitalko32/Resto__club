@@ -2,7 +2,7 @@ import { Controller, Post, Body, UseGuards } from "@nestjs/common";
 
 import { AuthGuard } from "../../common/auth.guard";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetallDTO } from "../../model/dto/getall.dto";
+import { IGetAll } from "../../model/dto/getall.interface";
 import { AdmingroupsService } from "./admingroups.service";
 import { Admingroup } from "../../model/orm/admingroup.entity";
 
@@ -13,7 +13,7 @@ export class AdmingroupsController {
     // get all
     @UseGuards(AuthGuard)
     @Post("all")
-    public all(@Body() dto: IGetallDTO): Promise<IAnswer<Admingroup[]>> {
+    public all(@Body() dto: IGetAll): Promise<IAnswer<Admingroup[]>> {
         return this.admingroupsService.all(dto);
     }    
 }

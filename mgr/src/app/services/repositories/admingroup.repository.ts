@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Repository } from './_repository';
 import { Admingroup } from '../../model/orm/admingroup.model';
 import { DataService } from '../data.service';
-import { IGetallDTO } from "../../model/dto/getall.dto";
+import { IGetAll } from "../../model/dto/getall.interface";
 
 @Injectable()
 export class AdmingroupRepository extends Repository<Admingroup> {
@@ -16,7 +16,7 @@ export class AdmingroupRepository extends Repository<Admingroup> {
 
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const dto: IGetallDTO = {
+            const dto: IGetAll = {
                 sortBy: this.allSortBy,
                 sortDir: this.allSortDir,                    
             };

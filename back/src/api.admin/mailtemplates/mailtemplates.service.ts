@@ -3,11 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { IAnswer } from "src/model/answer.interface";
-import { IGetchunkDTO } from "src/model/dto/getchunk.dto";
+import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
 import { Mailtemplate } from "../../model/orm/mailtemplate.entity";
-import { IMailtemplateCreateDTO } from "./dto/mailtemplate.create.dto";
-import { IMailtemplateUpdateDTO } from "./dto/mailtemplate.update.dto";
+import { IMailtemplateCreate } from "./dto/mailtemplate.create.interface";
+import { IMailtemplateUpdate } from "./dto/mailtemplate.update.interface";
 import { Sortdir } from "src/model/sortdir.type";
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MailtemplatesService extends APIService {
         super();
     }      
     
-    public async chunk(dto: IGetchunkDTO): Promise<IAnswer<Mailtemplate[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Mailtemplate[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let from: number = dto.from;
@@ -45,7 +45,7 @@ export class MailtemplatesService extends APIService {
         }
     }
 
-    public async create(dto: IMailtemplateCreateDTO): Promise<IAnswer<void>> {        
+    public async create(dto: IMailtemplateCreate): Promise<IAnswer<void>> {        
         try { 
             if (!dto.name) {
                 return {statusCode: 400, error: "required field is empty"};
@@ -61,7 +61,7 @@ export class MailtemplatesService extends APIService {
         }        
     }
 
-    public async update(dto: IMailtemplateUpdateDTO): Promise<IAnswer<void>> {
+    public async update(dto: IMailtemplateUpdate): Promise<IAnswer<void>> {
         try { 
             if (!dto.name) {
                 return {statusCode: 400, error: "required field is empty"};

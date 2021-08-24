@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
-import { IUpdateParamDTO } from "./dto/updateparam.dto";
+import { IUpdateParam } from "./dto/updateparam.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { Admin } from "../../model/orm/admin.entity";
 import { Setting } from "src/model/orm/setting.entity";
@@ -23,7 +23,7 @@ export class ObjectsService extends APIService {
         super();
     }
 
-    public async updateParam (dto: IUpdateParamDTO): Promise<IAnswer<void>> {        
+    public async updateParam (dto: IUpdateParam): Promise<IAnswer<void>> {        
         try {                        
             await this[`${dto.obj}Repository`].update(dto.id, {[dto.p]: dto.v});
             return {statusCode: 200};
@@ -34,7 +34,7 @@ export class ObjectsService extends APIService {
         }
     }
 
-    public async updateEgoisticParam (dto: IUpdateParamDTO): Promise<IAnswer<void>> {        
+    public async updateEgoisticParam (dto: IUpdateParam): Promise<IAnswer<void>> {        
         try {
             if (dto.v) { // if param is true, first set all to false, because it is egoistic! :-)                                
                 this[`${dto.obj}Repository`].update({}, {[dto.p]: false});

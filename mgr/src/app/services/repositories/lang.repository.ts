@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Repository } from './_repository';
 import { Lang } from '../../model/orm/lang.model';
-import { IGetallDTO } from '../../model/dto/getall.dto';
-import { IGetchunkDTO } from '../../model/dto/getchunk.dto';
+import { IGetAll } from '../../model/dto/getall.interface';
+import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class LangRepository extends Repository<Lang> {
     
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetallDTO = {
+            const dto: IGetAll = {
                 sortBy: this.allSortBy,
                 sortDir: this.allSortDir,                    
             };
@@ -40,7 +40,7 @@ export class LangRepository extends Repository<Lang> {
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetchunkDTO = {
+            const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,

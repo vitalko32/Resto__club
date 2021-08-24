@@ -1,0 +1,23 @@
+.big-btn {height: 60px; line-height: 60px; border-radius: 30px; padding: 0 45px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; display: inline-block; font-weight: bold; white-space: nowrap; cursor: pointer;}
+.small-btn {
+	height: 40px; line-height: 40px; border-radius: 20px; padding: 0 30px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; display: inline-block; font-weight: bold; white-space: nowrap; cursor: pointer;
+	&.rightmargined {margin-right: 30px;}
+    &.inline-flex {display: inline-flex;}
+}
+.lang {
+	.lang-btn {
+		height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block; margin-bottom: 5px;
+		span::before {font-family: "fa-solid"; content:"\f57d"; font-size: 20px;}
+	}
+	.lang-title {font-size: 12px; font-weight: bold; text-align: center;}
+}	
+.history-btn {
+    height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block;
+    span::before {font-family: "fa-solid"; content:"\f1da"; font-size: 20px;}
+}
+.action-btn {
+    height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block; margin: 0 5px;
+    span::before {font-family: "fa-solid"; font-size: 20px;}
+    &.delete {span::before {content: "\f00d"; color: var(--color-red);}}
+    &.edit {span::before {content: "\f303";}}
+}

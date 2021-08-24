@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { APIService } from "../../common/api.service";
 import { Admingroup } from "../../model/orm/admingroup.entity";
 import { IAnswer } from "../../model/answer.interface";
-import { IGetallDTO } from "../../model/dto/getall.dto";
+import { IGetAll } from "../../model/dto/getall.interface";
 import { Sortdir } from "src/model/sortdir.type";
 
 @Injectable()
@@ -14,7 +14,7 @@ export class AdmingroupsService extends APIService {
         super();
     }
 
-    public async all(dto: IGetallDTO): Promise<IAnswer<Admingroup[]>> {
+    public async all(dto: IGetAll): Promise<IAnswer<Admingroup[]>> {
         let sortBy: string = dto.sortBy;
         let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
         let filter: Object = dto.filter;
