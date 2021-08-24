@@ -1,4 +1,4 @@
-@import "./styles/var.scss";
+@import "./common.styles/var.scss";
 
 html {
 	height: 100%;
@@ -15,9 +15,15 @@ html {
 		.flex {display: flex;}		
 		.align-left {text-align: left;}
 		.align-center {text-align: center;}
-		.nowrap {white-space: nowrap;}
+		.nowrap {white-space: nowrap;}		
+		input, select, textarea {
+			@media (min-width:0) {font-size: 16px;}
+			@media (min-width:1000px) {font-size: 14px;}	
+			font-family: "mont", Arial, Helvetica, sans-serif;			
+		}
 	
 		.wrap {
+			// themes
 			&.modern {
 				--color-txt: #{$modern-color-txt};
 				--color-bg: #{$modern-color-bg};
@@ -25,6 +31,7 @@ html {
 				--color-bg-datalist: #{$modern-color-bg-datalist};
 				--color-red: #{$modern-color-red};
 				--block-shadow: #{$modern-block-shadow};
+				--activebtn-shadow: #{$modern-activebtn-shadow};
 			}
 			&.classic {
 				--color-txt: #{$classic-color-txt};
@@ -33,23 +40,38 @@ html {
 				--color-bg-datalist: #{$classic-color-bg-datalist};
 				--color-red: #{$classic-color-red};
 				--block-shadow: #{$classic-block-shadow};
+				--activebtn-shadow: #{$classic-activebtn-shadow};
 			}
 			
-			background-color: var(--color-bg); color: var(--color-txt); padding: 30px; font-size: 14px; min-height: 100%;
-			input, select, textarea {font-size: 16px;}
+			@media (min-width:0) {padding: 0; font-size: 13px;}
+			@media (min-width:1000px) {padding: 30px; font-size: 14px;}
+			background-color: var(--color-bg); color: var(--color-txt); min-height: 100%;			
+			
+			// main structure
 			.win {
-				border-radius: 60px; background-image: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); padding: 45px; box-shadow: var(--block-shadow);
-				main {
+				@media (min-width:0) {background: none; box-shadow: none; padding: 15px;}
+				@media (min-width:1000px) {background: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); box-shadow: var(--block-shadow); padding: 45px; }
+				border-radius: 60px; 
+				.content {
 					display: flex; 					 
-					.left {width: 20%; padding-top: 105px;}
-					.center {
-						&.compact {width: 80%;}							
-						.dash {height: 105px; display: flex; justify-content: space-between;}
+					aside {
+						@media (min-width:0) {display: none;}
+						@media (min-width:1000px) {display: block;}
+						width: 20%; padding: 105px 45px 0 0;						
+					}
+					main {
+						&.compact {
+							@media (min-width:0) {width: 100%;}
+							@media (min-width:1000px) {width: 80%;}							
+						}													
 					}					
-					@import "./styles/buttons.scss";
-					@import "./styles/data.scss";
+					@import "./common.styles/buttons.scss";
+					@import "./common.styles/data.scss";
 				}
 			}
+
+			// misc
+			.red {color: var(--color-red);}
 		}
 	}
 }

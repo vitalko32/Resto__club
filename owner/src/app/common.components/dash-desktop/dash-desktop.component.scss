@@ -1,0 +1,24 @@
+.dash-desktop {
+    @media (min-width:0) {display: none;}
+	@media (min-width:1000px) {display: flex;}
+    height: 105px; justify-content: space-between;
+    .dd-langs {
+        position: relative;
+        .ddl-btn {
+            height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block; margin-bottom: 5px;
+            span::before {font-family: "fa-solid"; content:"\f57d"; font-size: 20px;}
+        }
+        .ddl-title {font-size: 12px; font-weight: bold; text-align: center;}
+        .ddl-panel {
+            position: absolute; right: 0; top:0; width:60px; border: 1px white solid; border-radius: 15px; padding: 15px; z-index: 2; background-color: var(--color-bg); overflow: hidden; top: -10000px; opacity: 0; transition: top 0s linear 0.3s, opacity 0.3s ease 0s;
+            &.active {top: 0; opacity: 1; transition: top 0s linear 0s, opacity 0.3s ease 0s;}
+            ul {
+                list-style: none; margin: 0; padding: 0;
+                li {
+                    cursor: pointer; text-align: center;
+                    &:hover {font-weight: bold;}
+                }                
+            }
+        }
+    }
+}

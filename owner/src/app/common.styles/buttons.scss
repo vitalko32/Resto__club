@@ -1,0 +1,6 @@
+.big-btn {height: 60px; line-height: 60px; border-radius: 30px; padding: 0 45px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; display: inline-block; font-weight: bold; white-space: nowrap; cursor: pointer;}
+.small-btn {
+	height: 40px; line-height: 40px; border-radius: 20px; padding: 0 30px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; display: inline-block; font-weight: bold; white-space: nowrap; cursor: pointer;
+	&.rightmargined {margin-right: 30px;}
+    &.inline-flex {display: inline-flex;}
+}	

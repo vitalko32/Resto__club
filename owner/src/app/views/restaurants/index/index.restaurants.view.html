@@ -1,77 +1,35 @@
-<main>
-    <div class="left">
-        menu
-    </div>
-    <div class="center compact">
-        <div class="dash">
-            <div>
-                <a class="big-btn">Добавить ресторан</a>
-            </div>
-            <div>
-                <div class="flex">
-                    <a class="small-btn rightmargined">Выход</a>
-                    <div class="lang">
-                        <div class="lang-btn"><span></span></div>
-                        <div class="lang-title">Рус</div>
-                    </div>                    
-                </div>
-            </div>
-        </div>
+<div class="content">
+    <aside>
+        <the-menu></the-menu>           
+    </aside>
+    <main class="compact">
+        <dash-desktop></dash-desktop>
         <div class="data">
             <div class="datalist-desktop">
                 <table>
                     <tr>
-                        <th class="align-left">Дата</th>
-                        <th class="align-left">URL</th>
-                        <th class="align-left">Подписка</th>
-                        <th class="align-center">Активация</th>
-                        <th class="align-center">История</th>
-                        <th class="align-center">Действия</th>
+                        <th class="align-left">{{words['owner-restaurants']['created-at'][currentLang.slug]}}</th>
+                        <th class="align-left">{{words['owner-restaurants']['name'][currentLang.slug]}}</th>
+                        <th class="align-left">{{words['owner-restaurants']['subscription'][currentLang.slug]}}</th>                        
+                        <th class="align-center">{{words['owner-restaurants']['actions'][currentLang.slug]}}</th>
                     </tr>                                    
                     <tr>
                         <td><span class="nowrap">27.08.2022 07:30</span></td>
-                        <td><strong>blinchik</strong>.restclick.vio.net.ua</td>
+                        <td>Длинное название ресторана</td>
                         <td>
                             <div><strong class="nowrap">15.09.2023 07:30</strong></div>
-                            <div>Осталось 27 дн.</div>
+                            <div>27 {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
                         </td>
-                        <td class="align-center"><div class="small-btn">Продлить подписку</div></td>
-                        <td class="align-center"><div class="history-btn"><span></span></div></td>
-                        <td class="align-center nowrap">
-                            <a class="action-btn edit"><span></span></a>
-                            <a class="action-btn delete"><span></span></a>
+                        <td class="dl-actions">
+                            <a class="dl-action prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
+                            <a class="dl-action history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
+                            <a class="dl-action edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
+                            <a class="dl-action delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td><span class="nowrap">27.08.2022 07:30</span></td>
-                        <td><strong>blinchik</strong>.restclick.vio.net.ua</td>
-                        <td>
-                            <div><strong class="nowrap">15.09.2023 07:30</strong></div>
-                            <div>Осталось 27 дн.</div>
-                        </td>
-                        <td class="align-center"><div class="small-btn">Продлить подписку</div></td>
-                        <td class="align-center"><div class="history-btn"><span></span></div></td>
-                        <td class="align-center nowrap">
-                            <a class="action-btn edit"><span></span></a>
-                            <a class="action-btn delete"><span></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span class="nowrap">27.08.2022 07:30</span></td>
-                        <td><strong>blinchik</strong>.restclick.vio.net.ua</td>
-                        <td>
-                            <div><strong class="nowrap">15.09.2023 07:30</strong></div>
-                            <div>Осталось 27 дн.</div>
-                        </td>
-                        <td class="align-center"><div class="small-btn">Продлить подписку</div></td>
-                        <td class="align-center"><div class="history-btn"><span></span></div></td>
-                        <td class="align-center nowrap">
-                            <a class="action-btn edit"><span></span></a>
-                            <a class="action-btn delete"><span></span></a>
-                        </td>
-                    </tr>                                                  
+                    </tr>                                                                                                                                                                                                                                                                                                                                  
                 </table>
-            </div>        
+            </div>
+            <the-pagination [allLength]="90000" [length]="10" [current]="2"></the-pagination>        
         </div>        
-    </div>
-</main>
+    </main>
+</div>

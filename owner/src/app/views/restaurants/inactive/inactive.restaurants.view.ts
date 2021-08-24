@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -6,10 +6,10 @@ import { AppService } from "src/app/services/app.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "index-restaurants-view",
-    templateUrl: "index.restaurants.view.html",    
+    selector: "inactive-restaurants-view",
+    templateUrl: "inactive.restaurants.view.html",    
 })
-export class IndexRestaurantsView implements OnInit, OnDestroy {
+export class InactiveRestaurantsView {
     public langSubscription: Subscription = null;
     
     constructor(
@@ -29,7 +29,7 @@ export class IndexRestaurantsView implements OnInit, OnDestroy {
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["owner-restaurants"]["title-active"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"]["title-active"][lang.slug]));
+        this.appService.setTitle(this.words["owner-restaurants"]["title-inactive"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"]["title-inactive"][lang.slug]));
     }
 }
