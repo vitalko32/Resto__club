@@ -6,10 +6,10 @@ import { AppService } from "src/app/services/app.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "index-restaurants-view",
-    templateUrl: "index.restaurants.view.html",    
+    selector: "active-restaurants-view",
+    templateUrl: "active.restaurants.view.html",    
 })
-export class IndexRestaurantsView implements OnInit, OnDestroy {
+export class ActiveRestaurantsView implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     
     constructor(

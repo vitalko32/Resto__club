@@ -4,7 +4,7 @@
     </div>
     <div>
         <div class="flex">
-            <a class="small-btn rightmargined">{{words['owner-common']['logout'][currentLang.slug]}}</a>
+            <a class="small-btn rightmargined" routerLink="/auth/logout">{{words['owner-common']['logout'][currentLang.slug]}}</a>
             <div class="dd-langs">
                 <div class="ddl-btn" (click)="activateLangPanel();"><span></span></div>
                 <div class="ddl-title">{{currentLang.shorttitle}}</div>

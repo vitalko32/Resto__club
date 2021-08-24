@@ -1,0 +1,17 @@
+<div class="dash-mobile">
+    <div class="dm-head">{{title}}</div>
+    <div class="dm-menubtn" [class.active]="menuActive" (click)="menuActive = !menuActive;"><div></div><div></div><div></div></div>
+    <div class="dm-menu" [class.active]="menuActive">
+        <div class="dmm-pages">
+            <div class="dmm-page"><a routerLink="/restaurants/active" (click)="menuActive = false;">{{words['owner-common']['menu-active'][currentLang.slug]}}</a></div>            
+            <div class="dmm-page"><a routerLink="/restaurants/inactive" (click)="menuActive = false;">{{words['owner-common']['menu-inactive'][currentLang.slug]}}</a></div>            
+            <div class="dmm-page"><a routerLink="/auth/password" (click)="menuActive = false;">{{words['owner-common']['menu-pw'][currentLang.slug]}}</a></div>
+            <div class="dmm-page"><a routerLink="/auth/logout" (click)="menuActive = false;">{{words['owner-common']['logout'][currentLang.slug]}}</a></div>
+        </div>
+        <div class="dmm-langs">
+            <ul>
+                <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

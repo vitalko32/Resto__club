@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { RestaurantsModule } from './views/restaurants/restaurants.module';
 
 const routes: Routes = [
-	{path: "", redirectTo: "/restaurants", pathMatch: "full"},
+	{path: "", redirectTo: "/restaurants/active", pathMatch: "full"},
 	//{path: "auth", loadChildren: () => AuthModule}, 	
 	{path: "restaurants", loadChildren: () => RestaurantsModule}, 	
-	{path: "**", redirectTo: "/restaurants"},
+	{path: "**", redirectTo: "/restaurants/active"},
 ];
 
 
