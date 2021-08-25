@@ -1,0 +1,19 @@
+<div class="head-desktop">
+    <div class="hd-left">
+        <a class="big-btn" *ngIf="showCreateRestaurantBtn">{{words['owner-restaurants']['create'][currentLang.slug]}}</a>
+    </div>
+    <div class="hd-right">
+        <div class="flex">
+            <a *ngIf="showLogoutBtn" class="small-btn rightmargined" routerLink="/auth/logout">{{words['owner-common']['logout'][currentLang.slug]}}</a>
+            <div class="hd-langs">
+                <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>
+                <div class="hdl-title">{{currentLang.shorttitle}}</div>
+                <div class="hdl-panel" [class.active]="langPanelActive">
+                    <ul>
+                        <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
+                    </ul>
+                </div>
+            </div>                    
+        </div>
+    </div>
+</div>

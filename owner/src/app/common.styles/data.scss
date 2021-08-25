@@ -2,24 +2,25 @@
     .datalist-desktop {
         @media (min-width:0) {display: none;}
         @media (min-width:1000px) {display: block;}
-        border-radius: 45px; background: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; overflow: auto; margin-bottom: 30px;
+        border-radius: 45px; background-color: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; overflow: auto; margin-bottom: 30px;
         table {
             width: 100%; 
             th {padding: 10px 5px;}
-            td {
-                padding: 10px 5px;
-                &.dl-actions {
-                    text-align: center; white-space: nowrap;
-                    .dl-action {
-                        height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block; margin: 0 5px;
-                        span::before {font-size: 20px;}
-                        &.delete {font-family: "fa-solid"; span::before {content: "\f00d"; color: var(--color-red);}}
-                        &.edit {font-family: "fa-solid"; span::before {content: "\f06e";}}
-                        &.prolong {font-family: "fa-regular"; span::before {content: "\f873";}}
-                        &.history {font-family: "fa-solid"; span::before {content: "\f1da";}}
-                    }
-                }
-            }            
+            td {padding: 10px 5px;}            
+        }
+    }
+    .datalist-mobile {
+        @media (min-width:0) {display: block;}
+        @media (min-width:1000px) {display: none;}
+        border-radius: 15px; background-color: var(--color-bg-datalist); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px; overflow: auto; margin-bottom: 30px;
+        .dlm-item {
+            background-color: var(--color-bg); border-radius: 5px; padding: 10px; margin-bottom: 5px;
+            &:last-child {margin-bottom: 0;}            
+            .dlmi-param {
+                margin-bottom: 5px;
+                .dlmi-title {font-size: 10px;}
+            }   
+            .dlmi-actions {display: flex; justify-content: center;}         
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -6,10 +6,11 @@ import { AppService } from "src/app/services/app.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "active-restaurants-view",
-    templateUrl: "active.restaurants.view.html",    
+    selector: "login-auth-page",
+    templateUrl: "login.auth.page.html",
+    styleUrls: [],
 })
-export class ActiveRestaurantsView implements OnInit, OnDestroy {
+export class LoginAuthPage {
     public langSubscription: Subscription = null;
     
     constructor(
@@ -29,7 +30,7 @@ export class ActiveRestaurantsView implements OnInit, OnDestroy {
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["owner-restaurants"]["title-active"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"]["title-active"][lang.slug]));
+        this.appService.setTitle(this.words["owner-login"]["title"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-login"]["title"][lang.slug]));
     }
 }

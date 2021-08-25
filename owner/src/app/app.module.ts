@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CCModule } from './common.components/cc.module';
 import { ServicesModule } from './services/services.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ServicesModule } from './services/services.module';
 
     	AppRoutingModule,
 		ServicesModule,
+		CCModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

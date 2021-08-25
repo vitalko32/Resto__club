@@ -26,6 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	) {}
 
 	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	
+	get showSidebar(): boolean {return this.appService.url[1] === "restaurants" && (this.appService.url[2] === "active" || this.appService.url[2] === "inactive");}
 
 	public ngOnInit(): void {
 		this.initLangs();

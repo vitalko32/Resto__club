@@ -3,13 +3,13 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { ActiveRestaurantsPage } from "./active/active.restaurants.page";
-import { InactiveRestaurantsPage } from "./inactive/inactive.restaurants.page";
+import { LoginAuthPage } from "./login/login.auth.page";
+import { LogoutAuthPage } from "./logout/logout.auth.page";
 
 let routes = RouterModule.forChild ([            
-	{path: "active", component: ActiveRestaurantsPage, pathMatch: "full"},
-	{path: "inactive", component: InactiveRestaurantsPage, pathMatch: "full"},
-	{path: "**", redirectTo: "/restaurants/active"},
+	{path: "login", component: LoginAuthPage, pathMatch: "full"},
+	{path: "logout", component: LogoutAuthPage, pathMatch: "full"},
+	{path: "**", redirectTo: "/auth/logout"},
 ]);
 
 @NgModule({	
@@ -22,8 +22,8 @@ let routes = RouterModule.forChild ([
 		CCModule,
 	],
 	declarations: [
-		ActiveRestaurantsPage,
-		InactiveRestaurantsPage,
+		LoginAuthPage,	
+		LogoutAuthPage,	
 	],    		    
 })
-export class RestaurantsModule {}
+export class AuthModule {}

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -6,13 +6,15 @@ import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "dash-desktop",
-    templateUrl: "dash-desktop.component.html",
-    styleUrls: ["dash-desktop.component.scss"],
+    selector: "head-mobile",
+    templateUrl: "head-mobile.component.html",
+    styleUrls: ["head-mobile.component.scss"],
 })
-export class DashDesktopComponent {
-    public langPanelActive: boolean = false;
-    public langPanelTimer: number = null;
+export class HeadMobileComponent {
+    @Input() title: string = "";
+    @Input() showMenuBtn: boolean = false;
+    public menuPanelActive: boolean = false;
+    public langPanelActive: boolean = false;    
     
     constructor(
         private appService: AppService,
@@ -23,13 +25,8 @@ export class DashDesktopComponent {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get langs(): Lang[] {return this.langRepository.xl;}
-
-    public activateLangPanel(): void {
-        this.langPanelActive = true;
-        this.langPanelTimer ? window.clearTimeout(this.langPanelTimer) : null;        
-        this.langPanelTimer = window.setTimeout(() => this.langPanelActive = false, 5000);
-    }
-
+    get url(): string[] {return this.appService.url;}
+    
     public setLang(l: Lang): void {
         this.appService.currentLang.next(l);
         this.langPanelActive = false;

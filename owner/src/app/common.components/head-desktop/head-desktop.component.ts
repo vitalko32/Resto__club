@@ -6,13 +6,15 @@ import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "dash-mobile",
-    templateUrl: "dash-mobile.component.html",
-    styleUrls: ["dash-mobile.component.scss"],
+    selector: "head-desktop",
+    templateUrl: "head-desktop.component.html",
+    styleUrls: ["head-desktop.component.scss"],
 })
-export class DashMobileComponent {
-    @Input() title: string = "";
-    public menuActive: boolean = false;
+export class HeadDesktopComponent {
+    @Input() showCreateRestaurantBtn: boolean = false;
+    @Input() showLogoutBtn: boolean = false;
+    public langPanelActive: boolean = false;
+    public langPanelTimer: number = null;
     
     constructor(
         private appService: AppService,
@@ -24,8 +26,14 @@ export class DashMobileComponent {
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get langs(): Lang[] {return this.langRepository.xl;}
 
+    public activateLangPanel(): void {
+        this.langPanelActive = true;
+        this.langPanelTimer ? window.clearTimeout(this.langPanelTimer) : null;        
+        this.langPanelTimer = window.setTimeout(() => this.langPanelActive = false, 5000);
+    }
+
     public setLang(l: Lang): void {
         this.appService.currentLang.next(l);
-        this.menuActive = false;
+        this.langPanelActive = false;
     }
 }

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DashDesktopComponent } from './dash-desktop/dash-desktop.component';
-import { DashMobileComponent } from './dash-mobile/dash-mobile.component';
+import { HeadDesktopComponent } from './head-desktop/head-desktop.component';
+import { HeadMobileComponent } from './head-mobile/head-mobile.component';
 import { MenuComponent } from './menu/menu.component';
 import { PaginationComponent } from './pagination/pagination.component';
 
@@ -14,14 +14,14 @@ import { PaginationComponent } from './pagination/pagination.component';
     declarations: [
         MenuComponent,
         PaginationComponent,
-        DashDesktopComponent,
-        DashMobileComponent,
+        HeadDesktopComponent,
+        HeadMobileComponent,
     ],
     exports: [
         MenuComponent,
         PaginationComponent,
-        DashDesktopComponent,
-        DashMobileComponent,
+        HeadDesktopComponent,
+        HeadMobileComponent,
     ],    
 })
 export class CCModule {}
