@@ -16,10 +16,7 @@ export class Lang {
     shorttitle: string;
 
     @Column({nullable: true, default: null})
-    img: string;
-
-    @Column({nullable: true, default: null})
-    img_s: string;
+    img: string;    
 
     @Column({nullable: false, default: 0})
     pos: number;

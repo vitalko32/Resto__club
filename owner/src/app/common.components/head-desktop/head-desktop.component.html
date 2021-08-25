@@ -5,6 +5,7 @@
     <div class="hd-right">
         <div class="flex">
             <a *ngIf="showLogoutBtn" class="small-btn rightmargined" routerLink="/auth/logout">{{words['owner-common']['logout'][currentLang.slug]}}</a>
+            <a *ngIf="showHomeBtn" class="small-btn rightmargined" routerLink="/">{{words['owner-common']['home'][currentLang.slug]}}</a>
             <div class="hd-langs">
                 <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>
                 <div class="hdl-title">{{currentLang.shorttitle}}</div>
@@ -17,4 +18,5 @@
         </div>
     </div>
     <div class="hd-logo" *ngIf="showLogo"><img src="/assets/images/logo.svg"></div>
+    <div class="hd-title" *ngIf="showTitle">{{title}}</div>
 </div>

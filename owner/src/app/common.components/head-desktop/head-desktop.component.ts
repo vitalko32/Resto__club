@@ -14,6 +14,9 @@ export class HeadDesktopComponent {
     @Input() showCreateRestaurantBtn: boolean = false;
     @Input() showLogoutBtn: boolean = false;
     @Input() showLogo: boolean = false;
+    @Input() showTitle: boolean = false;
+    @Input() title: string = "";
+    @Input() showHomeBtn: boolean = false;
     public langPanelActive: boolean = false;
     public langPanelTimer: number = null;
     

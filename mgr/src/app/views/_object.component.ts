@@ -48,9 +48,8 @@ export abstract class ObjectComponent<T> {
                     const res: IAnswer<IPathable> = event.body;
     
                     if (res.statusCode === 200) {                        
-                        this.appService.monitorLog(`uploaded: ${res.data.paths[0]}, ${res.data.paths[1]}`);
-                        this.x.img = res.data.paths[0];
-                        this.x.img_s = res.data.paths[1]; 
+                        this.appService.monitorLog(`uploaded: ${res.data.paths[0]}`);
+                        this.x.img = res.data.paths[0];                        
                     } else {
                         this.appService.monitorLog (res.error, true);
                     }                    
@@ -62,8 +61,7 @@ export abstract class ObjectComponent<T> {
     }    
 
     public deleteImg(): void {
-        this.x.img = null;
-        this.x.img_s = null;
+        this.x.img = null;        
         this.progressImg = 0;
     }
 

@@ -6,8 +6,7 @@ export class Admin extends Model {
     public name: string;
     public email: string;
     public password: string;
-    public img: string;
-    public img_s: string;
+    public img: string;    
     public active: boolean;    
     public defended: boolean;        
 }

@@ -6,6 +6,7 @@ import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
+import { GoogleService } from "src/app/services/google.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginAuthPage {
     constructor(
         private appService: AppService,
         private authService: AuthService,
+        private googleService: GoogleService,
         private wordRepository: WordRepository,
         private router: Router,
     ) {}
@@ -65,6 +67,10 @@ export class LoginAuthPage {
             this.appService.showError(err);
             this.formLoading = false;
         }
+    }
+
+    public loginWithGoogle(): void {
+        this.googleService.signIn();
     }
 
     public validate(): boolean {

@@ -11,7 +11,7 @@ import { IAdminAuthData } from "../model/dto/admin.authdata.interface";
 import { IGetAll } from "../model/dto/getall.interface";
 import { IAnswer } from "../model/dto/answer.interface";
 import { IAdminLogin } from "../model/dto/admin.login.interface";
-import { IAdminGoogleData } from "../model/dto/admin.googledata.interface";
+import { IAdminUpdatePassword } from "../model/dto/admin.updatepassword.interface";
 
 @Injectable()
 export class DataService {
@@ -31,7 +31,8 @@ export class DataService {
     public settingsAll(): Observable<IAnswer<Settings>> {return this.sendRequest("settings/all");} 
     
     public adminsLogin(dto: IAdminLogin): Observable<IAnswer<IAdminAuthData>> {return this.sendRequest("admins/login", dto);} 
-    public adminsLoginWithGoogle(dto: IAdminGoogleData): Observable<IAnswer<IAdminAuthData>> {return this.sendRequest("admins/login-with-google", dto);}     
+    public adminsLoginByEmail(email: string): Observable<IAnswer<IAdminAuthData>> {return this.sendRequest("admins/login-by-email", {email});}     
+    public adminsUpdatePassword(dto: IAdminUpdatePassword): Observable<IAnswer<void>> {return this.sendRequest("admins/update-password", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

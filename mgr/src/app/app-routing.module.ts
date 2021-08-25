@@ -9,6 +9,7 @@ import { LangsModule } from './views/langs/langs.module';
 import { WordbooksModule } from './views/wordbooks/wordbooks.module';
 import { OptionsModule } from './views/options/options.module';
 import { MailtemplatesModule } from './views/mailtemplates/mailtemplates.module';
+import { CurrenciesModule } from './views/currencies/currencies.module';
 
 const routes: Routes = [
 	{path: "", redirectTo: "/settings", pathMatch: "full"},
@@ -18,6 +19,7 @@ const routes: Routes = [
 	{path: "admins", loadChildren: () => AdminsModule, canActivate: [AuthGuard]}, 	
 	{path: "localization/langs", loadChildren: () => LangsModule, canActivate: [AuthGuard]}, 	
 	{path: "localization/wordbooks", loadChildren: () => WordbooksModule, canActivate: [AuthGuard]}, 				
+	{path: "localization/currencies", loadChildren: () => CurrenciesModule, canActivate: [AuthGuard]}, 				
 	{path: "utils/mailtemplates", loadChildren: () => MailtemplatesModule, canActivate: [AuthGuard]}, 		
 	{path: "**", redirectTo: "/settings"},
 ];

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { IAdminAuthData } from "../model/dto/admin.authdata.interface";
-import { IAdminGoogleData } from "../model/dto/admin.googledata.interface";
 import { IAdminLogin } from "../model/dto/admin.login.interface";
+import { IAdminUpdatePassword } from "../model/dto/admin.updatepassword.interface";
 import { Admin } from "../model/orm/admin.model";
 import { DataService } from './data.service';
 
@@ -37,9 +37,9 @@ export class AuthService {
         });        
     }
 
-    public loginWithGoogle(dto: IAdminGoogleData): Promise<number> {
+    public loginByEmail(email: string): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.dataService.adminsLoginWithGoogle(dto).subscribe(res => {
+            this.dataService.adminsLoginByEmail(email).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.buildAuthData(res.data); 
                     this.save();    
@@ -66,25 +66,13 @@ export class AuthService {
                 reject(err.message);
             });
         });
-    }*/
-       
-    /*
-    public update(data: Customer): Promise<number> {
-        return new Promise((resolve, reject) => {
-            this.dataService.customersUpdate(data).subscribe(res => {                
-                if (res.statusCode === 200) {                
-                    delete data.password;
-                    this.authData.customer = new Customer().build(data);                    
-                    this.save();  
-                } 
+    }*/    
 
-                resolve(res.statusCode);
-            }, err => {                
-                reject(err.message);                
-            });
-        }); 
-    }    
-    */
+    public updatePassword(dto: IAdminUpdatePassword): Promise<number> {
+        return new Promise((resolve, reject) => {            
+            this.dataService.adminsUpdatePassword(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
+        });
+    }
         
     public logout(): void {
         this.authData = null;

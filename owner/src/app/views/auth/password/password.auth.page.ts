@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { IAdminUpdatePassword } from "src/app/model/dto/admin.updatepassword.interface";
+import { Admin } from "src/app/model/orm/admin.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -10,9 +12,16 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "password-auth-page",
     templateUrl: "password.auth.page.html",
+    styleUrls: ["../../../common.styles/forms.scss"],
 })
 export class PasswordAuthPage {
     public langSubscription: Subscription = null;
+    public password1: string = "";
+    public password2: string = "";
+    public formLoading: boolean = false;
+    public formErrorPassword1: boolean = false;
+    public formErrorPassword2: boolean = false;
+    public formErrorMismatch: boolean = false;
     
     constructor(
         private appService: AppService,
@@ -23,6 +32,7 @@ export class PasswordAuthPage {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
+    get admin(): Admin {return this.authService.authData.admin;}
 
     public ngOnInit(): void {        
         this.initTitle();
@@ -35,5 +45,54 @@ export class PasswordAuthPage {
     private initTitle(): void {
         this.appService.setTitle(this.words["owner-password"]["title"][this.currentLang.slug]);
         this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-password"]["title"][lang.slug]));
+    }
+
+    public async update(): Promise<void> {
+        try {
+            if (this.validate()) {
+                this.formLoading = true;
+                let dto: IAdminUpdatePassword = {id: this.admin.id, password: this.password1};
+                let statusCode: number = await this.authService.updatePassword(dto);                
+                this.formLoading = false;
+
+                if (statusCode === 200) {
+                    this.router.navigateByUrl("/");
+                } else {
+                    this.appService.showError(this.words['owner-common']['error'][this.currentLang.slug]);
+                }
+            }
+        } catch (err) {
+            this.appService.showError(err);
+            this.formLoading = false;
+        }
+    }
+
+    private validate(): boolean {
+        this.password1 = this.password1.trim();
+        this.password2 = this.password2.trim();
+        let error = false;
+
+        if (!this.password1.length) {
+            this.formErrorPassword1 = true;
+            error = true;
+        } else {
+            this.formErrorPassword1 = false;
+        }
+
+        if (!this.password2.length) {
+            this.formErrorPassword2 = true;
+            error = true;
+        } else {
+            this.formErrorPassword2 = false;
+        }
+
+        if (this.password1 !== this.password2) {
+            this.formErrorMismatch = true;
+            error = true;
+        } else {
+            this.formErrorMismatch = false;
+        }
+
+        return !error;
     }
 }

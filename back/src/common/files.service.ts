@@ -14,18 +14,13 @@ export class FilesService {
             const diskSubfolder: string = `${new Date ().getFullYear ()}-${new Date().getMonth() + 1}`;
             const diskFullFolder: string = `${diskFolder}/${diskSubfolder}`;            
             !fs.existsSync(diskFullFolder) ? fs.mkdirSync(diskFullFolder) : null;            
-            let paths: string[] = [];
-            let filename: string = await this.saveFileToFolder(diskFullFolder, file);
-            paths.push(`${diskSubfolder}/${filename}`);
-
-            if (dto.resize) {
-                let widths: number[] = JSON.parse(dto.resize);                
+            let paths: string[] = [];            
+            let widths: number[] = JSON.parse(dto.resize);                
                 
-                for (let w of widths) {
-                    filename = await this.saveResizedImg(diskFullFolder, file, w);
-                    paths.push(`${diskSubfolder}/${filename}`);
-                }                
-            } 
+            for (let w of widths) {
+                let filename: string = await this.saveResizedImg(diskFullFolder, file, w);
+                paths.push(`${diskSubfolder}/${filename}`);
+            }                
 
             return {statusCode: 200, data: {paths}};
         } catch (err) {
@@ -35,7 +30,7 @@ export class FilesService {
         }
     }  
     
-    private saveFileToFolder(folder: string, file: Express.Multer.File): Promise<string> {
+    /*private saveFileToFolder(folder: string, file: Express.Multer.File): Promise<string> {
         return new Promise((resolve, reject) => {
             const fileName: string = Math.round(new Date().getTime()).toString();
             const fileExtension: string = extname(file.originalname);
@@ -49,13 +44,15 @@ export class FilesService {
                 }
             });
         });
-    }
+    }*/
 
     private async saveResizedImg(folder: string, file: Express.Multer.File, width: number): Promise<string> {        
-        const fileName: string = Math.round(new Date().getTime()).toString()+`_${width}`;
-        const fileExtension: string = extname(file.originalname);
-        const fileFullName = `${fileName}${fileExtension}`;        
-        await sharp(file.buffer).resize({width, withoutEnlargement: true}).toFile(`${folder}/${fileFullName}`);
+        const fileName: string = Math.round(new Date().getTime()).toString()+`_${width}`;        
+        const fileFullName = `${fileName}.jpg`;        
+        await sharp(file.buffer)
+            .resize({width, withoutEnlargement: true})
+            .jpeg({quality: 80})
+            .toFile(`${folder}/${fileFullName}`);
         return fileFullName;        
     }
 }

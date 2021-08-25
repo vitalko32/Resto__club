@@ -16,6 +16,7 @@
             "sidebar-module-localization": "Локализация",            
             "sidebar-submodule-langs": "Языки",    
             "sidebar-submodule-wordbooks": "Словари",  
+            "sidebar-submodule-currencies": "Валюты", 
             "sidebar-module-utils": "Служебные",    
             "sidebar-submodule-mailtemplates": "Шаблоны писем",                                                                                      
             
@@ -85,7 +86,12 @@
             "workspace-wordbooks-tab-phrases": "Фразы",
             "workspace-wordbooks-mark": "Метка",
             "workspace-wordbooks-note": "Примечание",
-            "workspace-wordbooks-text": "Текст",              
+            "workspace-wordbooks-text": "Текст",     
+            
+            "workspace-currencies-h1": "Валюты",                 
+            "workspace-currencies-name": "Название",    
+            "workspace-currencies-symbol": "Обозначение",        
+            "workspace-currencies-pos": "Позиция",              
 
             "workspace-mailtemplates-h1": "Шаблоны писем",     
             "workspace-mailtemplates-name": "Название",     
@@ -109,7 +115,8 @@
             "sidebar-module-admins": "Administrators",      
             "sidebar-module-localization": "Localization",            
             "sidebar-submodule-langs": "Languages",    
-            "sidebar-submodule-wordbooks": "Dictionaries",                       
+            "sidebar-submodule-wordbooks": "Dictionaries",    
+            "sidebar-submodule-currencies": "Currencies",                      
             "sidebar-module-utils": "Utilities",    
             "sidebar-submodule-mailtemplates": "Mail templates",   
 
@@ -179,7 +186,12 @@
             "workspace-wordbooks-tab-phrases": "Phrases",
             "workspace-wordbooks-mark": "Mark",
             "workspace-wordbooks-note": "Note",
-            "workspace-wordbooks-text": "Text",                           
+            "workspace-wordbooks-text": "Text",   
+            
+            "workspace-currencies-h1": "Currencies",                 
+            "workspace-currencies-name": "Name",      
+            "workspace-currencies-symbol": "Symbol",      
+            "workspace-currencies-pos": "Position",  
 
             "workspace-mailtemplates-h1": "Mail templates",     
             "workspace-mailtemplates-name": "Name",     

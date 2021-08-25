@@ -6,9 +6,10 @@ import { Not, Repository } from "typeorm";
 import { APIService } from "src/common/api.service";
 import { IAnswer } from "src/model/answer.interface";
 import { Admin } from "src/model/orm/admin.entity";
-import { IAdminGoogleData } from "./dto/admin.googledata.interface";
 import { IAdminAuthData } from "./dto/admin.authdata.interface";
 import { IAdminLogin } from "./dto/admin.login.interface";
+import { IAdminLoginByEmail } from "./dto/admin.loginbyemail.interface";
+import { IAdminUpdatePassword } from "./dto/admin.updatepassword.interface";
 
 @Injectable()
 export class AdminsService extends APIService {
@@ -36,7 +37,7 @@ export class AdminsService extends APIService {
         }
     }
     
-    public async loginWithGoogle(dto: IAdminGoogleData): Promise<IAnswer<IAdminAuthData>> {
+    public async loginByEmail(dto: IAdminLoginByEmail): Promise<IAnswer<IAdminAuthData>> {
         try {
             let admin: Admin = await this.adminRepository.findOne({where: {email: dto.email}});
             
@@ -51,42 +52,25 @@ export class AdminsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    }    
-
-    /*public async update(dto: ICustomerUpdate): Promise<IAnswer<void>> {
+    }  
+    
+    public async updatePassword(dto: IAdminUpdatePassword): Promise<IAnswer<void>> {
         try {
-            let emailExist: boolean = !!await this.customerRepository.findOne({where: {email: dto.email, id: Not(dto.id)}});            
+            let admin: Admin = await this.adminRepository.findOne(dto.id);
 
-            if (emailExist) {
-                return {statusCode: 409, error: "e-mail already in use"};
-            }
-            
-            let slugChecked: boolean = await this.checkSlug(dto);
-            
-            if (!slugChecked) {
-                return {statusCode: 410, error: "slug duplication"};                
+            if (!admin) {
+                return {statusCode: 404, error: "admin not found"}; 
             }
 
-            let x: Customer = this.customerRepository.create(dto);
-
-            if (x.password) {                
-                x.password = bcrypt.hashSync(dto.password, 10);
-            } else {
-                delete x.password; // if we got empty or null password, then it will not change in DB
-            }
-
-            await this.customerRepository.save(x);       
+            admin.password = bcrypt.hashSync(dto.password, 10);
+            await this.adminRepository.save(admin);
             return {statusCode: 200};
         } catch (err) {
-            let errTxt: string = `Error in CustomersService.update: ${String(err)}`;
+            let errTxt: string = `Error in AdminsService.updatePassword: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
-        } 
-    }  */
-
-    
-
-    
+        }
+    }
 
     private async validateAdmin(email: string, password: string): Promise<Admin> {
         let admin: Admin = await this.adminRepository

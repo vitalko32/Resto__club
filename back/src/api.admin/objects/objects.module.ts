@@ -10,6 +10,7 @@ import { Setting } from "src/model/orm/setting.entity";
 import { Lang } from "src/model/orm/lang.entity";
 import { Wordbook } from "src/model/orm/wordbook.entity";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
+import { Currency } from "src/model/orm/currency.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -21,7 +22,8 @@ import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
 			Setting,
 			Lang,
 			Wordbook,			
-			Mailtemplate,				
+			Mailtemplate,			
+			Currency,	
 		]),
 	],
 })

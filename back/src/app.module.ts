@@ -4,6 +4,7 @@ import { AdminAPIModule } from './api.admin/admin.api.module';
 import { OwnerAPIModule } from './api.owner/owner.api.module';
 import { Admin } from './model/orm/admin.entity';
 import { Admingroup } from './model/orm/admingroup.entity';
+import { Currency } from './model/orm/currency.entity';
 import { Lang } from './model/orm/lang.entity';
 import { Mailtemplate } from './model/orm/mailtemplate.entity';
 import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.entity';
@@ -32,6 +33,7 @@ import { Wordbook } from './model/orm/wordbook.entity';
 				WordTranslation,
 				Mailtemplate,							
 				MailtemplateTranslation,
+				Currency,
 			],
 			synchronize: true,
 		}),

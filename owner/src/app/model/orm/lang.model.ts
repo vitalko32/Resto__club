@@ -5,8 +5,7 @@ export class Lang extends Model {
     public slug: string;    
     public title: string;
     public shorttitle: string;
-    public img: string;
-    public img_s: string;
+    public img: string;    
     public pos: number;
     public active: boolean;
     public slugable: boolean;

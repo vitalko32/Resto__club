@@ -1,8 +1,8 @@
 <aside [class]="active ? 'active' : ''">
     <div id="aside-left">
         <div id="user" *ngIf="authenticated" [routerLink]="'/admins/edit/'+admin.id">
-            <div id="u-imgwrap" [style.background-image]="admin.img_s ? 'url(/images/admins/'+admin.img_s+')' : 'none'">
-                <span *ngIf="!admin.img_s">{{shortAdminName}}</span>
+            <div id="u-imgwrap" [style.background-image]="admin.img ? 'url(/images/admins/'+admin.img+')' : 'none'">
+                <span *ngIf="!admin.img">{{shortAdminName}}</span>
             </div>
             <div id="u-info">
                 <div id="u-name">{{admin.name}}</div>
@@ -27,6 +27,7 @@
                 <div class="nav-sub" [class.active]="subActive[0]">
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'langs'"><a routerLink="/localization/langs"><span>{{currentLang.phrases['sidebar-submodule-langs']}}</span></a></div>
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'wordbooks'"><a routerLink="/localization/wordbooks"><span>{{currentLang.phrases['sidebar-submodule-wordbooks']}}</span></a></div>                                    
+                    <div class="nav-item" [class.active]="currentUrl.parts[1] === 'currencies'"><a routerLink="/localization/currencies"><span>{{currentLang.phrases['sidebar-submodule-currencies']}}</span></a></div>                                    
                 </div>
                 
                 <div class="nav-item" [class.active]="currentUrl.parts[0] === 'utils'"><a (click)="toggleSub(1);"><span class="nav-utils">{{currentLang.phrases['sidebar-module-utils']}}</span></a></div>

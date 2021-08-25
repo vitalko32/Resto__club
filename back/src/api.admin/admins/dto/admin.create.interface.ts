@@ -3,7 +3,6 @@ export interface IAdminCreate {
     readonly name: string;
     readonly email: string;
     readonly password: string; 
-    readonly img: string;
-    readonly img_s: string;
+    readonly img: string;    
     readonly active: boolean;    
 }

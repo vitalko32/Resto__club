@@ -3,8 +3,7 @@ export interface ILangUpdate {
     readonly slug: string;
     readonly title: string;
     readonly shorttitle: string;
-    readonly img: string;
-    readonly img_s: string;
+    readonly img: string;    
     readonly pos: number;
     readonly active: boolean;
     readonly slugable: boolean;

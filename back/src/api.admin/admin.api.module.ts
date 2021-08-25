@@ -8,6 +8,7 @@ import { SettingsModule } from "./settings/settings.module";
 import { LangsModule } from "./langs/langs.module";
 import { WordbooksModule } from "./wordbooks/wordbooks.module";
 import { MailtemplatesModule } from "./mailtemplates/mailtemplates.module";
+import { CurrenciesModule } from "./currencies/currencies.module";
 
 @Module({
     imports: [        
@@ -19,6 +20,7 @@ import { MailtemplatesModule } from "./mailtemplates/mailtemplates.module";
         LangsModule,
         WordbooksModule,        
         MailtemplatesModule,    
+        CurrenciesModule,
     ],
     providers: [],
 })

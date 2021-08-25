@@ -21,10 +21,7 @@ export class Admin {
 
     @Column({nullable: true, default: null})
     img: string;
-
-    @Column({nullable: true, default: null})
-    img_s: string;
-
+    
     @Column({nullable: false, default: true})
     active: boolean;
 

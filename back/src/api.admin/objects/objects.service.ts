@@ -10,6 +10,7 @@ import { Setting } from "src/model/orm/setting.entity";
 import { Lang } from "src/model/orm/lang.entity";
 import { Wordbook } from "src/model/orm/wordbook.entity";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
+import { Currency } from "src/model/orm/currency.entity";
 
 @Injectable()
 export class ObjectsService extends APIService {
@@ -19,6 +20,7 @@ export class ObjectsService extends APIService {
         @InjectRepository(Lang) private langRepository: Repository<Lang>,
         @InjectRepository(Wordbook) private wordbookRepository: Repository<Wordbook>,
         @InjectRepository(Mailtemplate) private mailtemplateRepository: Repository<Mailtemplate>,        
+        @InjectRepository(Currency) private currencyRepository: Repository<Currency>,        
     ) {
         super();
     }

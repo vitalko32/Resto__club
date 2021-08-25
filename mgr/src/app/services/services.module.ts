@@ -14,6 +14,7 @@ import { SettingRepository } from "./repositories/setting.repository";
 import { LangRepository } from './repositories/lang.repository';
 import { WordbookRepository } from './repositories/wordbook.repository';
 import { MailtemplateRepository } from './repositories/mailtemplate.repository';
+import { CurrencyRepository } from './repositories/currency.repository';
 
 @NgModule({
     declarations: [],
@@ -32,7 +33,8 @@ import { MailtemplateRepository } from './repositories/mailtemplate.repository';
 		SettingRepository,
 		LangRepository,
 		WordbookRepository,
-		MailtemplateRepository,				
+		MailtemplateRepository,		
+		CurrencyRepository,		
 	],
 })
 export class ServicesModule { }

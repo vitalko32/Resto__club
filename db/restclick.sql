@@ -76,7 +76,6 @@ CREATE TABLE "default".vne_admins (
     email character varying NOT NULL,
     password character varying,
     img character varying,
-    img_s character varying,
     active boolean DEFAULT true NOT NULL,
     defended boolean DEFAULT false NOT NULL
 );
@@ -107,6 +106,43 @@ ALTER SEQUENCE "default".vne_admins_id_seq OWNED BY "default".vne_admins.id;
 
 
 --
+-- Name: vne_currencies; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_currencies (
+    id integer NOT NULL,
+    name character varying,
+    symbol character varying,
+    pos integer DEFAULT 0 NOT NULL,
+    defended boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE "default".vne_currencies OWNER TO vio;
+
+--
+-- Name: vne_currencies_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_currencies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_currencies_id_seq OWNER TO vio;
+
+--
+-- Name: vne_currencies_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_currencies_id_seq OWNED BY "default".vne_currencies.id;
+
+
+--
 -- Name: vne_langs; Type: TABLE; Schema: default; Owner: vio
 --
 
@@ -116,7 +152,6 @@ CREATE TABLE "default".vne_langs (
     title character varying,
     shorttitle character varying,
     img character varying,
-    img_s character varying,
     pos integer DEFAULT 0 NOT NULL,
     active boolean DEFAULT true NOT NULL,
     slugable boolean DEFAULT false NOT NULL,
@@ -383,6 +418,13 @@ ALTER TABLE ONLY "default".vne_admins ALTER COLUMN id SET DEFAULT nextval('"defa
 
 
 --
+-- Name: vne_currencies id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_currencies ALTER COLUMN id SET DEFAULT nextval('"default".vne_currencies_id_seq'::regclass);
+
+
+--
 -- Name: vne_langs id; Type: DEFAULT; Schema: default; Owner: vio
 --
 
@@ -444,8 +486,19 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 -- Data for Name: vne_admins; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_admins (id, admingroup_id, name, email, password, img, img_s, active, defended) FROM stdin;
-1	1	Alex Zdorov	7573497@gmail.com	$2b$10$Uck8butdmdtylqpkJv08lu/0T69jhkEon4AlV2AXoo2XFEyhUL.7y	2021-8/1629757583992.jpeg	2021-8/1629757583993_150.jpeg	t	t
+COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
+1	1	Alex	7573497@gmail.com	$2b$10$rw6.jxMsMClPyXRmFpFB..v79zc6yiE4WZ1jueL9rBBveh923vjoq	2021-8/1629929025223_150.jpg	t	t
+\.
+
+
+--
+-- Data for Name: vne_currencies; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_currencies (id, name, symbol, pos, defended) FROM stdin;
+1	RUR	₽	1	t
+3	USD	$	3	f
+2	EUR	€	2	f
 \.
 
 
@@ -453,9 +506,9 @@ COPY "default".vne_admins (id, admingroup_id, name, email, password, img, img_s,
 -- Data for Name: vne_langs; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_langs (id, slug, title, shorttitle, img, img_s, pos, active, slugable, dir, defended) FROM stdin;
-1	ru	Русский	Рус	\N	\N	1	t	f	ltr	t
-2	en	English	Eng	\N	\N	2	t	f	ltr	f
+COPY "default".vne_langs (id, slug, title, shorttitle, img, pos, active, slugable, dir, defended) FROM stdin;
+2	en	English	Eng	\N	2	t	f	ltr	f
+1	ru	Русский	Рус	\N	1	t	f	ltr	t
 \.
 
 
@@ -480,8 +533,9 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
-2	google-clientid	436933185487-3jup4q4e86a5jv2p1ns6g7ngcppepq3g.apps.googleusercontent.com	Google Oauth API client ID	2	t	f
 1	domain	restclick.vio.net.ua	main domain of app	1	t	f
+4	owner-app-url	https://owner.restclick.vio.net.ua	owner application URL	2	t	f
+2	google-clientid	63103186909-5ut3m449vpr9uqp0v7jv02phea85mub0.apps.googleusercontent.com	Google Oauth API client ID	3	t	f
 \.
 
 
@@ -490,8 +544,80 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 --
 
 COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
-1	1	1	111
-2	1	2	222
+5	2	1	Активные
+6	2	2	Active
+7	3	1	Неактивные
+8	3	2	Inactive
+9	4	1	Сменить пароль
+10	4	2	Change password
+11	5	1	Страница
+12	5	2	Page
+13	6	1	Выход
+14	6	2	Sign out
+2	1	2	Add restaurant
+1	1	1	Добавить ресторан
+15	7	1	Активные
+16	7	2	Active
+17	8	1	Активные рестораны
+18	8	2	Active restaurants
+19	9	1	Неактивные
+20	9	2	Inactive
+21	10	1	Неактивные рестораны
+22	10	2	Inactive restaurants
+23	11	1	Продлить подписку
+24	11	2	Prolong subscription
+25	12	1	История заказов
+26	12	2	Orders history
+27	13	1	Просмотр и редактирование
+28	13	2	View and edit
+29	14	1	Удалить
+30	14	2	Delete
+31	15	1	Действия
+32	15	2	Actions
+35	17	1	Название
+36	17	2	Name
+37	18	1	Подписка
+38	18	2	Subscription
+39	19	1	дн. осталось
+40	19	2	days left
+33	16	1	Дата создания
+34	16	2	Created at
+45	22	1	E-mail
+46	22	2	E-mail
+47	23	1	Пароль
+48	23	2	Password
+49	24	1	Войти
+50	24	2	Sign in
+51	25	1	Произошла ошибка. Попробуйте позднее.
+52	25	2	An error has occurred. Please try again later.
+55	27	1	Доступ запрещен
+56	27	2	Access denied
+57	28	1	Смена пароля
+58	28	2	Change password
+59	29	1	Смена пароля
+60	29	2	Change password
+61	30	1	Сохранить
+62	30	2	Save
+63	31	1	загрузка...
+64	31	2	loading...
+65	32	1	Войти через Google
+66	32	2	Sign in with Google
+67	33	1	Войти через Apple
+68	33	2	Sign in with Apple
+41	20	1	Авторизация
+42	20	2	Authorization
+43	21	1	Авторизация
+44	21	2	Authorization
+69	34	1	Главная
+70	34	2	Home
+71	35	1	Новый пароль
+72	35	2	New password
+73	36	1	Новый пароль еще раз
+74	36	2	Repeat new password
+75	37	1	Ваш логин
+76	37	2	Your login
+77	38	1	Пароли не совпадают
+78	38	2	Passwords don't match
 \.
 
 
@@ -500,7 +626,10 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 --
 
 COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
-1	owner-restaurants	1
+1	owner-restaurants	2
+2	owner-common	1
+3	owner-login	3
+4	owner-password	4
 \.
 
 
@@ -509,7 +638,43 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 --
 
 COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
-1	1	1	test	\N
+2	2	1	menu-active	\N
+3	2	2	menu-inactive	\N
+4	2	3	menu-pw	\N
+5	2	100	page	\N
+6	2	101	logout	\N
+1	1	100	create	\N
+7	1	1	head-active	\N
+8	1	2	title-active	\N
+9	1	3	head-inactive	\N
+10	1	4	title-inactive	\N
+11	1	101	prolong	\N
+12	1	102	history	\N
+13	1	103	edit	\N
+14	1	104	delete	\N
+15	1	105	actions	\N
+16	1	200	created-at	\N
+17	1	201	name	\N
+18	1	202	subscription	\N
+19	1	106	days-left	\N
+20	3	1	title	\N
+21	3	2	head	\N
+22	3	3	email	\N
+23	3	4	password	\N
+24	3	5	login	\N
+27	2	201	error-401	\N
+25	2	200	error	\N
+28	4	1	head	\N
+29	4	2	title	\N
+30	2	102	save	\N
+31	2	103	loading	\N
+32	3	6	with-google	\N
+33	3	7	with-apple	\N
+34	2	104	home	\N
+35	4	3	password1	\N
+36	4	4	password2	\N
+37	4	5	login	\N
+38	4	6	error-mismatch	\N
 \.
 
 
@@ -524,56 +689,63 @@ SELECT pg_catalog.setval('"default".vne_admingroups_id_seq', 1, true);
 -- Name: vne_admins_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_admins_id_seq', 1, true);
+SELECT pg_catalog.setval('"default".vne_admins_id_seq', 2, true);
+
+
+--
+-- Name: vne_currencies_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_currencies_id_seq', 3, true);
 
 
 --
 -- Name: vne_langs_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_langs_id_seq', 3, true);
+SELECT pg_catalog.setval('"default".vne_langs_id_seq', 4, true);
 
 
 --
 -- Name: vne_mailtemplate_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_mailtemplate_translations_id_seq', 1, false);
+SELECT pg_catalog.setval('"default".vne_mailtemplate_translations_id_seq', 2, true);
 
 
 --
 -- Name: vne_mailtemplates_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, false);
+SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 
 
 --
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_settings_id_seq', 2, true);
+SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 3, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 78, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 1, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 4, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 1, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 38, true);
 
 
 --
@@ -614,6 +786,14 @@ ALTER TABLE ONLY "default".vne_admins
 
 ALTER TABLE ONLY "default".vne_word_translations
     ADD CONSTRAINT "PK_521f92df69a7ad9c67b18da8f68" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_currencies PK_84d6314cfa9aff009fbb4f55c22; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_currencies
+    ADD CONSTRAINT "PK_84d6314cfa9aff009fbb4f55c22" PRIMARY KEY (id);
 
 
 --

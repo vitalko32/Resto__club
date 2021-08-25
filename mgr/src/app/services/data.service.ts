@@ -16,6 +16,7 @@ import { Wordbook } from "../model/orm/wordbook.model";
 import { IPathable } from "../model/pathable.interface";
 import { ErrorService } from "./error.service";
 import { Mailtemplate } from "../model/orm/mailtemplate.model";
+import { Currency } from "../model/orm/currency.model";
 
 @Injectable()
 export class DataService {
@@ -64,7 +65,15 @@ export class DataService {
     public wordbooksDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`wordbooks/delete/${id}`, null, true);}
     public wordbooksDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("wordbooks/delete-bulk", ids, true);}
     public wordbooksCreate(x: Wordbook): Observable<IAnswer<void>> {return this.sendRequest("wordbooks/create", x, true);}
-    public wordbooksUpdate(x: Wordbook): Observable<IAnswer<void>> {return this.sendRequest("wordbooks/update", x, true);}         
+    public wordbooksUpdate(x: Wordbook): Observable<IAnswer<void>> {return this.sendRequest("wordbooks/update", x, true);}     
+    
+    public currenciesAll(dto: IGetAll): Observable<IAnswer<Currency[]>> {return this.sendRequest(`currencies/all`, dto, true);}    
+    public currenciesChunk(dto: IGetChunk): Observable<IAnswer<Currency[]>> {return this.sendRequest("currencies/chunk", dto, true);}
+    public currenciesOne(id: number): Observable<IAnswer<Currency>> {return this.sendRequest(`currencies/one/${id}`, null, true);}
+    public currenciesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`currencies/delete/${id}`, null, true);}
+    public currenciesDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("currencies/delete-bulk", ids, true);}
+    public currenciesCreate(x: Currency): Observable<IAnswer<void>> {return this.sendRequest("currencies/create", x, true);}
+    public currenciesUpdate(x: Currency): Observable<IAnswer<void>> {return this.sendRequest("currencies/update", x, true);} 
     
     public mailtemplatesChunk(dto: IGetChunk): Observable<IAnswer<Mailtemplate[]>> {return this.sendRequest("mailtemplates/chunk", dto, true);}
     public mailtemplatesOne(id: number): Observable<IAnswer<Mailtemplate>> {return this.sendRequest(`mailtemplates/one/${id}`, null, true);}
