@@ -13,6 +13,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 export class HeadDesktopComponent {
     @Input() showCreateRestaurantBtn: boolean = false;
     @Input() showLogoutBtn: boolean = false;
+    @Input() showLogo: boolean = false;
     public langPanelActive: boolean = false;
     public langPanelTimer: number = null;
     

@@ -1,2 +1,14 @@
-<head-desktop [showCreateRestaurantBtn]="false" [showLogoutBtn]="false"></head-desktop>
+<head-desktop [showCreateRestaurantBtn]="false" [showLogoutBtn]="false" [showLogo]="true"></head-desktop>
 <head-mobile [title]="words['owner-login']['head'][currentLang.slug]" [showMenuBtn]="false"></head-mobile>
+<form class="generic-form" (submit)="login();">
+    <div class="gf-param margined">
+        <div class="gf-inputwrap"><input type="email" name="email" [(ngModel)]="email" [placeholder]="words['owner-login']['email'][currentLang.slug]"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-inputwrap"><input type="password" name="password" [(ngModel)]="password" [placeholder]="words['owner-login']['password'][currentLang.slug]"></div>
+    </div>
+    <div class="gf-btnwrap">
+        <button type="submit" class="fixed200">{{words['owner-login']['login'][currentLang.slug]}}</button>
+        <div class="gf-error" *ngIf="formErrorDenied">{{words['owner-common']['error-401'][currentLang.slug]}}</div>
+    </div>
+</form>
