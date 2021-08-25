@@ -28,7 +28,7 @@ export class HeadMobileComponent {
     get url(): string[] {return this.appService.url;}
     
     public setLang(l: Lang): void {
-        this.appService.currentLang.next(l);
+        this.appService.setLang(l);
         this.langPanelActive = false;
     }
 }

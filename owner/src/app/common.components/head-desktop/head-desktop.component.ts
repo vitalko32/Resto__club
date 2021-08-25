@@ -34,7 +34,7 @@ export class HeadDesktopComponent {
     }
 
     public setLang(l: Lang): void {
-        this.appService.currentLang.next(l);
+        this.appService.setLang(l);
         this.langPanelActive = false;
     }
 }
