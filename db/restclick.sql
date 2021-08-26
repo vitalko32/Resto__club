@@ -143,6 +143,118 @@ ALTER SEQUENCE "default".vne_currencies_id_seq OWNED BY "default".vne_currencies
 
 
 --
+-- Name: vne_employee_status_translations; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_employee_status_translations (
+    id integer NOT NULL,
+    employee_status_id integer,
+    lang_id integer,
+    name character varying
+);
+
+
+ALTER TABLE "default".vne_employee_status_translations OWNER TO vio;
+
+--
+-- Name: vne_employee_status_translations_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_employee_status_translations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_employee_status_translations_id_seq OWNER TO vio;
+
+--
+-- Name: vne_employee_status_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_employee_status_translations_id_seq OWNED BY "default".vne_employee_status_translations.id;
+
+
+--
+-- Name: vne_employee_statuses; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_employee_statuses (
+    id integer NOT NULL,
+    color character varying DEFAULT '#000000'::character varying NOT NULL,
+    pos integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE "default".vne_employee_statuses OWNER TO vio;
+
+--
+-- Name: vne_employee_statuses_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_employee_statuses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_employee_statuses_id_seq OWNER TO vio;
+
+--
+-- Name: vne_employee_statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_employee_statuses_id_seq OWNED BY "default".vne_employee_statuses.id;
+
+
+--
+-- Name: vne_employees; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_employees (
+    id integer NOT NULL,
+    restaurant_id integer,
+    employee_status_id integer,
+    email character varying NOT NULL,
+    password character varying,
+    name character varying,
+    phone character varying,
+    is_admin boolean DEFAULT false NOT NULL,
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE "default".vne_employees OWNER TO vio;
+
+--
+-- Name: vne_employees_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_employees_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_employees_id_seq OWNER TO vio;
+
+--
+-- Name: vne_employees_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_employees_id_seq OWNED BY "default".vne_employees.id;
+
+
+--
 -- Name: vne_langs; Type: TABLE; Schema: default; Owner: vio
 --
 
@@ -254,6 +366,50 @@ ALTER TABLE "default".vne_mailtemplates_id_seq OWNER TO vio;
 --
 
 ALTER SEQUENCE "default".vne_mailtemplates_id_seq OWNED BY "default".vne_mailtemplates.id;
+
+
+--
+-- Name: vne_restaurants; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_restaurants (
+    id integer NOT NULL,
+    currency_id integer,
+    name character varying,
+    domain character varying NOT NULL,
+    ownername character varying,
+    phone character varying,
+    address character varying,
+    inn character varying,
+    ogrn character varying,
+    comment text,
+    active_until timestamp without time zone,
+    created_at timestamp without time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE "default".vne_restaurants OWNER TO vio;
+
+--
+-- Name: vne_restaurants_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_restaurants_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_restaurants_id_seq OWNER TO vio;
+
+--
+-- Name: vne_restaurants_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_restaurants_id_seq OWNED BY "default".vne_restaurants.id;
 
 
 --
@@ -425,6 +581,27 @@ ALTER TABLE ONLY "default".vne_currencies ALTER COLUMN id SET DEFAULT nextval('"
 
 
 --
+-- Name: vne_employee_status_translations id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_status_translations ALTER COLUMN id SET DEFAULT nextval('"default".vne_employee_status_translations_id_seq'::regclass);
+
+
+--
+-- Name: vne_employee_statuses id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_statuses ALTER COLUMN id SET DEFAULT nextval('"default".vne_employee_statuses_id_seq'::regclass);
+
+
+--
+-- Name: vne_employees id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employees ALTER COLUMN id SET DEFAULT nextval('"default".vne_employees_id_seq'::regclass);
+
+
+--
 -- Name: vne_langs id; Type: DEFAULT; Schema: default; Owner: vio
 --
 
@@ -443,6 +620,13 @@ ALTER TABLE ONLY "default".vne_mailtemplate_translations ALTER COLUMN id SET DEF
 --
 
 ALTER TABLE ONLY "default".vne_mailtemplates ALTER COLUMN id SET DEFAULT nextval('"default".vne_mailtemplates_id_seq'::regclass);
+
+
+--
+-- Name: vne_restaurants id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_restaurants ALTER COLUMN id SET DEFAULT nextval('"default".vne_restaurants_id_seq'::regclass);
 
 
 --
@@ -503,6 +687,39 @@ COPY "default".vne_currencies (id, name, symbol, pos, defended) FROM stdin;
 
 
 --
+-- Data for Name: vne_employee_status_translations; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_employee_status_translations (id, employee_status_id, lang_id, name) FROM stdin;
+1	1	1	выходной
+2	1	2	day off
+5	2	2	working
+4	2	1	работает
+\.
+
+
+--
+-- Data for Name: vne_employee_statuses; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_employee_statuses (id, color, pos) FROM stdin;
+1	#000000	1
+2	#24b83f	2
+\.
+
+
+--
+-- Data for Name: vne_employees; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, password, name, phone, is_admin, created_at) FROM stdin;
+1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723
+2	2	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	f	2021-08-26 21:32:06.303446
+3	1	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342
+\.
+
+
+--
 -- Data for Name: vne_langs; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
@@ -525,6 +742,16 @@ COPY "default".vne_mailtemplate_translations (id, mailtemplate_id, lang_id, subj
 --
 
 COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
+\.
+
+
+--
+-- Data for Name: vne_restaurants; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at) FROM stdin;
+1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727
+2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727
 \.
 
 
@@ -556,12 +783,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 14	6	2	Sign out
 2	1	2	Add restaurant
 1	1	1	Добавить ресторан
-15	7	1	Активные
-16	7	2	Active
 17	8	1	Активные рестораны
 18	8	2	Active restaurants
-19	9	1	Неактивные
-20	9	2	Inactive
 21	10	1	Неактивные рестораны
 22	10	2	Inactive restaurants
 23	11	1	Продлить подписку
@@ -592,8 +815,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 52	25	2	An error has occurred. Please try again later.
 55	27	1	Доступ запрещен
 56	27	2	Access denied
-57	28	1	Смена пароля
-58	28	2	Change password
 59	29	1	Смена пароля
 60	29	2	Change password
 61	30	1	Сохранить
@@ -606,8 +827,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 68	33	2	Sign in with Apple
 41	20	1	Авторизация
 42	20	2	Authorization
-43	21	1	Авторизация
-44	21	2	Authorization
 69	34	1	Главная
 70	34	2	Home
 71	35	1	Новый пароль
@@ -644,10 +863,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 5	2	100	page	\N
 6	2	101	logout	\N
 1	1	100	create	\N
-7	1	1	head-active	\N
-8	1	2	title-active	\N
-9	1	3	head-inactive	\N
-10	1	4	title-inactive	\N
 11	1	101	prolong	\N
 12	1	102	history	\N
 13	1	103	edit	\N
@@ -658,23 +873,23 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 18	1	202	subscription	\N
 19	1	106	days-left	\N
 20	3	1	title	\N
-21	3	2	head	\N
-22	3	3	email	\N
-23	3	4	password	\N
-24	3	5	login	\N
 27	2	201	error-401	\N
 25	2	200	error	\N
-28	4	1	head	\N
-29	4	2	title	\N
 30	2	102	save	\N
 31	2	103	loading	\N
-32	3	6	with-google	\N
-33	3	7	with-apple	\N
 34	2	104	home	\N
-35	4	3	password1	\N
-36	4	4	password2	\N
-37	4	5	login	\N
-38	4	6	error-mismatch	\N
+8	1	1	title-active	\N
+10	1	2	title-inactive	\N
+22	3	2	email	\N
+23	3	3	password	\N
+24	3	4	login	\N
+32	3	5	with-google	\N
+33	3	6	with-apple	\N
+29	4	1	title	\N
+35	4	2	password1	\N
+36	4	3	password2	\N
+37	4	4	login	\N
+38	4	5	error-mismatch	\N
 \.
 
 
@@ -700,10 +915,31 @@ SELECT pg_catalog.setval('"default".vne_currencies_id_seq', 3, true);
 
 
 --
+-- Name: vne_employee_status_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_employee_status_translations_id_seq', 5, true);
+
+
+--
+-- Name: vne_employee_statuses_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 2, true);
+
+
+--
+-- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 3, true);
+
+
+--
 -- Name: vne_langs_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_langs_id_seq', 4, true);
+SELECT pg_catalog.setval('"default".vne_langs_id_seq', 5, true);
 
 
 --
@@ -721,6 +957,13 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 
 
 --
+-- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 2, true);
+
+
+--
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
@@ -731,7 +974,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 78, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 111, true);
 
 
 --
@@ -765,6 +1008,14 @@ ALTER TABLE ONLY "default".vne_words
 
 
 --
+-- Name: vne_restaurants PK_0875461f4afdd97af48b6444eff; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_restaurants
+    ADD CONSTRAINT "PK_0875461f4afdd97af48b6444eff" PRIMARY KEY (id);
+
+
+--
 -- Name: vne_mailtemplates PK_0ad69d17564005feccf82893808; Type: CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -778,6 +1029,22 @@ ALTER TABLE ONLY "default".vne_mailtemplates
 
 ALTER TABLE ONLY "default".vne_admins
     ADD CONSTRAINT "PK_0e169cb063501c963352dfbaaac" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_employee_status_translations PK_3537ef87ea04c2bb295c1c0e948; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_status_translations
+    ADD CONSTRAINT "PK_3537ef87ea04c2bb295c1c0e948" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_employee_statuses PK_3b845110cc6cfb8b64b275a9f4f; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_statuses
+    ADD CONSTRAINT "PK_3b845110cc6cfb8b64b275a9f4f" PRIMARY KEY (id);
 
 
 --
@@ -813,6 +1080,14 @@ ALTER TABLE ONLY "default".vne_mailtemplate_translations
 
 
 --
+-- Name: vne_employees PK_be6da89c037f846b6b791a35f8b; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employees
+    ADD CONSTRAINT "PK_be6da89c037f846b6b791a35f8b" PRIMARY KEY (id);
+
+
+--
 -- Name: vne_langs PK_d5d1c1e82773cfdb6bc8785f60a; Type: CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -837,6 +1112,22 @@ ALTER TABLE ONLY "default".vne_admins
 
 
 --
+-- Name: vne_employees UQ_752fad6244eb8729bba8e6558da; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employees
+    ADD CONSTRAINT "UQ_752fad6244eb8729bba8e6558da" UNIQUE (email);
+
+
+--
+-- Name: vne_restaurants UQ_83e1ce98acfb064fa10c6dbb9b6; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_restaurants
+    ADD CONSTRAINT "UQ_83e1ce98acfb064fa10c6dbb9b6" UNIQUE (domain);
+
+
+--
 -- Name: vne_mailtemplates UQ_8dcdd7fca3bc0ba922e66e6e632; Type: CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -852,10 +1143,38 @@ CREATE INDEX "IDX_04ce0a0d84f168475f385b5843" ON "default".vne_words USING btree
 
 
 --
+-- Name: IDX_0ebf4ce544e97dc18ccf67dadb; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_0ebf4ce544e97dc18ccf67dadb" ON "default".vne_admins USING btree (email);
+
+
+--
+-- Name: IDX_29851f01aa898c68aa2c4b7014; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_29851f01aa898c68aa2c4b7014" ON "default".vne_restaurants USING btree (name);
+
+
+--
 -- Name: IDX_2e1de563e14f7009d683b9bde4; Type: INDEX; Schema: default; Owner: vio
 --
 
 CREATE INDEX "IDX_2e1de563e14f7009d683b9bde4" ON "default".vne_langs USING btree (slug);
+
+
+--
+-- Name: IDX_752fad6244eb8729bba8e6558d; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_752fad6244eb8729bba8e6558d" ON "default".vne_employees USING btree (email);
+
+
+--
+-- Name: IDX_83e1ce98acfb064fa10c6dbb9b; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_83e1ce98acfb064fa10c6dbb9b" ON "default".vne_restaurants USING btree (domain);
 
 
 --
@@ -873,11 +1192,33 @@ CREATE INDEX "IDX_961714c023daa0f447930913e0" ON "default".vne_settings USING bt
 
 
 --
+-- Name: IDX_b5c0be82ee53a573665f8129f9; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_b5c0be82ee53a573665f8129f9" ON "default".vne_restaurants USING btree (active_until);
+
+
+--
+-- Name: IDX_d30ea31a6d19f1e5e6ab6aea97; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_d30ea31a6d19f1e5e6ab6aea97" ON "default".vne_employees USING btree (name);
+
+
+--
 -- Name: vne_mailtemplate_translations FK_04dd42b567b276df508ea10d846; Type: FK CONSTRAINT; Schema: default; Owner: vio
 --
 
 ALTER TABLE ONLY "default".vne_mailtemplate_translations
     ADD CONSTRAINT "FK_04dd42b567b276df508ea10d846" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_employee_status_translations FK_0fddd42f52eb8aa644afef6ce0c; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_status_translations
+    ADD CONSTRAINT "FK_0fddd42f52eb8aa644afef6ce0c" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -905,11 +1246,43 @@ ALTER TABLE ONLY "default".vne_admins
 
 
 --
+-- Name: vne_employee_status_translations FK_568aa4b75543a6152b15e117352; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employee_status_translations
+    ADD CONSTRAINT "FK_568aa4b75543a6152b15e117352" FOREIGN KEY (employee_status_id) REFERENCES "default".vne_employee_statuses(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_employees FK_60383ed5415c03ba84e5670d21b; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employees
+    ADD CONSTRAINT "FK_60383ed5415c03ba84e5670d21b" FOREIGN KEY (employee_status_id) REFERENCES "default".vne_employee_statuses(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
 -- Name: vne_mailtemplate_translations FK_967e7082c5cd07daaa63df4a36b; Type: FK CONSTRAINT; Schema: default; Owner: vio
 --
 
 ALTER TABLE ONLY "default".vne_mailtemplate_translations
     ADD CONSTRAINT "FK_967e7082c5cd07daaa63df4a36b" FOREIGN KEY (mailtemplate_id) REFERENCES "default".vne_mailtemplates(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_employees FK_ab4672296c3f1ab805e0937a481; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_employees
+    ADD CONSTRAINT "FK_ab4672296c3f1ab805e0937a481" FOREIGN KEY (restaurant_id) REFERENCES "default".vne_restaurants(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- Name: vne_restaurants FK_b4f2c8b3192294163738f730610; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_restaurants
+    ADD CONSTRAINT "FK_b4f2c8b3192294163738f730610" FOREIGN KEY (currency_id) REFERENCES "default".vne_currencies(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
