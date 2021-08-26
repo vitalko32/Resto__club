@@ -8,4 +8,5 @@ export interface ILangUpdate {
     readonly active: boolean;
     readonly slugable: boolean;
     readonly dir: string;
+    readonly defended: boolean;
 }

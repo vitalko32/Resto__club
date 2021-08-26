@@ -5,5 +5,6 @@ export interface IAdminUpdate {
     readonly email: string;
     readonly password: string; 
     readonly img: string;    
-    readonly active: boolean;        
+    readonly active: boolean;     
+    readonly defended: boolean;   
 }

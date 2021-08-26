@@ -115,6 +115,10 @@ export abstract class APIService {
         return `${date.getFullYear()}-${this.twoDigits(date.getMonth()+1)}-${this.twoDigits(date.getDate())}`;
     }
 
+    protected mysqlDateTime(date: Date): string {
+        return `${date.getFullYear()}-${this.twoDigits(date.getMonth()+1)}-${this.twoDigits(date.getDate())} ${this.twoDigits(date.getHours())}:${this.twoDigits(date.getMinutes())}:${this.twoDigits(date.getSeconds())}`;
+    }
+
     protected daysInMonth(month: number, year: number): number {
         return new Date(year, month, 0).getDate();
     }

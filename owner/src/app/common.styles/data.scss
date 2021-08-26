@@ -2,7 +2,7 @@
     .datalist-desktop {
         @media (min-width:0) {display: none;}
         @media (min-width:1000px) {display: block;}
-        border-radius: 45px; background-color: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; overflow: auto; margin-bottom: 30px;
+        border-radius: 45px; background-color: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; overflow: auto; margin-bottom: 30px; position: relative;
         table {
             width: 100%; 
             th {padding: 10px 5px;}
@@ -12,7 +12,7 @@
     .datalist-mobile {
         @media (min-width:0) {display: block;}
         @media (min-width:1000px) {display: none;}
-        border-radius: 15px; background-color: var(--color-bg-datalist); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px; overflow: auto; margin-bottom: 30px;
+        border-radius: 15px; background-color: var(--color-bg-datalist); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px; overflow: auto; margin-bottom: 30px; position: relative;
         .dlm-item {
             background-color: var(--color-bg); border-radius: 5px; padding: 10px; margin-bottom: 5px;
             &:last-child {margin-bottom: 0;}            
@@ -22,5 +22,9 @@
             }   
             .dlmi-actions {display: flex; justify-content: center;}         
         }
+    }
+    .datalist-overlay {
+        position: absolute; left: 0; top: 0; z-index: 2; background-color: rgba(255,255,255,0.5); width:0; height: 100%; opacity: 0; will-change: opacity, width; transition: width 0s linear 0.3s, opacity 0.3s ease 0s;
+        &.active {width: 100%; opacity: 1; transition: width 0s linear 0s, opacity 0.3s ease 0s;}
     }
 }

@@ -3,4 +3,5 @@ export interface ICurrencyUpdateDTO {
     readonly name: string;
     readonly symbol: string;
     readonly pos: number;    
+    readonly defended: boolean;
 }

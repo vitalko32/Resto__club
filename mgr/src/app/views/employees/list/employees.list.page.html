@@ -38,7 +38,7 @@
                             <td><input type="checkbox" *ngIf="!x.defended" [(ngModel)]="x.__selected" (ngModelChange)="onSelect();"></td>
                             <td>{{x.formattedCreatedAt}}</td>
                             <td>{{x.email}}</td>
-                            <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="x.name" (change)="updateParam (x.id, 'name', x.name);" [disabled]="x.defended"></div></td> 
+                            <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="x.name" (change)="updateParam (x.id, 'name', x.name);"></div></td> 
                             <td>{{x.restaurant?.name}}</td>
                             <td>
                                 <div class="dt-actions">

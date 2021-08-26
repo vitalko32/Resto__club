@@ -20,11 +20,11 @@
                         <tr *ngFor="let x of xl">
                             <td><input type="checkbox" *ngIf="!x.defended" [(ngModel)]="x.__selected" (ngModelChange)="onSelect();"></td>
                             <td>{{x.formattedCreatedAt}}</td>
-                            <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="x.name" (change)="updateParam (x.id, 'name', x.name);" [disabled]="x.defended"></div></td> 
+                            <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="x.name" (change)="updateParam (x.id, 'name', x.name);"></div></td> 
                             <td>
                                 <div class="dt-actions">
                                     <div class="dt-btn edit" [title]="currentLang.phrases['workspace-edit']" [routerLink]="homeUrl + '/edit/'+x.id"><span></span></div>
-                                    <div class="dt-btn delete" [title]="currentLang.phrases['workspace-delete']" *ngIf="!x.defended" (click)="delete(x.id);"><span></span></div>
+                                    <div class="dt-btn delete" [title]="currentLang.phrases['workspace-delete']" (click)="delete(x.id);"><span></span></div>
                                 </div>
                             </td>
                         </tr>                            

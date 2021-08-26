@@ -17,6 +17,6 @@
     input {
         @media (min-width:0) {height: 20px; width: 65px;}
         @media (min-width:1000px) {height: 30px; width:45px;}
-        border-radius: 15px; border:none; padding: 0 5px; text-align: center;
+        border-radius: 15px; border:none; padding: 0 5px; text-align: center; background-color: white; box-shadow: var(--block-shadow);
     }
 }

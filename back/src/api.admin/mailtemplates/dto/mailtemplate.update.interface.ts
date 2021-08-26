@@ -3,5 +3,6 @@ import { MailtemplateTranslation } from "src/model/orm/mailtemplate.translation.
 export interface IMailtemplateUpdate {
     readonly id: number;
     readonly name: string;
+    readonly defended: boolean;
     readonly translations: MailtemplateTranslation[];
 }

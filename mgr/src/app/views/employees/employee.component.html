@@ -18,7 +18,7 @@
     
     <div class="df-title" [class.required]="isRequired('restaurant_id')">{{currentLang.phrases['workspace-employees-restaurant']}}:</div>
     <div class="df-inputwrap">
-        <select [(ngModel)]="x.restaurant_id">
+        <select [(ngModel)]="x.restaurant_id" [disabled]="x.defended">
             <option [ngValue]="null">{{currentLang.phrases['workspace-none']}}</option>
             <option *ngFor="let r of rl" [ngValue]="r.id">{{r.name}}</option>
         </select>
@@ -33,7 +33,7 @@
     </div>    
 
     <div class="df-title" [class.required]="isRequired('is_admin')">{{currentLang.phrases['workspace-employees-is-admin']}}:</div>
-    <div class="df-inputwrap"><checkbox-slider [(value)]="x.is_admin"></checkbox-slider></div>
+    <div class="df-inputwrap"><checkbox-slider [(value)]="x.is_admin" [disabled]="x.defended"></checkbox-slider></div>
         
     <div class="df-title"></div>
     <div class="df-inputwrap"><button type="submit">{{currentLang.phrases['workspace-save']}}</button></div>                    

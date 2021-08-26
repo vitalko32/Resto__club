@@ -32,6 +32,9 @@ export class Employee {
 
     @CreateDateColumn()
     created_at: Date;   
+
+    @Column({nullable: false, default: false})
+    defended: boolean;
     
     // relations
     @ManyToOne(type => Restaurant, {onDelete: "SET NULL", onUpdate: "CASCADE"})

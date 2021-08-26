@@ -12,6 +12,8 @@ import { IGetAll } from "../model/dto/getall.interface";
 import { IAnswer } from "../model/dto/answer.interface";
 import { IAdminLogin } from "../model/dto/admin.login.interface";
 import { IAdminUpdatePassword } from "../model/dto/admin.updatepassword.interface";
+import { IGetChunk } from "../model/dto/getchunk.interface";
+import { Restaurant } from "../model/orm/restaurant.model";
 
 @Injectable()
 export class DataService {
@@ -33,6 +35,8 @@ export class DataService {
     public adminsLogin(dto: IAdminLogin): Observable<IAnswer<IAdminAuthData>> {return this.sendRequest("admins/login", dto);} 
     public adminsLoginByEmail(email: string): Observable<IAnswer<IAdminAuthData>> {return this.sendRequest("admins/login-by-email", {email});}     
     public adminsUpdatePassword(dto: IAdminUpdatePassword): Observable<IAnswer<void>> {return this.sendRequest("admins/update-password", dto, true);}
+
+    public restaurantsChunk(dto: IGetChunk): Observable<IAnswer<Restaurant[]>> {return this.sendRequest("restaurants/chunk", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

@@ -5,7 +5,7 @@ import { AppService } from 'src/app/services/app.service';
 import { WordRepository } from 'src/app/services/repositories/word.repository';
 
 @Component({
-    selector: 'the-pagination',
+    selector: 'pagination',
     templateUrl: './pagination.component.html',  
     styleUrls: ['./pagination.component.scss'],
 })

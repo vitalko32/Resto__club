@@ -11,6 +11,7 @@ export class Employee extends Model {
     public phone: string;    
     public is_admin: boolean;    
     public created_at: Date;   
+    public defended: boolean;
     public restaurant?: Restaurant;
 
     get formattedCreatedAt(): string {return `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}`;}

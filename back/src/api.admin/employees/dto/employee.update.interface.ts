@@ -8,4 +8,5 @@ export interface IEmployeeUpdate {
     readonly phone: string;    
     readonly is_admin: boolean;    
     readonly created_at: string;   
+    readonly defended: boolean;
 }
