@@ -67,8 +67,7 @@ export class RestaurantsService extends APIService {
                 return {statusCode: 400, error: "required field is empty"};
             }            
             
-            let x: Restaurant = this.restaurantRepository.create(dto);
-            x.created_at = new Date();
+            let x: Restaurant = this.restaurantRepository.create(dto);            
             await this.restaurantRepository.save(x);
             return {statusCode: 200};
         } catch (err) {

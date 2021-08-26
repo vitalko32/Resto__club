@@ -22,7 +22,7 @@ export class RestaurantRepository extends Repository<Restaurant> {
                 sortBy: this.allSortBy,
                 sortDir: this.allSortDir,                    
             };
-            this.dataService.langsAll(dto).subscribe(res => {
+            this.dataService.restaurantsAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.xlAll = res.data.length ? res.data.map(d => new Restaurant().build(d)) : [];                                    
                     resolve();

@@ -19,6 +19,7 @@ import { Mailtemplate } from "../model/orm/mailtemplate.model";
 import { Currency } from "../model/orm/currency.model";
 import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { Restaurant } from "../model/orm/restaurant.model";
+import { Employee } from "../model/orm/employee.model";
 
 @Injectable()
 export class DataService {
@@ -77,6 +78,14 @@ export class DataService {
     public currenciesCreate(x: Currency): Observable<IAnswer<void>> {return this.sendRequest("currencies/create", x, true);}
     public currenciesUpdate(x: Currency): Observable<IAnswer<void>> {return this.sendRequest("currencies/update", x, true);} 
     
+    public employeesAll(dto: IGetAll): Observable<IAnswer<Employee[]>> {return this.sendRequest(`employees/all`, dto, true);}    
+    public employeesChunk(dto: IGetChunk): Observable<IAnswer<Employee[]>> {return this.sendRequest("employees/chunk", dto, true);}
+    public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}
+    public employeesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`employees/delete/${id}`, null, true);}
+    public employeesDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("employees/delete-bulk", ids, true);}
+    public employeesCreate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/create", x, true);}
+    public employeesUpdate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/update", x, true);}     
+
     public employeeStatusesAll(dto: IGetAll): Observable<IAnswer<EmployeeStatus[]>> {return this.sendRequest(`employee-statuses/all`, dto, true);}    
     public employeeStatusesChunk(dto: IGetChunk): Observable<IAnswer<EmployeeStatus[]>> {return this.sendRequest("employee-statuses/chunk", dto, true);}
     public employeeStatusesOne(id: number): Observable<IAnswer<EmployeeStatus>> {return this.sendRequest(`employee-statuses/one/${id}`, null, true);}

@@ -12,6 +12,7 @@ import { MailtemplatesModule } from './views/mailtemplates/mailtemplates.module'
 import { CurrenciesModule } from './views/currencies/currencies.module';
 import { EmployeeStatusesModule } from './views/employee.statuses/employee.statuses.module';
 import { RestaurantsModule } from './views/restaurants/restaurants.module';
+import { EmployeesModule } from './views/employees/employees.module';
 
 const routes: Routes = [
 	{path: "", redirectTo: "/settings", pathMatch: "full"},
@@ -23,6 +24,7 @@ const routes: Routes = [
 	{path: "localization/wordbooks", loadChildren: () => WordbooksModule, canActivate: [AuthGuard]}, 				
 	{path: "localization/currencies", loadChildren: () => CurrenciesModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/restaurants", loadChildren: () => RestaurantsModule, canActivate: [AuthGuard]}, 				
+	{path: "restaurants/employees", loadChildren: () => EmployeesModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/employee-statuses", loadChildren: () => EmployeeStatusesModule, canActivate: [AuthGuard]}, 				
 	{path: "utils/mailtemplates", loadChildren: () => MailtemplatesModule, canActivate: [AuthGuard]}, 		
 	{path: "**", redirectTo: "/settings"},

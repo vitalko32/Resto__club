@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Currency } from "./currency.entity";
 
 @Entity({name: "vne_restaurants"})
@@ -14,7 +14,7 @@ export class Restaurant {
     name: string;
 
     @Index()
-    @Column({nullable: true, default: null})
+    @Column({nullable: false, unique: true})
     domain: string;
 
     @Column({nullable: true, default: null})
@@ -35,10 +35,11 @@ export class Restaurant {
     @Column({nullable: true, default: null, type: "text"})
     comment: string;
 
+    @Index()
     @Column({nullable: true, default: null, type: "timestamp"})
     active_until: Date;
 
-    @Column({nullable: true, default: null, type: "timestamp"})
+    @CreateDateColumn()
     created_at: Date;    
 
     // relations

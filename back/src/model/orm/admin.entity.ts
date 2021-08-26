@@ -13,6 +13,7 @@ export class Admin {
     @Column({nullable: true, default: null})
     name: string;
     
+    @Index()
     @Column({nullable: false, unique: true})
     email: string;
 

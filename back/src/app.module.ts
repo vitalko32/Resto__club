@@ -5,6 +5,7 @@ import { OwnerAPIModule } from './api.owner/owner.api.module';
 import { Admin } from './model/orm/admin.entity';
 import { Admingroup } from './model/orm/admingroup.entity';
 import { Currency } from './model/orm/currency.entity';
+import { Employee } from './model/orm/employee.entity';
 import { EmployeeStatus } from './model/orm/employee.status.entity';
 import { EmployeeStatusTranslation } from './model/orm/employee.status.translation.entity';
 import { Lang } from './model/orm/lang.entity';
@@ -38,8 +39,9 @@ import { Wordbook } from './model/orm/wordbook.entity';
 				MailtemplateTranslation,
 				Currency,
 				Restaurant,
+				Employee,
 				EmployeeStatus,
-				EmployeeStatusTranslation,
+				EmployeeStatusTranslation,				
 			],
 			synchronize: true,
 		}),

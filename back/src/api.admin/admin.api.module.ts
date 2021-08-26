@@ -11,6 +11,7 @@ import { MailtemplatesModule } from "./mailtemplates/mailtemplates.module";
 import { CurrenciesModule } from "./currencies/currencies.module";
 import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.module";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
+import { EmployeesModule } from "./employees/employees.module";
 
 @Module({
     imports: [        
@@ -23,8 +24,9 @@ import { RestaurantsModule } from "./restaurants/restaurants.module";
         WordbooksModule,        
         MailtemplatesModule,    
         CurrenciesModule,
-        EmployeeStatusesModule,
-        RestaurantsModule,
+        EmployeesModule,
+        EmployeeStatusesModule,        
+        RestaurantsModule,        
     ],
     providers: [],
 })

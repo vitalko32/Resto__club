@@ -14,6 +14,7 @@ import { Currency } from "src/model/orm/currency.entity";
 import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
 import { Restaurant } from "src/model/orm/restaurant.entity";
+import { Employee } from "src/model/orm/employee.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -27,6 +28,7 @@ import { Restaurant } from "src/model/orm/restaurant.entity";
 			Wordbook,			
 			Mailtemplate,			
 			Currency,	
+			Employee,
 			EmployeeStatus,
 			EmployeeStatusTranslation,
 			Restaurant,
