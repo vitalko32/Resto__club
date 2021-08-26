@@ -226,7 +226,8 @@ CREATE TABLE "default".vne_employees (
     name character varying,
     phone character varying,
     is_admin boolean DEFAULT false NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    defended boolean DEFAULT false NOT NULL
 );
 
 
@@ -712,10 +713,10 @@ COPY "default".vne_employee_statuses (id, color, pos) FROM stdin;
 -- Data for Name: vne_employees; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, password, name, phone, is_admin, created_at) FROM stdin;
-1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723
-2	2	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	f	2021-08-26 21:32:06.303446
-3	1	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342
+COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, password, name, phone, is_admin, created_at, defended) FROM stdin;
+2	2	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	f	2021-08-26 21:32:06.303446	f
+3	1	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342	f
+1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 \.
 
 
@@ -752,6 +753,18 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at) FROM stdin;
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727
+3	1	Тестовый 1	test1	\N	\N	\N	\N	\N	\N	2021-10-21 00:23:00	2021-08-27 00:23:50.454941
+4	1	Тестовый 2	test2	\N	\N	\N	\N	\N	\N	2021-11-26 00:24:00	2021-08-27 00:24:10.543446
+5	1	Тестовый 3	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564
+6	1	Тестовый 4	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572
+7	1	Тестовый 5	test5	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937
+8	1	Тестовый 6	test6	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101
+9	1	Тестовый 7	test7	\N	\N	\N	\N	\N	\N	2021-12-25 00:25:00	2021-08-27 00:25:34.269246
+10	1	Тестовый 8	test8	\N	\N	\N	\N	\N	\N	2021-12-18 00:25:00	2021-08-27 00:25:50.223075
+11	1	Тестовый 9	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306
+12	1	Тестовый 10	tets10	\N	\N	\N	\N	\N	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626
+13	1	Тестовый 11	test11	\N	\N	\N	\N	\N	\N	2022-01-20 01:53:00	2021-08-27 00:26:35.018103
+15	1	Тестовый 12	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543
 \.
 
 
@@ -960,7 +973,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 2, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 15, true);
 
 
 --
