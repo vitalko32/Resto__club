@@ -18,7 +18,7 @@ export class CurrencyRepository extends Repository<Currency> {
         super(dataService);
     } 
     
-    public loadFull(): Promise<void> {
+    public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {            
             const dto: IGetAll = {
                 sortBy: this.allSortBy,

@@ -2,9 +2,9 @@
 
 .generic-form {
     max-width: 400px; margin-left: auto; margin-right: auto; 
-    &.bottombordered {border-bottom: 1px white solid; margin-bottom: 30px;}    
-    &.padded {padding: 30px 0;}
-    .margined {margin-bottom: 15px;}
+    &.bottombordered {border-bottom: 1px white solid; margin-bottom: 30px; padding-bottom: 30px;}        
+    &.toppadded {padding-top: 30px;}
+    .margined {margin-bottom: 15px;}    
     .gf-inputwrap {
         input {
             @media (min-width:0) {height: 45px;}
@@ -25,6 +25,10 @@
         }
     }
     .gf-error {text-align: center; padding: 5px 0; font-size: 12px; color: var(--color-red);}
+    .gf-logo {
+        text-align: center;
+        img {max-height: 100px; width: auto;}
+    }
 }
 
 .socauth-form {

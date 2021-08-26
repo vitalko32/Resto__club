@@ -12,3 +12,18 @@
 	&.prolong {font-family: "fa-regular"; span::before {content: "\f873";}}
 	&.history {font-family: "fa-solid"; span::before {content: "\f1da";}}
 }
+.create-btn {
+	display: flex; align-items: center;
+	.cb-btn {
+		@media (min-width: 0) {width:40px; height: 40px;}
+		@media (min-width: 1000px) {width: 60px; height: 60px;}
+		display: block; border-radius: 30px; background-color: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; position: relative;
+		&::after {display: block; content:""; position: absolute; left: 50%; top:50%; transform: translate(-50%, -50%); width:2px; height: 50%; background-color: var(--color-txt); border-radius: 1px;}
+		&::before {display: block; content:""; position: absolute; left: 50%; top:50%; transform: translate(-50%, -50%); width:50%; height: 2px; background-color: var(--color-txt); border-radius: 1px;}
+	}
+	.cb-title {
+		@media (min-width: 0) {display: none;}
+		@media (min-width: 1000px) {display: block;}
+		white-space: nowrap; font-weight: bold; margin-left: 10px;
+	}
+}

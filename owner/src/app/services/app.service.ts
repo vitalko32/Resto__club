@@ -6,7 +6,8 @@ import { Lang } from "../model/orm/lang.model";
 @Injectable()
 export class AppService {
     public url: string[] = [];
-    public currentLang: BehaviorSubject<Lang> = new BehaviorSubject(null);    
+    public currentLang: BehaviorSubject<Lang> = new BehaviorSubject(null);  
+    public title: string = "";
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";
@@ -54,6 +55,7 @@ export class AppService {
     }
 
     public setTitle (title: string) {
+        this.title = title;
         this.titleService.setTitle(this.decodeHTMLEntities(title));
     }    
 

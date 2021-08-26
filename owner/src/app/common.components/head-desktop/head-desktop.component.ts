@@ -10,12 +10,9 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "head-desktop.component.html",
     styleUrls: ["head-desktop.component.scss"],
 })
-export class HeadDesktopComponent {
-    @Input() showCreateRestaurantBtn: boolean = false;
-    @Input() showLogoutBtn: boolean = false;
-    @Input() showLogo: boolean = false;
-    @Input() showTitle: boolean = false;
-    @Input() title: string = "";
+export class HeadDesktopComponent {    
+    @Input() showLogoutBtn: boolean = false;    
+    @Input() showTitle: boolean = false;    
     @Input() showHomeBtn: boolean = false;
     public langPanelActive: boolean = false;
     public langPanelTimer: number = null;
@@ -29,6 +26,7 @@ export class HeadDesktopComponent {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get langs(): Lang[] {return this.langRepository.xl;}
+    get title(): string {return this.appService.title;}
 
     public activateLangPanel(): void {
         this.langPanelActive = true;

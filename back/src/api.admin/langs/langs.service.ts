@@ -14,15 +14,19 @@ import { WordTranslation } from "src/model/orm/word.translation.entity";
 import { Sortdir } from "src/model/sortdir.type";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
 import { MailtemplateTranslation } from "src/model/orm/mailtemplate.translation.entity";
+import { EmployeeStatus } from "src/model/orm/employee.status.entity";
+import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
 
 @Injectable()
 export class LangsService extends APIService {
     constructor (
         @InjectRepository(Lang) private langRepository: Repository<Lang>,
         @InjectRepository(Word) private wordRepository: Repository<Word>,
-        @InjectRepository(WordTranslation) private wordtranslationRepository: Repository<WordTranslation>,
+        @InjectRepository(WordTranslation) private wordTranslationRepository: Repository<WordTranslation>,
         @InjectRepository(Mailtemplate) private mailtemplateRepository: Repository<Mailtemplate>,
-        @InjectRepository(MailtemplateTranslation) private mailtemplatetranslationRepository: Repository<MailtemplateTranslation>,                
+        @InjectRepository(MailtemplateTranslation) private mailtemplateTranslationRepository: Repository<MailtemplateTranslation>,                
+        @InjectRepository(EmployeeStatus) private employeeStatusRepository: Repository<EmployeeStatus>,
+        @InjectRepository(EmployeeStatusTranslation) private employeeStatusTranslationRepository: Repository<EmployeeStatusTranslation>,                
     ) {
         super();
     } 
@@ -137,12 +141,17 @@ export class LangsService extends APIService {
     private async rebuildMultilangEntities(lang_id: number): Promise<void> {
         let wl: Word[] = await this.wordRepository.find();
         let wtl: WordTranslation[] = [];
-        wl.forEach(w => wtl.push(this.wordtranslationRepository.create({word_id: w.id, lang_id})));        
-        await this.wordtranslationRepository.save(wtl);
+        wl.forEach(w => wtl.push(this.wordTranslationRepository.create({word_id: w.id, lang_id})));        
+        await this.wordTranslationRepository.save(wtl);
 
         let mtl: Mailtemplate[] = await this.mailtemplateRepository.find();
         let mttl: MailtemplateTranslation[] = [];
-        mtl.forEach(mt => mttl.push(this.mailtemplatetranslationRepository.create({mailtemplate_id: mt.id, lang_id})));
-        await this.mailtemplatetranslationRepository.save(mttl);         
+        mtl.forEach(mt => mttl.push(this.mailtemplateTranslationRepository.create({mailtemplate_id: mt.id, lang_id})));
+        await this.mailtemplateTranslationRepository.save(mttl);  
+        
+        let esl: EmployeeStatus[] = await this.employeeStatusRepository.find();
+        let estl: EmployeeStatusTranslation[] = [];
+        esl.forEach(es => estl.push(this.employeeStatusTranslationRepository.create({employee_status_id: es.id, lang_id})));        
+        await this.employeeStatusTranslationRepository.save(estl);
     }    
 }

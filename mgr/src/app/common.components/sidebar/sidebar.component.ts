@@ -21,7 +21,7 @@ export class SidebarComponent implements AfterViewInit {
 	public password: string = "";
 	public errorEmail: boolean = false;
 	public errorPassword: boolean = false;	
-	public subActive: boolean[] = [false, false];
+	public subActive: boolean[] = [false, false, false];
 
 	constructor(
 		private authService: AuthService,
@@ -48,7 +48,8 @@ export class SidebarComponent implements AfterViewInit {
 
 	private buildSub(): void {
 		this.subActive[0] = this.appService.currentUrl.parts[0] === "localization";							
-		this.subActive[1] = this.appService.currentUrl.parts[0] === "utils";					
+		this.subActive[1] = this.appService.currentUrl.parts[0] === "restaurants";					
+		this.subActive[2] = this.appService.currentUrl.parts[0] === "utils";					
 	}
 
 	public close(): void {

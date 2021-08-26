@@ -9,6 +9,8 @@ import { LangsModule } from "./langs/langs.module";
 import { WordbooksModule } from "./wordbooks/wordbooks.module";
 import { MailtemplatesModule } from "./mailtemplates/mailtemplates.module";
 import { CurrenciesModule } from "./currencies/currencies.module";
+import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.module";
+import { RestaurantsModule } from "./restaurants/restaurants.module";
 
 @Module({
     imports: [        
@@ -21,6 +23,8 @@ import { CurrenciesModule } from "./currencies/currencies.module";
         WordbooksModule,        
         MailtemplatesModule,    
         CurrenciesModule,
+        EmployeeStatusesModule,
+        RestaurantsModule,
     ],
     providers: [],
 })

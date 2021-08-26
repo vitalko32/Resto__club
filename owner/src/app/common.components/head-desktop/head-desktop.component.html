@@ -1,14 +1,11 @@
 <div class="head-desktop">
-    <div class="hd-left">
-        <a class="big-btn" *ngIf="showCreateRestaurantBtn">{{words['owner-restaurants']['create'][currentLang.slug]}}</a>
-    </div>
+    <div class="hd-left"><!-- пока не используется --></div>
     <div class="hd-right">
         <div class="flex">
             <a *ngIf="showLogoutBtn" class="small-btn rightmargined" routerLink="/auth/logout">{{words['owner-common']['logout'][currentLang.slug]}}</a>
             <a *ngIf="showHomeBtn" class="small-btn rightmargined" routerLink="/">{{words['owner-common']['home'][currentLang.slug]}}</a>
             <div class="hd-langs">
-                <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>
-                <div class="hdl-title">{{currentLang.shorttitle}}</div>
+                <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
                 <div class="hdl-panel" [class.active]="langPanelActive">
                     <ul>
                         <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
@@ -16,7 +13,6 @@
                 </div>
             </div>                    
         </div>
-    </div>
-    <div class="hd-logo" *ngIf="showLogo"><img src="/assets/images/logo.svg"></div>
+    </div>    
     <div class="hd-title" *ngIf="showTitle">{{title}}</div>
 </div>

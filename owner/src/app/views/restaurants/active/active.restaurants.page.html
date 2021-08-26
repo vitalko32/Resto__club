@@ -1,5 +1,9 @@
-<head-desktop [showCreateRestaurantBtn]="true" [showLogoutBtn]="true"></head-desktop>
-<head-mobile [title]="words['owner-restaurants']['head-active'][currentLang.slug]" [showMenuBtn]="true"></head-mobile>
+<div class="dash">
+    <div class="create-btn">
+        <a class="cb-btn"></a>
+        <div class="cb-title">{{words['owner-restaurants']['create'][currentLang.slug]}}</div>
+    </div>    
+</div>
 <div class="data">
     <!-- desktop -->
     <div class="datalist-desktop">

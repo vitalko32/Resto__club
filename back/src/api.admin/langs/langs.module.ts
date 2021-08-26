@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { EmployeeStatus } from "src/model/orm/employee.status.entity";
+import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
 
 import { Lang } from "src/model/orm/lang.entity";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
@@ -19,6 +21,8 @@ import { LangsService } from "./langs.service";
             WordTranslation,
             Mailtemplate, 
             MailtemplateTranslation,
+            EmployeeStatus,
+            EmployeeStatusTranslation,
         ]),
         JwtModule.register(jwtConstants),
     ],    

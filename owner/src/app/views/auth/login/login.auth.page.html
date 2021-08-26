@@ -1,7 +1,5 @@
-<head-desktop [showLogo]="true"></head-desktop>
-<head-mobile [title]="words['owner-login']['head'][currentLang.slug]"></head-mobile>
-
-<form class="generic-form bottombordered padded" (submit)="login();">
+<form class="generic-form bottombordered" (submit)="login();">
+    <div class="gf-logo margined"><img src="/assets/images/logo.svg"></div>
     <div class="gf-param margined">
         <div class="gf-inputwrap"><input type="email" name="email" [(ngModel)]="email" [placeholder]="words['owner-login']['email'][currentLang.slug]"></div>
     </div>
