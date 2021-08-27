@@ -33,7 +33,7 @@
         }
     }
     .datalist-overlay {
-        position: absolute; left: 0; top: 0; z-index: 2; background-color: rgba(255,255,255,0.5); width:0; height: 100%; opacity: 0; will-change: opacity, width; transition: width 0s linear 0.3s, opacity 0.3s ease 0s;
+        position: absolute; left: 0; top: 0; z-index: 2; background-color: rgba(255,255,255,0.5); width:0; height: 100%; opacity: 0; will-change: opacity, width; transition: width 0s linear 0.3s, opacity 0.3s ease 0s; border-radius: 45px;
         &.active {width: 100%; opacity: 1; transition: width 0s linear 0s, opacity 0.3s ease 0s;}
     }
 }

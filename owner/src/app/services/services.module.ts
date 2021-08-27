@@ -6,8 +6,11 @@ import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ErrorService } from './error.service';
 import { GoogleService } from './google.service';
+import { CurrencyRepository } from './repositories/currency.repository';
 import { LangRepository } from './repositories/lang.repository';
 import { RestaurantActiveRepository } from './repositories/restaurant.active.repository';
+import { RestaurantInactiveRepository } from './repositories/restaurant.inactive.repository';
+import { RestaurantRepository } from './repositories/restaurant.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
 
@@ -24,8 +27,11 @@ import { WordRepository } from './repositories/word.repository';
         AuthGuard,
         LangRepository,
         WordRepository,
-        SettingRepository,       
+        SettingRepository,  
+        RestaurantRepository,     
         RestaurantActiveRepository,
+        RestaurantInactiveRepository,
+        CurrencyRepository,
     ],
 })
 export class ServicesModule {}

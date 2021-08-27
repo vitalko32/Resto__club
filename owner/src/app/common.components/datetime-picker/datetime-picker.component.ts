@@ -40,7 +40,7 @@ export class DatetimePickerComponent implements OnInit {
             let time: string = this.withTime ? ` ${this.twoDigits(this.value.getHours())}:${this.twoDigits(this.value.getMinutes())}` : "";
             return `${this.twoDigits(this.value.getDate())}.${this.twoDigits(this.value.getMonth()+1)}.${this.value.getFullYear()}${time}`;
         } else {
-            return this.words['common']['nodate'][this.currentLang.slug];
+            return this.words['common']['no-date'][this.currentLang.slug];
         }
     }
 

@@ -1,0 +1,60 @@
+<form class="generic-form toppadded" (submit)="onSave();">    
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['name'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="name" [(ngModel)]="x.name" [class.error]="errorName"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['domain'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="domain" [disabled]="mode !== 'create'" [(ngModel)]="x.domain" [class.error]="errorDomain || errorDomainDuplication"></div>
+        <div class="gf-error" *ngIf="errorDomainDuplication">{{words['owner-restaurants']['error-domain-duplication'][currentLang.slug]}}</div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['ownername'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="ownername" [(ngModel)]="x.ownername"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['phone'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="phone" [(ngModel)]="x.phone"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['address'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="address" [(ngModel)]="x.address"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['inn'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="inn" [(ngModel)]="x.inn"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['ogrn'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><input type="text" name="ogrn" [(ngModel)]="x.ogrn"></div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['currency'][currentLang.slug]}}</div>
+        <div class="gf-selectwrap">
+            <select [(ngModel)]="x.currency_id" name="currency">
+                <option *ngFor="let c of cl" [ngValue]="c.id">{{c.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['comment'][currentLang.slug]}}</div>
+        <div class="gf-inputwrap"><textarea name="comment" [(ngModel)]="x.comment"></textarea></div>
+    </div>    
+    
+    <ng-container *ngIf="mode === 'create'">
+        <div class="gf-divider"></div>
+        <div class="gf-param margined">
+            <div class="gf-title">{{words['owner-restaurants']['admin-email'][currentLang.slug]}}</div>
+            <div class="gf-inputwrap"><input type="email" name="adminemail" [(ngModel)]="x.employees[0].email" [class.error]="errorEmail || errorEmailDuplication"></div>
+            <div class="gf-error" *ngIf="errorEmailDuplication">{{words['owner-restaurants']['error-email-duplication'][currentLang.slug]}}</div>
+        </div>
+        <div class="gf-param margined">
+            <div class="gf-title">{{words['owner-restaurants']['admin-password'][currentLang.slug]}}</div>
+            <div class="gf-inputwrap"><input type="password" name="adminpassword" [(ngModel)]="x.employees[0].password" [class.error]="errorPassword"></div>
+        </div>
+    </ng-container>
+        
+    <div class="gf-btnwrap">
+        <button type="submit" class="fixedwidth" [disabled]="loading">{{words['common']['save'][currentLang.slug]}}</button>        
+    </div>
+</form>

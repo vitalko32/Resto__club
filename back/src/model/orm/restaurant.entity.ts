@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Currency } from "./currency.entity";
+import { Employee } from "./employee.entity";
 
 @Entity({name: "vne_restaurants"})
 export class Restaurant {
@@ -46,4 +47,7 @@ export class Restaurant {
     @ManyToOne(type => Currency, {onDelete: "SET NULL", onUpdate: "CASCADE"})
     @JoinColumn({name: "currency_id"})
     currency: Currency;
+
+    @OneToMany(type => Employee, employee => employee.restaurant, {cascade: true})
+    employees: Employee[];
 }

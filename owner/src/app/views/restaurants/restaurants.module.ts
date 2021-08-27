@@ -3,12 +3,15 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { ActiveRestaurantsPage } from "./active/active.restaurants.page";
-import { InactiveRestaurantsPage } from "./inactive/inactive.restaurants.page";
+import { RestaurantComponent } from "./components/restaurant/restaurant.component";
+import { ActiveRestaurantsPage } from "./pages/active/active.restaurants.page";
+import { CreateRestaurantsPage } from "./pages/create/create.restaurants.page";
+import { InactiveRestaurantsPage } from "./pages/inactive/inactive.restaurants.page";
 
 let routes = RouterModule.forChild ([            
 	{path: "active", component: ActiveRestaurantsPage, pathMatch: "full"},
 	{path: "inactive", component: InactiveRestaurantsPage, pathMatch: "full"},
+	{path: "create", component: CreateRestaurantsPage, pathMatch: "full"},
 	{path: "**", redirectTo: "/restaurants/active"},
 ]);
 
@@ -21,9 +24,11 @@ let routes = RouterModule.forChild ([
         routes,
 		CCModule,
 	],
-	declarations: [
+	declarations: [		
 		ActiveRestaurantsPage,
 		InactiveRestaurantsPage,
+		CreateRestaurantsPage,
+		RestaurantComponent,
 	],    		    
 })
 export class RestaurantsModule {}

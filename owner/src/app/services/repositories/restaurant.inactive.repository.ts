@@ -3,10 +3,10 @@ import { DataService } from '../data.service';
 import { RestaurantRepository } from './restaurant.repository';
 
 @Injectable()
-export class RestaurantActiveRepository extends RestaurantRepository {    
+export class RestaurantInactiveRepository extends RestaurantRepository {    
     constructor(protected dateService: DataService) {
         super(dateService);
-        this.filterActive = true;
+        this.filterActive = false;
         this.filterActiveUntil = null;
         this.filterName = "";
     }    

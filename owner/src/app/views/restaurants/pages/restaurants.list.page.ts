@@ -1,25 +1,22 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Restaurant } from "src/app/model/orm/restaurant.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
-import { RestaurantActiveRepository } from "src/app/services/repositories/restaurant.active.repository";
+import { RestaurantRepository } from "src/app/services/repositories/restaurant.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
-@Component({
-    selector: "active-restaurants-page",
-    templateUrl: "active.restaurants.page.html",   
-    styleUrls: ["../../../common.styles/data.scss"],
-})
-export class ActiveRestaurantsPage implements OnInit, OnDestroy {
+@Injectable()
+export abstract class RestaurantsListPage implements OnInit, OnDestroy {
+    public type: string = "";
     public langSubscription: Subscription = null;    
     public rlLoading: boolean = false;
 
     constructor(
-        private appService: AppService,
-        private wordRepository: WordRepository,
-        private restaurantRepository: RestaurantActiveRepository,
+        protected appService: AppService,
+        protected wordRepository: WordRepository,
+        protected restaurantRepository: RestaurantRepository,
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
@@ -44,8 +41,8 @@ export class ActiveRestaurantsPage implements OnInit, OnDestroy {
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["owner-restaurants"]["title-active"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"]["title-active"][lang.slug]));
+        this.appService.setTitle(this.words["owner-restaurants"][`title-${this.type}`][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-${this.type}`][lang.slug]));
     }       
     
     public async initRestaurants(): Promise<void> {		                

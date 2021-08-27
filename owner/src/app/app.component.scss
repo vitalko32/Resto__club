@@ -40,7 +40,9 @@ html {
 		.flex {display: flex;}		
 		.align-left {text-align: left;}
 		.align-center {text-align: center;}
-		.nowrap {white-space: nowrap;}		
+		.nowrap {white-space: nowrap;}
+		.red {color: var(--color-red);}
+		.grey {color: $color-grey;}
 		input, select, textarea {
 			@media (min-width:0) {font-size: 16px;}
 			@media (min-width:1000px) {font-size: 14px;}	
@@ -78,10 +80,7 @@ html {
 						}
 					}					
 				}
-			}
-
-			// misc
-			.red {color: var(--color-red);}
+			}			
 		}
 	}
 }

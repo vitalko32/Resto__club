@@ -757,7 +757,6 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 5	1	Тестовый 3	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564
 6	1	Тестовый 4	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572
 7	1	Тестовый 5	test5	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937
-8	1	Тестовый 6	test6	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101
 9	1	Тестовый 7	test7	\N	\N	\N	\N	\N	\N	2021-12-25 00:25:00	2021-08-27 00:25:34.269246
 10	1	Тестовый 8	test8	\N	\N	\N	\N	\N	\N	2021-12-18 00:25:00	2021-08-27 00:25:50.223075
 11	1	Тестовый 9	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306
@@ -765,6 +764,7 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 13	1	Тестовый 11	test11	\N	\N	\N	\N	\N	\N	2022-01-20 01:53:00	2021-08-27 00:26:35.018103
 4	1	Тестовый 2	test2	\N	\N	\N	\N	\N	\N	2021-12-17 00:24:00	2021-08-27 00:24:10.543446
 15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543
+8	1	Тестовый 6	test6	\N	\N	\N	\N	\N	\N	2021-08-26 17:55:00	2021-08-27 00:25:12.606101
 \.
 
 
@@ -844,8 +844,9 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 76	37	2	Your login
 77	38	1	Пароли не совпадают
 78	38	2	Passwords don't match
-37	18	1	Подписка до
-38	18	2	Subscription until
+164	65	1	Закончилась
+168	67	1	Не задано
+169	67	2	Not set
 112	39	1	Фильтр
 113	39	2	Filter
 132	49	1	Пн
@@ -880,6 +881,37 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 161	63	2	loading...
 162	64	1	Главная
 163	64	2	Home
+37	18	1	Подписка
+38	18	2	Subscription
+165	65	2	Expired
+166	66	1	дн. назад
+167	66	2	days ago
+170	68	1	Регистрация ресторана
+171	68	2	Restaurant registration
+172	69	1	Домен
+173	69	2	Domain
+174	70	1	ФИО
+175	70	2	Contact person name
+176	71	1	Телефон
+177	71	2	Phone
+178	72	1	Адрес
+179	72	2	Address
+180	73	1	ИНН
+181	73	2	ITN/TIN
+182	74	1	ОГРН
+183	74	2	PSRN
+184	75	1	Валюта
+185	75	2	Currency
+186	76	1	Комментарий
+187	76	2	Comment
+188	77	1	E-mail администратора
+189	77	2	Administrator e-mail
+190	78	1	Пароль администратора
+191	78	2	Administrator password
+192	79	1	Домен занят
+193	79	2	Domain is already in use
+194	80	1	E-mail занят
+195	80	2	E-mail is already in use
 \.
 
 
@@ -892,7 +924,7 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 2	owner-common	2
 1	owner-restaurants	3
 3	owner-login	2
-4	owner-password	3
+4	owner-password	4
 \.
 
 
@@ -941,7 +973,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 54	5	6	sa	\N
 55	5	7	su	\N
 56	5	100	apply	\N
-57	5	101	nodate	\N
 58	5	200	error	\N
 59	5	201	error-401	\N
 60	5	102	page	\N
@@ -949,6 +980,23 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 62	5	104	save	\N
 63	5	105	loading	\N
 64	5	106	home	\N
+65	1	108	expired	\N
+66	1	109	days-ago	\N
+57	5	101	no-date	\N
+67	5	107	not-set	\N
+68	1	3	title-create	\N
+69	1	203	domain	\N
+70	1	204	ownername	\N
+71	1	205	phone	\N
+72	1	206	address	\N
+73	1	207	inn	\N
+74	1	208	ogrn	\N
+75	1	209	currency	\N
+76	1	210	comment	\N
+77	1	211	admin-email	\N
+78	1	212	admin-password	\N
+79	1	110	error-domain-duplication	\N
+80	1	111	error-email-duplication	\N
 \.
 
 
@@ -1033,7 +1081,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 163, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 195, true);
 
 
 --
@@ -1047,7 +1095,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 5, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 64, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 80, true);
 
 
 --
