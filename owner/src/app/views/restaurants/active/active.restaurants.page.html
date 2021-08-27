@@ -10,9 +10,15 @@
         <div class="datalist-overlay" [class.active]="rlLoading"></div>
         <table>
             <tr>
+                <td></td>
+                <td><search-input [(value)]="rlFilterName" cssClass="inline-block" (apply)="initRestaurants();"></search-input></td>
+                <td><datetime-picker [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker></td>
+                <td></td>
+            </tr>
+            <tr>
                 <th class="align-left">{{words['owner-restaurants']['created-at'][currentLang.slug]}}</th>
                 <th class="align-left">{{words['owner-restaurants']['name'][currentLang.slug]}}</th>
-                <th class="align-left">{{words['owner-restaurants']['subscription'][currentLang.slug]}}</th>                        
+                <th class="align-left">{{words['owner-restaurants']['active-until'][currentLang.slug]}}</th>                        
                 <th class="align-center">{{words['owner-restaurants']['actions'][currentLang.slug]}}</th>
             </tr>                                    
             <tr *ngFor="let r of rl">
@@ -20,7 +26,7 @@
                 <td [innerHTML]="r.name"></td>
                 <td>
                     <div><strong class="nowrap">{{r.formattedActiveUntil}}</strong></div>
-                    <div>27 {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
+                    <div [class.red]="r.daysLeft <= 3">{{r.daysLeft}} {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
                 </td>
                 <td class="align-center nowrap">
                     <a class="action-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
@@ -34,6 +40,17 @@
     <!-- mobile -->
     <div class="datalist-mobile">
         <div class="datalist-overlay" [class.active]="rlLoading"></div>
+        <div class="dlm-filter">            
+            <div class="dlmf-head">{{words['owner-restaurants']['filter'][currentLang.slug]}}</div>
+            <div class="dlmf-param">
+                <div class="dlmf-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
+                <div class="dlmf-inputwrap"><search-input [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></search-input></div>
+            </div>
+            <div class="dlmf-param">
+                <div class="dlmf-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
+                <div class="dlmf-inputwrap"><datetime-picker [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker></div>
+            </div>            
+        </div>
         <div class="dlm-item" *ngFor="let r of rl">            
             <div class="dlmi-param">
                 <div class="dlmi-title">{{words['owner-restaurants']['created-at'][currentLang.slug]}}:</div>
@@ -44,10 +61,10 @@
                 <div class="dlmi-value" [innerHTML]="r.name"></div>
             </div>
             <div class="dlmi-param">
-                <div class="dlmi-title">{{words['owner-restaurants']['subscription'][currentLang.slug]}}:</div>
+                <div class="dlmi-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
                 <div class="dlmi-value">
                     <div><strong class="nowrap">{{r.formattedActiveUntil}}</strong></div>
-                    <div>27 {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
+                    <div [class.red]="r.daysLeft <= 3">{{r.daysLeft}} {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
                 </div>
             </div>
             <div class="dlmi-actions">
@@ -58,6 +75,6 @@
             </div>            
         </div>               
     </div>
-    <pagination [allLength]="rlAllLength" [length]="rlLength" [current]="rlCurrentPart" (currentChanged)="rlCurrentPart = $event; loadRestaurants();"></pagination>
+    <pagination [allLength]="rlAllLength" [length]="rlLength" [current]="rlCurrentPart" (currentChanged)="rlCurrentPart = $event; initRestaurants();"></pagination>
 </div>        
     

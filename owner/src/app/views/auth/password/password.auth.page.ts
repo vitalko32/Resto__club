@@ -58,7 +58,7 @@ export class PasswordAuthPage {
                 if (statusCode === 200) {
                     this.router.navigateByUrl("/");
                 } else {
-                    this.appService.showError(this.words['owner-common']['error'][this.currentLang.slug]);
+                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
                 }
             }
         } catch (err) {

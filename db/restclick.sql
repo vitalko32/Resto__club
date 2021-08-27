@@ -754,7 +754,6 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727
 3	1	Тестовый 1	test1	\N	\N	\N	\N	\N	\N	2021-10-21 00:23:00	2021-08-27 00:23:50.454941
-4	1	Тестовый 2	test2	\N	\N	\N	\N	\N	\N	2021-11-26 00:24:00	2021-08-27 00:24:10.543446
 5	1	Тестовый 3	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564
 6	1	Тестовый 4	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572
 7	1	Тестовый 5	test5	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937
@@ -764,7 +763,8 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 11	1	Тестовый 9	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306
 12	1	Тестовый 10	tets10	\N	\N	\N	\N	\N	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626
 13	1	Тестовый 11	test11	\N	\N	\N	\N	\N	\N	2022-01-20 01:53:00	2021-08-27 00:26:35.018103
-15	1	Тестовый 12	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543
+4	1	Тестовый 2	test2	\N	\N	\N	\N	\N	\N	2021-12-17 00:24:00	2021-08-27 00:24:10.543446
+15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543
 \.
 
 
@@ -812,8 +812,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 32	15	2	Actions
 35	17	1	Название
 36	17	2	Name
-37	18	1	Подписка
-38	18	2	Subscription
 39	19	1	дн. осталось
 40	19	2	days left
 33	16	1	Дата создания
@@ -824,10 +822,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 48	23	2	Password
 49	24	1	Войти
 50	24	2	Sign in
-51	25	1	Произошла ошибка. Попробуйте позднее.
-52	25	2	An error has occurred. Please try again later.
-55	27	1	Доступ запрещен
-56	27	2	Access denied
 59	29	1	Смена пароля
 60	29	2	Change password
 61	30	1	Сохранить
@@ -850,6 +844,42 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 76	37	2	Your login
 77	38	1	Пароли не совпадают
 78	38	2	Passwords don't match
+37	18	1	Подписка до
+38	18	2	Subscription until
+112	39	1	Фильтр
+113	39	2	Filter
+132	49	1	Пн
+133	49	2	Mo
+134	50	1	Вт
+135	50	2	Tu
+136	51	1	Ср
+137	51	2	We
+138	52	1	Чт
+139	52	2	Th
+140	53	1	Пт
+141	53	2	Fr
+142	54	1	Сб
+143	54	2	Sa
+144	55	1	Вс
+145	55	2	Su
+146	56	1	Применить
+147	56	2	Apply
+148	57	1	дата не задана
+149	57	2	date is not set
+150	58	1	Произошла ошибка. Попробуйте позднее.
+151	58	2	An error has occurred. Please try again later.
+152	59	1	Доступ запрещен
+153	59	2	Access denied
+154	60	1	Страница
+155	60	2	Page
+156	61	1	Выход
+157	61	2	Sign out
+158	62	1	Сохранить
+159	62	2	Save
+160	63	1	загрузка...
+161	63	2	loading...
+162	64	1	Главная
+163	64	2	Home
 \.
 
 
@@ -858,10 +888,11 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 --
 
 COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
-1	owner-restaurants	2
-2	owner-common	1
-3	owner-login	3
-4	owner-password	4
+5	common	1
+2	owner-common	2
+1	owner-restaurants	3
+3	owner-login	2
+4	owner-password	3
 \.
 
 
@@ -883,11 +914,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 15	1	105	actions	\N
 16	1	200	created-at	\N
 17	1	201	name	\N
-18	1	202	subscription	\N
 19	1	106	days-left	\N
 20	3	1	title	\N
-27	2	201	error-401	\N
-25	2	200	error	\N
 30	2	102	save	\N
 31	2	103	loading	\N
 34	2	104	home	\N
@@ -903,6 +931,24 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 36	4	3	password2	\N
 37	4	4	login	\N
 38	4	5	error-mismatch	\N
+18	1	202	active-until	\N
+39	1	107	filter	\N
+49	5	1	mo	\N
+50	5	2	tu	\N
+51	5	3	we	\N
+52	5	4	th	\N
+53	5	5	fr	\N
+54	5	6	sa	\N
+55	5	7	su	\N
+56	5	100	apply	\N
+57	5	101	nodate	\N
+58	5	200	error	\N
+59	5	201	error-401	\N
+60	5	102	page	\N
+61	5	103	logout	\N
+62	5	104	save	\N
+63	5	105	loading	\N
+64	5	106	home	\N
 \.
 
 
@@ -987,21 +1033,21 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 111, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 163, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 4, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 5, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 38, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 64, true);
 
 
 --

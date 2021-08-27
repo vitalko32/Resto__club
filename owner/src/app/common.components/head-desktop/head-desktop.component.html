@@ -2,8 +2,8 @@
     <div class="hd-left"><!-- пока не используется --></div>
     <div class="hd-right">
         <div class="flex">
-            <a *ngIf="showLogoutBtn" class="small-btn rightmargined" routerLink="/auth/logout">{{words['owner-common']['logout'][currentLang.slug]}}</a>
-            <a *ngIf="showHomeBtn" class="small-btn rightmargined" routerLink="/">{{words['owner-common']['home'][currentLang.slug]}}</a>
+            <a *ngIf="showLogoutBtn" class="small-btn rightmargined" routerLink="/auth/logout">{{words['common']['logout'][currentLang.slug]}}</a>
+            <a *ngIf="showHomeBtn" class="small-btn rightmargined" routerLink="/">{{words['common']['home'][currentLang.slug]}}</a>
             <div class="hd-langs">
                 <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
                 <div class="hdl-panel" [class.active]="langPanelActive">

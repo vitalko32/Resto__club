@@ -19,12 +19,21 @@ export class RestaurantsService extends APIService {
             let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
             let from: number = dto.from;
             let q: number = dto.q;
-            let filter: string = "";
+            let filter: string = "TRUE";
 
             if (dto.filter.active !== undefined) {
                 let now = this.mysqlDateTime(new Date());
-                filter += dto.filter.active ? `restaurants.active_until >= '${now}'` : `restaurants.active_until < '${now}' OR restaurants.active_until IS NULL`;                
-            }            
+                filter += dto.filter.active ? ` AND restaurants.active_until >= '${now}'` : ` AND (restaurants.active_until < '${now}' OR restaurants.active_until IS NULL)`;                
+            }     
+            
+            if (dto.filter.name) {
+                filter += ` AND LOWER(restaurants.name) LIKE LOWER('%${dto.filter.name}%')`;
+            }
+
+            if (dto.filter.active_until) {
+                let date: string = this.mysqlDate(new Date(dto.filter.active_until));
+                filter += ` AND active_until BETWEEN '${date}' AND '${date} 23:59:59'`;
+            }
             
             let query = this.restaurantRepository.createQueryBuilder("restaurants").where(filter);
             let data: Restaurant[] = await query.orderBy({[`restaurants.${sortBy}`]: sortDir}).take(q).skip(from).getMany();

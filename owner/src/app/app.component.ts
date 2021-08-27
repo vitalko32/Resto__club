@@ -36,10 +36,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.initLangs();
 		this.initWords();
 		this.initSettings();
-		this.initURLRoutine();		
+		this.initURLRoutine();				
 	}
 
-	public ngAfterViewInit(): void {		
+	public ngAfterViewInit(): void {
+		this.initTheme();		
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationEnd))
 			.subscribe(event => window.scrollY ? setTimeout(() => {window.scrollTo(0, 0);}, 1) : null);
@@ -78,4 +79,9 @@ export class AppComponent implements OnInit, AfterViewInit {
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => this.appService.url = event.urlAfterRedirects.split("/"));
     }
+
+	private async initTheme(): Promise<void> {
+		await this.appService.pause(1);
+		document.documentElement.classList.add("modern");
+	}
 }

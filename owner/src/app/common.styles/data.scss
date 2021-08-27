@@ -2,17 +2,17 @@
     .datalist-desktop {
         @media (min-width:0) {display: none;}
         @media (min-width:1000px) {display: block;}
-        border-radius: 45px; background-color: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; overflow: auto; margin-bottom: 30px; position: relative;
+        border-radius: 45px; background-color: var(--color-bg-datalist); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px;  margin-bottom: 30px; position: relative; 
         table {
             width: 100%; 
             th {padding: 10px 5px;}
             td {padding: 10px 5px;}            
-        }
+        }        
     }
     .datalist-mobile {
         @media (min-width:0) {display: block;}
         @media (min-width:1000px) {display: none;}
-        border-radius: 15px; background-color: var(--color-bg-datalist); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px; overflow: auto; margin-bottom: 30px; position: relative;
+        border-radius: 15px; background-color: var(--color-bg-datalist); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px;  margin-bottom: 30px; position: relative;
         .dlm-item {
             background-color: var(--color-bg); border-radius: 5px; padding: 10px; margin-bottom: 5px;
             &:last-child {margin-bottom: 0;}            
@@ -21,6 +21,15 @@
                 .dlmi-title {font-size: 10px;}
             }   
             .dlmi-actions {display: flex; justify-content: center;}         
+        }
+        .dlm-filter {
+            padding: 10px;
+            .dlmf-head {font-size: 14px; font-weight: bold; margin-bottom: 10px;}
+            .dlmf-param {
+                margin-bottom: 10px;
+                &:last-child {margin-bottom: 0;}
+                .dlmf-title {font-size: 10px; margin-bottom: 3px;}
+            }
         }
     }
     .datalist-overlay {

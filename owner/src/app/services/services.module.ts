@@ -7,7 +7,7 @@ import { DataService } from './data.service';
 import { ErrorService } from './error.service';
 import { GoogleService } from './google.service';
 import { LangRepository } from './repositories/lang.repository';
-import { RestaurantRepository } from './repositories/restaurant.repository';
+import { RestaurantActiveRepository } from './repositories/restaurant.active.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
 
@@ -25,7 +25,7 @@ import { WordRepository } from './repositories/word.repository';
         LangRepository,
         WordRepository,
         SettingRepository,       
-        RestaurantRepository,  
+        RestaurantActiveRepository,
     ],
 })
 export class ServicesModule {}

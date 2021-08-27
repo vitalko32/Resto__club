@@ -60,7 +60,7 @@ export class LoginAuthPage {
                 } else if (statusCode === 401) {
                     this.formErrorDenied = true;                    
                 } else {
-                    this.appService.showError(this.words['owner-common']['error'][this.currentLang.slug]);
+                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
                 }                
             }            
         } catch (err) {

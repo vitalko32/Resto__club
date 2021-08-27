@@ -16,6 +16,7 @@ export class Restaurant extends Model {
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}
     get formattedActiveUntil(): string {return this.active_until ? `${this.twoDigits(this.active_until.getDate())}.${this.twoDigits(this.active_until.getMonth()+1)}.${this.active_until.getFullYear()} ${this.twoDigits(this.active_until.getHours())}:${this.twoDigits(this.active_until.getMinutes())}` : "";}
+    get daysLeft(): number {return Math.round((this.active_until.getTime() - (new Date().getTime())) / (24 * 60 * 60 * 1000));}
 
     public build (o: Object): any {
         for (let field in o) {

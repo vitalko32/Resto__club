@@ -75,4 +75,14 @@ export class AppService {
     public pause(ms: number): Promise<void> {
         return new Promise((resolve, reject) => setTimeout(() => resolve(), ms));
     }
+
+    public pathHasClass(elements: HTMLElement[], className): boolean {
+        for (let element of elements) {
+            if (element.classList?.contains(className)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

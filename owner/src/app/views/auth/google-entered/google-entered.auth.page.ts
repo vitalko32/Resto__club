@@ -39,10 +39,10 @@ export class GoogleEnteredAuthPage implements OnInit {
             if (statusCode === 200) {
                 this.router.navigateByUrl("/");                            
             } else if (statusCode === 401) {
-                this.appService.showError(this.words['owner-common']['error-401'][this.currentLang.slug]);	
+                this.appService.showError(this.words['common']['error-401'][this.currentLang.slug]);	
                 this.router.navigateByUrl("/auth/login");			
             } else {
-                this.appService.showError(this.words['owner-common']['error'][this.currentLang.slug]);				
+                this.appService.showError(this.words['common']['error'][this.currentLang.slug]);				
                 this.router.navigateByUrl("/auth/login");	
             }
         } catch (err) {

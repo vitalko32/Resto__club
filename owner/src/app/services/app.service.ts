@@ -94,4 +94,14 @@ export class AppService {
     public encodeHTMLEntities(text: string): string {        
         return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');        
     }  
+
+    public pathHasClass(elements: HTMLElement[], className): boolean {
+        for (let element of elements) {
+            if (element.classList?.contains(className)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

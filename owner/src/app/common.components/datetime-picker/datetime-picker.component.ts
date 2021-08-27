@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnInit, HostListener } from "@angular/core";
 
 import { IDtpDay } from './dtpday.interface';
-import { IDtpLang } from './dtplang.interface';
-import { dtpLangs } from './datetime-picker.constants';
 import { AppService } from "src/app/services/app.service";
+import { WordRepository } from "src/app/services/repositories/word.repository";
+import { Words } from "src/app/model/orm/words.type";
+import { Lang } from "src/app/model/orm/lang.model";
 
 @Component({
     selector: "datetime-picker",
@@ -11,12 +12,10 @@ import { AppService } from "src/app/services/app.service";
     styleUrls: ["./datetime-picker.component.scss"],
 })
 export class DatetimePickerComponent implements OnInit {
-    @Input() value: Date = null;
-    @Input() langName: string = "en";
+    @Input() value: Date = null;    
     @Input() canBeNull: boolean = false;
     @Input() withTime: boolean = true;
-    @Output() valueChange: EventEmitter<Date | null> = new EventEmitter();  
-    public currentLang: IDtpLang | null = null;  
+    @Output() valueChange: EventEmitter<Date> = new EventEmitter();      
     public ready: boolean = false;    
     public active: boolean = false;    
     public days: IDtpDay[] = []; // will select
@@ -28,28 +27,28 @@ export class DatetimePickerComponent implements OnInit {
     public currentHour: number; // now selected
     public currentMinute: number; // now selected
 
-    constructor(private appService: AppService) {}
+    constructor(
+        private appService: AppService,
+        private wordRepository: WordRepository,
+    ) {}
+
+    get words(): Words {return this.wordRepository.words;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}
 
     get formatedDate(): string {
         if (this.value) {
             let time: string = this.withTime ? ` ${this.twoDigits(this.value.getHours())}:${this.twoDigits(this.value.getMinutes())}` : "";
             return `${this.twoDigits(this.value.getDate())}.${this.twoDigits(this.value.getMonth()+1)}.${this.value.getFullYear()}${time}`;
         } else {
-            return this.currentLang.phrases["nodate"];
+            return this.words['common']['nodate'][this.currentLang.slug];
         }
     }
 
     get monthAndYear(): string {return `${this.twoDigits(this.month+1)}.${this.year}`;}    
 
     public ngOnInit(): void { 
-        this.currentLang = dtpLangs.find(l => l.name === this.langName) || null;
-
-        if (this.currentLang) {
-            this.init();
-            this.ready = true;
-        } else {
-            console.log("no lang found");
-        }        
+        this.init();
+        this.ready = true;      
     }
 
     public toggle(): void {

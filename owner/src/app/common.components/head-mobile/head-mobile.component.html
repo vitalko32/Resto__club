@@ -7,7 +7,7 @@
             <li><a routerLink="/restaurants/active" (click)="menuPanelActive = false;" [class.active]="url[1] === 'restaurants' && url[2] === 'active'">{{words['owner-common']['menu-active'][currentLang.slug]}}</a></li>            
             <li><a routerLink="/restaurants/inactive" (click)="menuPanelActive = false;" [class.active]="url[1] === 'restaurants' && url[2] === 'inactive'">{{words['owner-common']['menu-inactive'][currentLang.slug]}}</a></li>            
             <li><a routerLink="/auth/password" (click)="menuPanelActive = false;" [class.active]="url[1] === 'auth' && url[2] === 'password'">{{words['owner-common']['menu-pw'][currentLang.slug]}}</a></li>
-            <li><a routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['owner-common']['logout'][currentLang.slug]}}</a></li>
+            <li><a routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['common']['logout'][currentLang.slug]}}</a></li>
         </ul>            
     </div>
     <!-- langs -->

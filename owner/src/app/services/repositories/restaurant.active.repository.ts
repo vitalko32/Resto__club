@@ -6,8 +6,10 @@ import { DataService } from '../data.service';
 import { SimpleRepository } from './_simple.repository';
 
 @Injectable()
-export class RestaurantRepository extends SimpleRepository<Restaurant> {    
-    public filterActive: boolean = false;
+export class RestaurantActiveRepository extends SimpleRepository<Restaurant> {    
+    public filterActive: boolean = true;
+    public filterName: string = "";
+    public filterActiveUntil: Date = null;
     
     constructor(protected dataService: DataService) {
         super();
@@ -17,7 +19,7 @@ export class RestaurantRepository extends SimpleRepository<Restaurant> {
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            let filter: any = {active: this.filterActive};
+            let filter: any = {active: this.filterActive, name: this.filterName, active_until: this.filterActiveUntil};
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
