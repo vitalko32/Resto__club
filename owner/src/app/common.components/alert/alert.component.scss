@@ -4,7 +4,7 @@
         @media (min-width:0) {width: 90%;}
         @media (min-width:500px) {width:300px; }
         position: fixed; z-index: 101; left: -100%; top:50%; transform: translate(-50%, -50%); background-color: var(--color-bg); padding: 30px; border-radius: 15px; transition: 0.3s; will-change: left;
-        .aw-content {display: flex; justify-content: center; font-weight: bold; margin-bottom: 30px;}
+        .aw-content {display: flex; justify-content: center; text-align: center; font-weight: bold; margin-bottom: 30px;}
         .aw-btnwrap {
             text-align: center;
             button {height: 30px; width: 200px; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none; font-size: 14px;}

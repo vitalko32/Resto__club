@@ -12,6 +12,9 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public type: string = "";
     public langSubscription: Subscription = null;    
     public rlLoading: boolean = false;
+    public confirmActive: boolean = false;
+    public confirmMsg: string = "";
+    private idToDelete: number = null;
 
     constructor(
         protected appService: AppService,
@@ -62,4 +65,22 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
             this.rlLoading = false;
         }        
     } 
+
+    public onDelete(r: Restaurant): void {
+        this.idToDelete = r.id;
+        this.confirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${r.name}"?`;
+        this.confirmActive = true;
+    }
+
+    public async delete(): Promise<void> {
+        try {
+            this.confirmActive = false;
+            this.rlLoading = true;
+            await this.restaurantRepository.delete(this.idToDelete);
+            this.initRestaurants();
+        } catch (err) {
+            this.appService.showError(err);
+            this.rlLoading = false;
+        }
+    }
 }

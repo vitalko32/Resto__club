@@ -34,8 +34,8 @@
                 <td class="align-center nowrap">
                     <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                     <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                    <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="datalist-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
-                    <a class="datalist-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
                 </td>
             </tr>            
         </table>
@@ -79,11 +79,13 @@
             <div class="dlmi-actions">
                 <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                 <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="datalist-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
-                <a class="datalist-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
+                <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
+                <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
             </div>            
         </div>               
     </div>
     <pagination [allLength]="rlAllLength" [length]="rlLength" [current]="rlCurrentPart" (currentChanged)="rlCurrentPart = $event; initRestaurants();"></pagination>
-</div>        
+</div>    
+
+<the-confirm [(active)]="confirmActive" [msg]="confirmMsg" (confirmation)="delete()"></the-confirm>
     

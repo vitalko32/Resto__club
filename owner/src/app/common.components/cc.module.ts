@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 import { DatetimePickerComponent } from './datetime-picker/datetime-picker.component';
 import { ErrorNotificationComponent } from './error-notification/errornotification.component';
 import { HeadDesktopComponent } from './head-desktop/head-desktop.component';
@@ -26,6 +27,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         SearchInputComponent,
         DatetimePickerComponent,
         AlertComponent,
+        ConfirmComponent,
     ],
     exports: [
         MenuComponent,
@@ -36,6 +38,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         SearchInputComponent,
         DatetimePickerComponent,
         AlertComponent,
+        ConfirmComponent,
     ],    
 })
 export class CCModule {}

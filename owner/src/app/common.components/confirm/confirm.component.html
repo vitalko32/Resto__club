@@ -1,0 +1,11 @@
+<div class="confirm" [class.active]="active">
+    <div class="c-overlay" (click)="close()"></div>
+    <div class="c-win">
+        <div class="cw-content"><span>{{msg}}</span></div>
+        <div class="cw-buttons">
+            <button type="button" (click)="confirm()">{{words['common']['yes'][currentLang.slug]}}</button>
+            <button type="button" (click)="close()">{{words['common']['no'][currentLang.slug]}}</button>
+        </div>
+        <div class="cw-close" (click)="close()"><span></span></div>
+    </div>
+</div>
