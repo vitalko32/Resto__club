@@ -7,7 +7,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "the-alert",
     templateUrl: "alert.component.html",
-    styleUrls: ["alert.component.scss"],
+    styleUrls: ["../../common.styles/popup.scss"],
 })
 export class AlertComponent {
     @Input() active: boolean = false;

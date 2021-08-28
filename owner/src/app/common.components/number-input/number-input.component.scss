@@ -1,0 +1,5 @@
+.number-input {
+    display: flex; align-items: center; user-select: none;
+    .ni-btn {width: 25px; height: 25px; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer;}
+    .ni-value {min-width: 30px; padding: 0 5px; text-align: center; font-weight: bold;}
+}

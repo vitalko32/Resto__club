@@ -12,9 +12,11 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public type: string = "";
     public langSubscription: Subscription = null;    
     public rlLoading: boolean = false;
-    public confirmActive: boolean = false;
-    public confirmMsg: string = "";
-    private idToDelete: number = null;
+    public deleteConfirmActive: boolean = false;
+    public deleteConfirmMsg: string = "";
+    private deleteId: number = null;
+    public prolongActive: boolean = false;
+    public prolongRestaurant: Restaurant = null;
 
     constructor(
         protected appService: AppService,
@@ -67,20 +69,29 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     } 
 
     public onDelete(r: Restaurant): void {
-        this.idToDelete = r.id;
-        this.confirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${r.name}"?`;
-        this.confirmActive = true;
+        this.deleteId = r.id;
+        this.deleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${r.name}"?`;
+        this.deleteConfirmActive = true;
     }
 
     public async delete(): Promise<void> {
         try {
-            this.confirmActive = false;
+            this.deleteConfirmActive = false;
             this.rlLoading = true;
-            await this.restaurantRepository.delete(this.idToDelete);
+            await this.restaurantRepository.delete(this.deleteId);
             this.initRestaurants();
         } catch (err) {
             this.appService.showError(err);
             this.rlLoading = false;
         }
+    }
+
+    public onProlong(r: Restaurant): void {
+        this.prolongRestaurant = r;
+        this.prolongActive = true;
+    }
+
+    public async prolong(): Promise<void> {
+        console.log("prolongation");
     }
 }

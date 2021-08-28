@@ -7,13 +7,13 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "the-confirm",
     templateUrl: "confirm.component.html",
-    styleUrls: ["confirm.component.scss"],
+    styleUrls: ["../../common.styles/popup.scss"],
 })
 export class ConfirmComponent {
     @Input() active: boolean = false;
     @Input() msg: string = "";
     @Output() activeChange: EventEmitter<boolean> = new EventEmitter();
-    @Output() confirmation: EventEmitter<void> = new EventEmitter();
+    @Output() confirmed: EventEmitter<void> = new EventEmitter();
 
     constructor(
         private appService: AppService,
@@ -28,6 +28,6 @@ export class ConfirmComponent {
     }
 
     public confirm(): void {
-        this.confirmation.emit();
+        this.confirmed.emit();
     }
 }

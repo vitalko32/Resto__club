@@ -9,6 +9,7 @@ import { ErrorNotificationComponent } from './error-notification/errornotificati
 import { HeadDesktopComponent } from './head-desktop/head-desktop.component';
 import { HeadMobileComponent } from './head-mobile/head-mobile.component';
 import { MenuComponent } from './menu/menu.component';
+import { NumberInputComponent } from './number-input/number-input.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 
@@ -28,6 +29,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         DatetimePickerComponent,
         AlertComponent,
         ConfirmComponent,
+        NumberInputComponent,
     ],
     exports: [
         MenuComponent,
@@ -39,6 +41,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         DatetimePickerComponent,
         AlertComponent,
         ConfirmComponent,
+        NumberInputComponent,
     ],    
 })
 export class CCModule {}

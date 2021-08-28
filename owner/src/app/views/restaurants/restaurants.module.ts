@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
+import { ProlongComponent } from "./components/prolong/prolong.component";
 import { RestaurantComponent } from "./components/restaurant/restaurant.component";
 import { ActiveRestaurantsPage } from "./pages/active/active.restaurants.page";
 import { CreateRestaurantsPage } from "./pages/create/create.restaurants.page";
@@ -32,6 +33,7 @@ let routes = RouterModule.forChild ([
 		CreateRestaurantsPage,
 		EditRestaurantsPage,
 		RestaurantComponent,
+		ProlongComponent,
 	],    		    
 })
 export class RestaurantsModule {}

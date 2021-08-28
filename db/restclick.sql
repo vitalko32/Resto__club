@@ -673,7 +673,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 --
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
-1	1	Alex	7573497@gmail.com	$2b$10$h6IgvOly6ew5OMBSJohqFernOOJfAP2I9L3dTeNWn.x/8HkJ7Hs4e	2021-8/1629929025223_150.jpg	t	t
+1	1	Alex	7573497@gmail.com	$2b$10$nbckhw0BLqzO85eh3uznpeKxr0eNA.hDZzQI9Yjef1cCEZjWFkJYW	2021-8/1629929025223_150.jpg	t	t
 \.
 
 
@@ -756,16 +756,16 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at, lang_id) FROM stdin;
-22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	\N	2021-08-28 11:27:23.119406	1
-15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543	1
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727	1
+15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543	1
+22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	\N	2021-08-28 11:27:23.119406	1
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727	1
+10	1	Сто пудов	test8	\N	\N	\N	\N	\N	\N	2021-09-01 00:25:00	2021-08-27 00:25:50.223075	1
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2022-01-20 01:53:00	2021-08-27 00:26:35.018103	2
 12	1	Вкусно-быстро	tets10	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626	1
 18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	\N	2021-08-27 22:30:50.941314	1
 11	1	В гостях у сказки	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306	1
 19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	\N	2021-08-28 00:39:48.284041	1
-10	1	Сто пудов	test8	\N	\N	\N	\N	\N	\N	2021-12-18 00:25:00	2021-08-27 00:25:50.223075	1
 9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-12-25 00:25:00	2021-08-27 00:25:34.269246	1
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572	1
 5	1	У Ашота	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564	2
@@ -931,6 +931,20 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 205	85	2	Close
 206	86	1	Пароль сохранен
 207	86	2	Password saved
+208	87	1	Да
+209	87	2	Yes
+210	88	1	Нет
+211	88	2	No
+212	89	1	Удалить
+213	89	2	Delete
+214	90	1	Отмена
+215	90	2	Cancel
+216	91	1	День
+217	91	2	Day
+218	92	1	Месяц
+219	92	2	Month
+220	93	1	Год
+221	93	2	Year
 \.
 
 
@@ -1021,6 +1035,13 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 84	5	109	create	\N
 85	5	110	close	
 86	4	6	saved	\N
+87	5	111	yes	\N
+88	5	112	no	\N
+89	5	113	delete	\N
+90	5	114	cancel	\N
+91	5	115	day	\N
+92	5	116	month	\N
+93	5	117	year	\N
 \.
 
 
@@ -1063,7 +1084,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 2, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 10, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 14, true);
 
 
 --
@@ -1091,7 +1112,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 22, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 26, true);
 
 
 --
@@ -1105,7 +1126,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 207, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 221, true);
 
 
 --
@@ -1119,7 +1140,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 5, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 86, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 93, true);
 
 
 --

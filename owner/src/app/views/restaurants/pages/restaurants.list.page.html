@@ -32,7 +32,7 @@
                     </ng-container>                    
                 </td>
                 <td class="align-center nowrap">
-                    <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn prolong" (click)="onProlong(r)" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                     <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
                     <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
                     <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
@@ -77,7 +77,7 @@
                 </div>
             </div>
             <div class="dlmi-actions">
-                <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
+                <a class="datalist-btn prolong" (click)="onProlong(r)" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                 <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
                 <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
                 <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
@@ -87,5 +87,6 @@
     <pagination [allLength]="rlAllLength" [length]="rlLength" [current]="rlCurrentPart" (currentChanged)="rlCurrentPart = $event; initRestaurants();"></pagination>
 </div>    
 
-<the-confirm [(active)]="confirmActive" [msg]="confirmMsg" (confirmation)="delete()"></the-confirm>
+<the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>
+<the-prolong [(active)]="prolongActive" [restaurant]="prolongRestaurant" (prolong)="prolong()"></the-prolong>
     

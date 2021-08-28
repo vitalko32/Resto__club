@@ -105,4 +105,12 @@ export class AppService {
 
         return false;
     }
+
+    protected twoDigits(n: number): string {
+        return (n < 10) ? `0${n}` : `${n}`;
+    }
+
+    public formattedDate(date: Date): string {
+        return date ? `${this.twoDigits(date.getDate())}.${this.twoDigits(date.getMonth()+1)}.${date.getFullYear()} ${this.twoDigits(date.getHours())}:${this.twoDigits(date.getMinutes())}` : "";
+    }
 }
