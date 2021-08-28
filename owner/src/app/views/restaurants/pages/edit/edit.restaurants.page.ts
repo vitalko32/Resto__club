@@ -37,6 +37,7 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
     get currentLang(): Lang {return this.appService.currentLang.value;}    
     get cl(): Currency[] {return this.currencyRepository.xl;}
     get ll(): Lang[] {return this.langRepository.xl;}
+    get type(): string {return this.route.snapshot.params["type"];}
     
     public ngOnInit(): void {
         this.initTitle();    
@@ -78,7 +79,7 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
                 this.formLoading = false;
     
                 if (statusCode === 200) {
-                    this.router.navigateByUrl(`/restaurants/${this.route.snapshot.params["type"]}`);
+                    this.router.navigateByUrl(`/restaurants/${this.type}`);
                 } else {
                     this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
                 }
