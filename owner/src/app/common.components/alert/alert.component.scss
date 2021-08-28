@@ -9,6 +9,10 @@
             text-align: center;
             button {height: 30px; width: 200px; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none; font-size: 14px;}
         }
+        .aw-close {
+            position: absolute; right: 15px; top: 10px; cursor: pointer;
+            span::before {font-family: "fa-solid"; content:"\f00d";}
+        }
     }
     &.active {
         .a-overlay {left: 0;}
