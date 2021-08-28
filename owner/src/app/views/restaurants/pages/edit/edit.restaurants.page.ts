@@ -75,14 +75,9 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
         try {
             if (this.validate()) {
                 this.formLoading = true;
-                let statusCode = await this.restaurantRepository.update(this.restaurant);
+                await this.restaurantRepository.update(this.restaurant);
                 this.formLoading = false;
-    
-                if (statusCode === 200) {
-                    this.router.navigateByUrl(`/restaurants/${this.type}`);
-                } else {
-                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
-                }
+                this.router.navigateByUrl(`/restaurants/${this.type}`);                
             }            
         } catch (err) {
             this.appService.showError(err);

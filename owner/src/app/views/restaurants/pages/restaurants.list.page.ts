@@ -92,6 +92,13 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     }
 
     public async prolong(): Promise<void> {
-        console.log("prolongation");
+        try {            
+            this.rlLoading = true;
+            await this.restaurantRepository.prolong(this.prolongRestaurant);
+            this.initRestaurants();            
+        } catch (err) {
+            this.appService.showError(err);
+            this.rlLoading = false;
+        }
     }
 }

@@ -10,4 +10,5 @@ export interface IRestaurantCreate {
     readonly ogrn: string;
     readonly comment: string;
     readonly active_until: string;
+    readonly prolonged_at: string;
 }

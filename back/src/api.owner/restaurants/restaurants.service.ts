@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { LessThan, MoreThanOrEqual, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { IAnswer } from "src/model/answer.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
@@ -94,6 +94,19 @@ export class RestaurantsService extends APIService {
             return {statusCode: 200, data: x};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.update: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        } 
+    }
+
+    public async prolong(dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
+        try {             
+            let x: Restaurant = this.restaurantRepository.create(dto);
+            x.prolonged_at = new Date();
+            await this.restaurantRepository.save(x);            
+            return {statusCode: 200, data: x};
+        } catch (err) {
+            let errTxt: string = `Error in RestaurantsService.prolong: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         } 

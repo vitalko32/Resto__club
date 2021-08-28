@@ -7,6 +7,9 @@
     <div class="df-title" [class.required]="isRequired('active_until')">{{currentLang.phrases['workspace-restaurants-active-until']}}:</div>
     <div class="df-inputwrap"><datetime-picker [(value)]="x.active_until" [langName]="currentLang.name" [canBeNull]="true" [withTime]="true"></datetime-picker></div>
 
+    <div class="df-title" [class.required]="isRequired('prolonged_at')">{{currentLang.phrases['workspace-restaurants-prolonged-at']}}:</div>
+    <div class="df-inputwrap"><datetime-picker [(value)]="x.prolonged_at" [langName]="currentLang.name" [canBeNull]="true" [withTime]="true"></datetime-picker></div>
+
     <div class="df-title" [class.required]="isRequired('name')">{{currentLang.phrases['workspace-restaurants-name']}}:</div>
     <div class="df-inputwrap"><input type="text" [(ngModel)]="x.name"></div>
 

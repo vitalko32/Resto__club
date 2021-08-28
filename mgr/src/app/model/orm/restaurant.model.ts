@@ -13,6 +13,7 @@ export class Restaurant extends Model {
     public ogrn: string;
     public comment: string;
     public active_until: Date;
+    public prolonged_at: Date;
     public created_at: Date;
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}
@@ -20,7 +21,7 @@ export class Restaurant extends Model {
 
     public build (o: Object): any {
         for (let field in o) {
-            if (field === "active_until" || field === "created_at") {
+            if (field === "active_until" || field === "prolonged_at" || field === "created_at") {
                 this[field] = o[field] ? new Date (o[field]) : null;
             } else {
                 this[field] = o[field];

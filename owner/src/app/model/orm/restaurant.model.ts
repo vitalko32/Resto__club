@@ -14,16 +14,18 @@ export class Restaurant extends Model {
     public ogrn: string;
     public comment: string;
     public active_until: Date;
+    public prolonged_at: Date;
     public created_at: Date;
     public employees?: Employee[];
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}
+    get formattedProlongedAt(): string {return this.prolonged_at ? `${this.twoDigits(this.prolonged_at.getDate())}.${this.twoDigits(this.prolonged_at.getMonth()+1)}.${this.prolonged_at.getFullYear()} ${this.twoDigits(this.prolonged_at.getHours())}:${this.twoDigits(this.prolonged_at.getMinutes())}` : "";}
     get formattedActiveUntil(): string {return this.active_until ? `${this.twoDigits(this.active_until.getDate())}.${this.twoDigits(this.active_until.getMonth()+1)}.${this.active_until.getFullYear()} ${this.twoDigits(this.active_until.getHours())}:${this.twoDigits(this.active_until.getMinutes())}` : "";}
     get daysLeft(): number {return this.active_until ? Math.round((this.active_until.getTime() - (new Date().getTime())) / (24 * 60 * 60 * 1000)) : -999999999;}
 
     public build (o: Object): any {
         for (let field in o) {
-            if (field === "active_until" || field === "created_at") {
+            if (field === "active_until" || field === "prolonged_at" || field === "created_at") {
                 this[field] = o[field] ? new Date (o[field]) : null;
             } else {
                 this[field] = o[field];

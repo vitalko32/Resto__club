@@ -44,6 +44,9 @@ export class Restaurant {
     @Column({nullable: true, default: null, type: "timestamp"})
     active_until: Date;
 
+    @Column({nullable: true, default: null, type: "timestamp"})
+    prolonged_at: Date;
+
     @CreateDateColumn()
     created_at: Date;    
 

@@ -59,8 +59,32 @@ export class RestaurantRepository extends SimpleRepository<Restaurant> {
         return new Promise((resolve, reject) => this.dataService.restaurantsCreate(x).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
     }
 
-    public update(x: Restaurant): Promise<number> {
-        return new Promise((resolve, reject) => this.dataService.restaurantsUpdate(x).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
+    public update(x: Restaurant): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.dataService.restaurantsUpdate(x).subscribe(res => {
+                if (res.statusCode === 200) {
+                    resolve();
+                } else {                    
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);
+            });
+        });
+    }
+
+    public prolong(x: Restaurant): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.dataService.restaurantsProlong(x).subscribe(res => {
+                if (res.statusCode === 200) {
+                    resolve();
+                } else {                    
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);
+            });
+        });
     }
 
     public delete(id: number): Promise<void> {

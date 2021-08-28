@@ -44,5 +44,12 @@ export class RestaurantsController {
     @Post("delete/:id")
     public delete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.restaurantsService.delete(parseInt(id));
-    }    
+    }
+    
+    // prolong
+    @UseGuards(AuthGuard)
+    @Post("prolong")
+    public prolong(@Body() dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
+        return this.restaurantsService.prolong(dto);
+    }
 }

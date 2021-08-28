@@ -55,7 +55,11 @@ export class ProlongComponent implements OnChanges {
     }
 
     public async apply(): Promise<void> {
-        this.prolong.emit();
+        if (this.from.getTime() !== this.to.getTime()) {
+            this.restaurant.active_until = this.to;
+            this.prolong.emit();
+            this.close();
+        }        
     }
 
     private addDays(date: Date, days: number): Date {

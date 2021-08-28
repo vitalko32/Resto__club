@@ -109,6 +109,7 @@
             "workspace-restaurants-ogrn": "ОГРН",                 
             "workspace-restaurants-comment": "Комментарий",                 
             "workspace-restaurants-active-until": "Активен до",                 
+            "workspace-restaurants-prolonged-at": "Дата продления",
             "workspace-restaurants-created-at": "Дата создания",
             
             "workspace-employees-h1": "Cотрудники",
@@ -240,7 +241,8 @@
             "workspace-restaurants-inn": "ITN/TIN",                 
             "workspace-restaurants-ogrn": "PSRN",                 
             "workspace-restaurants-comment": "Comment",                 
-            "workspace-restaurants-active-until": "Active until",                 
+            "workspace-restaurants-active-until": "Active until", 
+            "workspace-restaurants-prolonged-at": "Prolonged at",                
             "workspace-restaurants-created-at": "Created at",
 
             "workspace-employees-h1": "Employees",

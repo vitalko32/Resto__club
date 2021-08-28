@@ -11,5 +11,6 @@ export interface IRestaurantUpdate {
     readonly ogrn: string;
     readonly comment: string;
     readonly active_until: string;
+    readonly prolonged_at: string;
     readonly created_at: string;
 }
