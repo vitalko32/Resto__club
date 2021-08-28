@@ -2,7 +2,7 @@
     @media (min-width:0) {display: flex;}
     @media (min-width:1000px) {display: none;}
     justify-content: center; align-items: center; position: relative; height: 60px;
-    .hm-title {width: calc(100% - 120px); text-align: center; font-size: 15px; font-weight: bold;}
+    .hm-title {width: calc(100% - 120px); text-align: center; font-size: 14px; font-weight: bold;}
     // menu
     .hm-menubtn {
         position: absolute; z-index: 3; right: 15px; top:50%; transform: translateY(-50%); width:30px; cursor: pointer; transition: 0.3s; 

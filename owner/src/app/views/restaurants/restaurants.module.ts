@@ -12,7 +12,7 @@ import { InactiveRestaurantsPage } from "./pages/inactive/inactive.restaurants.p
 let routes = RouterModule.forChild ([            
 	{path: "active", component: ActiveRestaurantsPage, pathMatch: "full"},
 	{path: "inactive", component: InactiveRestaurantsPage, pathMatch: "full"},
-	{path: "create", component: CreateRestaurantsPage, pathMatch: "full"},
+	{path: ":type/create", component: CreateRestaurantsPage, pathMatch: "full"},
 	{path: ":type/edit/:id", component: EditRestaurantsPage},
 	{path: "**", redirectTo: "/restaurants/active"},
 ]);

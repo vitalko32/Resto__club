@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Currency } from "src/app/model/orm/currency.model";
@@ -13,12 +13,15 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
     selector: "edit-restaurants-page",
-    templateUrl: "edit.restaurants.page.html",    
+    templateUrl: "edit.restaurants.page.html",   
+    styleUrls: ["../../../../common.styles/data.scss"],
+    encapsulation: ViewEncapsulation.None, 
 })
 export class EditRestaurantsPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;          
     public restaurant: Restaurant = null;
     public formLoading: boolean = false;     
+    public formErrorName: boolean = false;
     
     constructor(
         private appService: AppService,
@@ -69,18 +72,33 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
     
     public async update(): Promise<void> {
         try {
-            this.formLoading = true;
-            let statusCode = await this.restaurantRepository.update(this.restaurant);
-            this.formLoading = false;
-
-            if (statusCode === 200) {
-                this.router.navigateByUrl(`/restaurants/${this.route.snapshot.params["type"]}`);
-            } else {
-                this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
-            }
+            if (this.validate()) {
+                this.formLoading = true;
+                let statusCode = await this.restaurantRepository.update(this.restaurant);
+                this.formLoading = false;
+    
+                if (statusCode === 200) {
+                    this.router.navigateByUrl(`/restaurants/${this.route.snapshot.params["type"]}`);
+                } else {
+                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
+                }
+            }            
         } catch (err) {
             this.appService.showError(err);
             this.formLoading = false;
         }
+    }
+
+    private validate(): boolean {
+        let error = false;
+
+        if (!this.restaurant.name.length) {
+            this.formErrorName = true;
+            error = true;
+        } else {
+            this.formErrorName = false;
+        }
+
+        return !error;
     }
 }

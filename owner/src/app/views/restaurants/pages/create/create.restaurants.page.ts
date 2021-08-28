@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Currency } from "src/app/model/orm/currency.model";
@@ -14,6 +14,8 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "create-restaurants-page",
     templateUrl: "create.restaurants.page.html",    
+    styleUrls: ["../../../../common.styles/data.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class CreateRestaurantsPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;          
@@ -21,7 +23,11 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public formLoading: boolean = false; 
     public formErrorDomainDuplication: boolean = false;
     public formErrorEmailDuplication: boolean = false;
-    
+    public formErrorName: boolean = false;
+    public formErrorDomain: boolean = false;
+    public formErrorEmail: boolean = false;
+    public formErrorPassword: boolean = false;
+
     constructor(
         private appService: AppService,
         private wordRepository: WordRepository,
@@ -36,6 +42,7 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     get currentLang(): Lang {return this.appService.currentLang.value;}    
     get cl(): Currency[] {return this.currencyRepository.xl;}
     get ll(): Lang[] {return this.langRepository.xl;}
+    get type(): string {return this.route.snapshot.params["type"];}
     
     public ngOnInit(): void {
         this.initTitle();    
@@ -61,24 +68,60 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     
     public async create(): Promise<void> {
         try {
-            this.formLoading = true;
-            this.formErrorDomainDuplication = false;
-            this.formErrorEmailDuplication = false;
-            let statusCode = await this.restaurantRepository.create(this.restaurant);
-            this.formLoading = false;
-
-            if (statusCode === 200) {
-                this.router.navigateByUrl("/restaurants/inactive");
-            } else if (statusCode === 409) {
-                this.formErrorDomainDuplication = true;
-            } else if (statusCode === 410) {
-                this.formErrorEmailDuplication = true;
-            } else {
-                this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
-            }
+            if (this.validate()) {
+                this.formLoading = true;
+                this.formErrorDomainDuplication = false;
+                this.formErrorEmailDuplication = false;
+                let statusCode = await this.restaurantRepository.create(this.restaurant);
+                this.formLoading = false;
+    
+                if (statusCode === 200) {
+                    this.router.navigateByUrl("/restaurants/inactive"); // после создания переходим в неактивные, т.к. созданный ресторан неактивен
+                } else if (statusCode === 409) {
+                    this.formErrorDomainDuplication = true;
+                } else if (statusCode === 410) {
+                    this.formErrorEmailDuplication = true;
+                } else {
+                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
+                }
+            }            
         } catch (err) {
             this.appService.showError(err);
             this.formLoading = false;
         }
+    }
+
+    private validate(): boolean {
+        let error = false;
+
+        if (!this.restaurant.name.length) {
+            this.formErrorName = true;
+            error = true;
+        } else {
+            this.formErrorName = false;
+        }        
+
+        if (!this.restaurant.domain.length) {
+            this.formErrorDomain = true;
+            error = true;
+        } else {
+            this.formErrorDomain = false;
+        }
+
+        if (!this.restaurant.employees[0].email.length || !this.appService.validateEmail(this.restaurant.employees[0].email)) {
+            this.formErrorEmail = true;
+            error = true;
+        } else {
+            this.formErrorEmail = false;
+        }
+
+        if (!this.restaurant.employees[0].password.length) {
+            this.formErrorPassword = true;
+            error = true;
+        } else {
+            this.formErrorPassword = false;
+        }
+
+        return !error;
     }
 }

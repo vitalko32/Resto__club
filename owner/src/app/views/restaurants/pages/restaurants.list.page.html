@@ -1,8 +1,5 @@
 <div class="dash">
-    <div class="create-btn" routerLink="/restaurants/create">
-        <div class="cb-btn"></div>
-        <div class="cb-title">{{words['common']['create'][currentLang.slug]}}</div>
-    </div>    
+    <a class="dash-btn create" [routerLink]="'/restaurants/'+type+'/create'"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="data">
     <!-- desktop -->
@@ -35,10 +32,10 @@
                     </ng-container>                    
                 </td>
                 <td class="align-center nowrap">
-                    <a class="action-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
-                    <a *ngIf="type === 'active'" class="action-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                    <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
-                    <a class="action-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
+                    <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
+                    <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="datalist-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
                 </td>
             </tr>            
         </table>
@@ -80,10 +77,10 @@
                 </div>
             </div>
             <div class="dlmi-actions">
-                <a class="action-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
-                <a *ngIf="type === 'active'" class="action-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
-                <a class="action-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
+                <a class="datalist-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
+                <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
+                <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="datalist-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
+                <a class="datalist-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
             </div>            
         </div>               
     </div>

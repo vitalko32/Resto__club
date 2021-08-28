@@ -1,18 +1,15 @@
 <div class="head-desktop">
     <div class="hd-left"><!-- пока не используется --></div>
-    <div class="hd-right">
-        <div class="flex">
-            <a *ngIf="showLogout" class="small-btn rightmargined" routerLink="/auth/logout">{{words['common']['logout'][currentLang.slug]}}</a>
-            <!--<a *ngIf="backLink" class="small-btn rightmargined" [routerLink]="backLink">{{words['common']['back'][currentLang.slug]}}</a>-->
-            <div class="hd-langs">
+    <div class="hd-right">        
+        <a *ngIf="showLogout" class="hd-btn logout" routerLink="/auth/logout"><span>{{words['common']['logout'][currentLang.slug]}}</span></a>            
+        <div class="hd-langs">
                 <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
                 <div class="hdl-panel" [class.active]="langPanelActive">
                     <ul>
                         <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
                     </ul>
                 </div>
-            </div>                    
-        </div>
+        </div>                            
     </div>    
     <div class="hd-title">{{title}}</div>
 </div>

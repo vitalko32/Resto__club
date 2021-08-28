@@ -673,7 +673,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 --
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
-1	1	Alex	7573497@gmail.com	$2b$10$f6PpeSxo/w50O1j.VzrINekNDq3xLMyRPNY9XpSFZAJmw.T8EiGXu	2021-8/1629929025223_150.jpg	t	t
+1	1	Alex	7573497@gmail.com	$2b$10$h6IgvOly6ew5OMBSJohqFernOOJfAP2I9L3dTeNWn.x/8HkJ7Hs4e	2021-8/1629929025223_150.jpg	t	t
 \.
 
 
@@ -720,6 +720,8 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 6	18	\N	7573498@gmail.com	123	\N	\N	t	2021-08-27 22:30:50.941314	t
 7	19	\N	7573499@gmail.com	123	\N	\N	t	2021-08-28 00:39:48.284041	t
+9	21	\N	75734999@gmail.com	123	\N	\N	t	2021-08-28 11:12:59.882811	t
+10	22	\N	757349788@gmail.com	123	\N	\N	t	2021-08-28 11:27:23.119406	t
 \.
 
 
@@ -754,9 +756,10 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at, lang_id) FROM stdin;
+22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	\N	2021-08-28 11:27:23.119406	1
+15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543	1
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727	1
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727	1
-15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543	1
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2022-01-20 01:53:00	2021-08-27 00:26:35.018103	2
 12	1	Вкусно-быстро	tets10	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626	1
 18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	\N	2021-08-27 22:30:50.941314	1
@@ -770,6 +773,7 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-10-21 00:23:00	2021-08-27 00:23:50.454941	1
 8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-26 17:55:00	2021-08-27 00:25:12.606101	1
 7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-25 03:42:00	2021-08-27 00:25:04.843937	1
+21	1	Пушкинский	push	Курочкин Иван Кузьмич	+38 097 456789987	\N	\N	\N	\N	\N	2021-08-28 11:12:59.882811	1
 \.
 
 
@@ -1059,7 +1063,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 2, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 7, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 10, true);
 
 
 --
@@ -1087,7 +1091,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 19, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 22, true);
 
 
 --

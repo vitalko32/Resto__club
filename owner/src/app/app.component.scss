@@ -1,38 +1,9 @@
 @import "./common.styles/var.scss";
-@import "./common.styles/buttons.scss";
 
-html {
-	// themes
-	&.modern {
-		--color-txt: #{$modern-color-txt};
-		--color-bg: #{$modern-color-bg};
-		--color-bg-light: #{$modern-color-bg-light};
-		--color-bg-highlight: #{$modern-color-bg-highlight};
-		--color-bg-highlight2: #{$modern-color-bg-highlight2};
-		--color-bg-data: #{$modern-color-bg-data};
-		--color-red: #{$modern-color-red};
-		--color-grey: #{$modern-color-grey};
-		--color-disabled: #{$modern-color-disabled};
-		--block-shadow: #{$modern-block-shadow};
-		--activebtn-shadow: #{$modern-activebtn-shadow};
-	}
-	&.classic {
-		--color-txt: #{$classic-color-txt};
-		--color-bg: #{$classic-color-bg};
-		--color-bg-light: #{$classic-color-bg-light};
-		--color-bg-highlight: #{$classic-color-bg-highlight};
-		--color-bg-highlight2: #{$classic-color-bg-highlight2};
-		--color-bg-data: #{$classic-color-bg-data};
-		--color-red: #{$classic-color-red};
-		--color-grey: #{$classic-color-grey};
-		--color-disabled: #{$classic-color-disabled};
-		--block-shadow: #{$classic-block-shadow};
-		--activebtn-shadow: #{$classic-activebtn-shadow};
-	}
-	height: 100%; background-color: var(--color-bg);
-	
+html {	
+	height: 100%; background-color: var(--color-bg);	
 	body {
-		margin: 0; padding: 0; font-size: 14px; overscroll-behavior: none; font-family: "mont", Arial, Helvetica, sans-serif; height: 100%; 	
+		margin: 0; padding: 0; overscroll-behavior: none; font-family: "mont", Arial, Helvetica, sans-serif; height: 100%; 	
 		&.noselect {user-select: none;}
 		&.no-scroll {overflow: hidden;}		
 
@@ -69,7 +40,7 @@ html {
 					aside {
 						@media (min-width:0) {display: none;}
 						@media (min-width:1000px) {display: block;}
-						width: 20%; padding: 115px 45px 0 0;						
+						width: 20%; padding: 120px 45px 0 0;						
 					}
 					main {
 						width: 100%;
@@ -77,11 +48,7 @@ html {
 							@media (min-width:0) {width: 100%;}
 							@media (min-width:1000px) {width: 80%;}							
 						}
-						.dash {
-							@media (min-width:0) {margin-bottom: 10px;}
-							@media (min-width:1000px) {margin-bottom: 15px;}							
-							display: flex; justify-content: space-between;
-						}
+						@import "./common.styles/dash.scss";						
 					}					
 				}
 			}			

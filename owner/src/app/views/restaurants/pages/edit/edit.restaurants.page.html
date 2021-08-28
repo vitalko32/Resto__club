@@ -1,9 +1,16 @@
-<the-restaurant
-    *ngIf="restaurant"
-    [x]="restaurant"
-    [cl]="cl"
-    [ll]="ll"
-    [loading]="formLoading"
-    mode="edit"
-    (save)="update();"
-></the-restaurant>
+<div class="dash">
+    <a class="dash-btn save" (click)="update()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>      
+</div>
+<div class="data">
+    <div class="dataedit">
+        <the-restaurant
+            *ngIf="restaurant"
+            [x]="restaurant"
+            [cl]="cl"
+            [ll]="ll"
+            [loading]="formLoading"
+            [errorName]="formErrorName"
+            mode="edit"
+            (save)="update();"
+        ></the-restaurant>
+</div>
