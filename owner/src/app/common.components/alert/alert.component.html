@@ -1,0 +1,9 @@
+<div class="alert" [class.active]="active">
+    <div class="a-overlay" (click)="close()"></div>
+    <div class="a-win">
+        <div class="aw-content"><span>{{msg}}</span></div>
+        <div class="aw-btnwrap">
+            <button type="button" (click)="close()">{{words['common']['close'][currentLang.slug]}}</button>
+        </div>
+    </div>
+</div>

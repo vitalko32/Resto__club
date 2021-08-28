@@ -43,7 +43,7 @@ export class LoginAuthPage {
 
     private initTitle(): void {
         this.appService.setTitle(this.words["owner-login"]["title"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-login"]["title"][lang.slug]));
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-login"]["title"][lang.slug]));           
     }
 
     public async login(): Promise<void> {

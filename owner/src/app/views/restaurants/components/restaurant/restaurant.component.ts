@@ -14,6 +14,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 export class RestaurantComponent {
     @Input() x: Restaurant;
     @Input() cl: Currency[];
+    @Input() ll: Lang[];
     @Input() mode: string = "create";
     @Input() loading: boolean = false;
     @Input() errorDomainDuplication: boolean = false;

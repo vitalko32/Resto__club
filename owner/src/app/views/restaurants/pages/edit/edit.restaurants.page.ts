@@ -12,15 +12,13 @@ import { RestaurantRepository } from "src/app/services/repositories/restaurant.r
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "create-restaurants-page",
-    templateUrl: "create.restaurants.page.html",    
+    selector: "edit-restaurants-page",
+    templateUrl: "edit.restaurants.page.html",    
 })
-export class CreateRestaurantsPage implements OnInit, OnDestroy {    
+export class EditRestaurantsPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;          
-    public restaurant: Restaurant = new Restaurant().init(); 
-    public formLoading: boolean = false; 
-    public formErrorDomainDuplication: boolean = false;
-    public formErrorEmailDuplication: boolean = false;
+    public restaurant: Restaurant = null;
+    public formLoading: boolean = false;     
     
     constructor(
         private appService: AppService,
@@ -40,15 +38,25 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.initTitle();    
         this.initCurrencies();
+        this.initRestaurant();
     }
 
     public ngOnDestroy(): void {
         this.langSubscription.unsubscribe();
     }
 
+    private async initRestaurant(): Promise<void> {
+        try {
+            let id: number = parseInt(this.route.snapshot.params["id"]);
+            this.restaurant = await this.restaurantRepository.loadOne(id);
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+    
     private initTitle(): void {
-        this.appService.setTitle(this.words["owner-restaurants"][`title-create`][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-create`][lang.slug]));        
+        this.appService.setTitle(this.words["owner-restaurants"][`title-edit`][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-edit`][lang.slug]));        
     }  
 
     private async initCurrencies(): Promise<void> {
@@ -59,20 +67,14 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
         }
     }
     
-    public async create(): Promise<void> {
+    public async update(): Promise<void> {
         try {
             this.formLoading = true;
-            this.formErrorDomainDuplication = false;
-            this.formErrorEmailDuplication = false;
-            let statusCode = await this.restaurantRepository.create(this.restaurant);
+            let statusCode = await this.restaurantRepository.update(this.restaurant);
             this.formLoading = false;
 
             if (statusCode === 200) {
-                this.router.navigateByUrl("/restaurants/inactive");
-            } else if (statusCode === 409) {
-                this.formErrorDomainDuplication = true;
-            } else if (statusCode === 410) {
-                this.formErrorEmailDuplication = true;
+                this.router.navigateByUrl(`/restaurants/${this.route.snapshot.params["type"]}`);
             } else {
                 this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
             }

@@ -30,7 +30,7 @@ export class Admin {
     defended: boolean;
 
     // relations
-    @ManyToOne(type => Admingroup, {onDelete: "SET NULL", onUpdate: "CASCADE"})
+    @ManyToOne(type => Admingroup, {onDelete: "RESTRICT", onUpdate: "CASCADE"})
     @JoinColumn({name: "admingroup_id"})
     admingroup: Admingroup;
 }

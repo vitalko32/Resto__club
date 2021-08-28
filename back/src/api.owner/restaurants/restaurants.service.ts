@@ -6,10 +6,16 @@ import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
 import { Restaurant } from "../../model/orm/restaurant.entity";
 import { Sortdir } from "src/model/sortdir.type";
+import { IRestaurantCreate } from "./dto/restaurant.create.interface";
+import { Employee } from "src/model/orm/employee.entity";
+import { IRestaurantUpdate } from "./dto/restaurant.update.interface";
 
 @Injectable()
 export class RestaurantsService extends APIService {
-    constructor (@InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>) {
+    constructor (
+        @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
+        @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+    ) {
         super();
     }    
     
@@ -46,28 +52,23 @@ export class RestaurantsService extends APIService {
         }
     }
 
-    /*
-    public async one(id: number): Promise<IAnswer<Restaurant>> {
-        try {
-            let data: Restaurant = await this.restaurantRepository.findOne(id);                   
-            return {statusCode: 200, data};
-        } catch (err) {
-            let errTxt: string = `Error in RestaurantsService.one: ${String(err)}`;
-            console.log(errTxt);
-            return {statusCode: 500, error: errTxt};
-        }
-    }
-
-    
-    public async create(dto: IRestaurantCreate): Promise<IAnswer<void>> {        
+    public async create(dto: IRestaurantCreate): Promise<IAnswer<Restaurant>> {        
         try { 
-            if (!dto.name || !dto.domain) {
-                return {statusCode: 400, error: "required field is empty"};
-            }            
+            let restaurant = await this.restaurantRepository.findOne({where: {domain: dto.domain}});            
+
+            if (restaurant) {
+                return {statusCode: 409, error: "restaurant domain in use"};    
+            }
+
+            let employee = await this.employeeRepository.findOne({where: {email: dto.employees[0].email}});
+
+            if (employee) {
+                return {statusCode: 410, error: "employee email in use"};    
+            }
             
             let x: Restaurant = this.restaurantRepository.create(dto);            
             await this.restaurantRepository.save(x);
-            return {statusCode: 200};
+            return {statusCode: 200, data: x};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.create: ${String(err)}`;
             console.log(errTxt);
@@ -75,22 +76,29 @@ export class RestaurantsService extends APIService {
         }        
     }
 
-    public async update(dto: IRestaurantUpdate): Promise<IAnswer<void>> {
-        try { 
-            if (!dto.name || !dto.domain) {
-                return {statusCode: 400, error: "required field is empty"};
-            }  
-            
+    public async one(id: number): Promise<IAnswer<Restaurant>> {
+        try {
+            let data: Restaurant = await this.restaurantRepository.findOne(id);                   
+            return data ? {statusCode: 200, data} : {statusCode: 404, error: "restaurant not found"};
+        } catch (err) {
+            let errTxt: string = `Error in RestaurantsService.one: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async update(dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
+        try {             
             let x: Restaurant = this.restaurantRepository.create(dto);
             await this.restaurantRepository.save(x);            
-            return {statusCode: 200};
+            return {statusCode: 200, data: x};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.update: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         } 
     }
-    
+
     public async delete(id: number): Promise<IAnswer<void>> {
         try {
             await this.restaurantRepository.delete(id);
@@ -101,5 +109,4 @@ export class RestaurantsService extends APIService {
             return {statusCode: 500, error: errTxt};
         }        
     }    
-    */
 }

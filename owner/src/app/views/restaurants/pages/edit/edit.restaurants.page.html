@@ -1,0 +1,9 @@
+<the-restaurant
+    *ngIf="restaurant"
+    [x]="restaurant"
+    [cl]="cl"
+    [ll]="ll"
+    [loading]="formLoading"
+    mode="edit"
+    (save)="update();"
+></the-restaurant>

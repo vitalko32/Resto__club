@@ -1,7 +1,7 @@
 <div class="dash">
-    <div class="create-btn">
-        <a class="cb-btn" routerLink="/restaurants/create"></a>
-        <div class="cb-title">{{words['owner-restaurants']['create'][currentLang.slug]}}</div>
+    <div class="create-btn" routerLink="/restaurants/create">
+        <div class="cb-btn"></div>
+        <div class="cb-title">{{words['common']['create'][currentLang.slug]}}</div>
     </div>    
 </div>
 <div class="data">
@@ -37,7 +37,7 @@
                 <td class="align-center nowrap">
                     <a class="action-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                     <a *ngIf="type === 'active'" class="action-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                    <a class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
+                    <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
                     <a class="action-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
                 </td>
             </tr>            
@@ -82,7 +82,7 @@
             <div class="dlmi-actions">
                 <a class="action-btn prolong" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
                 <a *ngIf="type === 'active'" class="action-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
-                <a class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
+                <a [routerLink]="'/restaurants/'+type+'/edit/'+r.id" class="action-btn edit" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
                 <a class="action-btn delete" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
             </div>            
         </div>               

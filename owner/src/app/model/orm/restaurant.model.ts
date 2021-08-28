@@ -4,6 +4,7 @@ import { Employee } from "./employee.model";
 export class Restaurant extends Model {
     public id: number;
     public currency_id: number;
+    public lang_id: number;
     public name: string;
     public domain: string;
     public ownername: string;
@@ -34,6 +35,7 @@ export class Restaurant extends Model {
 
     public init(): Restaurant {
         this.currency_id = 1;
+        this.lang_id = 1;
         this.name = "";
         this.domain = "";
         this.employees = [new Employee().init()];

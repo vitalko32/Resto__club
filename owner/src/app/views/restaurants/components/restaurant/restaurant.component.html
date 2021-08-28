@@ -37,6 +37,14 @@
         </div>
     </div>
     <div class="gf-param margined">
+        <div class="gf-title">{{words['owner-restaurants']['lang'][currentLang.slug]}}</div>
+        <div class="gf-selectwrap">
+            <select [(ngModel)]="x.lang_id" name="lang">
+                <option *ngFor="let l of ll" [ngValue]="l.id">{{l.title}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="gf-param margined">
         <div class="gf-title">{{words['owner-restaurants']['comment'][currentLang.slug]}}</div>
         <div class="gf-inputwrap"><textarea name="comment" [(ngModel)]="x.comment"></textarea></div>
     </div>    

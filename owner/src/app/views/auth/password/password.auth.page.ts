@@ -11,8 +11,8 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
     selector: "password-auth-page",
-    templateUrl: "password.auth.page.html",
-    styleUrls: ["../../../common.styles/forms.scss"],
+    templateUrl: "password.auth.page.html",    
+    styleUrls: ["../../../common.styles/data.scss"],
 })
 export class PasswordAuthPage {
     public langSubscription: Subscription = null;
@@ -22,12 +22,12 @@ export class PasswordAuthPage {
     public formErrorPassword1: boolean = false;
     public formErrorPassword2: boolean = false;
     public formErrorMismatch: boolean = false;
+    public alertActive: boolean = false;
     
     constructor(
         private appService: AppService,
         private authService: AuthService,
-        private wordRepository: WordRepository,
-        private router: Router,
+        private wordRepository: WordRepository,        
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
@@ -44,7 +44,7 @@ export class PasswordAuthPage {
 
     private initTitle(): void {
         this.appService.setTitle(this.words["owner-password"]["title"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-password"]["title"][lang.slug]));
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-password"]["title"][lang.slug]));        
     }
 
     public async update(): Promise<void> {
@@ -56,7 +56,7 @@ export class PasswordAuthPage {
                 this.formLoading = false;
 
                 if (statusCode === 200) {
-                    this.router.navigateByUrl("/");
+                    this.alertActive = true;
                 } else {
                     this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
                 }

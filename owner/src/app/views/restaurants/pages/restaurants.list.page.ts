@@ -42,7 +42,7 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
 
     private initTitle(): void {
         this.appService.setTitle(this.words["owner-restaurants"][`title-${this.type}`][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-${this.type}`][lang.slug]));
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-${this.type}`][lang.slug]));        
     }       
     
     public async initRestaurants(): Promise<void> {		                

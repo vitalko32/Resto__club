@@ -7,6 +7,8 @@ import { RestaurantRepository } from 'src/app/services/repositories/restaurant.r
 import { ObjectPage } from '../../_object.page';
 import { CurrencyRepository } from 'src/app/services/repositories/currency.repository';
 import { Currency } from 'src/app/model/orm/currency.model';
+import { LangRepository } from 'src/app/services/repositories/lang.repository';
+import { Lang } from 'src/app/model/orm/lang.model';
 
 @Component({
 	selector: 'restaurants-create-page',
@@ -21,6 +23,7 @@ export class RestaurantsCreatePage extends ObjectPage<Restaurant> implements OnI
 		protected admlangRepository: AdmLangRepository,
 		protected restaurantRepository: RestaurantRepository,		
 		protected currencyRepository: CurrencyRepository,
+		protected langRepository: LangRepository,
 		protected appService: AppService,		
 		protected router: Router,		
 	) {
@@ -28,10 +31,12 @@ export class RestaurantsCreatePage extends ObjectPage<Restaurant> implements OnI
 	}	
 	
 	get cl(): Currency[] {return this.currencyRepository.xlAll;}		
+	get ll(): Lang[] {return this.langRepository.xlAll;}		
 
 	public async ngOnInit(): Promise<void> {
 		try {
 			await this.currencyRepository.loadAll();			
+			await this.langRepository.loadAll();				
 			this.x = new Restaurant().init();				
 			this.appService.monitorLog("[restaurants create] page loaded");
 			this.ready = true;

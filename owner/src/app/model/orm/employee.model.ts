@@ -31,7 +31,8 @@ export class Employee extends Model {
     public init(): Employee {        
         this.is_admin = true;
         this.email = "";
-        this.password = "";        
+        this.password = "";     
+        this.defended = true;   
         return this;
     }
 }

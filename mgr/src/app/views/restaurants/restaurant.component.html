@@ -36,7 +36,14 @@
         <select [(ngModel)]="x.currency_id">
             <option *ngFor="let c of cl" [ngValue]="c.id">{{c.name}}</option>
         </select>
-    </div>    
+    </div> 
+    
+    <div class="df-title" [class.required]="isRequired('lang_id')">{{currentLang.phrases['workspace-restaurants-lang']}}:</div>
+    <div class="df-inputwrap">
+        <select [(ngModel)]="x.lang_id">
+            <option *ngFor="let l of ll" [ngValue]="l.id">{{l.slug}}</option>
+        </select>
+    </div> 
             
     <div class="df-title"></div>
     <div class="df-inputwrap"><button type="submit">{{currentLang.phrases['workspace-save']}}</button></div>                    

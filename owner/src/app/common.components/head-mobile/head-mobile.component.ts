@@ -10,8 +10,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "head-mobile.component.html",
     styleUrls: ["head-mobile.component.scss"],
 })
-export class HeadMobileComponent {    
-    @Input() showMenuBtn: boolean = false;
+export class HeadMobileComponent {        
     public menuPanelActive: boolean = false;
     public langPanelActive: boolean = false;    
     
@@ -26,6 +25,7 @@ export class HeadMobileComponent {
     get langs(): Lang[] {return this.langRepository.xl;}
     get url(): string[] {return this.appService.url;}
     get title(): string {return this.appService.title;}
+    get showMenuBtn(): boolean {return !(this.appService.url[1] === "auth" && this.appService.url[2] !== "password");}
     
     public setLang(l: Lang): void {
         this.appService.setLang(l);

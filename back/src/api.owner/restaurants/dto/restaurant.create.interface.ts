@@ -1,5 +1,6 @@
-export interface IRestaurantUpdate {
-    readonly id: number;
+import { Employee } from "src/model/orm/employee.entity";
+
+export interface IRestaurantCreate {
     readonly currency_id: number;
     readonly lang_id: number;
     readonly name: string;
@@ -10,6 +11,5 @@ export interface IRestaurantUpdate {
     readonly inn: string;
     readonly ogrn: string;
     readonly comment: string;
-    readonly active_until: string;
-    readonly created_at: string;
+    readonly employees: Employee[];
 }

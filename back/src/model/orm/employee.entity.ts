@@ -37,7 +37,7 @@ export class Employee {
     defended: boolean;
     
     // relations
-    @ManyToOne(type => Restaurant, {onDelete: "SET NULL", onUpdate: "CASCADE"})
+    @ManyToOne(type => Restaurant, {onDelete: "CASCADE", onUpdate: "CASCADE"})
     @JoinColumn({name: "restaurant_id"})
     restaurant: Restaurant;
 

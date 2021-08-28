@@ -6,8 +6,9 @@ import { Lang } from "../model/orm/lang.model";
 @Injectable()
 export class AppService {
     public url: string[] = [];
-    public currentLang: BehaviorSubject<Lang> = new BehaviorSubject(null);  
-    public title: string = "";
+    public currentLang: BehaviorSubject<Lang> = new BehaviorSubject(null);      
+    // iface
+    public title: string = "";            
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";

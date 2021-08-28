@@ -1,5 +1,6 @@
 export interface IRestaurantCreate {
     readonly currency_id: number;
+    readonly lang_id: number;
     readonly name: string;
     readonly domain: string;
     readonly ownername: string;

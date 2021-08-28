@@ -99,6 +99,7 @@
 
             "workspace-restaurants-h1": "Рестораны",                 
             "workspace-restaurants-currency": "Валюта",                 
+            "workspace-restaurants-lang": "Язык",                 
             "workspace-restaurants-name": "Название",                 
             "workspace-restaurants-domain": "Домен",                 
             "workspace-restaurants-ownername": "ФИО контактного лица",                 
@@ -229,7 +230,8 @@
             "workspace-currencies-pos": "Position", 
             
             "workspace-restaurants-h1": "Restaurants",                 
-            "workspace-restaurants-currency": "Currency",                 
+            "workspace-restaurants-currency": "Currency",   
+            "workspace-restaurants-lang": "Language",                               
             "workspace-restaurants-name": "Name",                 
             "workspace-restaurants-domain": "Domain",                 
             "workspace-restaurants-ownername": "Name of contact person",                 

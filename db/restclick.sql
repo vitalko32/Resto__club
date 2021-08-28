@@ -385,7 +385,8 @@ CREATE TABLE "default".vne_restaurants (
     ogrn character varying,
     comment text,
     active_until timestamp without time zone,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
+    created_at timestamp without time zone DEFAULT now() NOT NULL,
+    lang_id integer
 );
 
 
@@ -672,7 +673,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 --
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
-1	1	Alex	7573497@gmail.com	$2b$10$rw6.jxMsMClPyXRmFpFB..v79zc6yiE4WZ1jueL9rBBveh923vjoq	2021-8/1629929025223_150.jpg	t	t
+1	1	Alex	7573497@gmail.com	$2b$10$f6PpeSxo/w50O1j.VzrINekNDq3xLMyRPNY9XpSFZAJmw.T8EiGXu	2021-8/1629929025223_150.jpg	t	t
 \.
 
 
@@ -717,6 +718,8 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 2	2	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	f	2021-08-26 21:32:06.303446	f
 3	1	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342	f
 1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
+6	18	\N	7573498@gmail.com	123	\N	\N	t	2021-08-27 22:30:50.941314	t
+7	19	\N	7573499@gmail.com	123	\N	\N	t	2021-08-28 00:39:48.284041	t
 \.
 
 
@@ -750,21 +753,23 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 -- Data for Name: vne_restaurants; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at) FROM stdin;
-1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727
-2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727
-3	1	Тестовый 1	test1	\N	\N	\N	\N	\N	\N	2021-10-21 00:23:00	2021-08-27 00:23:50.454941
-5	1	Тестовый 3	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564
-6	1	Тестовый 4	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572
-7	1	Тестовый 5	test5	\N	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937
-9	1	Тестовый 7	test7	\N	\N	\N	\N	\N	\N	2021-12-25 00:25:00	2021-08-27 00:25:34.269246
-10	1	Тестовый 8	test8	\N	\N	\N	\N	\N	\N	2021-12-18 00:25:00	2021-08-27 00:25:50.223075
-11	1	Тестовый 9	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306
-12	1	Тестовый 10	tets10	\N	\N	\N	\N	\N	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626
-13	1	Тестовый 11	test11	\N	\N	\N	\N	\N	\N	2022-01-20 01:53:00	2021-08-27 00:26:35.018103
-4	1	Тестовый 2	test2	\N	\N	\N	\N	\N	\N	2021-12-17 00:24:00	2021-08-27 00:24:10.543446
-15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543
-8	1	Тестовый 6	test6	\N	\N	\N	\N	\N	\N	2021-08-26 17:55:00	2021-08-27 00:25:12.606101
+COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, active_until, created_at, lang_id) FROM stdin;
+1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2025-08-26 18:55:00	2021-08-26 20:52:31.021727	1
+2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2022-04-14 17:27:00	2021-08-26 20:52:31.021727	1
+15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2022-02-18 01:55:00	2021-08-27 01:55:15.844543	1
+13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2022-01-20 01:53:00	2021-08-27 00:26:35.018103	2
+12	1	Вкусно-быстро	tets10	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2022-02-18 00:26:00	2021-08-27 00:26:24.033626	1
+18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	\N	2021-08-27 22:30:50.941314	1
+11	1	В гостях у сказки	test9	\N	\N	\N	\N	\N	\N	2022-01-14 00:25:00	2021-08-27 00:26:05.774306	1
+19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	\N	2021-08-28 00:39:48.284041	1
+10	1	Сто пудов	test8	\N	\N	\N	\N	\N	\N	2021-12-18 00:25:00	2021-08-27 00:25:50.223075	1
+9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-12-25 00:25:00	2021-08-27 00:25:34.269246	1
+6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2022-01-14 00:24:00	2021-08-27 00:24:57.598572	1
+5	1	У Ашота	test3	\N	\N	\N	\N	\N	\N	2021-12-18 00:24:00	2021-08-27 00:24:34.213564	2
+4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-12-17 00:24:00	2021-08-27 00:24:10.543446	1
+3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-10-21 00:23:00	2021-08-27 00:23:50.454941	1
+8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-26 17:55:00	2021-08-27 00:25:12.606101	1
+7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-25 03:42:00	2021-08-27 00:25:04.843937	1
 \.
 
 
@@ -794,8 +799,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 12	5	2	Page
 13	6	1	Выход
 14	6	2	Sign out
-2	1	2	Add restaurant
-1	1	1	Добавить ресторан
 17	8	1	Активные рестораны
 18	8	2	Active restaurants
 21	10	1	Неактивные рестораны
@@ -912,6 +915,18 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 193	79	2	Domain is already in use
 194	80	1	E-mail занят
 195	80	2	E-mail is already in use
+196	81	1	Язык
+197	81	2	Language
+198	82	1	Параметры ресторана
+199	82	2	Restaurant data
+200	83	1	Назад
+201	83	2	Back
+202	84	1	Добавить
+203	84	2	Add
+204	85	1	Закрыть
+205	85	2	Close
+206	86	1	Пароль сохранен
+207	86	2	Password saved
 \.
 
 
@@ -938,7 +953,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 4	2	3	menu-pw	\N
 5	2	100	page	\N
 6	2	101	logout	\N
-1	1	100	create	\N
 11	1	101	prolong	\N
 12	1	102	history	\N
 13	1	103	edit	\N
@@ -997,6 +1011,12 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 78	1	212	admin-password	\N
 79	1	110	error-domain-duplication	\N
 80	1	111	error-email-duplication	\N
+81	1	213	lang	\N
+82	1	4	title-edit	\N
+83	5	108	back	\N
+84	5	109	create	\N
+85	5	110	close	
+86	4	6	saved	\N
 \.
 
 
@@ -1039,7 +1059,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 2, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 3, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 7, true);
 
 
 --
@@ -1067,7 +1087,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 1, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 15, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 19, true);
 
 
 --
@@ -1081,7 +1101,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 4, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 195, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 207, true);
 
 
 --
@@ -1095,7 +1115,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 5, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 80, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 86, true);
 
 
 --
@@ -1349,7 +1369,7 @@ ALTER TABLE ONLY "default".vne_word_translations
 --
 
 ALTER TABLE ONLY "default".vne_admins
-    ADD CONSTRAINT "FK_55d689227fb459994e546aa0293" FOREIGN KEY (admingroup_id) REFERENCES "default".vne_admingroups(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "FK_55d689227fb459994e546aa0293" FOREIGN KEY (admingroup_id) REFERENCES "default".vne_admingroups(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1381,7 +1401,7 @@ ALTER TABLE ONLY "default".vne_mailtemplate_translations
 --
 
 ALTER TABLE ONLY "default".vne_employees
-    ADD CONSTRAINT "FK_ab4672296c3f1ab805e0937a481" FOREIGN KEY (restaurant_id) REFERENCES "default".vne_restaurants(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "FK_ab4672296c3f1ab805e0937a481" FOREIGN KEY (restaurant_id) REFERENCES "default".vne_restaurants(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1389,7 +1409,7 @@ ALTER TABLE ONLY "default".vne_employees
 --
 
 ALTER TABLE ONLY "default".vne_restaurants
-    ADD CONSTRAINT "FK_b4f2c8b3192294163738f730610" FOREIGN KEY (currency_id) REFERENCES "default".vne_currencies(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "FK_b4f2c8b3192294163738f730610" FOREIGN KEY (currency_id) REFERENCES "default".vne_currencies(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -1398,6 +1418,14 @@ ALTER TABLE ONLY "default".vne_restaurants
 
 ALTER TABLE ONLY "default".vne_word_translations
     ADD CONSTRAINT "FK_c7d449bf6c30c1b0c83af297543" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_restaurants FK_f8d32ea80f03240f3f3328a7374; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_restaurants
+    ADD CONSTRAINT "FK_f8d32ea80f03240f3f3328a7374" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --

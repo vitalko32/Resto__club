@@ -26,11 +26,17 @@ export class AppComponent implements OnInit, AfterViewInit {
 	) {}
 
 	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	
-	get showSidebar(): boolean {return this.appService.url[1] === "restaurants" && (this.appService.url[2] === "active" || this.appService.url[2] === "inactive");}	
-	get desktopHeadShowLogoutBtn(): boolean {return this.appService.url[1] === "restaurants" && this.appService.url[2] !== "create";}
-	get desktopHeadShowHomeBtn(): boolean {return (this.appService.url[1] === "auth" && this.appService.url[2] === "password") || (this.appService.url[1] === "restaurants" && this.appService.url[2] === "create");}
-	get desktopHeadShowTitle(): boolean {return (this.appService.url[1] === "auth" && this.appService.url[2] === "password") || (this.appService.url[1] === "restaurants" && this.appService.url[2] === "create");}
-	get mobileHeadShowMenuBtn(): boolean {return !(this.appService.url[1] === "auth" && this.appService.url[2] === "login");}
+	get showSidebar(): boolean {		
+		if (this.appService.url[1] === "auth") {
+			if (this.appService.url[2] === "password") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}	
 
 	public ngOnInit(): void {
 		this.initLangs();

@@ -4,6 +4,8 @@ import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { RestaurantsService } from "./restaurants.service";
 import { Restaurant } from "../../model/orm/restaurant.entity";
+import { IRestaurantCreate } from "./dto/restaurant.create.interface";
+import { IRestaurantUpdate } from "./dto/restaurant.update.interface";
 
 @Controller('api/owner/restaurants')
 export class RestaurantsController {
@@ -15,8 +17,14 @@ export class RestaurantsController {
     public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Restaurant[]>> {
         return this.restaurantsService.chunk(dto);
     }
+
+    // create
+    @UseGuards(AuthGuard)
+    @Post("create")
+    public create(@Body() dto: IRestaurantCreate): Promise<IAnswer<Restaurant>> {
+        return this.restaurantsService.create(dto);
+    }
     
-    /*
     // get one
     @UseGuards(AuthGuard)
     @Post("one/:id")
@@ -24,21 +32,12 @@ export class RestaurantsController {
         return this.restaurantsService.one(parseInt(id));
     }
 
-    
-    // create
-    @UseGuards(AuthGuard)
-    @Post("create")
-    public create(@Body() dto: IRestaurantCreate): Promise<IAnswer<void>> {
-        return this.restaurantsService.create(dto);
-    }
-
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IRestaurantUpdate): Promise<IAnswer<void>> {
+    public update(@Body() dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
         return this.restaurantsService.update(dto);
     }
-    
 
     // delete one
     @UseGuards(AuthGuard)
@@ -46,5 +45,4 @@ export class RestaurantsController {
     public delete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.restaurantsService.delete(parseInt(id));
     }    
-    */
 }
