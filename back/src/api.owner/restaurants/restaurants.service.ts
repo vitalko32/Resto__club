@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import * as bcrypt from "bcrypt";
 import { IAnswer } from "src/model/answer.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
@@ -9,12 +10,14 @@ import { Sortdir } from "src/model/sortdir.type";
 import { IRestaurantCreate } from "./dto/restaurant.create.interface";
 import { Employee } from "src/model/orm/employee.entity";
 import { IRestaurantUpdate } from "./dto/restaurant.update.interface";
+import { MailService } from "src/common/mail.service";
 
 @Injectable()
 export class RestaurantsService extends APIService {
     constructor (
         @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+        private mailService: MailService,
     ) {
         super();
     }    
@@ -66,8 +69,12 @@ export class RestaurantsService extends APIService {
                 return {statusCode: 410, error: "employee email in use"};    
             }
             
+            let rawPassword = dto.employees[0].password;
+            dto.employees[0].password = bcrypt.hashSync(dto.employees[0].password, 10);
             let x: Restaurant = this.restaurantRepository.create(dto);            
             await this.restaurantRepository.save(x);
+            this.mailService.mailRestaurantCreated(dto.lang_id, dto.domain, dto.employees[0].email, rawPassword);
+
             return {statusCode: 200, data: x};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.create: ${String(err)}`;

@@ -39,20 +39,7 @@ export class MailService extends APIService {
         }
     }
 
-    public async mailCustomerCreatedWithEmail(lang_id: number, email: string, password: string): Promise<void> {
-        try {
-            const staticUrl: string = (await this.settingRepository.findOne({where: {p: "static-url"}}))?.v;
-            const mtd: IMailtemplateData = await this.getMailtemplateData("customer-created-with-email", lang_id);               
-            const subject: string = mtd.subject;
-            const content: string = mtd.content
-                .replace(/{{staticUrl}}/g, staticUrl)        
-                .replace(/{{email}}/g, email)
-                .replace(/{{password}}/g, password);                
-            await this.send(email, subject, content);               
-        } catch (err) {
-            console.log(`Error in MailService.mailCustomerCreatedWithEmail: ${String(err)}`);            
-        }
-    }
+    
 
     public async mailCustomerVerifyEmail(lang_id: number, email: string, code: string): Promise<void> {
         try {
@@ -167,33 +154,7 @@ export class MailService extends APIService {
         }
     }    */
 
-    public async mailTest(): Promise<void> {
-        try {  
-            const mtd: IMailtemplateData = await this.getMailtemplateData("test", 1);   
-            const subject: string = mtd.subject;
-            const content: string = mtd.content;
-            await this.send("7573497@gmail.com", subject, content);   
-        } catch (err) {
-            console.log(`Error in MailService.mailTest: ${String(err)}`); 
-        }
-    }    
-
-    private getMailtemplateData(name: string, lang_id: number): Promise<IMailtemplateData> {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let mt: Mailtemplate = await this.mailtemplateRepository.findOne({where: {name}, relations: ["translations"]});
-
-                if (!mt) {
-                    reject("mailtemplate not found");
-                } else {
-                    const t: MailtemplateTranslation = mt.translations.find(t => t.lang_id === lang_id);
-                    resolve({subject: t.subject, content: t.content});
-                }
-            } catch (err) {
-                reject(String(err));
-            }
-        });
-    }
+    
     
     public send(to: string, subject: string, html: string): Promise<void> {
         return new Promise(async (resolve, reject) => {
@@ -224,5 +185,47 @@ export class MailService extends APIService {
                 reject(String(err));
             }            
         });
-    }    
+    }       
+
+    private getMailtemplateData(name: string, lang_id: number): Promise<IMailtemplateData> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let mt: Mailtemplate = await this.mailtemplateRepository.findOne({where: {name}, relations: ["translations"]});
+
+                if (!mt) {
+                    reject("mailtemplate not found");
+                } else {
+                    const t: MailtemplateTranslation = mt.translations.find(t => t.lang_id === lang_id);
+                    resolve({subject: t.subject, content: t.content});
+                }
+            } catch (err) {
+                reject(String(err));
+            }
+        });
+    }
+
+    public async mailTest(): Promise<void> {
+        try {  
+            const mtd: IMailtemplateData = await this.getMailtemplateData("test", 1);   
+            const subject: string = mtd.subject;
+            const content: string = mtd.content;
+            await this.send("7573497@gmail.com", subject, content);   
+        } catch (err) {
+            console.log(`Error in MailService.mailTest: ${String(err)}`); 
+        }
+    } 
+
+    public async mailRestaurantCreated(lang_id: number, domain: string, email: string, password: string): Promise<void> {
+        try {            
+            const mtd: IMailtemplateData = await this.getMailtemplateData("restaurant-created", lang_id);               
+            const subject: string = mtd.subject;
+            const content: string = mtd.content                
+                .replace(/{{domain}}/g, domain)    
+                .replace(/{{email}}/g, email)
+                .replace(/{{password}}/g, password);                
+            await this.send(email, subject, content);               
+        } catch (err) {
+            console.log(`Error in MailService.mailRestaurantCreated: ${String(err)}`);            
+        }
+    }
 }
