@@ -73,7 +73,10 @@ export class RestaurantsService extends APIService {
             dto.employees[0].password = bcrypt.hashSync(dto.employees[0].password, 10);
             let x: Restaurant = this.restaurantRepository.create(dto);            
             await this.restaurantRepository.save(x);
-            this.mailService.mailRestaurantCreated(dto.lang_id, dto.domain, dto.employees[0].email, rawPassword);
+            // mail
+            x = await this.restaurantRepository.findOne(x.id, {relations: ["currency", "employees", "lang"]});
+            x.employees[0].password = rawPassword;
+            this.mailService.mailRestaurantCreated(x);
 
             return {statusCode: 200, data: x};
         } catch (err) {

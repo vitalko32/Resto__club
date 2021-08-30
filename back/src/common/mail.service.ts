@@ -13,6 +13,7 @@ import { Wordbook } from "src/model/orm/wordbook.entity";
 import { Word } from "src/model/orm/word.entity";
 import { APIService } from "./api.service";
 import { Lang } from "src/model/orm/lang.entity";
+import { Restaurant } from "src/model/orm/restaurant.entity";
 
 @Injectable()
 export class MailService extends APIService {
@@ -215,15 +216,23 @@ export class MailService extends APIService {
         }
     } 
 
-    public async mailRestaurantCreated(lang_id: number, domain: string, email: string, password: string): Promise<void> {
+    public async mailRestaurantCreated(restaurant: Restaurant): Promise<void> {
         try {            
-            const mtd: IMailtemplateData = await this.getMailtemplateData("restaurant-created", lang_id);               
+            const mtd: IMailtemplateData = await this.getMailtemplateData("restaurant-created", restaurant.lang_id);               
             const subject: string = mtd.subject;
             const content: string = mtd.content                
-                .replace(/{{domain}}/g, domain)    
-                .replace(/{{email}}/g, email)
-                .replace(/{{password}}/g, password);                
-            await this.send(email, subject, content);               
+                .replace(/{{name}}/g, restaurant.name)        
+                .replace(/{{domain}}/g, restaurant.domain)    
+                .replace(/{{ownername}}/g, restaurant.ownername)    
+                .replace(/{{phone}}/g, restaurant.phone)    
+                .replace(/{{address}}/g, restaurant.address)    
+                .replace(/{{inn}}/g, restaurant.inn)    
+                .replace(/{{ogrn}}/g, restaurant.ogrn)    
+                .replace(/{{currency}}/g, restaurant.currency.name)    
+                .replace(/{{language}}/g, restaurant.lang.title)    
+                .replace(/{{email}}/g, restaurant.employees[0].email)
+                .replace(/{{password}}/g, restaurant.employees[0].password);                
+            await this.send(restaurant.employees[0].email, subject, content);               
         } catch (err) {
             console.log(`Error in MailService.mailRestaurantCreated: ${String(err)}`);            
         }

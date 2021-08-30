@@ -40,6 +40,11 @@ export class Restaurant extends Model {
         this.lang_id = 1;
         this.name = "";
         this.domain = "";
+        this.ownername = "";
+        this.phone = "";
+        this.address = "";
+        this.inn = "";
+        this.ogrn = "";
         this.employees = [new Employee().init()];
         return this;
     }    

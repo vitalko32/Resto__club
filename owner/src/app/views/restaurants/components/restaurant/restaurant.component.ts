@@ -16,12 +16,17 @@ export class RestaurantComponent {
     @Input() ll: Lang[];
     @Input() mode: string = "create";
     @Input() loading: boolean = false;
-    @Input() errorDomainDuplication: boolean = false;
-    @Input() errorEmailDuplication: boolean = false;
     @Input() errorName: boolean = false;
-    @Input() errorDomain: boolean = false;
+    @Input() errorDomain: boolean = false;    
+    @Input() errorOwnerName: boolean = false;
+    @Input() errorPhone: boolean = false;
+    @Input() errorAddress: boolean = false;
+    @Input() errorInn: boolean = false;
+    @Input() errorOgrn: boolean = false;
     @Input() errorEmail: boolean = false;
-    @Input() errorPassword: boolean = false;
+    @Input() errorPassword: boolean = false;    
+    @Input() errorDomainDuplication: boolean = false;
+    @Input() errorEmailDuplication: boolean = false;    
     @Output() save: EventEmitter<void> = new EventEmitter();    
 
     constructor(

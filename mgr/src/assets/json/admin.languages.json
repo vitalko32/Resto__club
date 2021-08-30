@@ -152,6 +152,7 @@
             "sidebar-submodule-wordbooks": "Dictionaries",    
             "sidebar-submodule-currencies": "Currencies",       
             "sidebar-module-restaurants": "Restaurants and related",  
+            "sidebar-submodule-restaurants": "Restaurants", 
             "sidebar-submodule-employees": "Employees",   
             "sidebar-submodule-employee-statuses": "Employee statuses",                
             "sidebar-module-utils": "Utilities",    

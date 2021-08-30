@@ -21,12 +21,17 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;          
     public restaurant: Restaurant = new Restaurant().init(); 
     public formLoading: boolean = false; 
-    public formErrorDomainDuplication: boolean = false;
-    public formErrorEmailDuplication: boolean = false;
     public formErrorName: boolean = false;
     public formErrorDomain: boolean = false;
+    public formErrorOwnerName: boolean = false;
+    public formErrorPhone: boolean = false;
+    public formErrorAddress: boolean = false;
+    public formErrorInn: boolean = false;
+    public formErrorOgrn: boolean = false;
     public formErrorEmail: boolean = false;
     public formErrorPassword: boolean = false;
+    public formErrorDomainDuplication: boolean = false;
+    public formErrorEmailDuplication: boolean = false;    
 
     constructor(
         private appService: AppService,
@@ -93,6 +98,15 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
 
     private validate(): boolean {
         let error = false;
+        this.restaurant.name = this.restaurant.name.trim();
+        this.restaurant.domain = this.restaurant.domain.trim();
+        this.restaurant.ownername = this.restaurant.ownername.trim();
+        this.restaurant.phone = this.restaurant.phone.trim();
+        this.restaurant.address = this.restaurant.address.trim();
+        this.restaurant.inn = this.restaurant.inn.trim();
+        this.restaurant.ogrn = this.restaurant.ogrn.trim();
+        this.restaurant.employees[0].email = this.restaurant.employees[0].email.trim();
+        this.restaurant.employees[0].password = this.restaurant.employees[0].password.trim();
 
         if (!this.restaurant.name.length) {
             this.formErrorName = true;
@@ -106,6 +120,41 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
             error = true;
         } else {
             this.formErrorDomain = false;
+        }
+
+        if (!this.restaurant.ownername.length) {
+            this.formErrorOwnerName = true;
+            error = true;
+        } else {
+            this.formErrorOwnerName = false;
+        }
+
+        if (!this.restaurant.phone.length) {
+            this.formErrorPhone = true;
+            error = true;
+        } else {
+            this.formErrorPhone = false;
+        }
+
+        if (!this.restaurant.address.length) {
+            this.formErrorAddress = true;
+            error = true;
+        } else {
+            this.formErrorAddress = false;
+        }
+
+        if (!this.restaurant.inn.length) {
+            this.formErrorInn = true;
+            error = true;
+        } else {
+            this.formErrorInn = false;
+        }
+
+        if (!this.restaurant.ogrn.length) {
+            this.formErrorOgrn = true;
+            error = true;
+        } else {
+            this.formErrorOgrn = false;
         }
 
         if (!this.restaurant.employees[0].email.length || !this.appService.validateEmail(this.restaurant.employees[0].email)) {
