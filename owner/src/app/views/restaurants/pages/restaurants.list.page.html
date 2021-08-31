@@ -13,10 +13,10 @@
                 <td></td>
             </tr>
             <tr>
-                <th class="align-left">{{words['owner-restaurants']['created-at'][currentLang.slug]}}</th>
-                <th class="align-left">{{words['owner-restaurants']['name'][currentLang.slug]}}</th>
-                <th class="align-left">{{words['owner-restaurants']['active-until'][currentLang.slug]}}</th>                        
-                <th class="align-center">{{words['owner-restaurants']['actions'][currentLang.slug]}}</th>
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'created_at' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'created_at' && rlSortDir === -1" (click)="changeSorting('created_at')">{{words['owner-restaurants']['created-at'][currentLang.slug]}}</label></th>
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'name' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'name' && rlSortDir === -1" (click)="changeSorting('name')">{{words['owner-restaurants']['name'][currentLang.slug]}}</label></th>
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'active_until' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'active_until' && rlSortDir === -1" (click)="changeSorting('active_until')">{{words['owner-restaurants']['active-until'][currentLang.slug]}}</label></th>                        
+                <th class="align-center"><label>{{words['owner-restaurants']['actions'][currentLang.slug]}}</label></th>
             </tr>                                    
             <tr *ngFor="let r of rl">
                 <td [class.grey]="type === 'inactive'"><span class="nowrap">{{r.formattedCreatedAt}}</span></td>
@@ -43,16 +43,29 @@
     <!-- mobile -->
     <div class="datalist-mobile">
         <div class="datalist-overlay" [class.active]="rlLoading"></div>
-        <div class="dlm-filter">            
-            <div class="dlmf-head">{{words['owner-restaurants']['filter'][currentLang.slug]}}</div>
-            <div class="dlmf-param">
-                <div class="dlmf-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
-                <div class="dlmf-inputwrap"><search-input [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></search-input></div>
+        <div class="dlm-dash">            
+            <div class="dlmd-head">{{words['owner-restaurants']['filter'][currentLang.slug]}}</div>
+            <div class="dlmd-param">
+                <div class="dlmd-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
+                <div class="dlmd-inputwrap"><search-input [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></search-input></div>
             </div>
-            <div class="dlmf-param" *ngIf="type === 'active'">
-                <div class="dlmf-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
-                <div class="dlmf-inputwrap"><datetime-picker [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker></div>
+            <div class="dlmd-param" *ngIf="type === 'active'">
+                <div class="dlmd-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
+                <div class="dlmd-inputwrap"><datetime-picker [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker></div>
             </div>            
+            <div class="dlmd-head">{{words['owner-restaurants']['sorting'][currentLang.slug]}}</div>
+            <div class="dlmd-param">
+                <div class="dlmd-selectwrap">
+                    <select #mobsorting (change)="setSorting(mobsorting.value)">
+                        <option [selected]="rlSortBy === 'created_at' && rlSortDir === 1" [value]="0">{{words['owner-restaurants']['created-at'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="rlSortBy === 'created_at' && rlSortDir === -1" [value]="1">{{words['owner-restaurants']['created-at'][currentLang.slug]}} &#9650;</option>
+                        <option [selected]="rlSortBy === 'name' && rlSortDir === 1" [value]="2">{{words['owner-restaurants']['name'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="rlSortBy === 'name' && rlSortDir === -1" [value]="3">{{words['owner-restaurants']['name'][currentLang.slug]}} &#9650;</option>
+                        <option [selected]="rlSortBy === 'active_until' && rlSortDir === 1" [value]="4">{{words['owner-restaurants']['active-until'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="rlSortBy === 'active_until' && rlSortDir === -1" [value]="5">{{words['owner-restaurants']['active-until'][currentLang.slug]}} &#9650;</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="dlm-item" *ngFor="let r of rl">            
             <div class="dlmi-param" [class.grey]="type === 'inactive'">

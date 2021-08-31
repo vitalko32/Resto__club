@@ -11,7 +11,9 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public type: string = "";
     public langSubscription: Subscription = null;    
-    public rlLoading: boolean = false;
+    public rlLoading: boolean = false;    
+    public rlSortingVariants: any[][] = // для мобильной верстки
+        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["active_until", 1], ["active_until", -1]];    
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
@@ -35,6 +37,10 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     set rlFilterName(v: string) {this.restaurantRepository.filterName = v;}
     get rlFilterActiveUntil(): Date {return this.restaurantRepository.filterActiveUntil;}  
     set rlFilterActiveUntil(v: Date) {this.restaurantRepository.filterActiveUntil = v;}
+    get rlSortBy(): string {return this.restaurantRepository.sortBy;}
+    get rlSortDir(): number {return this.restaurantRepository.sortDir;}
+    set rlSortBy(v: string) {this.restaurantRepository.sortBy = v;}
+    set rlSortDir(v: number) {this.restaurantRepository.sortDir = v;}
 
     public ngOnInit(): void {
         this.initTitle();
@@ -66,7 +72,25 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
             this.appService.showError(err);
             this.rlLoading = false;
         }        
-    } 
+    }
+    
+    public changeSorting(sortBy: string): void {
+        if (this.rlSortBy === sortBy) {
+            this.rlSortDir *= -1;
+        } else {
+            this.rlSortBy = sortBy;
+            this.rlSortDir = 1;
+        }
+
+        this.initRestaurants();
+    }
+
+    public setSorting(i: string): void {
+        let sorting = this.rlSortingVariants[parseInt(i)];
+        this.rlSortBy = sorting[0];
+        this.rlSortDir = sorting[1];
+        this.initRestaurants();
+    }
 
     public onDelete(r: Restaurant): void {
         this.deleteId = r.id;

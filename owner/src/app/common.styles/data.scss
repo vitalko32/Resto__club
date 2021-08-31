@@ -6,7 +6,18 @@
         border-radius: 45px; background-color: var(--color-bg-data); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; margin-bottom: 30px; position: relative; 
         table {
             width: 100%; 
-            th {padding: 10px 5px;}
+            th {
+                padding: 10px 5px;
+                label {
+                    &::after {font-family: "fa-solid"; margin-left: 5px;}
+                    &.sortable {
+                        cursor: pointer;
+                        &::after {content: "\f0dc";}
+                        &.sorted-forward::after {content: "\f0dd";}
+                        &.sorted-backward::after {content: "\f0de";}
+                    }                    
+                }                
+            }
             td {padding: 10px 5px;}            
         }        
     }
@@ -23,13 +34,21 @@
             }   
             .dlmi-actions {display: flex; justify-content: center;}         
         }
-        .dlm-filter {
+        .dlm-dash {
             padding: 10px;
-            .dlmf-head {font-size: 14px; font-weight: bold; margin-bottom: 10px;}
-            .dlmf-param {
+            .dlmd-head {font-size: 14px; font-weight: bold; margin-bottom: 10px;}
+            .dlmd-param {
                 margin-bottom: 10px;
                 &:last-child {margin-bottom: 0;}
-                .dlmf-title {font-size: 10px; margin-bottom: 3px;}
+                .dlmd-title {font-size: 10px; margin-bottom: 3px;}
+                .dlmd-inputwrap {}
+                .dlmd-selectwrap {        
+                    @media (min-width:0) {display: block;}
+                    @media (min-width:500px) {display: inline-block;}  
+                    height: 30px; border-radius: 15px; position: relative; border:1px var(--color-grey) solid; background-color: white;
+                    &::after {display: block; font-family: "fa-solid"; content: "\f078"; position: absolute; top:50%; transform: translateY(-50%); right:10px; pointer-events: none; color: var(--color-txt);}
+                    select {width: 100%; height: 100%; appearance: none; background: none; border:none; padding: 0 25px 0 10px; color: black;}        
+                }
             }
         }
     }

@@ -724,10 +724,10 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 1	1	\N	7573497@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 6	18	\N	7573498@gmail.com	123	\N	\N	t	2021-08-27 22:30:50.941314	t
 7	19	\N	7573499@gmail.com	123	\N	\N	t	2021-08-28 00:39:48.284041	t
-9	21	\N	75734999@gmail.com	123	\N	\N	t	2021-08-28 11:12:59.882811	t
-10	22	\N	757349788@gmail.com	123	\N	\N	t	2021-08-28 11:27:23.119406	t
 3	1	1	viovalya2@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342	f
 24	38	\N	viovalya@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	\N	\N	t	2021-08-30 12:54:22.738402	t
+10	22	\N	757349788@gmail.com	123	Алексей Петров	\N	t	2021-08-28 11:27:23.119406	t
+9	21	\N	75734999@gmail.com	123	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
 \.
 
 
@@ -961,6 +961,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 221	93	2	Year
 222	94	1	Дата продления
 223	94	2	Prolonged at
+224	95	1	Сортировка
+225	95	2	Sorting
 \.
 
 
@@ -1059,6 +1061,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 92	5	116	month	\N
 93	5	117	year	\N
 94	1	214	prolonged-at	\N
+95	1	215	sorting	\N
 \.
 
 
@@ -1143,7 +1146,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 8, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 223, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 225, true);
 
 
 --
@@ -1157,7 +1160,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 5, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 94, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 95, true);
 
 
 --
