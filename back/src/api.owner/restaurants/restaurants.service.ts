@@ -30,9 +30,8 @@ export class RestaurantsService extends APIService {
             let q: number = dto.q;
             let filter: string = "TRUE";
 
-            if (dto.filter.active !== undefined) {
-                let now = this.mysqlDateTime(new Date());
-                filter += dto.filter.active ? ` AND restaurants.active_until >= '${now}'` : ` AND (restaurants.active_until < '${now}' OR restaurants.active_until IS NULL)`;                
+            if (dto.filter.active !== undefined) {                
+                filter += dto.filter.active ? ` AND restaurants.active_until >= NOW()` : ` AND (restaurants.active_until < NOW() OR restaurants.active_until IS NULL)`;                
             }     
             
             if (dto.filter.name) {
@@ -76,7 +75,7 @@ export class RestaurantsService extends APIService {
             // mail
             x = await this.restaurantRepository.findOne(x.id, {relations: ["currency", "employees", "lang"]});
             x.employees[0].password = rawPassword;
-            this.mailService.mailRestaurantCreated(x);
+            this.mailService.mailEmployeeRestaurantCreated(x);
 
             return {statusCode: 200, data: x};
         } catch (err) {

@@ -1,9 +1,9 @@
 .popup {
-    .p-overlay {position: fixed; z-index: 100; left: -100%; top:0; width:100%; height: 100%; background-color: rgba(0,0,0,0.5); transition: 0.3s; will-change: left;}
+    .p-overlay {position: fixed; z-index: 99; left: -100%; top:0; width:100%; height: 100%; background-color: rgba(0,0,0,0.5); transition: 0.3s; will-change: left;}
     .p-win {
         @media (min-width:0) {width: 90%;}
         @media (min-width:500px) {width:320px; }
-        position: fixed; z-index: 101; left: -100%; top:50%; transform: translate(-50%, -50%); background-color: var(--color-bg); padding: 30px; border-radius: 15px; transition: 0.3s; will-change: left;
+        position: fixed; z-index: 100; left: -100%; top:50%; transform: translate(-50%, -50%); background-color: var(--color-bg); padding: 30px; border-radius: 15px; transition: 0.3s; will-change: left;
         .pw-content {
             .pw-txt {display: flex; justify-content: center; text-align: center; font-weight: bold; margin-bottom: 30px;}
         }

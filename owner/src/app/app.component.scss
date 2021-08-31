@@ -32,7 +32,7 @@ html {
 			
 			// main structure
 			.win {
-				@media (min-width:0) {background: none; box-shadow: none; padding: 15px;}
+				@media (min-width:0) {background: none; box-shadow: none; padding: 75px 15px 15px 15px;}
 				@media (min-width:1000px) {background: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); box-shadow: var(--block-shadow); padding: 45px; }
 				border-radius: 60px; 
 				.content {

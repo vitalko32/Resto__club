@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminAPIModule } from './api.admin/admin.api.module';
 import { OwnerAPIModule } from './api.owner/owner.api.module';
+import { TestAPIModule } from './api.test/test.api.module';
+import { CronModule } from './cron/cron.module';
 import { Admin } from './model/orm/admin.entity';
 import { Admingroup } from './model/orm/admingroup.entity';
 import { Currency } from './model/orm/currency.entity';
@@ -19,6 +22,7 @@ import { Wordbook } from './model/orm/wordbook.entity';
 
 @Module({
 	imports: [
+		ScheduleModule.forRoot(),
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			host: 'localhost',
@@ -47,6 +51,8 @@ import { Wordbook } from './model/orm/wordbook.entity';
 		}),
 		AdminAPIModule,	
 		OwnerAPIModule,
+		TestAPIModule,
+		CronModule,
 	],
 	controllers: [],
 	providers: [],
