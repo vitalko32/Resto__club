@@ -1,0 +1,57 @@
+@import "./common.styles/var.scss";
+
+html {	
+	height: 100%; background-color: var(--color-bg);	
+	body {
+		margin: 0; padding: 0; overscroll-behavior: none; font-family: "mont", Arial, Helvetica, sans-serif; height: 100%; 	
+		&.noselect {user-select: none;}
+		&.no-scroll {overflow: hidden;}		
+
+		* {box-sizing: border-box; outline: none; overflow-anchor: none; overscroll-behavior: none;}
+		img {vertical-align: top;}	
+		a {cursor: pointer;}	
+				
+		.hidden {display: none;}
+		.flex {display: flex;}		
+		.align-left {text-align: left;}
+		.align-center {text-align: center;}
+		.nowrap {white-space: nowrap;}
+		.red {color: var(--color-red);}
+		.grey {color: var(--color-grey);}
+		input, select, textarea {
+			@media (min-width:0) {font-size: 16px;}
+			@media (min-width:1000px) {font-size: 14px;}	
+			font-family: "mont", Arial, Helvetica, sans-serif;			
+		}
+		button {font-family: "mont", Arial, Helvetica, sans-serif;}
+	
+		.wrap {			
+			@media (min-width:0) {padding: 0; font-size: 13px;}
+			@media (min-width:1000px) {padding: 30px; font-size: 14px;}
+			background-color: var(--color-bg); color: var(--color-txt); min-height: 100%;			
+			
+			// main structure
+			.win {
+				@media (min-width:0) {background: none; box-shadow: none; padding: 75px 15px 15px 15px;}
+				@media (min-width:1000px) {background: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); box-shadow: var(--block-shadow); padding: 45px; }
+				border-radius: 60px; 
+				.content {
+					display: flex; 					 
+					aside {
+						@media (min-width:0) {display: none;}
+						@media (min-width:1000px) {display: block;}
+						width: 20%; padding: 120px 45px 0 0;						
+					}
+					main {
+						width: 100%;
+						&.compact {
+							@media (min-width:0) {width: 100%;}
+							@media (min-width:1000px) {width: 80%;}							
+						}
+						@import "./common.styles/dash.scss";						
+					}					
+				}
+			}			
+		}
+	}
+}

@@ -8,7 +8,7 @@ import { SimpleRepository } from "./_simple.repository";
 export class RestaurantRepository extends SimpleRepository<Restaurant> {
     public filterActive: boolean;
     public filterName: string;
-    public filterActiveUntil: Date;
+    public filterActiveUntil: Date[];
 
     constructor(protected dataService: DataService) {
         super();

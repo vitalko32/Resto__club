@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { DatePeriodPickerComponent } from './dateperiod-picker/dateperiod-picker.component';
 import { DatetimePickerComponent } from './datetime-picker/datetime-picker.component';
 import { ErrorNotificationComponent } from './error-notification/errornotification.component';
 import { HeadDesktopComponent } from './head-desktop/head-desktop.component';
@@ -27,6 +28,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         ErrorNotificationComponent,
         SearchInputComponent,
         DatetimePickerComponent,
+        DatePeriodPickerComponent,
         AlertComponent,
         ConfirmComponent,
         NumberInputComponent,
@@ -39,6 +41,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
         ErrorNotificationComponent,
         SearchInputComponent,
         DatetimePickerComponent,
+        DatePeriodPickerComponent,
         AlertComponent,
         ConfirmComponent,
         NumberInputComponent,

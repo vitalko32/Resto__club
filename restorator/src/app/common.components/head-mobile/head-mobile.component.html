@@ -1,0 +1,17 @@
+<div class="head-mobile">
+    <div class="hm-title">{{title}}</div>
+    <!-- menu -->
+    <div *ngIf="showMenuBtn" class="hm-menubtn" [class.active]="menuPanelActive" (click)="menuPanelActive = !menuPanelActive; langPanelActive = false;"><span></span></div>    
+    <div class="hm-panel" [class.active]="menuPanelActive">
+        <ul>
+            <li><a routerLink="/" (click)="menuPanelActive = false;" [class.active]="!url[1]">{{words['common']['home'][currentLang.slug]}}</a></li>                        
+        </ul>
+    </div>
+    <!-- langs -->
+    <div class="hm-langbtn" [class.active]="langPanelActive" (click)="langPanelActive = !langPanelActive; menuPanelActive = false;"><span></span></div>     
+    <div class="hm-panel" [class.active]="langPanelActive">
+        <ul>
+            <li *ngFor="let l of langs"><a (click)="setLang(l);" [class.active]="l.id === currentLang.id">{{l.shorttitle}}</a></li>
+        </ul>
+    </div>       
+</div>

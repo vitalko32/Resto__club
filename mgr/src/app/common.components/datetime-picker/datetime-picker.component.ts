@@ -167,12 +167,5 @@ export class DatetimePickerComponent implements OnInit {
         this.value = null;
         this.valueChange.emit(null);
         this.init();
-    }
-
-    @HostListener("window:click", ["$event"])
-    public onClick(event: PointerEvent): void {
-        if (!this.appService.pathHasClass(event.composedPath() as HTMLElement[], "dtp-component")) {
-            this.active = false;
-        }
-    }
+    }    
 }

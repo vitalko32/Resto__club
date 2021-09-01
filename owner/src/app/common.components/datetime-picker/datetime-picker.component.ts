@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, HostListener } from "@angular/core";
 
-import { IDtpDay } from './dtpday.interface';
+import { IDay } from './day.interface';
 import { AppService } from "src/app/services/app.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 import { Words } from "src/app/model/orm/words.type";
@@ -18,7 +18,7 @@ export class DatetimePickerComponent implements OnInit {
     @Output() valueChange: EventEmitter<Date> = new EventEmitter();      
     public ready: boolean = false;    
     public active: boolean = false;    
-    public days: IDtpDay[] = []; // will select
+    public days: IDay[] = []; // will select
     private year: number; // will select
     private month: number; // will select
     private currentYear: number; // now selected
@@ -34,17 +34,14 @@ export class DatetimePickerComponent implements OnInit {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-
+    get monthAndYear(): string {return `${this.appService.twoDigits(this.month+1)}.${this.year}`;}    
     get formatedDate(): string {
         if (this.value) {
-            let time: string = this.withTime ? ` ${this.twoDigits(this.value.getHours())}:${this.twoDigits(this.value.getMinutes())}` : "";
-            return `${this.twoDigits(this.value.getDate())}.${this.twoDigits(this.value.getMonth()+1)}.${this.value.getFullYear()}${time}`;
+            return this.withTime ? this.appService.formattedDateTime(this.value) : this.appService.formattedDate(this.value);            
         } else {
             return this.words['common']['no-date'][this.currentLang.slug];
         }
-    }
-
-    get monthAndYear(): string {return `${this.twoDigits(this.month+1)}.${this.year}`;}    
+    }    
 
     public ngOnInit(): void { 
         this.init();
@@ -77,12 +74,12 @@ export class DatetimePickerComponent implements OnInit {
         this.days = [];
 
         for (let i: number = 0; i < firstDayOfMonth; i++) {
-            let day: IDtpDay = {hidden: true};
+            let day: IDay = {hidden: true};
             this.days.push(day);
         }
 
         for (let i: number = 0; i < daysInMonth; i++) {
-            let day: IDtpDay = {n: i+1};
+            let day: IDay = {n: i+1};
 
             if (i+1 === this.currentDay && this.month === this.currentMonth && this.year === this.currentYear) {
                 day.current = true;
@@ -95,11 +92,7 @@ export class DatetimePickerComponent implements OnInit {
                 day.holiday = true;
             }            
         }
-    }
-
-    private twoDigits(n: number): string {
-        return (n < 10) ? `0${n}` : `${n}`;
-    }
+    }    
 
     public onMonthBack(): void {
         if (this.month === 0) {
@@ -121,26 +114,9 @@ export class DatetimePickerComponent implements OnInit {
         }
 
         this.buildDays();
-    }
+    }      
 
-    public getDayClass(day: IDtpDay): string {
-        let c: string = "day";
-        c += day.hidden ? " hidden" : "";
-        c += day.holiday ? " holiday" : "";
-        c += day.current ? " current" : "";
-
-        return c;
-    }
-
-    public getPickerClass(): string {
-        let c: string = "dtp-picker";
-        c += !this.withTime ? " compact" : "";
-        c += this.active ? " active" : "";
-
-        return c;
-    }
-
-    public setDate(day: IDtpDay): void {
+    public setDate(day: IDay): void {
         if (day.n) {
             this.currentDay = day.n;
             this.currentMonth = this.month;
@@ -166,12 +142,5 @@ export class DatetimePickerComponent implements OnInit {
         this.value = null;
         this.valueChange.emit(null);
         this.init();
-    }
-
-    @HostListener("window:click", ["$event"])
-    public onClick(event: PointerEvent): void {
-        if (!this.appService.pathHasClass(event.composedPath() as HTMLElement[], "dtp-component")) {
-            this.active = false;
-        }
-    }
+    }    
 }

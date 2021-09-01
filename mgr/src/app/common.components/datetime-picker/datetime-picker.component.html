@@ -28,5 +28,6 @@
             </div>
             <div class="dtp-apply"><button type="button" (click)="apply();">{{currentLang.phrases['apply']}}</button></div>
         </div>        
-    </div>    
+    </div> 
+    <div class="dtp-bgoverlay" [class.active]="active" (mousedown)="active = false;"></div>   
 </div>

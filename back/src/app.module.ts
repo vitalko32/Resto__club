@@ -3,6 +3,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminAPIModule } from './api.admin/admin.api.module';
 import { OwnerAPIModule } from './api.owner/owner.api.module';
+import { RestoratorAPIModule } from './api.restorator/restorator.api.module';
 import { TestAPIModule } from './api.test/test.api.module';
 import { CronModule } from './cron/cron.module';
 import { Admin } from './model/orm/admin.entity';
@@ -51,6 +52,7 @@ import { Wordbook } from './model/orm/wordbook.entity';
 		}),
 		AdminAPIModule,	
 		OwnerAPIModule,
+		RestoratorAPIModule,
 		TestAPIModule,
 		CronModule,
 	],

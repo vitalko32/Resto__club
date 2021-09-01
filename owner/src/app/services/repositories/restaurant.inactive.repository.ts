@@ -7,7 +7,7 @@ export class RestaurantInactiveRepository extends RestaurantRepository {
     constructor(protected dateService: DataService) {
         super(dateService);
         this.filterActive = false;
-        this.filterActiveUntil = null;
+        this.filterActiveUntil = [null, null];
         this.filterName = "";
     }    
 }

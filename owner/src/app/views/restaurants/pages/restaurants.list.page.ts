@@ -35,14 +35,14 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     get rlLength(): number {return this.restaurantRepository.chunkLength;}   
     get rlFilterName(): string {return this.restaurantRepository.filterName;}  
     set rlFilterName(v: string) {this.restaurantRepository.filterName = v;}
-    get rlFilterActiveUntil(): Date {return this.restaurantRepository.filterActiveUntil;}  
-    set rlFilterActiveUntil(v: Date) {this.restaurantRepository.filterActiveUntil = v;}
+    get rlFilterActiveUntil(): Date[] {return this.restaurantRepository.filterActiveUntil;}  
+    set rlFilterActiveUntil(v: Date[]) {this.restaurantRepository.filterActiveUntil = v;}
     get rlSortBy(): string {return this.restaurantRepository.sortBy;}
     get rlSortDir(): number {return this.restaurantRepository.sortDir;}
     set rlSortBy(v: string) {this.restaurantRepository.sortBy = v;}
     set rlSortDir(v: number) {this.restaurantRepository.sortDir = v;}
 
-    public ngOnInit(): void {
+    public ngOnInit(): void {        
         this.initTitle();
         this.initRestaurants();
     }
