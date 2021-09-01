@@ -4,7 +4,7 @@
     <div class="dpp-btn setnull" (click)="setNull();" *ngIf="value[0] || value[1]"><span></span></div>
     <div class="dpp-picker" [class.active]="active" [class.single]="!mode">        
         <div class="dpp-content">
-            <div class="dpp-mode" (click)="mode = mode === 1 ? 0 : 1"><input type="checkbox"> {{this.words['common']['period'][currentLang.slug]}}</div>
+            <div class="dpp-mode" (click)="mode = mode === 1 ? 0 : 1"><input type="checkbox" [checked]="mode"> {{this.words['common']['period'][currentLang.slug]}}</div>
             <div class="dpp-calendars">
                 <ng-container *ngFor="let v of value; let i = index;">
                     <div class="dpp-calendar" *ngIf="i <= mode">

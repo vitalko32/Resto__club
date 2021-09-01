@@ -10,8 +10,6 @@
         &.setnull {span::before {content: "\f00d";}}
     }
     .dtp-picker {
-        @media (min-width:0) {font-size: 13px;}
-		@media (min-width:1000px) {font-size: 14px;}
         position: absolute; top: calc(100% + 5px); left: -5px; width: 0; height: 0; opacity: 0; z-index: 3; color: var(--color-txt); overflow: hidden; box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.3); transition: all 0.3s ease 0s; will-change: height, width, opacity; border-radius: 15px; border:1px var(--color-txt) solid;
         &.active {
             height: 320px; width: 250px; opacity: 1;
@@ -54,11 +52,7 @@
             }
             .dtp-apply {
                 display: flex; justify-content: center;
-                button {
-                    @media (min-width:0) {font-size: 13px;}
-		            @media (min-width:1000px) {font-size: 14px;}
-                    background-color: var(--color-txt); color: #fff; cursor: pointer; border: none; padding: 5px 10px; border-radius: 5px;
-                }
+                button {background-color: var(--color-txt); color: #fff; cursor: pointer; border: none; padding: 5px 10px; border-radius: 5px;}
             }
         }
     }  
