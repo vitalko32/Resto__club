@@ -38,9 +38,10 @@ export class RestaurantsService extends APIService {
                 filter += ` AND LOWER(restaurants.name) LIKE LOWER('%${dto.filter.name}%')`;
             }
 
-            if (dto.filter.active_until) {
-                //let date: string = this.mysqlDate(new Date(dto.filter.active_until));
-                //filter += ` AND active_until BETWEEN '${date}' AND '${date} 23:59:59'`;
+            if (dto.filter.active_until[0]) {
+                let from: string = this.mysqlDate(new Date(dto.filter.active_until[0]));
+                let to: string = dto.filter.active_until[1] ? this.mysqlDate(new Date(dto.filter.active_until[1])) : from;
+                filter += ` AND active_until BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
             }
             
             let query = this.restaurantRepository.createQueryBuilder("restaurants").where(filter);

@@ -53,15 +53,10 @@ export class DatePeriodPickerComponent implements OnInit {
             this.init();
             this.active = true;        
         }        
-    }
-
-    public toggleMode(): void {
-        this.mode = this.mode ? 0 : 1;        
-        this.init();        
-    }
+    }    
 
     private init(): void {
-        for (let i = 0; i <= this.mode; i++) {
+        for (let i = 0; i <= 1; i++) {
             let iniDate = this.value[i] || new Date();
             this.year[i] = this.currentYear[i] = iniDate.getFullYear();
             this.month[i] = this.currentMonth[i] = iniDate.getMonth();
@@ -72,7 +67,7 @@ export class DatePeriodPickerComponent implements OnInit {
     }
 
     private buildDays(): void {
-        for (let i = 0; i <= this.mode; i++) {
+        for (let i = 0; i <= 1; i++) {
             let firstDayOfMonth: number = new Date(this.year[i], this.month[i]).getDay() - 1;
             (firstDayOfMonth === -1) ? firstDayOfMonth = 6 : null;
             let daysInMonth: number = 32 - new Date(this.year[i], this.month[i], 32).getDate();        
