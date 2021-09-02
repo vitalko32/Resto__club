@@ -8,11 +8,8 @@
         <table>
             <tr>
                 <td></td>
-                <td><search-input [(value)]="rlFilterName" cssClass="inline-block" (apply)="initRestaurants();"></search-input></td>
-                <td>
-                    <!--<datetime-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker>-->
-                    <dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker>
-                </td>
+                <td><input-search [(value)]="rlFilterName" cssClass="inline-block" (apply)="initRestaurants();"></input-search></td>
+                <td><dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker></td>
                 <td></td>
             </tr>
             <tr>
@@ -50,14 +47,11 @@
             <div class="dlmd-head">{{words['owner-restaurants']['filter'][currentLang.slug]}}</div>
             <div class="dlmd-param">
                 <div class="dlmd-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
-                <div class="dlmd-inputwrap"><search-input [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></search-input></div>
+                <div class="dlmd-inputwrap"><input-search [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></input-search></div>
             </div>
             <div class="dlmd-param" *ngIf="type === 'active'">
                 <div class="dlmd-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
-                <div class="dlmd-inputwrap">
-                    <!--<datetime-picker [(value)]="rlFilterActiveUntil" [withTime]="false" [canBeNull]="true" (valueChange)="initRestaurants();"></datetime-picker>-->
-                    <dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker>
-                </div>
+                <div class="dlmd-inputwrap"><dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker></div>
             </div>            
             <div class="dlmd-head">{{words['owner-restaurants']['sorting'][currentLang.slug]}}</div>
             <div class="dlmd-param">

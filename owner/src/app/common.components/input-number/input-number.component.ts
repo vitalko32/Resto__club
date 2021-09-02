@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
-    selector: "number-input",
-    templateUrl: "number-input.component.html",
-    styleUrls: ["number-input.component.scss"],
+    selector: "input-number",
+    templateUrl: "input-number.component.html",
+    styleUrls: ["input-number.component.scss"],
 })
-export class NumberInputComponent {
+export class InputNumberComponent {
     @Input() value: number = 0;
     @Input() min: number = 0;
     @Input() max: number = 999999999;

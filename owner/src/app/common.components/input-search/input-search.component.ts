@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
-    selector: "search-input",
-    templateUrl: "search-input.component.html",
-    styleUrls: ["search-input.component.scss"],
+    selector: "input-search",
+    templateUrl: "input-search.component.html",
+    styleUrls: ["input-search.component.scss"],
 })
-export class SearchInputComponent {
+export class InputSearchComponent {
     @Input() value: string;
     @Input() cssClass: string = "block";
     @Output() valueChange: EventEmitter<string> = new EventEmitter();
