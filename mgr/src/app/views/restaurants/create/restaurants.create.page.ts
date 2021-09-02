@@ -17,7 +17,7 @@ import { Lang } from 'src/app/model/orm/lang.model';
 export class RestaurantsCreatePage extends ObjectPage<Restaurant> implements OnInit {
 	public x: Restaurant = null;
 	public homeUrl: string = "/restaurants/restaurants";	
-	public requiredFields: string[] = ["name", "domain"];		
+	public requiredFields: string[] = ["name"];		
 
 	constructor(
 		protected admlangRepository: AdmLangRepository,

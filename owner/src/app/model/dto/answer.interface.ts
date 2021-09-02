@@ -3,4 +3,5 @@ export interface IAnswer<T> {
     readonly error?: string;
     readonly data?: T;
     readonly allLength?: number; // quantity of all elements in table
+    readonly sum?: number;
 }

@@ -9,12 +9,14 @@ import { ActiveRestaurantsPage } from "./pages/active/active.restaurants.page";
 import { CreateRestaurantsPage } from "./pages/create/create.restaurants.page";
 import { EditRestaurantsPage } from "./pages/edit/edit.restaurants.page";
 import { InactiveRestaurantsPage } from "./pages/inactive/inactive.restaurants.page";
+import { TransactionsRestaurantsPage } from "./pages/transactions/transactions.restaurants.page";
 
 let routes = RouterModule.forChild ([            
 	{path: "active", component: ActiveRestaurantsPage, pathMatch: "full"},
 	{path: "inactive", component: InactiveRestaurantsPage, pathMatch: "full"},
 	{path: ":type/create", component: CreateRestaurantsPage, pathMatch: "full"},
 	{path: ":type/edit/:id", component: EditRestaurantsPage},
+	{path: ":type/transactions/:id", component: TransactionsRestaurantsPage},
 	{path: "**", redirectTo: "/restaurants/active"},
 ]);
 
@@ -32,6 +34,7 @@ let routes = RouterModule.forChild ([
 		InactiveRestaurantsPage,
 		CreateRestaurantsPage,
 		EditRestaurantsPage,
+		TransactionsRestaurantsPage,
 		RestaurantComponent,
 		RechargeComponent,
 	],    		    

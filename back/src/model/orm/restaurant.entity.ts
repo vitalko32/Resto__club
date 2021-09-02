@@ -17,8 +17,7 @@ export class Restaurant {
     @Index()
     @Column({nullable: true, default: null})
     name: string;
-
-    @Index()
+    
     @Column({nullable: false, unique: true})
     domain: string;
 

@@ -18,7 +18,10 @@
                     }                    
                 }                
             }
-            td {padding: 10px 5px;}            
+            td {
+                padding: 10px 5px;
+                &.borderedbottom {border-bottom: 1px var(--color-grey) solid;}
+            }            
         }        
     }
     .datalist-mobile {
@@ -70,7 +73,7 @@
     .dataedit {
         @media (min-width:0) {border-radius: 15px; border: 5px var(--color-bg) solid; padding: 15px;}
         @media (min-width:1000px) {border-radius: 45px; border: 10px var(--color-bg) solid; padding: 30px;}
-        background-color: var(--color-bg-data); box-shadow: var(--block-shadow);
+        background-color: var(--color-bg-data); box-shadow: var(--block-shadow);        
         .de-row {
             display: flex; flex-wrap: wrap; margin-bottom: 15px; align-items: center;
             .de-title {

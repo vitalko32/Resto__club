@@ -12,6 +12,7 @@ import { RestaurantActiveRepository } from './repositories/restaurant.active.rep
 import { RestaurantInactiveRepository } from './repositories/restaurant.inactive.repository';
 import { RestaurantRepository } from './repositories/restaurant.repository';
 import { SettingRepository } from './repositories/setting.repository';
+import { TransactionRepository } from './repositories/transaction.repository';
 import { WordRepository } from './repositories/word.repository';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { WordRepository } from './repositories/word.repository';
         RestaurantActiveRepository,
         RestaurantInactiveRepository,
         CurrencyRepository,
+        TransactionRepository,
     ],
 })
 export class ServicesModule {}

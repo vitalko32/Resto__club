@@ -4,6 +4,7 @@ import { CurrenciesModule } from "./currencies/currencies.module";
 import { LangsModule } from "./langs/langs.module";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { SettingsModule } from "./settings/settings.module";
+import { TransactionsModule } from "./transactions/transactions.module";
 import { WordsModule } from "./words/words.module";
 
 @Module({
@@ -14,6 +15,7 @@ import { WordsModule } from "./words/words.module";
         WordsModule,
         RestaurantsModule,
         CurrenciesModule,
+        TransactionsModule,
     ],
     providers: [],
 })

@@ -16,6 +16,7 @@ import { IGetChunk } from "../model/dto/getchunk.interface";
 import { Restaurant } from "../model/orm/restaurant.model";
 import { Currency } from "../model/orm/currency.model";
 import { IRestaurantRecharge } from "../model/dto/restaurant.recharge.interface";
+import { Transaction } from "../model/orm/transaction.model";
 
 @Injectable()
 export class DataService {
@@ -46,6 +47,8 @@ export class DataService {
     public restaurantsRecharge(dto: IRestaurantRecharge): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/recharge", dto, true);}
     
     public currenciesAll(dto: IGetAll): Observable<IAnswer<Currency[]>> {return this.sendRequest("currencies/all", dto, true);}
+
+    public transactionsChunk(dto: IGetChunk): Observable<IAnswer<Transaction[]>> {return this.sendRequest("transactions/chunk", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

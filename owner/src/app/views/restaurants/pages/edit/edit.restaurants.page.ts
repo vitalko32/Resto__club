@@ -92,7 +92,7 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
 
     private validate(): boolean {
         let error = false;
-        this.restaurant.name = this.appService.trim(this.restaurant.name);        
+        this.restaurant.name = this.appService.trim(this.restaurant.name);            
         this.restaurant.ownername = this.appService.trim(this.restaurant.ownername);
         this.restaurant.phone = this.appService.trim(this.restaurant.phone);
         this.restaurant.address = this.appService.trim(this.restaurant.address);

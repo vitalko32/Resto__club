@@ -5,10 +5,7 @@
     </ng-container>        
     
     <div class="df-title" [class.required]="isRequired('name')">{{currentLang.phrases['workspace-restaurants-name']}}:</div>
-    <div class="df-inputwrap"><input type="text" [(ngModel)]="x.name"></div>
-
-    <div class="df-title" [class.required]="isRequired('domain')">{{currentLang.phrases['workspace-restaurants-domain']}}:</div>
-    <div class="df-inputwrap"><input type="text" [(ngModel)]="x.domain"></div>
+    <div class="df-inputwrap"><input type="text" [(ngModel)]="x.name"></div>    
 
     <div class="df-title" [class.required]="isRequired('ownername')">{{currentLang.phrases['workspace-restaurants-ownername']}}:</div>
     <div class="df-inputwrap"><input type="text" [(ngModel)]="x.ownername"></div>
@@ -24,6 +21,9 @@
 
     <div class="df-title" [class.required]="isRequired('ogrn')">{{currentLang.phrases['workspace-restaurants-ogrn']}}:</div>
     <div class="df-inputwrap"><input type="text" [(ngModel)]="x.ogrn"></div>
+
+    <div class="df-title" [class.required]="isRequired('domain')">{{currentLang.phrases['workspace-restaurants-domain']}}:</div>
+    <div class="df-inputwrap"><input type="text" [(ngModel)]="x.domain"></div>
 
     <div class="df-title" [class.required]="isRequired('comment')">{{currentLang.phrases['workspace-restaurants-comment']}}:</div>
     <div class="df-inputwrap"><textarea [(ngModel)]="x.comment"></textarea></div>

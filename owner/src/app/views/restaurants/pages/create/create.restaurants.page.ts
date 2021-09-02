@@ -21,16 +21,14 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;          
     public restaurant: Restaurant = new Restaurant().init(); 
     public formLoading: boolean = false; 
-    public formErrorName: boolean = false;
-    public formErrorDomain: boolean = false;
+    public formErrorName: boolean = false;    
     public formErrorOwnerName: boolean = false;
     public formErrorPhone: boolean = false;
     public formErrorAddress: boolean = false;
     public formErrorInn: boolean = false;
     public formErrorOgrn: boolean = false;
     public formErrorEmail: boolean = false;
-    public formErrorPassword: boolean = false;
-    public formErrorDomainDuplication: boolean = false;
+    public formErrorPassword: boolean = false;    
     public formErrorEmailDuplication: boolean = false;    
 
     constructor(
@@ -74,17 +72,14 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public async create(): Promise<void> {
         try {
             if (this.validate()) {
-                this.formLoading = true;
-                this.formErrorDomainDuplication = false;
+                this.formLoading = true;                
                 this.formErrorEmailDuplication = false;
                 let statusCode = await this.restaurantRepository.create(this.restaurant);
                 this.formLoading = false;
     
                 if (statusCode === 200) {
-                    this.router.navigateByUrl("/restaurants/inactive"); // после создания переходим в неактивные, т.к. созданный ресторан неактивен
+                    this.router.navigateByUrl("/restaurants/active"); // после создания переходим в активные
                 } else if (statusCode === 409) {
-                    this.formErrorDomainDuplication = true;
-                } else if (statusCode === 410) {
                     this.formErrorEmailDuplication = true;
                 } else {
                     this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
@@ -98,8 +93,7 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
 
     private validate(): boolean {
         let error = false;
-        this.restaurant.name = this.appService.trim(this.restaurant.name);
-        this.restaurant.domain = this.appService.trim(this.restaurant.domain);
+        this.restaurant.name = this.appService.trim(this.restaurant.name);        
         this.restaurant.ownername = this.appService.trim(this.restaurant.ownername);
         this.restaurant.phone = this.appService.trim(this.restaurant.phone);
         this.restaurant.address = this.appService.trim(this.restaurant.address);
@@ -113,14 +107,7 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
             error = true;
         } else {
             this.formErrorName = false;
-        }        
-
-        if (!this.restaurant.domain.length) {
-            this.formErrorDomain = true;
-            error = true;
-        } else {
-            this.formErrorDomain = false;
-        }
+        }                
 
         if (!this.restaurant.ownername.length) {
             this.formErrorOwnerName = true;

@@ -63,7 +63,7 @@ export class RestaurantsService extends APIService {
 
     public async create(dto: IRestaurantCreate): Promise<IAnswer<void>> {        
         try { 
-            if (!dto.name || !dto.domain) {
+            if (!dto.name) {
                 return {statusCode: 400, error: "required field is empty"};
             }            
             
@@ -79,7 +79,7 @@ export class RestaurantsService extends APIService {
 
     public async update(dto: IRestaurantUpdate): Promise<IAnswer<void>> {
         try { 
-            if (!dto.name || !dto.domain) {
+            if (!dto.name) {
                 return {statusCode: 400, error: "required field is empty"};
             }  
             

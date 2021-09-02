@@ -13,14 +13,7 @@
         <div class="de-value">
             <div class="de-inputwrap"><input type="text" name="name" [(ngModel)]="x.name" [class.error]="errorName"></div>
         </div>
-    </div>
-    <div class="de-row">
-        <div class="de-title">{{words['owner-restaurants']['domain'][currentLang.slug]}}: <span class="red">*</span></div>
-        <div class="de-value">
-            <div class="de-inputwrap"><input type="text" name="domain" [disabled]="mode !== 'create'" [(ngModel)]="x.domain" [class.error]="errorDomain || errorDomainDuplication"></div>
-            <div class="de-error" *ngIf="errorDomainDuplication">{{words['owner-restaurants']['error-domain-duplication'][currentLang.slug]}}</div>
-        </div>
-    </div>
+    </div>    
     <div class="de-row">
         <div class="de-title">{{words['owner-restaurants']['ownername'][currentLang.slug]}}: <span class="red">*</span></div>
         <div class="de-value">
@@ -31,6 +24,12 @@
         <div class="de-title">{{words['owner-restaurants']['phone'][currentLang.slug]}}: <span class="red">*</span></div>
         <div class="de-value">
             <div class="de-inputwrap"><input type="text" name="phone" [(ngModel)]="x.phone" [class.error]="errorPhone"></div>            
+        </div>
+    </div>
+    <div class="de-row">
+        <div class="de-title">{{words['owner-restaurants']['domain'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-inputwrap"><input type="text" name="domain" [(ngModel)]="x.domain"></div>            
         </div>
     </div>
     <div class="de-row">
@@ -70,7 +69,7 @@
                 </select>
             </div>     
         </div>
-    </div>
+    </div>    
     <div class="de-row">
         <div class="de-title">{{words['owner-restaurants']['comment'][currentLang.slug]}}:</div>
         <div class="de-value">

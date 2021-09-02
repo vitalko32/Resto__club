@@ -61,17 +61,11 @@ export class RestaurantsService extends APIService {
     }
 
     public async create(dto: IRestaurantCreate): Promise<IAnswer<Restaurant>> {        
-        try { 
-            let restaurant = await this.restaurantRepository.findOne({where: {domain: dto.domain}});            
-
-            if (restaurant) {
-                return {statusCode: 409, error: "restaurant domain in use"};    
-            }
-
+        try {
             let employee = await this.employeeRepository.findOne({where: {email: dto.employees[0].email}});
 
             if (employee) {
-                return {statusCode: 410, error: "employee email in use"};    
+                return {statusCode: 409, error: "employee email in use"};    
             }
             
             let rawPassword = dto.employees[0].password;
