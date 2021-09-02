@@ -12,12 +12,10 @@ export class Restaurant extends Model {
     public inn: string;
     public ogrn: string;
     public comment: string;
-    public active_until: Date;
-    public prolonged_at: Date;
+    public money: number;
     public created_at: Date;
 
-    get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}
-    get formattedActiveUntil(): string {return this.active_until ? `${this.twoDigits(this.active_until.getDate())}.${this.twoDigits(this.active_until.getMonth()+1)}.${this.active_until.getFullYear()} ${this.twoDigits(this.active_until.getHours())}:${this.twoDigits(this.active_until.getMinutes())}` : "";}
+    get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}    
 
     public build (o: Object): any {
         for (let field in o) {
@@ -34,6 +32,7 @@ export class Restaurant extends Model {
     public init(): Restaurant {
         this.currency_id = 1;
         this.lang_id = 1;
+        this.money = 0;
         return this;
     }    
 }

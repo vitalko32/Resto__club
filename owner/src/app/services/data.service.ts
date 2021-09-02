@@ -15,6 +15,7 @@ import { IAdminUpdatePassword } from "../model/dto/admin.updatepassword.interfac
 import { IGetChunk } from "../model/dto/getchunk.interface";
 import { Restaurant } from "../model/orm/restaurant.model";
 import { Currency } from "../model/orm/currency.model";
+import { IRestaurantRecharge } from "../model/dto/restaurant.recharge.interface";
 
 @Injectable()
 export class DataService {
@@ -42,7 +43,7 @@ export class DataService {
     public restaurantsCreate(x: Restaurant): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/create", x, true);}    
     public restaurantsUpdate(x: Restaurant): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/update", x, true);} 
     public restaurantsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`restaurants/delete/${id}`, null, true);}    
-    public restaurantsProlong(x: Restaurant): Observable<IAnswer<Restaurant>> {return this.sendRequest(`restaurants/prolong`, x, true);}    
+    public restaurantsRecharge(dto: IRestaurantRecharge): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/recharge", dto, true);}
     
     public currenciesAll(dto: IGetAll): Observable<IAnswer<Currency[]>> {return this.sendRequest("currencies/all", dto, true);}
     

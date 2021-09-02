@@ -98,15 +98,15 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
 
     private validate(): boolean {
         let error = false;
-        this.restaurant.name = this.restaurant.name.trim();
-        this.restaurant.domain = this.restaurant.domain.trim();
-        this.restaurant.ownername = this.restaurant.ownername.trim();
-        this.restaurant.phone = this.restaurant.phone.trim();
-        this.restaurant.address = this.restaurant.address.trim();
-        this.restaurant.inn = this.restaurant.inn.trim();
-        this.restaurant.ogrn = this.restaurant.ogrn.trim();
-        this.restaurant.employees[0].email = this.restaurant.employees[0].email.trim();
-        this.restaurant.employees[0].password = this.restaurant.employees[0].password.trim();
+        this.restaurant.name = this.appService.trim(this.restaurant.name);
+        this.restaurant.domain = this.appService.trim(this.restaurant.domain);
+        this.restaurant.ownername = this.appService.trim(this.restaurant.ownername);
+        this.restaurant.phone = this.appService.trim(this.restaurant.phone);
+        this.restaurant.address = this.appService.trim(this.restaurant.address);
+        this.restaurant.inn = this.appService.trim(this.restaurant.inn);
+        this.restaurant.ogrn = this.appService.trim(this.restaurant.ogrn);
+        this.restaurant.employees[0].email = this.appService.trim(this.restaurant.employees[0].email);
+        this.restaurant.employees[0].password = this.appService.trim(this.restaurant.employees[0].password);
 
         if (!this.restaurant.name.length) {
             this.formErrorName = true;

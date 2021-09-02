@@ -12,6 +12,7 @@ import { CurrenciesModule } from "./currencies/currencies.module";
 import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.module";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { EmployeesModule } from "./employees/employees.module";
+import { TransactionsModule } from "./transactions/transactions.module";
 
 @Module({
     imports: [        
@@ -27,6 +28,7 @@ import { EmployeesModule } from "./employees/employees.module";
         EmployeesModule,
         EmployeeStatusesModule,        
         RestaurantsModule,        
+        TransactionsModule,
     ],
     providers: [],
 })

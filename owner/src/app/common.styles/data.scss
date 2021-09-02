@@ -61,7 +61,8 @@
         span::before {font-size: 20px;}
         &.delete {font-family: "fa-solid"; span::before {content: "\f00d"; color: var(--color-red);}}
         &.edit {font-family: "fa-solid"; span::before {content: "\f06e";}}
-        &.prolong {font-family: "fa-regular"; span::before {content: "\f873";}}
+        &.recharge {font-family: "fa-regular"; span::before {content: "\f873";}}
+        &.transactions {font-family: "fa-regular"; span::before {content: "\f688";}}
         &.history {font-family: "fa-solid"; span::before {content: "\f1da";}}
     }    
 

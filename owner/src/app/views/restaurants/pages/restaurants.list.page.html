@@ -9,31 +9,23 @@
             <tr>
                 <td></td>
                 <td><input-search [(value)]="rlFilterName" cssClass="inline-block" (apply)="initRestaurants();"></input-search></td>
-                <td><dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker></td>
+                <td></td>
                 <td></td>
             </tr>
             <tr>
                 <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'created_at' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'created_at' && rlSortDir === -1" (click)="changeSorting('created_at')">{{words['owner-restaurants']['created-at'][currentLang.slug]}}</label></th>
                 <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'name' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'name' && rlSortDir === -1" (click)="changeSorting('name')">{{words['owner-restaurants']['name'][currentLang.slug]}}</label></th>
-                <th class="align-left"><label class="sortable" [class.sorted-forward]="rlSortBy === 'active_until' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'active_until' && rlSortDir === -1" (click)="changeSorting('active_until')">{{words['owner-restaurants']['active-until'][currentLang.slug]}}</label></th>                        
+                <th class="align-center"><label class="sortable" [class.sorted-forward]="rlSortBy === 'money' && rlSortDir === 1" [class.sorted-backward]="rlSortBy === 'money' && rlSortDir === -1" (click)="changeSorting('money')">{{words['owner-restaurants']['money'][currentLang.slug]}}</label></th>                        
                 <th class="align-center"><label>{{words['owner-restaurants']['actions'][currentLang.slug]}}</label></th>
             </tr>                                    
             <tr *ngFor="let r of rl">
                 <td [class.grey]="type === 'inactive'"><span class="nowrap">{{r.formattedCreatedAt}}</span></td>
                 <td [class.grey]="type === 'inactive'" [innerHTML]="r.name"></td>
-                <td [class.grey]="type === 'inactive'">                    
-                    <ng-container *ngIf="type === 'active'">
-                        <div><strong class="nowrap">{{r.formattedActiveUntil}}</strong></div>
-                        <div [class.red]="r.daysLeft <= 3">{{r.daysLeft}} {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
-                    </ng-container>
-                    <ng-container *ngIf="type === 'inactive'">                        
-                        <div *ngIf="r.daysLeft !== -999999999">{{words['owner-restaurants']['expired'][currentLang.slug]}} {{-r.daysLeft}} {{words['owner-restaurants']['days-ago'][currentLang.slug]}}</div>
-                        <div *ngIf="r.daysLeft === -999999999">{{words['common']['not-set'][currentLang.slug]}}</div>
-                    </ng-container>                    
-                </td>
+                <td class="align-center" [class.grey]="type === 'inactive'">{{r.money | number:'1.2-2'}}</td>
                 <td class="align-center nowrap">
-                    <a class="datalist-btn prolong" (click)="onProlong(r)" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
-                    <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn recharge" (click)="onRecharge(r)" [title]="words['owner-restaurants']['recharge'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn transactions" [title]="words['owner-restaurants']['transactions'][currentLang.slug]"><span></span></a>
+                    <!--<a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>-->
                     <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>
                     <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
                 </td>
@@ -48,11 +40,7 @@
             <div class="dlmd-param">
                 <div class="dlmd-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
                 <div class="dlmd-inputwrap"><input-search [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></input-search></div>
-            </div>
-            <div class="dlmd-param" *ngIf="type === 'active'">
-                <div class="dlmd-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
-                <div class="dlmd-inputwrap"><dateperiod-picker *ngIf="type === 'active'" [(value)]="rlFilterActiveUntil" (valueChange)="initRestaurants();"></dateperiod-picker></div>
-            </div>            
+            </div>                     
             <div class="dlmd-head">{{words['owner-restaurants']['sorting'][currentLang.slug]}}</div>
             <div class="dlmd-param">
                 <div class="dlmd-selectwrap">
@@ -61,8 +49,8 @@
                         <option [selected]="rlSortBy === 'created_at' && rlSortDir === -1" [value]="1">{{words['owner-restaurants']['created-at'][currentLang.slug]}} &#9650;</option>
                         <option [selected]="rlSortBy === 'name' && rlSortDir === 1" [value]="2">{{words['owner-restaurants']['name'][currentLang.slug]}} &#9660;</option>
                         <option [selected]="rlSortBy === 'name' && rlSortDir === -1" [value]="3">{{words['owner-restaurants']['name'][currentLang.slug]}} &#9650;</option>
-                        <option [selected]="rlSortBy === 'active_until' && rlSortDir === 1" [value]="4">{{words['owner-restaurants']['active-until'][currentLang.slug]}} &#9660;</option>
-                        <option [selected]="rlSortBy === 'active_until' && rlSortDir === -1" [value]="5">{{words['owner-restaurants']['active-until'][currentLang.slug]}} &#9650;</option>
+                        <option [selected]="rlSortBy === 'money' && rlSortDir === 1" [value]="4">{{words['owner-restaurants']['money'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="rlSortBy === 'money' && rlSortDir === -1" [value]="5">{{words['owner-restaurants']['money'][currentLang.slug]}} &#9650;</option>
                     </select>
                 </div>
             </div>
@@ -77,21 +65,13 @@
                 <div class="dlmi-value" [innerHTML]="r.name"></div>
             </div>
             <div class="dlmi-param" [class.grey]="type === 'inactive'">
-                <div class="dlmi-title">{{words['owner-restaurants']['active-until'][currentLang.slug]}}:</div>
-                <div class="dlmi-value">
-                    <ng-container *ngIf="type === 'active'">
-                        <div><strong class="nowrap">{{r.formattedActiveUntil}}</strong></div>
-                        <div [class.red]="r.daysLeft <= 3">{{r.daysLeft}} {{words['owner-restaurants']['days-left'][currentLang.slug]}}</div>
-                    </ng-container>
-                    <ng-container *ngIf="type === 'inactive'">                        
-                        <div *ngIf="r.daysLeft !== -999999999">{{words['owner-restaurants']['expired'][currentLang.slug]}} {{-r.daysLeft}} {{words['owner-restaurants']['days-ago'][currentLang.slug]}}</div>
-                        <div *ngIf="r.daysLeft === -999999999">{{words['common']['not-set'][currentLang.slug]}}</div>
-                    </ng-container>                    
-                </div>
+                <div class="dlmi-title">{{words['owner-restaurants']['money'][currentLang.slug]}}:</div>
+                <div class="dlmi-value">{{r.money | number:'1.2-2'}}</div>
             </div>
             <div class="dlmi-actions">
-                <a class="datalist-btn prolong" (click)="onProlong(r)" [title]="words['owner-restaurants']['prolong'][currentLang.slug]"><span></span></a>
-                <a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
+                <a class="datalist-btn recharge" (click)="onRecharge(r)" [title]="words['owner-restaurants']['recharge'][currentLang.slug]"><span></span></a>
+                <a class="datalist-btn transactions" [title]="words['owner-restaurants']['transactions'][currentLang.slug]"><span></span></a>
+                <!--<a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>-->
                 <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['owner-restaurants']['edit'][currentLang.slug]"><span></span></a>                    
                 <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['owner-restaurants']['delete'][currentLang.slug]"><span></span></a>
             </div>            
@@ -101,5 +81,5 @@
 </div>    
 
 <the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>
-<the-prolong [(active)]="prolongActive" [restaurant]="prolongRestaurant" (prolong)="prolong()"></the-prolong>
+<the-recharge [(active)]="rechargePanelActive" [restaurant]="rechargeRestaurant" (recharged)="initRestaurants()"></the-recharge>
     

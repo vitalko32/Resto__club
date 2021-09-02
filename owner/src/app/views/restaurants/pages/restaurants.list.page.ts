@@ -13,13 +13,13 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;    
     public rlLoading: boolean = false;    
     public rlSortingVariants: any[][] = // для мобильной верстки
-        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["active_until", 1], ["active_until", -1]];    
+        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1]];    
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
-    public prolongActive: boolean = false;
-    public prolongRestaurant: Restaurant = null;
-
+    public rechargeRestaurant: Restaurant = null;
+    public rechargePanelActive: boolean = false;
+    
     constructor(
         protected appService: AppService,
         protected wordRepository: WordRepository,
@@ -108,21 +108,10 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
             this.appService.showError(err);
             this.rlLoading = false;
         }
-    }
+    }    
 
-    public onProlong(r: Restaurant): void {
-        this.prolongRestaurant = r;
-        this.prolongActive = true;
-    }
-
-    public async prolong(): Promise<void> {
-        try {            
-            this.rlLoading = true;
-            await this.restaurantRepository.prolong(this.prolongRestaurant);
-            this.initRestaurants();            
-        } catch (err) {
-            this.appService.showError(err);
-            this.rlLoading = false;
-        }
+    public onRecharge(r: Restaurant): void {
+        this.rechargeRestaurant = r;
+        this.rechargePanelActive = true;
     }
 }

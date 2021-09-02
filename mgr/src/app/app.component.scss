@@ -154,6 +154,7 @@ html {
                                 }
                                 td {
                                     padding: 5px 10px; white-space: nowrap;
+                                    &.right {text-align: right;}
                                     .dt-inputwrap {
                                         &.flex {display: flex;}
                                         input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input[type="password"], select {                                            

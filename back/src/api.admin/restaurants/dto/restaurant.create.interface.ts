@@ -9,6 +9,5 @@ export interface IRestaurantCreate {
     readonly inn: string;
     readonly ogrn: string;
     readonly comment: string;
-    readonly active_until: string;
-    readonly prolonged_at: string;
+    readonly money: number;
 }

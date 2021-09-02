@@ -11,5 +11,6 @@ export interface IRestaurantCreate {
     readonly inn: string;
     readonly ogrn: string;
     readonly comment: string;
+    readonly money: number;
     readonly employees: Employee[];
 }

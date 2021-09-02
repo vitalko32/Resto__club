@@ -11,12 +11,17 @@ import { IRestaurantCreate } from "./dto/restaurant.create.interface";
 import { Employee } from "src/model/orm/employee.entity";
 import { IRestaurantUpdate } from "./dto/restaurant.update.interface";
 import { MailService } from "src/common/mail.service";
+import { Admin } from "src/model/orm/admin.entity";
+import { IRestaurantRecharge } from "./dto/restaurant.recharge.interface";
+import { Transaction, TransactionType } from "src/model/orm/transaction.entity";
 
 @Injectable()
 export class RestaurantsService extends APIService {
     constructor (
         @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+        @InjectRepository(Admin) private adminRepository: Repository<Admin>,
+        @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
         private mailService: MailService,
     ) {
         super();
@@ -31,7 +36,7 @@ export class RestaurantsService extends APIService {
             let filter: string = "TRUE";
 
             if (dto.filter.active !== undefined) {                
-                filter += dto.filter.active ? ` AND restaurants.active_until >= NOW()` : ` AND (restaurants.active_until < NOW() OR restaurants.active_until IS NULL)`;                
+                filter += dto.filter.active ? ` AND restaurants.money >= 0` : ` AND restaurants.money < 0`;                
             }     
             
             if (dto.filter.name) {
@@ -107,20 +112,7 @@ export class RestaurantsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         } 
-    }
-
-    public async prolong(dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
-        try {             
-            let x: Restaurant = this.restaurantRepository.create(dto);
-            x.prolonged_at = new Date();
-            await this.restaurantRepository.save(x);            
-            return {statusCode: 200, data: x};
-        } catch (err) {
-            let errTxt: string = `Error in RestaurantsService.prolong: ${String(err)}`;
-            console.log(errTxt);
-            return {statusCode: 500, error: errTxt};
-        } 
-    }
+    }    
 
     public async delete(id: number): Promise<IAnswer<void>> {
         try {
@@ -131,5 +123,43 @@ export class RestaurantsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }        
-    }    
+    }  
+
+    public async recharge(dto: IRestaurantRecharge): Promise<IAnswer<void>> {
+        try {
+            if (!(await this.validateAdmin(dto.admin_id, dto.admin_password))) {
+                return {statusCode: 401};
+            }
+
+            let x: Restaurant = await this.restaurantRepository.findOne(dto.restaurant_id);
+
+            if (!x) {
+                return {statusCode: 404, error: "restaurant not found"};
+            }
+
+            x.money += dto.amount;
+            await this.restaurantRepository.save(x);
+            let t = new Transaction();
+            t.amount = dto.amount;
+            t.restaurant_id = dto.restaurant_id;
+            t.type = TransactionType.Admin;
+            await this.transactionRepository.save(t);
+
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in RestaurantsService.recharge: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }  
+    }
+    
+    private async validateAdmin(id: number, password: string): Promise<boolean> {
+        let admin: Admin = await this.adminRepository
+            .createQueryBuilder("admin")
+            .addSelect("admin.password")
+            .where({id})
+            .getOne();      
+        
+        return admin && admin.active && await this.comparePassHash(password, admin.password);        
+    }
 }

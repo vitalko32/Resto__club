@@ -126,6 +126,7 @@ export class MailService extends APIService {
         }
     }
 
+    /*
     public async mailEmployeeRestaurantExpiring(email: string, restaurant: Restaurant): Promise<void> {
         try {            
             const mtd: IMailtemplateData = await this.getMailtemplateData("[employee]restaurant-expiring", restaurant.lang_id);               
@@ -178,5 +179,5 @@ export class MailService extends APIService {
         } catch (err) {
             console.log(`Error in MailService.mailAdminRestaurantsExpiring: ${String(err)}`);            
         }
-    }
+    }*/
 }

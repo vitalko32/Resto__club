@@ -40,12 +40,8 @@ export class Restaurant {
     @Column({nullable: true, default: null, type: "text"})
     comment: string;
 
-    @Index()
-    @Column({nullable: true, default: null, type: "timestamp"})
-    active_until: Date;
-
-    @Column({nullable: true, default: null, type: "timestamp"})
-    prolonged_at: Date;
+    @Column({nullable: false, default: 0})
+    money: number;
 
     @CreateDateColumn()
     created_at: Date;    

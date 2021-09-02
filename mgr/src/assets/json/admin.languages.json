@@ -21,6 +21,7 @@
             "sidebar-submodule-restaurants": "Рестораны", 
             "sidebar-submodule-employees": "Сотрудники", 
             "sidebar-submodule-employee-statuses": "Статусы сотрудников", 
+            "sidebar-submodule-transactions": "Транзакции", 
             "sidebar-module-utils": "Служебные",    
             "sidebar-submodule-mailtemplates": "Шаблоны писем",                                                                                      
             
@@ -108,8 +109,7 @@
             "workspace-restaurants-inn": "ИНН",                 
             "workspace-restaurants-ogrn": "ОГРН",                 
             "workspace-restaurants-comment": "Комментарий",                 
-            "workspace-restaurants-active-until": "Активен до",                 
-            "workspace-restaurants-prolonged-at": "Дата продления",
+            "workspace-restaurants-money": "Деньги",                             
             "workspace-restaurants-created-at": "Дата создания",
             
             "workspace-employees-h1": "Cотрудники",
@@ -126,6 +126,12 @@
             "workspace-employee-statuses-name": "Название",     
             "workspace-employee-statuses-color": "Цвет",     
             "workspace-employee-statuses-pos": "Позиция",     
+
+            "workspace-transactions-h1": "Транзакции",
+            "workspace-transactions-restaurant": "Ресторан",
+            "workspace-transactions-type": "Тип",
+            "workspace-transactions-amount": "Сумма",
+            "workspace-transactions-created-at": "Дата создания",
 
             "workspace-mailtemplates-h1": "Шаблоны писем",     
             "workspace-mailtemplates-name": "Название",     
@@ -154,7 +160,8 @@
             "sidebar-module-restaurants": "Restaurants and related",  
             "sidebar-submodule-restaurants": "Restaurants", 
             "sidebar-submodule-employees": "Employees",   
-            "sidebar-submodule-employee-statuses": "Employee statuses",                
+            "sidebar-submodule-employee-statuses": "Employee statuses",       
+            "sidebar-submodule-transactions": "Transactions",          
             "sidebar-module-utils": "Utilities",    
             "sidebar-submodule-mailtemplates": "Mail templates",   
 
@@ -242,8 +249,7 @@
             "workspace-restaurants-inn": "ITN/TIN",                 
             "workspace-restaurants-ogrn": "PSRN",                 
             "workspace-restaurants-comment": "Comment",                 
-            "workspace-restaurants-active-until": "Active until", 
-            "workspace-restaurants-prolonged-at": "Prolonged at",                
+            "workspace-restaurants-money": "Money",                                   
             "workspace-restaurants-created-at": "Created at",
 
             "workspace-employees-h1": "Employees",
@@ -259,7 +265,13 @@
             "workspace-employee-statuses-h1": "Employee statuses",     
             "workspace-employee-statuses-name": "Name",     
             "workspace-employee-statuses-color": "Color",     
-            "workspace-employee-statuses-pos": "Position",    
+            "workspace-employee-statuses-pos": "Position",   
+            
+            "workspace-transactions-h1": "Transactions",
+            "workspace-transactions-restaurant": "Restaurants",
+            "workspace-transactions-type": "Type",
+            "workspace-transactions-amount": "Amount",
+            "workspace-transactions-created-at": "Created at",
 
             "workspace-mailtemplates-h1": "Mail templates",     
             "workspace-mailtemplates-name": "Name",     

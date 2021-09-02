@@ -20,6 +20,7 @@ export class CronService extends APIService {
         super();
     }
     
+    /*
     // рассылка рестораторам уведомлений о скорой или уже состоявшейся просрочке
     @Cron('0 0 4 * * *') // каждый день в 4 утра                            
     public async notifyEmployeesAboutExpiring(): Promise<void> {                
@@ -105,4 +106,5 @@ export class CronService extends APIService {
             .getMany();      
         return rl;
     }
+    */
 }

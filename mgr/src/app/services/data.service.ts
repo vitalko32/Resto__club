@@ -20,6 +20,7 @@ import { Currency } from "../model/orm/currency.model";
 import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { Restaurant } from "../model/orm/restaurant.model";
 import { Employee } from "../model/orm/employee.model";
+import { Transaction } from "../model/orm/transaction.model";
 
 @Injectable()
 export class DataService {
@@ -101,6 +102,8 @@ export class DataService {
     public restaurantsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("restaurants/delete-bulk", ids, true);}
     public restaurantsCreate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/create", x, true);}
     public restaurantsUpdate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/update", x, true);}     
+
+    public transactionsChunk(dto: IGetChunk): Observable<IAnswer<Transaction[]>> {return this.sendRequest("transactions/chunk", dto, true);}
     
     public mailtemplatesChunk(dto: IGetChunk): Observable<IAnswer<Mailtemplate[]>> {return this.sendRequest("mailtemplates/chunk", dto, true);}
     public mailtemplatesOne(id: number): Observable<IAnswer<Mailtemplate>> {return this.sendRequest(`mailtemplates/one/${id}`, null, true);}
