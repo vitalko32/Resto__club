@@ -79,8 +79,8 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     }    
     
     private initTitle(): void {
-        this.appService.setTitle(this.words["owner-restaurants"][`title-transactions`][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-restaurants"][`title-transactions`][lang.slug]));        
+        this.appService.setTitle(this.words["owner-transactions"][`title`][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["owner-transactions"][`title`][lang.slug]));        
     }
 
     public changeSorting(sortBy: string): void {

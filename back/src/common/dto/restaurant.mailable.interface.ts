@@ -1,5 +1,4 @@
-export interface IRestaurantMailable {
-    active_until: string;
+export interface IRestaurantMailable {    
     name: string;
     email: string;
     phone: string;

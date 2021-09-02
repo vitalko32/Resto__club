@@ -126,58 +126,41 @@ export class MailService extends APIService {
         }
     }
 
-    /*
-    public async mailEmployeeRestaurantExpiring(email: string, restaurant: Restaurant): Promise<void> {
+    public async mailEmployeeRestaurantLowMoney(email: string, restaurant: Restaurant, days: number): Promise<void> {
         try {            
-            const mtd: IMailtemplateData = await this.getMailtemplateData("[employee]restaurant-expiring", restaurant.lang_id);               
+            const mtd: IMailtemplateData = await this.getMailtemplateData("[employee]restaurant-low-money", restaurant.lang_id);               
             const subject: string = mtd.subject;
             const content: string = mtd.content
                 .replace(/{{name}}/g, restaurant.name)
-                .replace(/{{date}}/g, this.humanDatetime(restaurant.active_until));                
+                .replace(/{{days}}/g, days.toString());                
             await this.send(email, subject, content);               
         } catch (err) {
-            console.log(`Error in MailService.mailEmployeeRestaurantExpiring: ${String(err)}`);            
+            console.log(`Error in MailService.mailEmployeeRestaurantLowmoney: ${String(err)}`);            
         }
     }
 
-    public async mailEmployeeRestaurantExpired(email: string, restaurant: Restaurant): Promise<void> {
+    public async mailEmployeeRestaurantNoMoney(email: string, restaurant: Restaurant): Promise<void> {
         try {            
-            const mtd: IMailtemplateData = await this.getMailtemplateData("[employee]restaurant-expired", restaurant.lang_id);               
+            const mtd: IMailtemplateData = await this.getMailtemplateData("[employee]restaurant-no-money", restaurant.lang_id);               
             const subject: string = mtd.subject;
-            const content: string = mtd.content
-                .replace(/{{name}}/g, restaurant.name)
-                .replace(/{{date}}/g, this.humanDatetime(restaurant.active_until));                
-            await this.send(email, subject, content);
+            const content: string = mtd.content.replace(/{{name}}/g, restaurant.name);                
+            await this.send(email, subject, content);               
         } catch (err) {
-            console.log(`Error in MailService.mailEmployeeRestaurantExpiring: ${String(err)}`);            
+            console.log(`Error in MailService.mailEmployeeRestaurantNomoney: ${String(err)}`);            
         }
     }
 
-    public async mailAdminRestaurantsExpiring(email, restaurants: IRestaurantMailable[], days: number, part: number, parts: number): Promise<void> {
+    public async mailAdminRestaurantsLowNoMoney(email, restaurants: IRestaurantMailable[], days: number, part: number, parts: number): Promise<void> {
         try {
-            const mtd: IMailtemplateData = await this.getMailtemplateData("[admin]restaurants-expiring", 1);               
+            const mtd: IMailtemplateData = await this.getMailtemplateData("[admin]restaurants-low-no-money", 1);               
             const subject: string = mtd.subject
                 .replace(/{{days}}/g, days.toString())
                 .replace(/{{part}}/g, part.toString())
                 .replace(/{{parts}}/g, parts.toString());
-            const content: string = this.buildCycledFragment(mtd.content, restaurants, "restaurants", "r", ["active_until", "name", "email", "phone"]);
+            const content: string = this.buildCycledFragment(mtd.content, restaurants, "restaurants", "r", ["name", "email", "phone"]);
             await this.send(email, subject, content);
         } catch (err) {
             console.log(`Error in MailService.mailAdminRestaurantsExpiring: ${String(err)}`);            
         }
-    }
-
-    public async mailAdminRestaurantsExpired(email, restaurants: IRestaurantMailable[], days: number, part: number, parts: number): Promise<void> {
-        try {
-            const mtd: IMailtemplateData = await this.getMailtemplateData("[admin]restaurants-expired", 1);               
-            const subject: string = mtd.subject
-                .replace(/{{days}}/g, days.toString())
-                .replace(/{{part}}/g, part.toString())
-                .replace(/{{parts}}/g, parts.toString());
-            const content: string = this.buildCycledFragment(mtd.content, restaurants, "restaurants", "r", ["active_until", "name", "email", "phone"]);
-            await this.send(email, subject, content);
-        } catch (err) {
-            console.log(`Error in MailService.mailAdminRestaurantsExpiring: ${String(err)}`);            
-        }
-    }*/
+    }    
 }

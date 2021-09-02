@@ -730,7 +730,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 --
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
-1	1	Alex	7573497@gmail.com	$2b$10$Gobwd1qZOKJdbSuurk6l4erxyxJwWVAgketfn64yZGLhV9EXZa1iW	2021-8/1629929025223_150.jpg	t	t
+1	1	Alex	7573497@gmail.com	$2b$10$CwPx5O0WXZSvhDLH4abDDulVgye1JkYWmYt9y7XSgZ3sGOsriWYEy	2021-8/1629929025223_150.jpg	t	t
 \.
 
 
@@ -785,6 +785,8 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 2	10	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	t	2021-08-26 21:32:06.303446	f
 3	8	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	t	2021-08-26 22:03:00.332342	f
 27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Алексей Чепига	+380660000000	f	2021-09-02 12:59:04.543675	f
+28	45	\N	75734974444@gmail.com	$2b$10$o2Y63TUS9aBVLLpNAkS9IOMVb2TvEKCjUtg3tADQTnsJI/zrTqBJe	\N	\N	t	2021-09-02 21:07:52.119825	t
+29	9	\N	7573497777@gmail.com	$2b$10$lrWJKgjzIhv6qDzSD6AcZOjh2KO9k5x3K5tVjQJ3q58ZgF/uSQKj6	Петров Андрей	+380664000050	t	2021-09-03 01:41:45.691878	f
 \.
 
 
@@ -805,14 +807,12 @@ COPY "default".vne_langs (id, slug, title, shorttitle, img, pos, active, slugabl
 COPY "default".vne_mailtemplate_translations (id, mailtemplate_id, lang_id, subject, content) FROM stdin;
 4	2	2	Your Restclick account	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Your account has been created in the Restclick system.</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;"><b>Access data:</b></div>\n                            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 14px; line-height: 20px;">\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Name</td><td width="10">&nbsp;</td><td>{{name}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Domain</td><td width="10">&nbsp;</td><td><a href="https://{{domain}}.restclick.vio.net.ua">https://{{domain}}.restclick.vio.net.ua</a></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Contact&nbsp;person</td><td width="10">&nbsp;</td><td>{{ownername}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Phone</td><td width="10">&nbsp;</td><td>{{phone}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Address</td><td width="10">&nbsp;</td><td>{{address}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">ITN/TIN</td><td width="10">&nbsp;</td><td>{{inn}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">PSRN</td><td width="10">&nbsp;</td><td>{{ogrn}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Currency</td><td width="10">&nbsp;</td><td>{{currency}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Language</td><td width="10">&nbsp;</td><td>{{language}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Administrator&nbsp;e-mail</td><td width="10">&nbsp;</td><td>{{email}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Administrator&nbsp;password</td><td width="10">&nbsp;</td><td>{{password}}</td></tr>\n                                <tr><td height="10"></td></tr>                                \n                            </table>\n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n
 3	2	1	Аккаунт в системе Restclick	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Создан аккаунт в системе Restclick.</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;"><b>Данные для доступа:</b></div>\n                            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 14px; line-height: 20px;">\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Название</td><td width="10">&nbsp;</td><td>{{name}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Домен</td><td width="10">&nbsp;</td><td><a href="https://{{domain}}.restclick.vio.net.ua">https://{{domain}}.restclick.vio.net.ua</a></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">ФИО</td><td width="10">&nbsp;</td><td>{{ownername}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Телефон</td><td width="10">&nbsp;</td><td>{{phone}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Адрес</td><td width="10">&nbsp;</td><td>{{address}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">ИНН</td><td width="10">&nbsp;</td><td>{{inn}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">ОГРН</td><td width="10">&nbsp;</td><td>{{ogrn}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Валюта</td><td width="10">&nbsp;</td><td>{{currency}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Язык</td><td width="10">&nbsp;</td><td>{{language}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">E-mail&nbsp;администратора</td><td width="10">&nbsp;</td><td>{{email}}</td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td colspan="3" height="1" bgcolor="#f0f0f0"></td></tr>\n                                <tr><td height="10"></td></tr>\n                                <tr><td width="115" style="color: #666666;">Пароль&nbsp;администратора</td><td width="10">&nbsp;</td><td>{{password}}</td></tr>\n                                <tr><td height="10"></td></tr>                             \n                            </table>\n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n\n\n
-9	5	1	Заканчивается подписка в системе Restclick	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Внимание!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                Дата окончания подписки в системе Restclick для ресторана "{{name}}": <strong>{{date}}</strong>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n\n\n
-12	6	2	Restclick subscription expired	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Attention!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                Restclick subscription for the "{{name}}" restaurant expired on <strong>{{date}}</strong>. The main functionality is blocked.\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n\n\n
-11	6	1	Подписка в системе Restclick не действительна	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Внимание!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                Срок действия подписки в системе Restclick для ресторана "{{name}}" окончен <strong>{{date}}</strong>. Основной функционал заблокирован.\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n
-10	5	2	Restclick subscription ends	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Attention!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                End date of Restclick subscription for the "{{name}}" restaurant: <strong>{{date}}</strong>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n
+9	5	1	Заканчиваются средства в системе Restclick	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Внимание!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                <div>Средства на счету ресторана "{{name}}" в системе Restclick позволяют оплатить {{days}} дн. пользования.</div>\n                                <div>Для дальнейшего пользования не забудьте пополнить счет!</div>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>\n
+13	7	1	Рестораны, у которых заканчиваются средства через {{days}} дн. ({{part}}/{{parts}})	<html>\n    <body>\n        <table>\n            <tr>\n                <td><strong>Название</strong></td><td><strong>E-mail администратора</strong></td><td><strong>Телефон</strong></td>\n            </tr>\n            {{foreach restaurants r}}\n            <tr><td>{{r.name}}</td><td>{{r.email}}</td><td>{{r.phone}}</td></tr>\n            {{endforeach}}\n        </table>\n    </body>\n</html>\n
 14	7	2	\N	
-13	7	1	Рестораны, у которых заканчивается подписка через {{days}} дн. ({{part}}/{{parts}})	<html>\n    <body>\n        <table>\n            <tr>\n                <td><strong>Дата окончания</strong></td><td><strong>Название</strong></td><td><strong>E-mail администратора</strong></td><td><strong>Телефон</strong></td>\n            </tr>\n            {{foreach restaurants r}}\n            <tr><td>{{r.active_until}}</td><td>{{r.name}}</td><td>{{r.email}}</td><td>{{r.phone}}</td></tr>\n            {{endforeach}}\n        </table>\n    </body>\n</html>\n
-15	8	1	Рестораны, у которых закончилась подписка {{days}} дн. назад ({{part}}/{{parts}})	<html>\n    <body>\n        <table>\n            <tr>\n                <td><strong>Дата окончания</strong></td><td><strong>Название</strong></td><td><strong>E-mail администратора</strong></td><td><strong>Телефон</strong></td>\n            </tr>\n            {{foreach restaurants r}}\n            <tr><td>{{r.active_until}}</td><td>{{r.name}}</td><td>{{r.email}}</td><td>{{r.phone}}</td></tr>\n            {{endforeach}}\n        </table>\n    </body>\n</html>\n
-16	8	2	\N	
+12	6	2	Out of funds in the Restclick system	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Attention!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                <div>Funds on the "{{name}}" restaurant account in the Restclick system have been exhausted.</div>\n                                <div>For further use, do not forget to recharge your account!</div>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>
+10	5	2	The funds in the Restclick system are running out	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Attention!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                <div>Funds on the "{{name}}" restaurant account in Restclick system allow you to pay {{days}} days of use.</div>\n                                <div>For further use, do not forget to recharge your account!</div>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>
+11	6	1	Закончились средства в системе Restclick	<html>\n    <head>\n        <style>\n            @media (min-width:0) {.email-wrap {background-color: none; padding: 15px 0;}} \n            @media (min-width:960px) {.email-wrap {background-color: #E8EFF4; padding: 40px 15px;}} \n            @media (min-width:0) {.email-blk {padding: 0; background-color: inherit;}} \n            @media (min-width:960px) {.email-blk {padding: 30px 60px; background-color: #ffffff;}}\n        </style>\n    </head>\n    <body>\n        <div style="font-family: Verdana, Geneva, Tahoma, sans-serif; color:#000000;" class="email-wrap">\n            <div style="max-width:560px; margin:0 auto;">\n                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 12px;">\n                    <tr><td align="center" height="72" valign="top"><img src="https://static.restclick.vio.net.ua/images/email/logo.png" width="40" height="40"></td></tr>\n                    <tr>\n                        <td class="email-blk">\n                            <div style="font-size: 16px; line-height: 26px; margin-bottom: 15px;"><b>Внимание!</b></div>                            \n                            <div style="margin-bottom: 10px; font-size: 14px;">\n                                <div>Средства на счету ресторана "{{name}}" в системе Restclick исчерпаны.</div>\n                                <div>Для дальнейшего пользования не забудьте пополнить счет!</div>\n                            </div>                            \n                        </td>\n                    </tr>                                                                                    \n                </table>\n            </div>\n        </div>\n    </body>\n</html>
 \.
 
 
@@ -822,10 +822,9 @@ COPY "default".vne_mailtemplate_translations (id, mailtemplate_id, lang_id, subj
 
 COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 2	[employee]restaurant-created	f
-5	[employee]restaurant-expiring	f
-6	[employee]restaurant-expired	f
-7	[admin]restaurants-expiring	f
-8	[admin]restaurants-expired	f
+5	[employee]restaurant-low-money	f
+6	[employee]restaurant-no-money	f
+7	[admin]restaurants-low-no-money	f
 \.
 
 
@@ -834,26 +833,27 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
-38	1	Владимирский	vlad	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	0
-1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	0
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
 4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0
 7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0
-8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	0
 15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	94
 19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	1000
-12	1	Вкусно-быстро	tets10	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	9476
 10	1	Сто пудов	test8	Алексей Сидоров	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:25:50.223075	1	0
 5	1	У Ашота	test3	Алексей Козлов	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:24:34.213564	2	0
 9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:34.269246	1	10
 22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-10
 11	1	В гостях у сказки	test9	\N	\N	\N	\N	\N	\N	2021-08-27 00:26:05.774306	1	46588
-43	1	Надежда	nadezhda	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	1000
-21	1	Пушкинский	vio	Курочкин Иван Кузьмич	+38 097 456789987	\N	\N	\N	\N	2021-08-28 11:12:59.882811	1	456
 18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	2021-08-27 22:30:50.941314	1	333
+45	1	Кошки-мышки	http://ukr.net	Максим Савенков	+380667889999	Танкопия, 13/9	999666333	555444	\N	2021-09-02 21:07:52.119825	1	5
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	456
+12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	9476
+1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	66485
+38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	111
+43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	1945
+8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	20
 \.
 
 
@@ -862,13 +862,13 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 --
 
 COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
-1	domain	restclick.vio.net.ua	main domain of app	1	t	f
-4	owner-app-url	https://owner.restclick.vio.net.ua	owner application URL	2	t	f
-2	google-clientid	63103186909-5ut3m449vpr9uqp0v7jv02phea85mub0.apps.googleusercontent.com	Google Oauth API client ID	3	t	f
 5	smtp-host	smtp.gmail.com	\N	100	f	f
 6	smtp-port	587	\N	101	f	f
 7	smtp-login	viodev.robot@gmail.com	\N	102	f	f
 8	smtp-pw	6vl1TfeXq	\N	103	f	f
+4	owner-app-url	https://owner.restclick.vio.net.ua	owner application URL	1	t	f
+2	google-clientid	63103186909-5ut3m449vpr9uqp0v7jv02phea85mub0.apps.googleusercontent.com	Google Oauth API client ID	3	t	f
+9	price	10	цена человеко-дня	2	t	f
 \.
 
 
@@ -878,13 +878,21 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 
 COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FROM stdin;
 1	1	111	2021-09-02 13:03:47.052906	auto
-2	1	-555	2021-09-02 13:04:10.573991	auto
 3	2	88	2021-09-02 13:04:23.827832	auto
 4	18	333	2021-09-02 15:44:46.945943	auto
 5	15	94	2021-09-02 15:45:26.75125	auto
 6	19	1000	2021-09-02 16:10:59.442815	admin
 7	12	9476	2021-09-02 16:11:06.945146	admin
 8	11	46588	2021-09-02 16:11:40.90919	admin
+9	45	5	2021-09-02 21:09:19.325418	admin
+10	1	111	2021-09-02 21:50:21.612191	admin
+12	1	654	2021-09-02 21:50:31.732758	admin
+2	1	-555	2021-09-01 13:04:10.573991	auto
+13	1	65498	2021-09-01 21:50:39.086692	admin
+11	1	222	2021-09-03 21:50:26.375833	admin
+14	38	111	2021-09-02 23:56:56.688894	admin
+15	43	945	2021-09-02 23:58:40.44392	admin
+16	8	20	2021-09-03 01:42:34.353377	admin
 \.
 
 
@@ -939,8 +947,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 78	38	2	Passwords don't match
 168	67	1	Не задано
 169	67	2	Not set
-112	39	1	Фильтр
-113	39	2	Filter
 132	49	1	Пн
 133	49	2	Mo
 134	50	1	Вт
@@ -975,8 +981,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 163	64	2	Home
 170	68	1	Регистрация ресторана
 171	68	2	Restaurant registration
-172	69	1	Домен
-173	69	2	Domain
 174	70	1	ФИО
 175	70	2	Contact person name
 176	71	1	Телефон
@@ -1009,6 +1013,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 203	84	2	Add
 204	85	1	Закрыть
 205	85	2	Close
+173	69	2	Website
+172	69	1	Сайт
 206	86	1	Пароль сохранен
 207	86	2	Password saved
 208	87	1	Да
@@ -1025,8 +1031,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 219	92	2	Month
 220	93	1	Год
 221	93	2	Year
-224	95	1	Сортировка
-225	95	2	Sorting
 226	96	1	Авторизация
 227	96	2	Authorization
 228	97	1	E-mail
@@ -1043,8 +1047,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 239	102	2	period
 240	103	1	Деньги на счету
 241	103	2	Money in the account
-242	104	1	Транзакции
-243	104	2	Transactions
 244	105	1	Транзакции
 245	105	2	Transactions
 246	106	1	Пополнить счет
@@ -1055,6 +1057,32 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 251	108	2	Amount
 252	109	1	Ваш пароль
 253	109	2	Your password
+254	110	1	Ресторан
+255	110	2	Restaurant
+256	111	1	Дата создания
+257	111	2	Created at
+258	112	1	Тип
+259	112	2	Type
+260	113	1	Сумма
+261	113	2	Amount
+263	114	2	none
+262	114	1	нет данных
+264	115	1	автоматическая
+265	115	2	auto
+266	116	1	сотрудник ресторана
+267	116	2	restaurant employee
+268	117	1	администратор системы
+269	117	2	system administrator
+270	118	1	Итоговая сумма
+271	118	2	Total
+272	119	1	Фильтр
+273	119	2	Filter
+274	120	1	Сортировка
+275	120	2	Sorting
+276	121	1	Транзакции
+277	121	2	Transactions
+278	122	1	Сводка
+279	122	2	Summary
 \.
 
 
@@ -1067,9 +1095,10 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 2	owner-common	2
 3	owner-login	3
 1	owner-restaurants	4
-4	owner-password	5
-6	restorator-login	7
-7	restorator-common	6
+4	owner-password	6
+7	restorator-common	7
+6	restorator-login	8
+8	owner-transactions	5
 \.
 
 
@@ -1128,6 +1157,11 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 91	5	115	day	\N
 92	5	116	month	\N
 93	5	117	year	\N
+113	8	4	amount	\N
+115	8	5	type-auto	\N
+116	8	6	type-employee	\N
+117	8	7	type-admin	\N
+118	8	8	sum	
 96	6	1	title	\N
 97	6	2	email	\N
 98	6	3	password	\N
@@ -1135,7 +1169,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 100	6	5	with-google	\N
 101	6	6	with-apple	\N
 102	5	118	period	\N
-39	1	106	filter	\N
+122	8	9	summary	\N
 79	1	107	error-domain-duplication	\N
 80	1	108	error-email-duplication	\N
 16	1	109	created-at	\N
@@ -1151,14 +1185,19 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 77	1	119	admin-email	\N
 78	1	120	admin-password	\N
 81	1	121	lang	\N
-95	1	123	sorting	\N
 103	1	124	money	\N
-104	1	5	title-transactions	\N
 105	1	125	transactions	\N
 106	1	101	recharge	\N
 107	1	126	restaurant	\N
 108	1	127	amount	\N
 109	1	128	your-password	\N
+114	5	119	none	\N
+119	5	120	filter	\N
+120	5	121	sorting	\N
+121	8	0	title	\N
+110	8	1	restaurant	\N
+111	8	2	created-at	\N
+112	8	3	type	\N
 \.
 
 
@@ -1201,7 +1240,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 3, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 27, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 29, true);
 
 
 --
@@ -1229,42 +1268,42 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 43, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 45, true);
 
 
 --
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_settings_id_seq', 8, true);
+SELECT pg_catalog.setval('"default".vne_settings_id_seq', 9, true);
 
 
 --
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 8, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 16, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 253, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 279, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 7, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 8, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 109, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 122, true);
 
 
 --
@@ -1452,13 +1491,6 @@ CREATE INDEX "IDX_2e1de563e14f7009d683b9bde4" ON "default".vne_langs USING btree
 --
 
 CREATE INDEX "IDX_752fad6244eb8729bba8e6558d" ON "default".vne_employees USING btree (email);
-
-
---
--- Name: IDX_83e1ce98acfb064fa10c6dbb9b; Type: INDEX; Schema: default; Owner: vio
---
-
-CREATE INDEX "IDX_83e1ce98acfb064fa10c6dbb9b" ON "default".vne_restaurants USING btree (domain);
 
 
 --

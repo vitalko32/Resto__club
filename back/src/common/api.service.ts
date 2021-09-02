@@ -132,5 +132,5 @@ export abstract class APIService {
         }
 
         return data;
-    }
+    }    
 }

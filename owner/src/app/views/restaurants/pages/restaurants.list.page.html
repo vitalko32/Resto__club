@@ -41,12 +41,12 @@
     <div class="datalist-mobile">
         <div class="datalist-overlay" [class.active]="rlLoading"></div>
         <div class="dlm-dash">            
-            <div class="dlmd-head">{{words['owner-restaurants']['filter'][currentLang.slug]}}</div>
+            <div class="dlmd-head">{{words['common']['filter'][currentLang.slug]}}</div>
             <div class="dlmd-param">
                 <div class="dlmd-title">{{words['owner-restaurants']['name'][currentLang.slug]}}:</div>
                 <div class="dlmd-inputwrap"><input-search [(value)]="rlFilterName" cssClass="adopt-block" (apply)="initRestaurants();"></input-search></div>
             </div>                     
-            <div class="dlmd-head">{{words['owner-restaurants']['sorting'][currentLang.slug]}}</div>
+            <div class="dlmd-head">{{words['common']['sorting'][currentLang.slug]}}</div>
             <div class="dlmd-param">
                 <div class="dlmd-selectwrap">
                     <select #mobsorting (change)="setSorting(mobsorting.value)">
