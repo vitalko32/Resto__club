@@ -15,7 +15,16 @@
             </tr>
             <tr>
                 <td><dateperiod-picker [(value)]="tlFilterCreatedAt" (valueChange)="initTransactions()"></dateperiod-picker></td>
-                <td></td>
+                <td>
+                    <div class="dld-selectwrap">
+                        <select [(ngModel)]="tlFilterType" (ngModelChange)="initTransactions()">
+                            <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
+                            <option [ngValue]="'auto'">{{words['owner-transactions']['type-auto'][currentLang.slug]}}</option>
+                            <option [ngValue]="'employee'">{{words['owner-transactions']['type-employee'][currentLang.slug]}}</option>
+                            <option [ngValue]="'admin'">{{words['owner-transactions']['type-admin'][currentLang.slug]}}</option>
+                        </select>
+                    </div>                    
+                </td>
                 <td></td>                
             </tr>
             <tr>
@@ -52,6 +61,17 @@
             <div class="dlmd-param">
                 <div class="dlmd-title">{{words['owner-transactions']['created-at'][currentLang.slug]}}:</div>
                 <div class="dlmd-inputwrap"><dateperiod-picker [(value)]="tlFilterCreatedAt" (valueChange)="initTransactions()"></dateperiod-picker></div>
+            </div> 
+            <div class="dlmd-param">
+                <div class="dlmd-title">{{words['owner-transactions']['type'][currentLang.slug]}}:</div>
+                <div class="dlmd-selectwrap">
+                    <select [(ngModel)]="tlFilterType" (ngModelChange)="initTransactions()">
+                        <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
+                        <option [ngValue]="'auto'">{{words['owner-transactions']['type-auto'][currentLang.slug]}}</option>
+                        <option [ngValue]="'employee'">{{words['owner-transactions']['type-employee'][currentLang.slug]}}</option>
+                        <option [ngValue]="'admin'">{{words['owner-transactions']['type-admin'][currentLang.slug]}}</option>
+                    </select>
+                </div>
             </div>                     
             <div class="dlmd-head">{{words['common']['sorting'][currentLang.slug]}}</div>
             <div class="dlmd-param">

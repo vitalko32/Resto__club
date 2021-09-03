@@ -40,6 +40,8 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     get tlLength(): number {return this.transactionRepository.chunkLength;}   
     get tlFilterCreatedAt(): Date[] {return this.transactionRepository.filterCreatedAt;}  
     set tlFilterCreatedAt(v: Date[]) {this.transactionRepository.filterCreatedAt = v;}
+    get tlFilterType(): TransactionType {return this.transactionRepository.filterType;}
+    set tlFilterType(v: TransactionType) {this.transactionRepository.filterType = v;}
     get tlSortBy(): string {return this.transactionRepository.sortBy;}
     get tlSortDir(): number {return this.transactionRepository.sortDir;}
     set tlSortBy(v: string) {this.transactionRepository.sortBy = v;}

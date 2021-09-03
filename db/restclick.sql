@@ -1083,6 +1083,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 277	121	2	Transactions
 278	122	1	Сводка
 279	122	2	Summary
+280	123	1	все
+281	123	2	any
 \.
 
 
@@ -1170,6 +1172,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 101	6	6	with-apple	\N
 102	5	118	period	\N
 122	8	9	summary	\N
+123	5	122	any	\N
 79	1	107	error-domain-duplication	\N
 80	1	108	error-email-duplication	\N
 16	1	109	created-at	\N
@@ -1289,7 +1292,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 16, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 279, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 281, true);
 
 
 --
@@ -1303,7 +1306,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 8, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 122, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 123, true);
 
 
 --

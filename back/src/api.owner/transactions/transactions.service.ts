@@ -32,6 +32,10 @@ export class TransactionsService extends APIService {
                 filter += ` AND restaurant_id = '${dto.filter.restaurant_id}'`;
             }
 
+            if (dto.filter.type) {
+                filter += ` AND type = '${dto.filter.type}'`;
+            }
+
             let query = this.transactionRepository.createQueryBuilder("transactions").where(filter);
             let data: Transaction[] = await query.orderBy({[`${sortBy}`]: sortDir}).take(q).skip(from).getMany();
             let allLength: number = await query.getCount();
