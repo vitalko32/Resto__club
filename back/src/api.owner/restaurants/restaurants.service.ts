@@ -41,13 +41,7 @@ export class RestaurantsService extends APIService {
             
             if (dto.filter.name) {
                 filter += ` AND LOWER(restaurants.name) LIKE LOWER('%${dto.filter.name}%')`;
-            }
-
-            if (dto.filter.active_until[0]) {
-                let from: string = this.mysqlDate(new Date(dto.filter.active_until[0]));
-                let to: string = dto.filter.active_until[1] ? this.mysqlDate(new Date(dto.filter.active_until[1])) : from;
-                filter += ` AND active_until BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
-            }
+            }            
             
             let query = this.restaurantRepository.createQueryBuilder("restaurants").where(filter);
             let data: Restaurant[] = await query.orderBy({[`restaurants.${sortBy}`]: sortDir}).take(q).skip(from).getMany();

@@ -46,7 +46,7 @@ export class NotificationService {
                 }                
             }
         } catch (err) {
-            let errTxt: string = `Error in CronService.notifyEmployeesAboutLowMoney: ${String(err)}`;
+            let errTxt: string = `Error in NotificationService.notifyEmployeesAboutLowMoney: ${String(err)}`;
             console.log(errTxt);
         }           
     }    
@@ -95,7 +95,7 @@ export class NotificationService {
                 }
             }
         } catch (err) {
-            let errTxt: string = `Error in CronService.notifyAdminsAboutLowMoney: ${String(err)}`;
+            let errTxt: string = `Error in NotificationService.notifyAdminsAboutLowMoney: ${String(err)}`;
             console.log(errTxt);
         }  
     }    
