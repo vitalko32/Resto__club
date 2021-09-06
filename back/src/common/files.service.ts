@@ -50,6 +50,7 @@ export class FilesService {
         const fileName: string = Math.round(new Date().getTime()).toString()+`_${width}`;        
         const fileFullName = `${fileName}.jpg`;        
         await sharp(file.buffer)
+            .rotate() // поворачиваем в соответствии с метаданными, которые по умолчанию не используются (и не надо, т.к. не все устройства их понимают!)    
             .resize({width, withoutEnlargement: true})
             .jpeg({quality: 80})
             .toFile(`${folder}/${fileFullName}`);

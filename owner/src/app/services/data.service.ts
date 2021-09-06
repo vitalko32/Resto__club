@@ -41,10 +41,10 @@ export class DataService {
 
     public restaurantsChunk(dto: IGetChunk): Observable<IAnswer<Restaurant[]>> {return this.sendRequest("restaurants/chunk", dto, true);}
     public restaurantsOne(id: number): Observable<IAnswer<Restaurant>> {return this.sendRequest(`restaurants/one/${id}`, null, true);}
-    public restaurantsCreate(x: Restaurant): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/create", x, true);}    
-    public restaurantsUpdate(x: Restaurant): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/update", x, true);} 
+    public restaurantsCreate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/create", x, true);}    
+    public restaurantsUpdate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/update", x, true);} 
     public restaurantsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`restaurants/delete/${id}`, null, true);}    
-    public restaurantsRecharge(dto: IRestaurantRecharge): Observable<IAnswer<Restaurant>> {return this.sendRequest("restaurants/recharge", dto, true);}
+    public restaurantsRecharge(dto: IRestaurantRecharge): Observable<IAnswer<void>> {return this.sendRequest("restaurants/recharge", dto, true);}
     
     public currenciesAll(dto: IGetAll): Observable<IAnswer<Currency[]>> {return this.sendRequest("currencies/all", dto, true);}
 

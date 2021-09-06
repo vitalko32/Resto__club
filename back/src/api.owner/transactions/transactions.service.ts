@@ -6,6 +6,7 @@ import { Transaction } from "../../model/orm/transaction.entity";
 import { IAnswer } from "../../model/answer.interface";
 import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { Sortdir } from "src/model/sortdir.type";
+import { db_name, db_schema } from "src/options";
 
 
 @Injectable()
@@ -39,7 +40,7 @@ export class TransactionsService extends APIService {
             let query = this.transactionRepository.createQueryBuilder("transactions").where(filter);
             let data: Transaction[] = await query.orderBy({[`${sortBy}`]: sortDir}).take(q).skip(from).getMany();
             let allLength: number = await query.getCount();
-            let sumRes = await getManager().query(`SELECT SUM(amount) AS sum FROM restclick.default.vne_transactions WHERE ${filter}`);
+            let sumRes = await getManager().query(`SELECT SUM(amount) AS sum FROM ${db_name}.${db_schema}.vne_transactions WHERE ${filter}`);
             let sum: number = sumRes[0].sum ? parseInt(sumRes[0].sum) : 0;            
 
             return {statusCode: 200, data, allLength, sum};

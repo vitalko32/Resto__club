@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { getManager, Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { IAnswer } from "src/model/answer.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
@@ -14,6 +14,9 @@ import { MailService } from "src/common/mail.service";
 import { Admin } from "src/model/orm/admin.entity";
 import { IRestaurantRecharge } from "./dto/restaurant.recharge.interface";
 import { Transaction, TransactionType } from "src/model/orm/transaction.entity";
+import { Setting } from "src/model/orm/setting.entity";
+import { db_name, db_schema } from "src/options";
+import { IRestaurant } from "./dto/restaurant.interface";
 
 @Injectable()
 export class RestaurantsService extends APIService {
@@ -22,30 +25,54 @@ export class RestaurantsService extends APIService {
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Admin) private adminRepository: Repository<Admin>,
         @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
+        @InjectRepository(Setting) private settingRepository: Repository<Setting>,
         private mailService: MailService,
     ) {
         super();
     }    
     
-    public async chunk(dto: IGetChunk): Promise<IAnswer<Restaurant[]>> {
+    public async chunk(dto: IGetChunk): Promise<IAnswer<IRestaurant[]>> {
         try {
-            let sortBy: string = dto.sortBy;
-            let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-            let from: number = dto.from;
-            let q: number = dto.q;
-            let filter: string = "TRUE";
+            const strPrice: string = (await this.settingRepository.findOne({where: {p: "price"}}))?.v;
+            const price: number = strPrice ? parseInt(strPrice) : 999999999;
+            const sortBy: string = dto.sortBy !== "daysleft" ? `r.${dto.sortBy}` : dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const from: number = dto.from;
+            const q: number = dto.q;            
+            const t_restaurants: string = `${db_name}.${db_schema}.vne_restaurants`;
+            const t_employees: string = `${db_name}.${db_schema}.vne_employees`;
+            let filterStatement: string = "TRUE";
+            let havingStatement: string = "TRUE";
 
             if (dto.filter.active !== undefined) {                
-                filter += dto.filter.active ? ` AND restaurants.money >= 0` : ` AND restaurants.money < 0`;                
+                filterStatement += dto.filter.active ? ` AND r.money >= 0` : ` AND r.money < 0`;                
             }     
             
             if (dto.filter.name) {
-                filter += ` AND LOWER(restaurants.name) LIKE LOWER('%${dto.filter.name}%')`;
+                filterStatement += ` AND LOWER(r.name) LIKE LOWER('%${dto.filter.name}%')`;
+            }
+
+            if (dto.filter.daysleft) {
+                havingStatement += ` AND r.money / NULLIF(COUNT(DISTINCT e.id) * ${price}, 0) = '${dto.filter.daysleft}'`;
             }            
             
-            let query = this.restaurantRepository.createQueryBuilder("restaurants").where(filter);
-            let data: Restaurant[] = await query.orderBy({[`restaurants.${sortBy}`]: sortDir}).take(q).skip(from).getMany();
-            let allLength: number = await query.getCount();
+            const mainStatement: string = `
+                SELECT 
+                    r.*, 
+                    CAST(COUNT(DISTINCT e.id) AS INT) AS employees_q,
+                    CAST(r.money / NULLIF(COUNT(DISTINCT e.id) * ${price}, 0) AS INT) AS daysleft
+                FROM ${t_restaurants} AS r
+                LEFT JOIN ${t_employees} AS e ON r.id=e.restaurant_id
+                WHERE ${filterStatement}                
+                GROUP BY r.id
+                HAVING ${havingStatement}
+                ORDER BY ${sortBy} ${sortDir}                                                
+            `;
+            const chunkStatement: string = `LIMIT ${q} OFFSET ${from}`;   
+            const countStatement: string = `SELECT CAST(COUNT(*) AS INT) AS count FROM (${mainStatement}) AS t`;            
+            const data: IRestaurant[] = await getManager().query(`${mainStatement} ${chunkStatement}`);
+            const allLength: number = (await getManager().query(countStatement))[0]?.count || 0;
+
             return {statusCode: 200, data, allLength};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.chunk: ${String(err)}`;
@@ -54,7 +81,7 @@ export class RestaurantsService extends APIService {
         }
     }
 
-    public async create(dto: IRestaurantCreate): Promise<IAnswer<Restaurant>> {        
+    public async create(dto: IRestaurantCreate): Promise<IAnswer<void>> {        
         try {
             let employee = await this.employeeRepository.findOne({where: {email: dto.employees[0].email}});
 
@@ -71,7 +98,7 @@ export class RestaurantsService extends APIService {
             x.employees[0].password = rawPassword;
             this.mailService.mailEmployeeRestaurantCreated(x);
 
-            return {statusCode: 200, data: x};
+            return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.create: ${String(err)}`;
             console.log(errTxt);
@@ -90,11 +117,11 @@ export class RestaurantsService extends APIService {
         }
     }
 
-    public async update(dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
+    public async update(dto: IRestaurantUpdate): Promise<IAnswer<void>> {
         try {             
             let x: Restaurant = this.restaurantRepository.create(dto);
             await this.restaurantRepository.save(x);            
-            return {statusCode: 200, data: x};
+            return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.update: ${String(err)}`;
             console.log(errTxt);

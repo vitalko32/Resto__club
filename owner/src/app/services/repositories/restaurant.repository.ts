@@ -9,7 +9,7 @@ import { SimpleRepository } from "./_simple.repository";
 export class RestaurantRepository extends SimpleRepository<Restaurant> {
     public filterActive: boolean;
     public filterName: string;
-    public filterActiveUntil: Date[];
+    public filterDaysleft: string;    
 
     constructor(protected dataService: DataService) {
         super();
@@ -19,7 +19,7 @@ export class RestaurantRepository extends SimpleRepository<Restaurant> {
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            let filter: any = {active: this.filterActive, name: this.filterName, active_until: this.filterActiveUntil};
+            let filter: any = {active: this.filterActive, name: this.filterName, daysleft: this.filterDaysleft};
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
@@ -72,21 +72,7 @@ export class RestaurantRepository extends SimpleRepository<Restaurant> {
                 reject(err.message);
             });
         });
-    }
-
-    /*public prolong(x: Restaurant): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.dataService.restaurantsProlong(x).subscribe(res => {
-                if (res.statusCode === 200) {
-                    resolve();
-                } else {                    
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);
-            });
-        });
-    }*/
+    }    
 
     public recharge(dto: IRestaurantRecharge): Promise<number> {
         return new Promise((resolve, reject) => this.dataService.restaurantsRecharge(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message)));

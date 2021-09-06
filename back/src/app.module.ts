@@ -21,6 +21,7 @@ import { Transaction } from './model/orm/transaction.entity';
 import { Word } from './model/orm/word.entity';
 import { WordTranslation } from './model/orm/word.translation.entity';
 import { Wordbook } from './model/orm/wordbook.entity';
+import { db_login, db_name, db_password, db_port, db_schema } from './options';
 
 @Module({
 	imports: [
@@ -28,11 +29,11 @@ import { Wordbook } from './model/orm/wordbook.entity';
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			host: 'localhost',
-			port: 5432,
-			username: 'vio',
-			password: '6vl1TfeXq',
-			database: 'restclick',
-			schema: "default",
+			port: db_port,
+			username: db_login,
+			password: db_password,
+			database: db_name,
+			schema: db_schema,
 			entities: [
 				Admin,
 				Admingroup,

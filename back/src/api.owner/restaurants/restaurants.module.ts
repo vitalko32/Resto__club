@@ -6,6 +6,7 @@ import { Admin } from "src/model/orm/admin.entity";
 import { Employee } from "src/model/orm/employee.entity";
 
 import { Restaurant } from "src/model/orm/restaurant.entity";
+import { Setting } from "src/model/orm/setting.entity";
 import { Transaction } from "src/model/orm/transaction.entity";
 import { jwtConstants } from "../../common/auth.constants";
 import { RestaurantsController } from "./restaurants.controller";
@@ -18,6 +19,7 @@ import { RestaurantsService } from "./restaurants.service";
             Employee,
             Admin,
             Transaction,
+            Setting,
         ]),
         JwtModule.register(jwtConstants),
         CommonModule,

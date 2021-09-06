@@ -6,8 +6,8 @@ import { RestaurantRepository } from './restaurant.repository';
 export class RestaurantInactiveRepository extends RestaurantRepository {    
     constructor(protected dateService: DataService) {
         super(dateService);
-        this.filterActive = false;
-        this.filterActiveUntil = [null, null];
+        this.filterActive = false;        
         this.filterName = "";
+        this.filterDaysleft = "";
     }    
 }

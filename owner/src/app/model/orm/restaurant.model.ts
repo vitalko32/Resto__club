@@ -15,7 +15,10 @@ export class Restaurant extends Model {
     public comment: string;
     public money: number;
     public created_at: Date;
+
     public employees?: Employee[];
+    public employees_q?: number;
+    public daysleft?: number;
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}` : "";}
     

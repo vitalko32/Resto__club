@@ -13,7 +13,7 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;    
     public rlLoading: boolean = false;    
     public rlSortingVariants: any[][] = // для мобильной верстки
-        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1]];    
+        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1], ["daysleft", 1], ["daysleft", -1]];    
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
@@ -35,8 +35,8 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     get rlLength(): number {return this.restaurantRepository.chunkLength;}   
     get rlFilterName(): string {return this.restaurantRepository.filterName;}  
     set rlFilterName(v: string) {this.restaurantRepository.filterName = v;}
-    get rlFilterActiveUntil(): Date[] {return this.restaurantRepository.filterActiveUntil;}  
-    set rlFilterActiveUntil(v: Date[]) {this.restaurantRepository.filterActiveUntil = v;}
+    get rlFilterDaysleft(): string {return this.restaurantRepository.filterDaysleft;}  
+    set rlFilterDaysleft(v: string) {this.restaurantRepository.filterDaysleft = v;}
     get rlSortBy(): string {return this.restaurantRepository.sortBy;}
     get rlSortDir(): number {return this.restaurantRepository.sortDir;}
     set rlSortBy(v: string) {this.restaurantRepository.sortBy = v;}

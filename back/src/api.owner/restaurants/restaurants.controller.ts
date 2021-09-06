@@ -7,6 +7,7 @@ import { Restaurant } from "../../model/orm/restaurant.entity";
 import { IRestaurantCreate } from "./dto/restaurant.create.interface";
 import { IRestaurantUpdate } from "./dto/restaurant.update.interface";
 import { IRestaurantRecharge } from "./dto/restaurant.recharge.interface";
+import { IRestaurant } from "./dto/restaurant.interface";
 
 @Controller('api/owner/restaurants')
 export class RestaurantsController {
@@ -15,14 +16,14 @@ export class RestaurantsController {
     // get fragment
     @UseGuards(AuthGuard)
     @Post("chunk")
-    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Restaurant[]>> {
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<IRestaurant[]>> {
         return this.restaurantsService.chunk(dto);
     }
 
     // create
     @UseGuards(AuthGuard)
     @Post("create")
-    public create(@Body() dto: IRestaurantCreate): Promise<IAnswer<Restaurant>> {
+    public create(@Body() dto: IRestaurantCreate): Promise<IAnswer<void>> {
         return this.restaurantsService.create(dto);
     }
     
@@ -36,7 +37,7 @@ export class RestaurantsController {
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IRestaurantUpdate): Promise<IAnswer<Restaurant>> {
+    public update(@Body() dto: IRestaurantUpdate): Promise<IAnswer<void>> {
         return this.restaurantsService.update(dto);
     }
 
