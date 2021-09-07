@@ -1,1 +1,22 @@
-[home]
+<div class="dash-placeholder"></div>
+<div class="data">
+    <div class="dataedit">
+        <div class="de-row aligntop">
+            <div class="de-title">Вы работаете как:</div>
+            <div class="de-value"><div class="de-txtwrap"><strong>{{employee.name}}</strong></div></div>
+        </div>
+        <div class="de-row aligntop">
+            <div class="de-title">Ресторан:</div>
+            <div class="de-value"><div class="de-txtwrap"><strong>{{employee.restaurant.name}}</strong></div></div>
+        </div>
+        <div class="de-row aligntop" *ngIf="employee.is_admin">
+            <div class="de-title">Состояние счета:</div>
+            <div class="de-value">
+                <div class="de-txtwrap"><strong>{{employee.restaurant.money | number:'1.2-2'}} RUR</strong></div>
+                <div class="de-txtwrap">осталось дней: <strong>{{employee.restaurant.daysleft}}</strong></div>
+                <div class="de-txtwrap margined">следующее списание: <strong>{{localPayTime}}</strong> ({{payTime}} UTC)</div>
+                <div class="de-rechargewrap"><div class="de-recharge"><span>Пополнить</span></div></div>
+            </div>
+        </div>           
+    </div>
+</div>

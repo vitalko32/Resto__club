@@ -25,11 +25,13 @@
         }
     }
     .hd-btn {
-        height: 45px; display: flex; align-items: center; border-radius: 23px; padding: 0 30px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; font-weight: bold; white-space: nowrap; cursor: pointer; color: var(--color-txt); margin-right: 15px;
+        height: 45px; display: flex; align-items: center; border-radius: 23px; padding: 0 30px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; font-weight: bold; white-space: nowrap; cursor: pointer; color: var(--color-txt); 
+        &.rightmargined {margin-right: 15px;}
         span {
             display: flex; align-items: center;
             &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px;}
         }
         &.logout {span::before {content: "\f2f5";}}
+        &.money {span::before {content: "\f53c";}}
     }
 }

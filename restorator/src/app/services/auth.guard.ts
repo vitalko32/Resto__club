@@ -12,7 +12,7 @@ export class AuthGuard {
     ) { }
     
     public canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {        
-        if (this.authService.authData !== null) {
+        if (this.authService.authData.value !== null) {
             return true;
         } else {
             this.router.navigateByUrl ("/auth/login");

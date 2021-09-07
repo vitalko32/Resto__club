@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { IEmployeeLogin } from "src/app/model/dto/employee.login.interface";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { GoogleService } from "src/app/services/google.service";
+import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
@@ -25,14 +27,16 @@ export class LoginAuthPage {
         private authService: AuthService,
         private googleService: GoogleService,
         private wordRepository: WordRepository,
+        private langRepository: LangRepository,
         private router: Router,
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
+    get langs(): Lang[] {return this.langRepository.xl;}
 
     public ngOnInit(): void {
-        this.authService.authData !== null ? this.router.navigateByUrl("/") : null;
+        this.authService.authData.value !== null ? this.router.navigateByUrl("/") : null;
         this.initTitle();
     }
 
@@ -48,19 +52,21 @@ export class LoginAuthPage {
     public async login(): Promise<void> {
         try {            
             if (this.validate()) {
-                /*this.formLoading = true;
+                this.formLoading = true;
                 this.formErrorDenied = false;
-                let dto: IAdminLogin = {email: this.email, password: this.password};
+                let dto: IEmployeeLogin = {email: this.email, password: this.password};
                 let statusCode: number = await this.authService.login(dto);
                 this.formLoading = false;
     
                 if (statusCode === 200) {
+                    let lang = this.langs.find(l => l.id === this.authService.authData.value.employee.restaurant.lang_id);                    
+                    lang ? this.appService.setLang(lang) : null;
                     this.router.navigateByUrl("/");                    
                 } else if (statusCode === 401) {
                     this.formErrorDenied = true;                    
                 } else {
                     this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
-                } */               
+                } 
             }            
         } catch (err) {
             this.appService.showError(err);

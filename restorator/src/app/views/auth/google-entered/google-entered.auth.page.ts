@@ -31,13 +31,14 @@ export class GoogleEnteredAuthPage implements OnInit {
     }
 
     private async processGoogleData(): Promise<void> {
-        try {            
-            /*
+        try {                        
             this.googleService.buildToken();    
             let email: string = await this.googleService.getUserEmail();              
-            let statusCode: number = await this.authService.loginByEmail(email); // надо еще проверять домен!!!!!!!!!!!!!
+            let statusCode: number = await this.authService.loginByEmail(email); 
     
             if (statusCode === 200) {
+                let lang = this.langs.find(l => l.id === this.authService.authData.value.employee.restaurant.lang_id);                    
+                lang ? this.appService.setLang(lang) : null;
                 this.router.navigateByUrl("/");                            
             } else if (statusCode === 401) {
                 //this.appService.showError(this.words['common']['error-401'][this.currentLang.slug]);	
@@ -45,7 +46,7 @@ export class GoogleEnteredAuthPage implements OnInit {
             } else {
                 this.appService.showError(this.words['common']['error'][this.currentLang.slug]);				
                 this.router.navigateByUrl("/auth/login");	
-            }*/
+            }
         } catch (err) {
             this.appService.showError(err);
         } 

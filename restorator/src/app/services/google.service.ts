@@ -8,7 +8,8 @@ export class GoogleService {
     constructor(private settingsRepository: SettingRepository) {}
     
     get clientId(): string {return this.settingsRepository.settings["google-clientid"];}
-    
+    get redirectURL(): string {return `${this.settingsRepository.settings["restorator-app-url"]}/auth/google-entered`;}
+
     public signIn(): void {        
         const endpoint: string = 'https://accounts.google.com/o/oauth2/v2/auth';            
         const form: HTMLFormElement = document.createElement('form');
@@ -16,7 +17,7 @@ export class GoogleService {
         form.setAttribute('action', endpoint);            
         const params = {
             client_id: this.clientId,
-            redirect_uri: null, // TODO!!!!!!!!!!!!!!!!!!
+            redirect_uri: this.redirectURL,
             scope: 'profile email',
             response_type: 'token',            
             prompt: "select_account",

@@ -8,6 +8,10 @@
     </div>    
     <div class="data">
         <ng-container *ngIf="ready">
+            <div class="data-note">
+                <div class="dn-icon"><span></span></div>
+                <div class="dn-txt">{{currentLang.phrases['workspace-settings-note']}}</div>
+            </div>
             <div class="data-tablewrap">
                 <table class="data-table">
                     <tr class="no-selection">

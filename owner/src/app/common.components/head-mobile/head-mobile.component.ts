@@ -2,6 +2,7 @@ import { Component, Input } from "@angular/core";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
+import { AuthService } from "src/app/services/auth.service";
 import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
@@ -18,6 +19,7 @@ export class HeadMobileComponent {
         private appService: AppService,
         private wordRepository: WordRepository,
         private langRepository: LangRepository,
+        private authService: AuthService,
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
@@ -25,7 +27,7 @@ export class HeadMobileComponent {
     get langs(): Lang[] {return this.langRepository.xl;}
     get url(): string[] {return this.appService.url;}
     get title(): string {return this.appService.title;}
-    get showMenuBtn(): boolean {return !(this.appService.url[1] === "auth" && this.appService.url[2] !== "password");}
+    get showMenuBtn(): boolean {return this.authService.authData !== null;}
     
     public setLang(l: Lang): void {
         this.appService.setLang(l);

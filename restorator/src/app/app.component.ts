@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/co
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppService } from './services/app.service';
+import { AuthService } from './services/auth.service';
 import { LangRepository } from './services/repositories/lang.repository';
 import { SettingRepository } from './services/repositories/setting.repository';
 import { WordRepository } from './services/repositories/word.repository';
@@ -23,20 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private settingRepository: SettingRepository,
 		private router: Router,
 		private appService: AppService,		
+		private authService: AuthService,
 	) {}
 
 	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	
-	get showSidebar(): boolean {		
-		if (this.appService.url[1] === "auth") {
-			if (this.appService.url[2] === "password") {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		return true;
-	}	
+	get showSidebar(): boolean {return this.authService.authData.value !== null;}	
 
 	public ngOnInit(): void {
 		this.initLangs();

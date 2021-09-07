@@ -5,7 +5,7 @@ import { AuthModule } from './views/auth/auth.module';
 import { HomePage } from './views/home/home.page';
 
 const routes: Routes = [
-	{path: "", component: HomePage, pathMatch: "full"},
+	{path: "", component: HomePage, pathMatch: "full", canActivate: [AuthGuard]},
 	{path: "auth", loadChildren: () => AuthModule}, 		
 	{path: "**", redirectTo: "/"},
 ];

@@ -1,7 +1,7 @@
 <div class="head-desktop">
     <div class="hd-left"><!-- пока не используется --></div>
     <div class="hd-right">        
-        <a *ngIf="showLogout" class="hd-btn logout" routerLink="/auth/logout"><span>{{words['common']['logout'][currentLang.slug]}}</span></a>            
+        <a *ngIf="showLogout" class="hd-btn rightmargined logout" routerLink="/auth/logout"><span>{{words['common']['logout'][currentLang.slug]}}</span></a>            
         <div class="hd-langs">
                 <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
                 <div class="hdl-panel" [class.active]="langPanelActive">

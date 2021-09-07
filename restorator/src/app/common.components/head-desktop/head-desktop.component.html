@@ -1,0 +1,20 @@
+<div class="head-desktop">
+    <div class="hd-left">
+        <div class="hd-money" *ngIf="showMoney">
+            <a class="hd-btn money"><span>{{words['restorator-common']['acc-recharge'][currentLang.slug]}}</span></a>
+            <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} RUR</strong></div>
+        </div>
+    </div>
+    <div class="hd-right">        
+        <a *ngIf="showLogout" class="hd-btn rightmargined logout" routerLink="/auth/logout"><span>{{words['common']['logout'][currentLang.slug]}}</span></a>            
+        <div class="hd-langs">
+            <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
+            <div class="hdl-panel" [class.active]="langPanelActive">
+                <ul>
+                    <li *ngFor="let l of langs" (click)="setLang(l);" [class.active]="l.slug === currentLang.slug">{{l.shorttitle}}</li>
+                </ul>
+            </div>
+        </div>                            
+    </div>    
+    <div class="hd-title">{{title}}</div>
+</div>

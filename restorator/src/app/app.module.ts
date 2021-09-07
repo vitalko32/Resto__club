@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CCModule } from './common.components/cc.module';
 import { ServicesModule } from './services/services.module';
+import { HomeModule } from "./views/home/home.module";
 
 @NgModule({
 	declarations: [
@@ -18,6 +19,7 @@ import { ServicesModule } from './services/services.module';
     	AppRoutingModule,
 		ServicesModule,
 		CCModule,
+		HomeModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent]

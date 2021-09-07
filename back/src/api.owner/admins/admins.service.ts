@@ -48,7 +48,7 @@ export class AdminsService extends APIService {
             const payload: Object = {username: admin.email, sub: admin.id};    
             return {statusCode: 200, data: {token: this.jwtService.sign(payload), admin}};            
         } catch (err) {
-            let errTxt: string = `Error in AdminsService.loginWithGoogle: ${String(err)}`;
+            let errTxt: string = `Error in AdminsService.loginByEmail: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

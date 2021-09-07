@@ -77,6 +77,14 @@ html {
                     @media (min-width:0) {padding: 15px;}
                     @media (min-width:1000px) {padding: 30px;}  
                     background-color: $color-bg-dark; font-size: 13px; overflow: auto; position: relative;
+                    .data-note {
+                        display: flex; margin-bottom: 30px; color: $color-transparent; 
+                        .dn-icon {
+                            margin-right: 15px;
+                            span::before {font-family: "awesome-solid"; content:"\f05a"; font-size: 30px;}
+                        }
+                        .dn-txt {flex: 1;}
+                    }
                     // langs
                     .data-langs {
                         margin: 0 0 15px 0; display: flex; flex-wrap: wrap;

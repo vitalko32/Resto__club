@@ -65,6 +65,7 @@
             "workspace-settings-c": "Комментарий",
             "workspace-settings-pos": "Позиция",
             "workspace-settings-in-app": "В приложениях",
+            "workspace-settings-note": "Внимание! Для корректной работы настроек, зависящих от времени, рекомендуется установить временную зону сервера в UTC (префикс TZ=UTC в команде запуска скрипта).",
             
             "workspace-admins-h1": "Администраторы",
             "workspace-admins-name": "Имя",
@@ -205,6 +206,7 @@
             "workspace-settings-c": "Comment",
             "workspace-settings-pos": "Position",
             "workspace-settings-in-app": "Load in apps",
+            "workspace-settings-note": "Attention! It is recommended to set the server time zone to UTC for correct operation of time-dependent settings (use TZ=UTC prefix in command line).",
 
             "workspace-admins-h1": "Administrators",
             "workspace-admins-name": "Name",

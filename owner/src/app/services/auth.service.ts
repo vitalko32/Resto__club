@@ -9,16 +9,13 @@ import { DataService } from './data.service';
 export class AuthService {
     constructor(private dataService: DataService) {
         let data: string = localStorage.getItem("authdata");
-
-        if (data) {            
-            this.buildAuthData(JSON.parse(data));
-        }
+        data ? this.init(JSON.parse(data)) : null;        
     }
 
     get authData(): IAdminAuthData {return this.dataService.authData;}
     set authData(v: IAdminAuthData) {this.dataService.authData = v;}
     
-    private buildAuthData(data: IAdminAuthData): void {
+    private init(data: IAdminAuthData): void {
         this.authData = {token: data.token, admin: new Admin().build(data.admin)};
     }
     
@@ -26,7 +23,7 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             this.dataService.adminsLogin(dto).subscribe(res => {                
                 if (res.statusCode === 200) {    
-                    this.buildAuthData(res.data);                                
+                    this.init(res.data);                                
                     this.save();                                        
                 }
 
@@ -41,7 +38,7 @@ export class AuthService {
         return new Promise((resolve, reject) => {
             this.dataService.adminsLoginByEmail(email).subscribe(res => {
                 if (res.statusCode === 200) {
-                    this.buildAuthData(res.data); 
+                    this.init(res.data); 
                     this.save();    
                 }
                 
@@ -52,31 +49,15 @@ export class AuthService {
         });
     }    
 
-    /*public load(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.dataService.customersOne(this.authData.customer.id).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.authData.customer = new Customer().build(res.data);                    
-                    this.save();
-                    resolve();
-                } else {
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);
-            });
-        });
-    }*/    
-
     public updatePassword(dto: IAdminUpdatePassword): Promise<number> {
         return new Promise((resolve, reject) => {            
             this.dataService.adminsUpdatePassword(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
         });
     }
         
-    public logout(): void {
-        this.authData = null;
-        localStorage.removeItem("authdata");         
+    public logout(): void {        
+        this.authData = null;        
+        localStorage.removeItem("authdata");                 
     }
 
     public save(): void {

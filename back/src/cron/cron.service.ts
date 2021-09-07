@@ -32,5 +32,5 @@ export class CronService {
     @Cron('0 0 0 * * *') // каждый день в 0:00
     public deleteOldTransactions(): void {
         this.financeService.deleteOldTransactions();
-    }
+    }    
 }

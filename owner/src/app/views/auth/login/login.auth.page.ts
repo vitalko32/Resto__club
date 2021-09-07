@@ -55,7 +55,7 @@ export class LoginAuthPage {
                 let statusCode: number = await this.authService.login(dto);
                 this.formLoading = false;
     
-                if (statusCode === 200) {
+                if (statusCode === 200) {                    
                     this.router.navigateByUrl("/");                    
                 } else if (statusCode === 401) {
                     this.formErrorDenied = true;                    

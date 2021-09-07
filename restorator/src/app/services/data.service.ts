@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpEvent, HttpHeaders } from "@angular/common/http";
 import { filter } from "rxjs/operators";
 
@@ -12,12 +12,12 @@ import { IAnswer } from "../model/dto/answer.interface";
 import { IGetChunk } from "../model/dto/getchunk.interface";
 import { IEmployeeAuthData } from "../model/dto/employee.authdata.interface";
 import { IEmployeeLogin } from "../model/dto/employee.login.interface";
+import { Employee } from "../model/orm/employee.model";
 
 @Injectable()
 export class DataService {
-    public authData: IEmployeeAuthData = null;
-    private root: string = "https://back.restclick.vio.net.ua/api/restorator"; 
-    //private root: string = "https://back.melink.to/api/front"; 
+    public authData: BehaviorSubject<IEmployeeAuthData> = new BehaviorSubject(null);
+    private root: string = "https://back.restclick.vio.net.ua/api/restorator";     
     
     constructor (
         private http: HttpClient,
@@ -32,12 +32,13 @@ export class DataService {
     
     public employeesLogin(dto: IEmployeeLogin): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login", dto);} 
     public employeesLoginByEmail(email: string): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login-by-email", {email});}         
+    public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;
 
         if (authNeeded) {
-            headers = new HttpHeaders({token: this.authData.token});
+            headers = new HttpHeaders({token: this.authData.value.token});
         }
         
         if (withProgress) {
