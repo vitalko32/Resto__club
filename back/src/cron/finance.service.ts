@@ -28,24 +28,25 @@ export class FinanceService {
             const now: Date = new Date();
             const hour: number = now.getHours();
             const minute: number = now.getMinutes();
+            const second: number = now.getSeconds();
 
-            if (payHour !== hour && payMinute !== minute) {
-                return;
-            }
+            if (hour === payHour && minute === payMinute) {
+                const price: number = parseInt(strPrice);
+                const rl: Restaurant[] = await this.restaurantRepository.find({where: {money: MoreThanOrEqual(0)}, relations: ["employees"]});
+    
+                for (let r of rl) {                
+                    const amount = price * r.employees.length;                    
+                    r.money -= price * r.employees.length;
+                    await this.restaurantRepository.save(r);
+                    const t: Transaction = new Transaction();
+                    t.restaurant_id = r.id;
+                    t.type = TransactionType.Auto;
+                    t.amount = -amount;
+                    await this.transactionRepository.save(t);                
+                }
 
-            const price: number = parseInt(strPrice);
-            const rl: Restaurant[] = await this.restaurantRepository.find({where: {money: MoreThanOrEqual(0)}, relations: ["employees"]});
-
-            for (let r of rl) {                
-                const amount = price * r.employees.length;                    
-                r.money -= price * r.employees.length;
-                await this.restaurantRepository.save(r);
-                const t: Transaction = new Transaction();
-                t.restaurant_id = r.id;
-                t.type = TransactionType.Auto;
-                t.amount = -amount;
-                await this.transactionRepository.save(t);                
-            }            
+                console.log("payments done", new Date());
+            }                        
         } catch (err) {
             let errTxt: string = `Error in FinanceService.execPayments: ${String(err)}`;
             console.log(errTxt);

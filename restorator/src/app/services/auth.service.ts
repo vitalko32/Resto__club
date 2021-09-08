@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IEmployeeAuthData } from "../model/dto/employee.authdata.interface";
 import { IEmployeeLogin } from "../model/dto/employee.login.interface";
+import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 import { Employee } from "../model/orm/employee.model";
 import { DataService } from './data.service';
 
@@ -18,7 +19,7 @@ export class AuthService {
     
     private init(data: IEmployeeAuthData): void {        
         this.authData.next({token: data.token, employee: new Employee().build(data.employee)});        
-        this.interval = window.setInterval(() => this.load().catch(err => console.log(err)), 10*1000); // периодически проверяем актуальность аккаунта и получаем данные пользователя и ресторана
+        this.interval = window.setInterval(() => this.check().catch(err => console.log(err)), 60*1000); // периодически проверяем актуальность аккаунта и получаем данные пользователя и ресторана
     }
     
     public login(dto: IEmployeeLogin): Promise<number> {
@@ -51,9 +52,9 @@ export class AuthService {
         });
     }    
 
-    public load(): Promise<void> {
+    public check(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            this.dataService.employeesOne(this.authData.value.employee.id).subscribe(res => {
+            this.dataService.employeesCheck(this.authData.value.employee.id).subscribe(res => {
                 if (res.statusCode === 200) {                    
                     this.authData.next({token: this.authData.value.token, employee: new Employee().build(res.data)});
                     this.save();
@@ -66,11 +67,22 @@ export class AuthService {
             });
         });
     }
+
+    public setStatus(employee_status_id: number): Promise<void> {
+        return new Promise((resolve, reject) => {            
+            let employee = this.authData.value.employee;
+            employee.employee_status_id = employee_status_id;
+            this.authData.next({token: this.authData.value.token, employee});
+            this.save();
+            let dto: IEmployeeSetStatus = {employee_id: this.authData.value.employee.id, employee_status_id};
+            this.dataService.employeeSetStatus(dto).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message));
+        });
+    }
         
     public logout(): void {
-        this.authData.next(null);
         window.clearInterval(this.interval);
-        localStorage.removeItem("authdata");         
+        this.authData.next(null);        
+        localStorage.removeItem("authdata");                 
     }
 
     public save(): void {

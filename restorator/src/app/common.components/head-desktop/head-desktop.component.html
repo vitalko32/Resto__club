@@ -1,8 +1,8 @@
 <div class="head-desktop">
     <div class="hd-left">
         <div class="hd-money" *ngIf="showMoney">
-            <a class="hd-btn money"><span>{{words['restorator-common']['acc-recharge'][currentLang.slug]}}</span></a>
-            <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} RUR</strong></div>
+            <a class="hd-btn money"><span>{{words['restorator-common']['recharge'][currentLang.slug]}}</span></a>
+            <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} {{words['common']['rur'][currentLang.slug]}}</strong></div>
         </div>
     </div>
     <div class="hd-right">        

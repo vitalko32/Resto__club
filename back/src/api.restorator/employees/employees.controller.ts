@@ -6,6 +6,7 @@ import { IEmployeeLogin } from "./dto/employee.login.interface";
 import { IEmployeeLoginByEmail } from "./dto/employee.loginbyemail.interface";
 import { AuthGuard } from "src/common/auth.guard";
 import { IEmployee } from "./dto/employee.interface";
+import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {
@@ -23,10 +24,17 @@ export class EmployeesController {
         return this.employeesService.loginByEmail(dto);
     }
 
-    // get one
+    // check and reload
     @UseGuards(AuthGuard)
-    @Post("one/:id")
+    @Post("check/:id")
     public one(@Param("id") id: string): Promise<IAnswer<IEmployee>> {
-        return this.employeesService.one(parseInt(id));
+        return this.employeesService.check(parseInt(id));
+    }
+
+    // set status
+    @UseGuards(AuthGuard)
+    @Post("set-status")
+    public setStatus(@Body() dto: IEmployeeSetStatus): Promise<IAnswer<void>> {
+        return this.employeesService.setStatus(dto);
     }
 }

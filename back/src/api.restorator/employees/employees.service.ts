@@ -12,6 +12,7 @@ import { Setting } from "src/model/orm/setting.entity";
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { IRestaurant } from "./dto/restaurant.interface";
 import { IEmployee } from "./dto/employee.interface";
+import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 
 @Injectable()
 export class EmployeesService extends APIService {
@@ -58,9 +59,27 @@ export class EmployeesService extends APIService {
             return {statusCode: 500, error: errTxt};
         }
     }
+
+    public async setStatus(dto: IEmployeeSetStatus): Promise<IAnswer<void>> {
+        try {
+            let employee = await this.employeeRepository.findOne(dto.employee_id);
+
+            if (!employee) {
+                return {statusCode: 404, error: "employee not found"};
+            }
+
+            employee.employee_status_id = dto.employee_status_id;
+            await this.employeeRepository.save(employee);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.setStatus: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
     
-    // используется также для проверки актуальности аккаунта и подтягивания актуальных данных
-    public async one(id: number): Promise<IAnswer<IEmployee>> {
+    
+    public async check(id: number): Promise<IAnswer<IEmployee>> { // проверка актуальности аккаунта и подгрузка актуальных данных
         try {                                    
             let employee: IEmployee = await this.getEmployeeById(id);
                         
@@ -71,7 +90,7 @@ export class EmployeesService extends APIService {
             employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant);
             return {statusCode: 200, data: employee};
         } catch (err) {
-            let errTxt: string = `Error in EmployeesService.one: ${String(err)}`;
+            let errTxt: string = `Error in EmployeesService.check: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

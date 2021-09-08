@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ErrorService } from './error.service';
 import { GoogleService } from './google.service';
+import { EmployeeStatusRepository } from './repositories/employee.status.repository';
 import { LangRepository } from './repositories/lang.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
@@ -23,7 +24,8 @@ import { WordRepository } from './repositories/word.repository';
         AuthGuard,
         LangRepository,
         WordRepository,
-        SettingRepository,          
+        SettingRepository,     
+        EmployeeStatusRepository,     
     ],
 })
 export class ServicesModule {}

@@ -13,6 +13,8 @@ import { IGetChunk } from "../model/dto/getchunk.interface";
 import { IEmployeeAuthData } from "../model/dto/employee.authdata.interface";
 import { IEmployeeLogin } from "../model/dto/employee.login.interface";
 import { Employee } from "../model/orm/employee.model";
+import { EmployeeStatus } from "../model/orm/employee.status.model";
+import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 
 @Injectable()
 export class DataService {
@@ -32,7 +34,10 @@ export class DataService {
     
     public employeesLogin(dto: IEmployeeLogin): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login", dto);} 
     public employeesLoginByEmail(email: string): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login-by-email", {email});}         
-    public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}
+    public employeesCheck(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/check/${id}`, null, true);}
+    public employeeSetStatus(dto: IEmployeeSetStatus): Observable<IAnswer<void>> {return this.sendRequest("employees/set-status", dto, true);}
+
+    public employeeStatusesAll(dto: IGetAll): Observable<IAnswer<EmployeeStatus[]>> {return this.sendRequest(`employee-statuses/all`, dto, true);}    
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;
