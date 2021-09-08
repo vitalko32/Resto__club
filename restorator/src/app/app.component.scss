@@ -9,7 +9,7 @@ html {
 
 		* {box-sizing: border-box; outline: none; overflow-anchor: none; overscroll-behavior: none;}
 		img {vertical-align: top;}	
-		a {cursor: pointer; color: var(--color-link);}	
+		a {cursor: pointer; color: var(--color-link); text-decoration: underline;}	
 				
 		.hidden {display: none;}
 		.flex {display: flex;}		

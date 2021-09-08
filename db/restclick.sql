@@ -778,18 +778,19 @@ COPY "default".vne_employee_statuses (id, color, pos) FROM stdin;
 COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, password, name, phone, is_admin, created_at, defended) FROM stdin;
 6	18	\N	7573498@gmail.com	123	\N	\N	t	2021-08-27 22:30:50.941314	t
 7	19	\N	7573499@gmail.com	123	\N	\N	t	2021-08-28 00:39:48.284041	t
-10	22	\N	757349788@gmail.com	123	Алексей Петров	\N	t	2021-08-28 11:27:23.119406	t
-24	38	\N	viovalya3@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	Алексей Иванов	+380664021350	t	2021-08-30 12:54:22.738402	t
 1	1	\N	7573497222@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 2	10	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	t	2021-08-26 21:32:06.303446	f
-27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Алексей Чепига	+380660000000	f	2021-09-02 12:59:04.543675	f
 28	45	\N	75734974444@gmail.com	$2b$10$o2Y63TUS9aBVLLpNAkS9IOMVb2TvEKCjUtg3tADQTnsJI/zrTqBJe	\N	\N	t	2021-09-02 21:07:52.119825	t
 29	9	\N	7573497777@gmail.com	$2b$10$lrWJKgjzIhv6qDzSD6AcZOjh2KO9k5x3K5tVjQJ3q58ZgF/uSQKj6	Петров Андрей	+380664000050	t	2021-09-03 01:41:45.691878	f
-30	43	\N	7573497111@gmail.com	$2b$10$ZugM9ReCVctvQ9CdfPF7wucHDF8Tu7cTJyC9zXfbCgkZEMn12xgsm	Андрей Безымянный	+380664000000	f	2021-09-04 12:48:30.239362	f
 31	46	\N	7573497rr@gmail.com	$2b$10$4KyYx5FqOrFutyLB7Ls2oe82rMzNIGvQ/24YWJ1QivWSTFs4gSEpm	\N	\N	t	2021-09-07 01:16:30.429325	t
 32	15	\N	7573497999@gmail.com	$2b$10$IjNiwNYzTFdFc.r.fMYWo.sa5Mbm9ebMnABxBYaYfXDKdeJJnL9om	Пушкин А.	+380664028899	t	2021-09-07 02:03:30.360362	f
-9	21	1	7573497@gmail.com	$2b$10$DzU7zXBuoYgLpD3dv82nFuMKtOnTofGCuxzsrr8DD2E5u7fqSS.R2	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
-3	21	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Виктор Лисичкин	+38123444444444	f	2021-08-26 22:03:00.332342	f
+9	21	2	7573497@gmail.com	$2b$10$DzU7zXBuoYgLpD3dv82nFuMKtOnTofGCuxzsrr8DD2E5u7fqSS.R2	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
+36	21	1	bednenko@gmail.com	$2b$10$YxvpyUA1UJXhZnBUrsbXCOzUtFRbhx7ibOGkTHBeeECV0ZiLqDpPi	Бедненко Федор Иванович	\N	f	2021-09-08 17:44:35.220428	f
+3	21	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Лисичкин Виктор	+38123444444444	f	2021-08-26 22:03:00.332342	f
+30	43	\N	7573497111@gmail.com	$2b$10$ZugM9ReCVctvQ9CdfPF7wucHDF8Tu7cTJyC9zXfbCgkZEMn12xgsm	Безымянный Андрей	+380664000000	f	2021-09-04 12:48:30.239362	f
+27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Чепига Алексей	+380660000000	f	2021-09-02 12:59:04.543675	f
+10	22	\N	757349788@gmail.com	123	Петров Алексей	\N	t	2021-08-28 11:27:23.119406	t
+24	38	\N	viovalya3@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	Иванов Алексей	+380664021350	t	2021-08-30 12:54:22.738402	t
 \.
 
 
@@ -2229,6 +2230,10 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 317	141	2	Next charge
 322	144	1	Кол-во сотрудников
 323	144	2	Employees qty
+324	145	1	Персонал
+325	145	2	Personnel
+326	146	1	Язык
+327	146	2	Language
 \.
 
 
@@ -2246,6 +2251,7 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 6	restorator-login	8
 8	owner-transactions	5
 9	restorator-home	9
+10	restorator-employees	10
 \.
 
 
@@ -2366,6 +2372,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 143	9	0	status-none	\N
 139	9	0	acc-daysleft	
 144	9	0	employees-q	\N
+145	10	1	title-index	\N
+146	5	124	lang	\N
 \.
 
 
@@ -2408,7 +2416,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 3, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 32, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 36, true);
 
 
 --
@@ -2457,21 +2465,21 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1115, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 323, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 327, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 9, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 10, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 144, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 146, true);
 
 
 --

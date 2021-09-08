@@ -67,8 +67,9 @@ export class HomePage implements OnInit {
 
     public async setEmployeeStatus(esid: number): Promise<void> {
         try {            
+            this.authService.stopChecking();
             await this.authService.setStatus(esid);
-            this.authService.check();
+            this.authService.startChecking();
         } catch (err) {
             this.appService.showError(err);
         }

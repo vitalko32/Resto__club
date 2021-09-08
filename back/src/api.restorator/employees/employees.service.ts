@@ -13,6 +13,8 @@ import { Restaurant } from "src/model/orm/restaurant.entity";
 import { IRestaurant } from "./dto/restaurant.interface";
 import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
+import { IGetChunk } from "src/model/dto/getchunk.interface";
+import { Sortdir } from "src/model/sortdir.type";
 
 @Injectable()
 export class EmployeesService extends APIService {
@@ -76,8 +78,7 @@ export class EmployeesService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    }
-    
+    }    
     
     public async check(id: number): Promise<IAnswer<IEmployee>> { // проверка актуальности аккаунта и подгрузка актуальных данных
         try {                                    
@@ -91,6 +92,46 @@ export class EmployeesService extends APIService {
             return {statusCode: 200, data: employee};
         } catch (err) {
             let errTxt: string = `Error in EmployeesService.check: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async chunk(dto: IGetChunk): Promise<IAnswer<IEmployee[]>> {
+        try {
+            let sortBy: string = dto.sortBy;
+            let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            let from: number = dto.from;
+            let q: number = dto.q;
+            let filter: string = "TRUE"; 
+
+            if (dto.filter.created_at[0]) {
+                let from: string = this.mysqlDate(new Date(dto.filter.created_at[0]));
+                let to: string = dto.filter.created_at[1] ? this.mysqlDate(new Date(dto.filter.created_at[1])) : from;
+                filter += ` AND e.created_at BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
+            }
+
+            if (dto.filter.name) {
+                filter += ` AND LOWER(e.name) LIKE LOWER('%${dto.filter.name}%')`;
+            }
+
+            if (dto.filter.restaurant_id) {
+                filter += ` AND e.restaurant_id = '${dto.filter.restaurant_id}'`;
+            }
+
+            let query = this.employeeRepository.createQueryBuilder("e").where(filter);
+            let data: IEmployee[] = await query
+                .leftJoinAndSelect("e.status", "status")
+                .leftJoinAndSelect("status.translations", "translations")
+                .orderBy({[`e.${sortBy}`]: sortDir})
+                .take(q)
+                .skip(from)
+                .getMany();
+            let allLength: number = await query.getCount();
+
+            return {statusCode: 200, data, allLength};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.chunk: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

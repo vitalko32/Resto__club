@@ -1,13 +1,12 @@
 <div class="head-desktop">
-    <div class="hd-left">
-        <div class="hd-money" *ngIf="showMoney">
-            <a class="hd-btn money"><span>{{words['restorator-common']['recharge'][currentLang.slug]}}</span></a>
+    <div class="hd-left"><!-- пока не используется --></div>
+    <div class="hd-right">    
+        <div *ngIf="showMoney" class="hd-money">
+            <a class="hdm-btn"><span>{{words['restorator-common']['recharge'][currentLang.slug]}}</span></a>
             <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} {{words['common']['rur'][currentLang.slug]}}</strong></div>
-        </div>
-    </div>
-    <div class="hd-right">        
-        <a *ngIf="showLogout" class="hd-btn rightmargined logout" routerLink="/auth/logout"><span>{{words['common']['logout'][currentLang.slug]}}</span></a>            
-        <div class="hd-langs">
+        </div>    
+        <a *ngIf="showLogout" class="hd-logout" routerLink="/auth/logout" [title]="words['common']['logout'][currentLang.slug]"><span></span></a>            
+        <div class="hd-langs" [title]="words['common']['lang'][currentLang.slug]">            
             <div class="hdl-btn" (click)="activateLangPanel();"><span></span></div>                
             <div class="hdl-panel" [class.active]="langPanelActive">
                 <ul>

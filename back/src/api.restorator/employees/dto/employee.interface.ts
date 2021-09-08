@@ -1,3 +1,4 @@
+import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { IRestaurant } from "./restaurant.interface";
 
 export interface IEmployee {
@@ -12,4 +13,5 @@ export interface IEmployee {
     readonly created_at: Date;   
     readonly defended: boolean;
     readonly restaurant?: IRestaurant;
+    readonly status?: EmployeeStatus;
 }

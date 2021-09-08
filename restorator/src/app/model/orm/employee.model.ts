@@ -1,4 +1,5 @@
 import { Model } from "../model";
+import { EmployeeStatus } from "./employee.status.model";
 import { Restaurant } from "./restaurant.model";
 
 export class Employee extends Model {
@@ -12,7 +13,9 @@ export class Employee extends Model {
     public is_admin: boolean;    
     public created_at: Date;   
     public defended: boolean;
+
     public restaurant?: Restaurant;
+    public status?: EmployeeStatus;
 
     get formattedCreatedAt(): string {return `${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()} ${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())}`;}
 
@@ -21,7 +24,9 @@ export class Employee extends Model {
             if (field === "created_at") {
                 this[field] = o[field] ? new Date (o[field]) : null;
             } else if (field === "restaurant") {
-                this[field] = new Restaurant().build(o[field]);
+                this[field] = o[field] ? new Restaurant().build(o[field]) : null;
+            } else if (field === "status") {                
+                this[field] = o[field] ? new EmployeeStatus().build(o[field]) : null;
             } else {
                 this[field] = o[field];
             }            
@@ -31,10 +36,9 @@ export class Employee extends Model {
     }
 
     /*public init(): Employee {        
-        this.is_admin = true;
+        this.is_admin = false;
         this.email = "";
-        this.password = "";     
-        this.defended = true;   
+        this.password = "";             
         return this;
     }*/
 }

@@ -19,7 +19,7 @@ export class AuthService {
     
     private init(data: IEmployeeAuthData): void {        
         this.authData.next({token: data.token, employee: new Employee().build(data.employee)});        
-        this.interval = window.setInterval(() => this.check().catch(err => console.log(err)), 60*1000); // периодически проверяем актуальность аккаунта и получаем данные пользователя и ресторана
+        this.startChecking(); // периодически проверяем актуальность аккаунта и получаем данные пользователя и ресторана
     }
     
     public login(dto: IEmployeeLogin): Promise<number> {
@@ -50,7 +50,15 @@ export class AuthService {
                 reject(err.message);
             });
         });
-    }    
+    } 
+    
+    public startChecking(): void {
+        this.interval = window.setInterval(() => this.check().catch(err => console.log(err)), 10*1000);
+    }
+
+    public stopChecking(): void {
+        window.clearInterval(this.interval);
+    }
 
     public check(): Promise<void> {
         return new Promise((resolve, reject) => {            
@@ -80,7 +88,7 @@ export class AuthService {
     }
         
     public logout(): void {
-        window.clearInterval(this.interval);
+        this.stopChecking();
         this.authData.next(null);        
         localStorage.removeItem("authdata");                 
     }

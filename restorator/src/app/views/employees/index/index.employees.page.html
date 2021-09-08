@@ -1,0 +1,34 @@
+<div class="dash">
+    <a class="dash-btn create" routerLink="/employees/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
+</div>
+<div class="data">
+    <!-- desktop -->
+    <div class="datalist-desktop">
+        <div class="datalist-overlay" [class.active]="elLoading"></div>
+        <table>
+            <tr>
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="elSortBy === 'created_at' && elSortDir === 1" [class.sorted-backward]="elSortBy === 'created_at' && elSortDir === -1" (click)="changeSorting('created_at')">Дата создания</label></th>
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="elSortBy === 'name' && elSortDir === 1" [class.sorted-backward]="elSortBy === 'name' && elSortDir === -1" (click)="changeSorting('name')">ФИО</label></th>
+                <th class="align-center"><label class="sortable" [class.sorted-forward]="elSortBy === 'is_admin' && elSortDir === 1" [class.sorted-backward]="elSortBy === 'is_admin' && elSortDir === -1" (click)="changeSorting('is_admin')">Администратор</label></th>                                        
+                <th class="align-center"><label class="sortable" [class.sorted-forward]="elSortBy === 'employee_status_id' && elSortDir === 1" [class.sorted-backward]="elSortBy === 'employee_status_id' && elSortDir === -1" (click)="changeSorting('employee_status_id')">Статус</label></th>                                        
+                <th class="align-center"><label>Действия</label></th>
+            </tr>
+            <ng-container *ngIf="el.length">
+                <tr *ngFor="let e of el">
+                    <td><span class="nowrap">{{e.formattedCreatedAt}}</span></td>
+                    <td>{{e.name}}</td>
+                    <td class="align-center">{{e.is_admin ? 'да' : 'нет'}}</td>                    
+                    <td class="align-center">{{e.status?.translationByLang(currentLang.id)?.name}}</td>                    
+                    <td class="align-center nowrap">
+                        <a class="datalist-btn edit" [routerLink]="'/employees/edit/'+e.id" title="Просмотр и редактирование"><span></span></a>
+                        <a *ngIf="!e.defended" class="datalist-btn delete" (click)="onDelete(e)" title="Удалить"><span></span></a>
+                    </td>
+                </tr>   
+            </ng-container>            
+            <ng-container *ngIf="!el.length">
+                <tr><td>{{words['common']['none'][currentLang.slug]}}</td></tr>
+            </ng-container>     
+        </table>
+    </div>
+</div>
+        

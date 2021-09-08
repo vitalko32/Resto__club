@@ -7,6 +7,7 @@ import { IEmployeeLoginByEmail } from "./dto/employee.loginbyemail.interface";
 import { AuthGuard } from "src/common/auth.guard";
 import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
+import { IGetChunk } from "src/model/dto/getchunk.interface";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {
@@ -37,4 +38,11 @@ export class EmployeesController {
     public setStatus(@Body() dto: IEmployeeSetStatus): Promise<IAnswer<void>> {
         return this.employeesService.setStatus(dto);
     }
+
+    // get fragment
+    @UseGuards(AuthGuard)
+    @Post("chunk")
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<IEmployee[]>> {
+        return this.employeesService.chunk(dto);
+    }  
 }
