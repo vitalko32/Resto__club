@@ -1,6 +1,6 @@
 .head-mobile {
     @media (min-width:0) {display: flex;}
-    @media (min-width:1000px) {display: none;}
+    @media (min-width:1200px) {display: none;}
     position: fixed; z-index: 10; width:100%; left: 0; top:0; height: 60px; justify-content: center; align-items: center; background-color: var(--color-bg); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; box-shadow: var(--block-shadow);
     .hm-title {width: calc(100% - 120px); text-align: center; font-size: 14px; font-weight: bold;}
     // buttons

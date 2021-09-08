@@ -19,7 +19,10 @@ export class IndexEmployeesPage implements OnInit {
     public authSubscription: Subscription = null;
     public elLoading: boolean = false;
     public elSortingVariants: any[][] = // для мобильной верстки
-        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1]];    
+        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["employee_status_id", 1], ["employee_status_id", -1]];    
+    public deleteConfirmActive: boolean = false;
+    public deleteConfirmMsg: string = "";
+    private deleteId: number = null;
 
     constructor(
         private appService: AppService,        
@@ -38,8 +41,8 @@ export class IndexEmployeesPage implements OnInit {
     get elLength(): number {return this.employeeRepository.chunkLength;}   
     get elFilterCreatedAt(): Date[] {return this.employeeRepository.filterCreatedAt;}  
     set elFilterCreatedAt(v: Date[]) {this.employeeRepository.filterCreatedAt = v;}
-    get tlFilterName(): string {return this.employeeRepository.filterName;}
-    set tlFilterName(v: string) {this.employeeRepository.filterName = v;}
+    get elFilterName(): string {return this.employeeRepository.filterName;}
+    set elFilterName(v: string) {this.employeeRepository.filterName = v;}
     get elSortBy(): string {return this.employeeRepository.sortBy;}
     get elSortDir(): number {return this.employeeRepository.sortDir;}
     set elSortBy(v: string) {this.employeeRepository.sortBy = v;}
@@ -65,7 +68,7 @@ export class IndexEmployeesPage implements OnInit {
         this.authSubscription = this.authService.authData.subscribe(ad => !ad.employee.is_admin ? this.router.navigateByUrl("/") : null);
     }
 
-    private async initEmployees(): Promise<void> {
+    public async initEmployees(): Promise<void> {
         try {
             this.elLoading = true;
             this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
@@ -94,4 +97,22 @@ export class IndexEmployeesPage implements OnInit {
         this.elSortDir = sorting[1];
         this.initEmployees();
     }
+
+    public onDelete(e: Employee): void {
+        this.deleteId = e.id;
+        this.deleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${e.name}"?`;
+        this.deleteConfirmActive = true;
+    }
+
+    public async delete(): Promise<void> {
+        try {
+            this.deleteConfirmActive = false;
+            this.elLoading = true;            
+            await this.employeeRepository.delete(this.deleteId);
+            this.initEmployees();
+        } catch (err) {
+            this.appService.showError(err);
+            this.elLoading = false;
+        }
+    }  
 }

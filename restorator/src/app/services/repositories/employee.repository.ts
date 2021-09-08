@@ -40,6 +40,10 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
         });
     }    
 
+    public delete(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.employeesDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    } 
+
     /*
     public loadOne(id: number): Promise<Employee> {
         return new Promise((resolve, reject) => {
@@ -75,18 +79,6 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
     }    
     
 
-    public delete(id: number): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.dataService.employeesDelete(id).subscribe(res => {
-                if (res.statusCode === 200) {
-                    resolve();
-                } else {                    
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);                
-            });
-        });
-    } 
+    
     */
 }

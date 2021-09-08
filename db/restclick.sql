@@ -730,7 +730,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 --
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
-1	1	Alex	7573497@gmail.com	$2b$10$GGjD9GGiZWm/aquWoEkyZejOgDDozQOEGJw3/UE46xZtjziYMFZdS	2021-8/1629929025223_150.jpg	t	t
+1	1	Alex	7573497@gmail.com	$2b$10$BBFjulN8d2kWvPC6lbaOduhDRd0l59lOHEF6fKTd3yrSm6SW0q9t.	2021-8/1629929025223_150.jpg	t	t
 \.
 
 
@@ -2018,12 +2018,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 22	10	2	Inactive restaurants
 25	12	1	История заказов
 26	12	2	Orders history
-27	13	1	Просмотр и редактирование
-28	13	2	View and edit
-29	14	1	Удалить
-30	14	2	Delete
-31	15	1	Действия
-32	15	2	Actions
 35	17	1	Название
 36	17	2	Name
 33	16	1	Дата создания
@@ -2160,8 +2154,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 249	107	2	Restaurant
 250	108	1	Сумма
 251	108	2	Amount
-252	109	1	Ваш пароль
-253	109	2	Your password
 254	110	1	Ресторан
 255	110	2	Restaurant
 256	111	1	Дата создания
@@ -2230,10 +2222,26 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 317	141	2	Next charge
 322	144	1	Кол-во сотрудников
 323	144	2	Employees qty
-324	145	1	Персонал
 325	145	2	Personnel
 326	146	1	Язык
 327	146	2	Language
+328	147	1	Действия
+329	147	2	Actions
+330	148	1	Просмотр и редактирование
+331	148	2	View and edit
+332	149	1	Дата создания
+333	149	2	Created at
+334	150	1	ФИО
+335	150	2	Full name
+336	151	1	Администратор
+337	151	2	Administrator
+338	152	1	Статус
+339	152	2	Status
+340	153	1	Пароль
+324	145	1	Персонал
+341	153	2	Password
+342	154	1	Ваш пароль
+343	154	2	Your password
 \.
 
 
@@ -2264,9 +2272,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 3	2	2	menu-inactive	\N
 4	2	3	menu-pw	\N
 12	1	102	history	\N
-13	1	103	edit	\N
-14	1	104	delete	\N
-15	1	105	actions	\N
 20	3	1	title	\N
 8	1	1	title-active	\N
 10	1	2	title-inactive	\N
@@ -2346,7 +2351,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 106	1	101	recharge	\N
 107	1	126	restaurant	\N
 108	1	127	amount	\N
-109	1	128	your-password	\N
 114	5	119	none	\N
 119	5	120	filter	\N
 120	5	121	sorting	\N
@@ -2374,6 +2378,14 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 144	9	0	employees-q	\N
 145	10	1	title-index	\N
 146	5	124	lang	\N
+147	5	125	actions	\N
+148	5	126	edit	\N
+149	10	100	created-at	\N
+150	10	101	name	\N
+151	10	102	admin	\N
+152	10	103	status	\N
+153	5	127	password	\N
+154	5	128	your-password	\N
 \.
 
 
@@ -2416,7 +2428,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 3, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 36, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 37, true);
 
 
 --
@@ -2465,7 +2477,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1115, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 327, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 343, true);
 
 
 --
@@ -2479,7 +2491,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 10, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 146, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 154, true);
 
 
 --

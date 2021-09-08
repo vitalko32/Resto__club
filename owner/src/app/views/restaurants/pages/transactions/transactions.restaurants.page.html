@@ -107,5 +107,6 @@
             <div class="dlm-item">{{words['common']['none'][currentLang.slug]}}</div>
         </ng-container> 
     </div>
+    <!-- paging -->
     <pagination [allLength]="tlAllLength" [length]="tlLength" [current]="tlCurrentPart" (currentChanged)="tlCurrentPart = $event; initTransactions();"></pagination>
 </div>

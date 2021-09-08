@@ -1,10 +1,10 @@
 .dash {
     @media (min-width:0) {margin-bottom: 10px; height: 30px;}
-    @media (min-width:1000px) {margin-bottom: 15px; height: 45px;}							
+    @media (min-width:1200px) {margin-bottom: 15px; height: 45px;}							
     display: flex; justify-content: space-between;
     .dash-btn {
         @media (min-width: 0) {padding: 0 15px;}
-        @media (min-width: 1000px) {padding: 0 30px;}
+        @media (min-width: 1200px) {padding: 0 30px;}
         height: 100%; display: flex; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); color: var(--color-txt); font-weight: bold; text-decoration: none;
         span {
             display: flex; align-items: center;
@@ -18,5 +18,5 @@
 
 .dash-placeholder {
     @media (min-width:0) {height: 0;}
-    @media (min-width:1000px) {height: 60px;}	
+    @media (min-width:1200px) {height: 60px;}	
 }

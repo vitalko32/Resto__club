@@ -8,6 +8,7 @@ import { AuthGuard } from "src/common/auth.guard";
 import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
+import { IEmployeeConfirm } from "./dto/employee.confirm.interface";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {
@@ -37,6 +38,13 @@ export class EmployeesController {
     @Post("set-status")
     public setStatus(@Body() dto: IEmployeeSetStatus): Promise<IAnswer<void>> {
         return this.employeesService.setStatus(dto);
+    }    
+
+    // check pw and confirm
+    @UseGuards(AuthGuard)
+    @Post("confirm")
+    public confirm(@Body() dto: IEmployeeConfirm): Promise<IAnswer<void>> {
+        return this.employeesService.confirm(dto);
     }
 
     // get fragment
@@ -45,4 +53,11 @@ export class EmployeesController {
     public chunk(@Body() dto: IGetChunk): Promise<IAnswer<IEmployee[]>> {
         return this.employeesService.chunk(dto);
     }  
+
+    // delete one
+    @UseGuards(AuthGuard)
+    @Post("delete/:id")
+    public delete(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.employeesService.delete(parseInt(id));
+    }
 }

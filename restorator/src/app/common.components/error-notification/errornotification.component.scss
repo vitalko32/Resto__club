@@ -2,7 +2,7 @@
 
 .error-notification {
     @media (min-width:0) {width:100%;}
-	@media (min-width:1000px) {width:500px;}
+	@media (min-width:1200px) {width:500px;}
     position: fixed; z-index: 1000; left: 0; top:-100px; height: 100px; background-color: var(--color-red); color: white; overflow: hidden; display: flex; padding: 10px; transition: 0.3s; will-change: top;
     &.active {top:0;}
     .en-left {

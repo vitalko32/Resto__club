@@ -2,7 +2,7 @@
     // списки
     .datalist-desktop {
         @media (min-width:0) {display: none;}
-        @media (min-width:1000px) {display: block;}
+        @media (min-width:1200px) {display: block;}
         border-radius: 45px; background-color: var(--color-bg-data); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 15px; margin-bottom: 30px; position: relative; 
         table {
             width: 100%; 
@@ -31,7 +31,7 @@
     }
     .datalist-mobile {
         @media (min-width:0) {display: block;}
-        @media (min-width:1000px) {display: none;}
+        @media (min-width:1200px) {display: none;}
         border-radius: 15px; background-color: var(--color-bg-data); border: 5px var(--color-bg) solid; box-shadow: var(--block-shadow); padding: 5px; margin-bottom: 30px; position: relative;
         .dlm-item {
             background-color: var(--color-bg); border-radius: 5px; padding: 10px; margin-bottom: 5px;
@@ -72,24 +72,25 @@
         &.recharge {font-family: "fa-regular"; span::before {content: "\f873";}}
         &.transactions {font-family: "fa-regular"; span::before {content: "\f688";}}
         &.history {font-family: "fa-solid"; span::before {content: "\f1da";}}
+        &.disabled {opacity: 0.2; pointer-events: none;}
     }    
 
     // редактирование элемента
     .dataedit {
         @media (min-width:0) {border-radius: 15px; border: 5px var(--color-bg) solid; padding: 15px;}
-        @media (min-width:1000px) {border-radius: 45px; border: 10px var(--color-bg) solid; padding: 30px;}
+        @media (min-width:1200px) {border-radius: 45px; border: 10px var(--color-bg) solid; padding: 30px;}
         background-color: var(--color-bg-data); box-shadow: var(--block-shadow);        
         .de-row {
             @media (min-width:0) {display: block;}
-            @media (min-width:1000px) {display: flex;}
+            @media (min-width:1200px) {display: flex;}
             margin-bottom: 15px; align-items: center;            
             .de-title {
                 @media (min-width:0) {width:100%; margin-bottom: 3px; font-size: 12px; padding: 0 10px;}
-                @media (min-width:1000px) {width: 200px; margin-bottom: 0; font-size: 14px; padding: 0;}
+                @media (min-width:1200px) {width: 200px; margin-bottom: 0; font-size: 14px; padding: 0;}
             }
             .de-value {
                 @media (min-width:0) {max-width: 100%;}
-                @media (min-width:1000px) {max-width: 500px;}
+                @media (min-width:1200px) {max-width: 500px;}
                 flex: 1; 
                 .de-inputwrap {
                     input {
@@ -106,11 +107,11 @@
                 }
                 .de-btnwrap {
                     @media (min-width:0) {justify-content: center;}
-                    @media (min-width:1000px) {justify-content: flex-start;}
+                    @media (min-width:1200px) {justify-content: flex-start;}
                     display: flex;                    
                     button {                        
                         @media (min-width:0) {font-size: 13px;}
-                        @media (min-width:1000px) {font-size: 14px;}
+                        @media (min-width:1200px) {font-size: 14px;}
                         display: block; flex: 1; height: 45px; max-width: 220px; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none;
                         &:disabled {background-color: var(--color-disabled);}                        
                     }
@@ -133,19 +134,19 @@
     // просмотр данных в виде таблицы
     .dataview {
         @media (min-width:0) {border-radius: 15px; border: 5px var(--color-bg) solid; padding: 15px;}
-        @media (min-width:1000px) {border-radius: 45px; border: 10px var(--color-bg) solid; padding: 30px;}
+        @media (min-width:1200px) {border-radius: 45px; border: 10px var(--color-bg) solid; padding: 30px;}
         background-color: var(--color-bg-data); box-shadow: var(--block-shadow);        
         .dv-row {
             @media (min-width:0) {display: block;}
-            @media (min-width:1000px) {display: flex;}
+            @media (min-width:1200px) {display: flex;}
             margin-bottom: 15px; align-items: flex-start;            
             .dv-title {
                 @media (min-width:0) {width:100%; margin-bottom: 3px; font-size: 12px;}
-                @media (min-width:1000px) {width: 200px; margin-bottom: 0; font-size: 14px;}
+                @media (min-width:1200px) {width: 200px; margin-bottom: 0; font-size: 14px;}
             }
             .dv-value {
                 @media (min-width:0) {max-width: 100%;}
-                @media (min-width:1000px) {max-width: 500px;}     
+                @media (min-width:1200px) {max-width: 500px;}     
                 flex: 1;           
                 .dv-txtwrap {
                     font-size: 14px;
@@ -156,7 +157,7 @@
                     @media (min-width:500px) {display: flex;}                    
                     .dv-recharge {
                         @media (min-width: 0) {padding: 0 15px;}
-                        @media (min-width: 1000px) {padding: 0 30px;}
+                        @media (min-width: 1200px) {padding: 0 30px;}
                         height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer;
                         span {
                             display: flex; align-items: center;

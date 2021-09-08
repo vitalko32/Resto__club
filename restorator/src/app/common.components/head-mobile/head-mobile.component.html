@@ -4,14 +4,14 @@
     <div *ngIf="showMenuBtn" class="hm-menubtn" [class.active]="menuPanelActive" (click)="menuPanelActive = !menuPanelActive; langPanelActive = false;"><span></span></div>    
     <div class="hm-panel" [class.active]="menuPanelActive">
         <ul>
-            <li><a routerLink="/" class="menu-btn" [class.active]="!url[1]">{{words['restorator-common']['menu-home'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/employees" class="menu-btn" [class.active]="url[1] === 'employees'">{{words['restorator-common']['menu-employees'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/" class="menu-btn" [class.active]="!url[1]" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-home'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/employees" class="menu-btn" [class.active]="url[1] === 'employees'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-employees'][currentLang.slug]}}</a></li>            
             <!--
-            <li><a routerLink="/my-tables" class="menu-btn" [class.active]="url[1] === 'my-tables'">{{words['restorator-common']['menu-my-tables'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/orders" class="menu-btn" [class.active]="url[1] === 'orders'">{{words['restorator-common']['menu-orders'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/tables" class="menu-btn" [class.active]="url[1] === 'tables'">{{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/products" class="menu-btn" [class.active]="url[1] === 'products'">{{words['restorator-common']['menu-products'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/stat" class="menu-btn" [class.active]="url[1] === 'stat'">{{words['restorator-common']['menu-stat'][currentLang.slug]}}</a></li>                
+            <li><a routerLink="/my-tables" class="menu-btn" [class.active]="url[1] === 'my-tables'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-my-tables'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/orders" class="menu-btn" [class.active]="url[1] === 'orders'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-orders'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/tables" class="menu-btn" [class.active]="url[1] === 'tables'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/products" class="menu-btn" [class.active]="url[1] === 'products'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-products'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/stat" class="menu-btn" [class.active]="url[1] === 'stat'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-stat'][currentLang.slug]}}</a></li>                
             -->
             <li><a routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['common']['logout'][currentLang.slug]}}</a></li>            
         </ul>

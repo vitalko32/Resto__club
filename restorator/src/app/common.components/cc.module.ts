@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import { CheckboxSimpleComponent } from './checkbox-simple/checkbox-simple.component';
+import { ConfirmPasswordedComponent } from './confirm-passworded/confirm-passworded.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { DatePeriodPickerComponent } from './dateperiod-picker/dateperiod-picker.component';
 import { DatetimePickerComponent } from './datetime-picker/datetime-picker.component';
@@ -31,6 +32,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         DatePeriodPickerComponent,
         AlertComponent,
         ConfirmComponent,
+        ConfirmPasswordedComponent,
         InputNumberComponent,
         InputSearchComponent,
         CheckboxSimpleComponent,
@@ -45,6 +47,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         DatePeriodPickerComponent,
         AlertComponent,
         ConfirmComponent,
+        ConfirmPasswordedComponent,
         InputNumberComponent,
         InputSearchComponent,
         CheckboxSimpleComponent,

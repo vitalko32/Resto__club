@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { IEmployeeAuthData } from "../model/dto/employee.authdata.interface";
+import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
 import { IEmployeeLogin } from "../model/dto/employee.login.interface";
 import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 import { Employee } from "../model/orm/employee.model";
@@ -84,6 +85,13 @@ export class AuthService {
             this.save();
             let dto: IEmployeeSetStatus = {employee_id: this.authData.value.employee.id, employee_status_id};
             this.dataService.employeeSetStatus(dto).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message));
+        });
+    }
+
+    public confirm(password: string): Promise<number> {
+        return new Promise((resolve, reject) => {
+            let dto: IEmployeeConfirm = {id: this.authData.value.employee.id, password};
+            this.dataService.employeesConfirm(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
         });
     }
         

@@ -15,6 +15,7 @@ import { IEmployeeLogin } from "../model/dto/employee.login.interface";
 import { Employee } from "../model/orm/employee.model";
 import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
+import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
 
 @Injectable()
 export class DataService {
@@ -35,11 +36,11 @@ export class DataService {
     public employeesLogin(dto: IEmployeeLogin): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login", dto);} 
     public employeesLoginByEmail(email: string): Observable<IAnswer<IEmployeeAuthData>> {return this.sendRequest("employees/login-by-email", {email});}         
     public employeesCheck(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/check/${id}`, null, true);}
+    public employeesConfirm(dto: IEmployeeConfirm): Observable<IAnswer<void>> {return this.sendRequest(`employees/confirm`, dto, true);}
     public employeeSetStatus(dto: IEmployeeSetStatus): Observable<IAnswer<void>> {return this.sendRequest("employees/set-status", dto, true);}
     public employeesChunk(dto: IGetChunk): Observable<IAnswer<Employee[]>> {return this.sendRequest("employees/chunk", dto, true);}
-    //public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}
-    //public employeesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`employees/delete/${id}`, null, true);}
-    //public employeesDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("employees/delete-bulk", ids, true);}
+    public employeesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`employees/delete/${id}`, null, true);}
+    //public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}    
     //public employeesCreate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/create", x, true);}
     //public employeesUpdate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/update", x, true);}    
 

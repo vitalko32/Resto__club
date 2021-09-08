@@ -15,6 +15,7 @@ import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { Sortdir } from "src/model/sortdir.type";
+import { IEmployeeConfirm } from "./dto/employee.confirm.interface";
 
 @Injectable()
 export class EmployeesService extends APIService {
@@ -26,6 +27,7 @@ export class EmployeesService extends APIService {
         super();
     }
 
+    // обычный логин
     public async login(dto: IEmployeeLogin): Promise<IAnswer<IEmployeeAuthData>> {
         try {            
             let employee: IEmployee = await this.validateEmployee(dto.email, dto.password);
@@ -44,6 +46,7 @@ export class EmployeesService extends APIService {
         }
     }
     
+    // логин по email через сторонние сервисы (google и др.)
     public async loginByEmail(dto: IEmployeeLoginByEmail): Promise<IAnswer<IEmployeeAuthData>> {
         try {
             let employee: IEmployee = await this.getEmployeeByEmail(dto.email);
@@ -62,6 +65,7 @@ export class EmployeesService extends APIService {
         }
     }
 
+    // установка статуса сотрудника
     public async setStatus(dto: IEmployeeSetStatus): Promise<IAnswer<void>> {
         try {
             let employee = await this.employeeRepository.findOne(dto.employee_id);
@@ -80,7 +84,8 @@ export class EmployeesService extends APIService {
         }
     }    
     
-    public async check(id: number): Promise<IAnswer<IEmployee>> { // проверка актуальности аккаунта и подгрузка актуальных данных
+    // проверка актуальности аккаунта и подгрузка актуальных данных
+    public async check(id: number): Promise<IAnswer<IEmployee>> { 
         try {                                    
             let employee: IEmployee = await this.getEmployeeById(id);
                         
@@ -97,6 +102,34 @@ export class EmployeesService extends APIService {
         }
     }
 
+    // проверка пароля для запароленных форм подтверждения
+    public async confirm(dto: IEmployeeConfirm): Promise<IAnswer<void>> {
+        try {
+            let employee: Employee = await this.employeeRepository
+                .createQueryBuilder("employee")
+                .addSelect("employee.password")
+                .where({id: dto.id})
+                .getOne();      
+        
+            if (!employee) {
+                return {statusCode: 404};
+            }
+
+            let passwordOk: boolean = await this.comparePassHash(dto.password, employee.password);
+
+            if (!passwordOk) {
+                return {statusCode: 401};
+            }
+
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.confirm: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    // фрагмент
     public async chunk(dto: IGetChunk): Promise<IAnswer<IEmployee[]>> {
         try {
             let sortBy: string = dto.sortBy;
@@ -135,6 +168,18 @@ export class EmployeesService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
+    }
+
+    // удаление
+    public async delete(id: number): Promise<IAnswer<void>> {
+        try {
+            await this.employeeRepository.delete(id);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.delete: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }        
     }
 
     ///////////////////////////////

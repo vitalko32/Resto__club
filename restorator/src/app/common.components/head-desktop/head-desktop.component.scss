@@ -1,6 +1,6 @@
 .head-desktop {
     @media (min-width:0) {display: none;}
-	@media (min-width:1000px) {display: flex;}
+	@media (min-width:1200px) {display: flex;}
     height: 45px; justify-content: center; width:100%; position: relative; margin-bottom: 15px;
     .hd-left {position: absolute; left: 0; top: 0;}
     .hd-right {position: absolute; right: 0; top: 0; display: flex;}    
