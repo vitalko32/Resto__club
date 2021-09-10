@@ -50,9 +50,7 @@ export class AuthService {
     }    
 
     public updatePassword(dto: IAdminUpdatePassword): Promise<number> {
-        return new Promise((resolve, reject) => {            
-            this.dataService.adminsUpdatePassword(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
-        });
+        return new Promise((resolve, reject) => this.dataService.adminsUpdatePassword(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
     }
         
     public logout(): void {        

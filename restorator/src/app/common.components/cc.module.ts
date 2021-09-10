@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import { CheckboxSimpleComponent } from './checkbox-simple/checkbox-simple.component';
+import { CheckboxSliderComponent } from './checkbox-slider/checkbox-slider.component';
 import { ConfirmPasswordedComponent } from './confirm-passworded/confirm-passworded.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { DatePeriodPickerComponent } from './dateperiod-picker/dateperiod-picker.component';
@@ -14,6 +15,7 @@ import { HeadMobileComponent } from './head-mobile/head-mobile.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputSearchComponent } from './input-search/input-search.component';
 import { MenuComponent } from './menu/menu.component';
+import { MsgDesktopComponent } from './msg-desktop/msg-desktop.component';
 import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
@@ -36,6 +38,8 @@ import { PaginationComponent } from './pagination/pagination.component';
         InputNumberComponent,
         InputSearchComponent,
         CheckboxSimpleComponent,
+        CheckboxSliderComponent,
+        MsgDesktopComponent,
     ],
     exports: [
         MenuComponent,
@@ -51,6 +55,8 @@ import { PaginationComponent } from './pagination/pagination.component';
         InputNumberComponent,
         InputSearchComponent,
         CheckboxSimpleComponent,
+        CheckboxSliderComponent,
+        MsgDesktopComponent,
     ],    
 })
 export class CCModule {}

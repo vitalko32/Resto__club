@@ -16,8 +16,9 @@
     }
     // panels
     .hm-panel {
-        position: fixed; z-index: 10; left:15px; top:-10000px; width: calc(100% - 30px); max-height: calc(100% - 120px); overflow: auto; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-bottom:1px white solid; border-left:1px white solid; border-right:1px white solid;  opacity: 0; transition: top 0s linear 0.3s, opacity 0.3s ease 0s; padding: 45px;        
+        position: fixed; z-index: 10; left:15px; top:-10000px; width: calc(100% - 30px); max-height: calc(100% - 120px); overflow: auto; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-bottom:1px white solid; border-left:1px white solid; border-right:1px white solid;  opacity: 0; transition: top 0s linear 0.3s, opacity 0.3s ease 0s; padding: 45px 15px;        
         &.active {top: 60px; opacity: 1; transition: top 0s linear 0s, opacity 0.3s ease 0s;}
+        .hm-msg {background-color: var(--color-red); color: white; font-size: 11px; margin-bottom: 15px; padding: 5px; border-radius: 5px;}
         ul {             
             list-style: none; margin: 0; padding: 0;
             li {

@@ -41,7 +41,7 @@ export class TransactionsService extends APIService {
             let data: Transaction[] = await query.orderBy({[`${sortBy}`]: sortDir}).take(q).skip(from).getMany();
             let allLength: number = await query.getCount();
             let sumRes = await getManager().query(`SELECT SUM(amount) AS sum FROM ${db_name}.${db_schema}.vne_transactions WHERE ${filter}`);
-            let sum: number = sumRes[0].sum ? parseInt(sumRes[0].sum) : 0;            
+            let sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;            
 
             return {statusCode: 200, data, allLength, sum};
         } catch (err) {

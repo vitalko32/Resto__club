@@ -34,7 +34,7 @@ export class RestaurantsService extends APIService {
     public async chunk(dto: IGetChunk): Promise<IAnswer<IRestaurant[]>> {
         try {
             const strPrice: string = (await this.settingRepository.findOne({where: {p: "price"}}))?.v;
-            const price: number = strPrice ? parseInt(strPrice) : 999999999;
+            const price: number = strPrice ? parseFloat(strPrice) : 999999999;
             const sortBy: string = dto.sortBy !== "daysleft" ? `r.${dto.sortBy}` : dto.sortBy;
             const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
             const from: number = dto.from;

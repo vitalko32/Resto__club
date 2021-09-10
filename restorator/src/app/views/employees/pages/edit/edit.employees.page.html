@@ -1,0 +1,20 @@
+<div class="dash">
+    <a class="dash-btn save" (click)="onUpdate()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>    
+    <a class="dash-btn back" routerLink="/employees"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
+</div>
+<div class="data">
+    <div class="dataedit"> 
+        <the-employee
+            *ngIf="employee"
+            [x]="employee"
+            [loading]="formLoading"
+            [errorEmail]="formErrorEmail"
+            [errorEmailDuplication]="formErrorEmailDuplication"            
+            [errorName]="formErrorName"            
+            mode="edit"
+            (save)="onUpdate();"
+        ></the-employee>
+    </div>
+</div>
+
+<confirm-passworded [(active)]="updateConfirmActive" [msg]="words['common']['save'][currentLang.slug] + '?'" (confirmed)="update()"></confirm-passworded>

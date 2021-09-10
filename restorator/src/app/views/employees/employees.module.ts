@@ -3,10 +3,15 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { IndexEmployeesPage } from "./index/index.employees.page";
+import { EmployeeComponent } from "./components/employee/employee.component";
+import { CreateEmployeesPage } from "./pages/create/create.employees.page";
+import { EditEmployeesPage } from "./pages/edit/edit.employees.page";
+import { IndexEmployeesPage } from "./pages/index/index.employees.page";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexEmployeesPage, pathMatch: "full"},
+	{path: "create", component: CreateEmployeesPage, pathMatch: "full"},
+	{path: "edit/:id", component: EditEmployeesPage},
 	{path: "**", redirectTo: "/employees"},
 ]);
 
@@ -21,6 +26,9 @@ let routes = RouterModule.forChild ([
 	],
 	declarations: [
 		IndexEmployeesPage,
+		CreateEmployeesPage,
+		EditEmployeesPage,
+		EmployeeComponent,
 	],    		    
 })
 export class EmployeesModule {}

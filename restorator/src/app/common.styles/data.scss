@@ -129,6 +129,14 @@
         }
         .de-error {color: var(--color-red); padding: 3px 0; font-size: 12px; padding: 0 10px;}
         .de-divider {height: 1px; background-color: var(--color-grey);}
+        .de-note {
+            display: flex; margin-bottom: 15px;
+            .den-mark {
+                margin-right: 10px;
+                span::before {font-family: "fa-solid"; font-size: 20px; content: "\f071";}
+            }
+            .den-txt {}
+        }
     }
 
     // просмотр данных в виде таблицы

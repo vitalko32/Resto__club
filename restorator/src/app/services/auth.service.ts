@@ -4,6 +4,7 @@ import { IEmployeeAuthData } from "../model/dto/employee.authdata.interface";
 import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
 import { IEmployeeLogin } from "../model/dto/employee.login.interface";
 import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
+import { IEmployeeUpdatePassword } from "../model/dto/employee.updatepassword.interface";
 import { Employee } from "../model/orm/employee.model";
 import { DataService } from './data.service';
 
@@ -93,6 +94,10 @@ export class AuthService {
             let dto: IEmployeeConfirm = {id: this.authData.value.employee.id, password};
             this.dataService.employeesConfirm(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
         });
+    }
+
+    public updatePassword(dto: IEmployeeUpdatePassword): Promise<number> {
+        return new Promise((resolve, reject) => this.dataService.employeesUpdatePassword(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
     }
         
     public logout(): void {

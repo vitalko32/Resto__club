@@ -66,6 +66,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	private async initSettings(): Promise<void> {
 		try {
 			await this.settingRepository.loadAll();		
+			this.settingRepository.startReload();
 			this.settingsReady = true;			
 		} catch (err) {
 			this.appService.showError(err);			

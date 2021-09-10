@@ -9,19 +9,24 @@ import { IEmployeeAuthData } from "./dto/employee.authdata.interface";
 import { IEmployeeLogin } from "./dto/employee.login.interface";
 import { IEmployeeLoginByEmail } from "./dto/employee.loginbyemail.interface";
 import { Setting } from "src/model/orm/setting.entity";
-import { Restaurant } from "src/model/orm/restaurant.entity";
 import { IRestaurant } from "./dto/restaurant.interface";
 import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { Sortdir } from "src/model/sortdir.type";
 import { IEmployeeConfirm } from "./dto/employee.confirm.interface";
+import { IEmployeeCreate } from "src/api.admin/employees/dto/employee.create.interface";
+import * as bcrypt from "bcrypt";
+import { Restaurant } from "src/model/orm/restaurant.entity";
+import { IEmployeeUpdate } from "./dto/employee.update.interface";
+import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
 
 @Injectable()
 export class EmployeesService extends APIService {
     constructor (
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Setting) private settingRepository: Repository<Setting>,
+        @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
         private jwtService: JwtService,               
     ) {
         super();
@@ -182,6 +187,95 @@ export class EmployeesService extends APIService {
         }        
     }
 
+    // создание
+    public async create(dto: IEmployeeCreate): Promise<IAnswer<void>> {        
+        try {            
+            const employee = await this.employeeRepository.findOne({where: {email: dto.email}});
+
+            if (employee) {
+                return {statusCode: 409, error: "email exists"};
+            }
+
+            const restaurant = await this.restaurantRepository.findOne(dto.restaurant_id);
+
+            if (!restaurant) {
+                return {statusCode: 404, error: "restaurant not found"};
+            }
+            
+            const x: Employee = this.employeeRepository.create(dto);
+            x.password = bcrypt.hashSync(x.password, 10);
+            await this.employeeRepository.save(x);
+            // charge restaurant
+            const strPrice: string = (await this.settingRepository.findOne({where: {p: "price"}}))?.v;  
+            const price: number = strPrice ? parseFloat(strPrice) : 0;
+            restaurant.money -= price;
+            await this.restaurantRepository.save(restaurant);
+
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.create: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }        
+    }
+
+    // загрузка одного элемента
+    public async one(id: number): Promise<IAnswer<IEmployee>> {
+        try {
+            let data: IEmployee = await this.employeeRepository.findOne(id);
+            return data ? {statusCode: 200, data} : {statusCode: 404, error: "employee not found"};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.one: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    // обновление
+    public async update(dto: IEmployeeUpdate): Promise<IAnswer<void>> {
+        try {
+            const employee = await this.employeeRepository.findOne({where: {email: dto.email, id: Not(dto.id)}});
+
+            if (employee) {
+                return {statusCode: 409, error: "email exists"};
+            }
+
+            let x: Employee = this.employeeRepository.create(dto);
+
+            if (x.password) {                
+                x.password = bcrypt.hashSync(dto.password, 10);
+            } else {
+                delete x.password; // if we got empty or null password, then it will not change in DB
+            }
+
+            await this.employeeRepository.save(x);       
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.update: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        } 
+    }  
+
+    // смена пароля
+    public async updatePassword(dto: IEmployeeUpdatePassword): Promise<IAnswer<void>> {
+        try {
+            let employee: Employee = await this.employeeRepository.findOne(dto.id);
+
+            if (!employee) {
+                return {statusCode: 404, error: "employee not found"}; 
+            }
+
+            employee.password = bcrypt.hashSync(dto.password, 10);
+            await this.employeeRepository.save(employee);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.updatePassword: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
     ///////////////////////////////
     private getEmployeeByEmail(email: string): Promise<IEmployee> {
         return this.employeeRepository
@@ -220,7 +314,7 @@ export class EmployeesService extends APIService {
 
     private async getRestaurantDaysleft(r: IRestaurant): Promise<number> {
         const strPrice: string = (await this.settingRepository.findOne({where: {p: "price"}}))?.v;
-        const price: number = strPrice ? parseInt(strPrice) : 999999999;
+        const price: number = strPrice ? parseFloat(strPrice) : 999999999;
 
         return Math.floor(r.money / (price * r.employees_q));
     }

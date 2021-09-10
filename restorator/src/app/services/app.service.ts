@@ -117,4 +117,14 @@ export class AppService {
     public formattedDate(date: Date): string {
         return date ? `${this.twoDigits(date.getDate())}.${this.twoDigits(date.getMonth()+1)}.${date.getFullYear()}` : "";
     }
+
+    public trim(s: any): any {
+        if (s === null || s === undefined) {
+            return "";
+        } else if (typeof(s) === "string") {
+            return s.trim();
+        } else {
+            return s;
+        }
+    }
 }

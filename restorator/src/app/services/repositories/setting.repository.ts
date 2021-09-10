@@ -5,7 +5,8 @@ import { DataService } from '../data.service';
 
 @Injectable()
 export class SettingRepository {
-    public settings: Settings;
+    public settings: Settings = null;
+    private interval: number = null;
     
     constructor(protected dataService: DataService) {}
     
@@ -23,4 +24,8 @@ export class SettingRepository {
             });
         });
     }    
+
+    public startReload(): void {
+        this.interval = window.setInterval(() => this.loadAll(), 15 * 1000);
+    }
 }

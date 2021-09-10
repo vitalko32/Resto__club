@@ -35,10 +35,14 @@ export class Employee extends Model {
         return this;
     }
 
-    /*public init(): Employee {        
-        this.is_admin = false;
+    public init(restaurant_id: number): Employee {        
+        this.restaurant_id = restaurant_id;        
         this.email = "";
         this.password = "";             
+        this.name = "";
+        this.phone = "";
+        this.is_admin = false;
+        
         return this;
-    }*/
+    }
 }

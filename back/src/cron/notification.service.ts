@@ -27,7 +27,7 @@ export class NotificationService {
                 return;
             }
 
-            const price: number = parseInt(strPrice);
+            const price: number = parseFloat(strPrice);
             const rl: Restaurant[] = await this.restaurantRepository.find({relations: ["employees"]});
 
             for (let r of rl) {
@@ -60,7 +60,7 @@ export class NotificationService {
                 return;
             }
 
-            const price: number = parseInt(strPrice);
+            const price: number = parseFloat(strPrice);
             const rl: Restaurant[] = await this.restaurantRepository.find({relations: ["employees"]});
             const al: Admin[] = await this.adminRepository.find({where: {active: true, admingroup_id: 1}});
             const expirationDays = [0, 1, 2, 3];            

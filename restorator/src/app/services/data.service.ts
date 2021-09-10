@@ -16,6 +16,7 @@ import { Employee } from "../model/orm/employee.model";
 import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
+import { IEmployeeUpdatePassword } from "../model/dto/employee.updatepassword.interface";
 
 @Injectable()
 export class DataService {
@@ -40,9 +41,10 @@ export class DataService {
     public employeeSetStatus(dto: IEmployeeSetStatus): Observable<IAnswer<void>> {return this.sendRequest("employees/set-status", dto, true);}
     public employeesChunk(dto: IGetChunk): Observable<IAnswer<Employee[]>> {return this.sendRequest("employees/chunk", dto, true);}
     public employeesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`employees/delete/${id}`, null, true);}
-    //public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}    
-    //public employeesCreate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/create", x, true);}
-    //public employeesUpdate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/update", x, true);}    
+    public employeesCreate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/create", x, true);}
+    public employeesOne(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/one/${id}`, null, true);}        
+    public employeesUpdate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/update", x, true);}    
+    public employeesUpdatePassword(dto: IEmployeeUpdatePassword): Observable<IAnswer<void>> {return this.sendRequest("employees/update-password", dto, true);}
 
     public employeeStatusesAll(dto: IGetAll): Observable<IAnswer<EmployeeStatus[]>> {return this.sendRequest(`employee-statuses/all`, dto, true);}    
     

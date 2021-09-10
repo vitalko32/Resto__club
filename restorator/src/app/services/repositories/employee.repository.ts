@@ -13,7 +13,7 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
     constructor(protected dataService: DataService) {
         super();
         this.sortBy = "created_at";
-        this.sortDir = -1;
+        this.sortDir = 1;
     }    
 
     public loadChunk(): Promise<void> {
@@ -38,13 +38,8 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
                 reject(err.message);                
             });            
         });
-    }    
+    }
 
-    public delete(id: number): Promise<void> {
-        return new Promise((resolve, reject) => this.dataService.employeesDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
-    } 
-
-    /*
     public loadOne(id: number): Promise<Employee> {
         return new Promise((resolve, reject) => {
             this.dataService.employeesOne(id).subscribe(res => {
@@ -60,25 +55,15 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
         });
     } 
 
+    public update(x: Employee): Promise<number> {
+        return new Promise((resolve, reject) => this.dataService.employeesUpdate(x).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
+    }
+
+    public delete(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.employeesDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    } 
+
     public create(x: Employee): Promise<number> {
         return new Promise((resolve, reject) => this.dataService.employeesCreate(x).subscribe(res => resolve(res.statusCode), err => reject(err.message)));
     }
-
-    public update(x: Employee): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.dataService.employeesUpdate(x).subscribe(res => {
-                if (res.statusCode === 200) {
-                    resolve();
-                } else {                    
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);
-            });
-        });
-    }    
-    
-
-    
-    */
 }

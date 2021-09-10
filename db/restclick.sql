@@ -786,11 +786,11 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 32	15	\N	7573497999@gmail.com	$2b$10$IjNiwNYzTFdFc.r.fMYWo.sa5Mbm9ebMnABxBYaYfXDKdeJJnL9om	Пушкин А.	+380664028899	t	2021-09-07 02:03:30.360362	f
 9	21	2	7573497@gmail.com	$2b$10$DzU7zXBuoYgLpD3dv82nFuMKtOnTofGCuxzsrr8DD2E5u7fqSS.R2	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
 36	21	1	bednenko@gmail.com	$2b$10$YxvpyUA1UJXhZnBUrsbXCOzUtFRbhx7ibOGkTHBeeECV0ZiLqDpPi	Бедненко Федор Иванович	\N	f	2021-09-08 17:44:35.220428	f
-3	21	1	viovalya@gmail.com	$2b$10$uGttm7Z2Ovz1A95DkFmxZO2n9dObnnL08GPoI9oyvEUkIGpK5nwt6	Лисичкин Виктор	+38123444444444	f	2021-08-26 22:03:00.332342	f
 30	43	\N	7573497111@gmail.com	$2b$10$ZugM9ReCVctvQ9CdfPF7wucHDF8Tu7cTJyC9zXfbCgkZEMn12xgsm	Безымянный Андрей	+380664000000	f	2021-09-04 12:48:30.239362	f
 27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Чепига Алексей	+380660000000	f	2021-09-02 12:59:04.543675	f
 10	22	\N	757349788@gmail.com	123	Петров Алексей	\N	t	2021-08-28 11:27:23.119406	t
 24	38	\N	viovalya3@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	Иванов Алексей	+380664021350	t	2021-08-30 12:54:22.738402	t
+3	21	1	viovalya@gmail.com	$2b$10$8HdjDJmla3PgEFlM6lqe/Owei5EC8RX5WOEy1sOOW2ck4XYGvuJae	Лисичкин Виктор	+38123444444443	f	2021-08-26 22:03:00.332342	f
 \.
 
 
@@ -837,6 +837,7 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	1500
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
 46	1	RRR!		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
@@ -853,7 +854,6 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	30
 43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	755
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	65525
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	86
 11	1	В гостях у сказки	test9	\N	\N	\N	\N	\N	\N	2021-08-27 00:26:05.774306	1	46588
 38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-9
 12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	9476
@@ -876,6 +876,7 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 9	price	10	цена человеко-дня	3	t	f
 11	restorator-app-url	https://restorator.restclick.vio.net.ua	URL админки рестораторов	2	t	f
 10	pay-time	1:00	время снятия денег со счетов	4	t	f
+12	restorator-msg	Внимание! В 3:00 Мск сервер будет перезагружен. Ожидаемое время простоя - 1 минута. &bull; Attention! The server will be restarted at 3:00 Moscow time. The expected downtime is 1 minute.	сообщение для рестораторов	5	t	f
 \.
 
 
@@ -2242,6 +2243,36 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 341	153	2	Password
 342	154	1	Ваш пароль
 343	154	2	Your password
+345	155	2	Personnel - Add
+346	156	1	E-mail
+347	156	2	E-mail
+348	157	1	Пароль
+349	157	2	Password
+350	158	1	E-mail занят
+351	158	2	E-mail is already in use
+352	159	1	Телефон
+353	159	2	Phone
+354	160	1	При добавлении сотрудника с вашего счета будет списано
+355	160	2	When you add an employee, your account will be charged by
+356	161	1	Персонал - Редактирование
+357	161	2	Personnel - Edit
+344	155	1	Персонал - Добавление
+358	162	1	введите, если хотите изменить
+359	162	2	enter to update
+360	163	1	Сменить пароль
+361	163	2	Change password
+362	164	1	Смена пароля
+363	164	2	Change password
+364	165	1	Новый пароль
+365	165	2	New password
+366	166	1	Новый пароль еще раз
+367	166	2	Repeat new password
+368	167	1	Ваш логин
+369	167	2	Your login
+370	168	1	Пароли не совпадают
+371	168	2	Passwords don't match
+372	169	1	Пароль сохранен
+373	169	2	Password saved
 \.
 
 
@@ -2258,8 +2289,9 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 7	restorator-common	7
 6	restorator-login	8
 8	owner-transactions	5
-9	restorator-home	9
-10	restorator-employees	10
+9	restorator-home	10
+10	restorator-employees	11
+11	restorator-password	9
 \.
 
 
@@ -2386,6 +2418,21 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 152	10	103	status	\N
 153	5	127	password	\N
 154	5	128	your-password	\N
+155	10	2	title-create	\N
+156	10	104	email	\N
+157	10	105	password	\N
+158	10	106	error-email-duplication	\N
+159	10	107	phone	\N
+160	10	108	note	\N
+161	10	3	title-edit	\N
+162	5	129	password-change	\N
+163	7	8	menu-pw	\N
+164	11	0	title	\N
+165	11	0	password1	\N
+166	11	0	password2	\N
+167	11	0	login	\N
+168	11	0	error-mismatch	\N
+169	11	0	saved	\N
 \.
 
 
@@ -2428,7 +2475,7 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 3, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 37, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 42, true);
 
 
 --
@@ -2463,7 +2510,7 @@ SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 46, true);
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_settings_id_seq', 11, true);
+SELECT pg_catalog.setval('"default".vne_settings_id_seq', 12, true);
 
 
 --
@@ -2477,21 +2524,21 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1115, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 343, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 373, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 10, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 11, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 154, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 169, true);
 
 
 --

@@ -9,6 +9,9 @@ import { IEmployee } from "./dto/employee.interface";
 import { IEmployeeSetStatus } from "./dto/employee.setstatus.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { IEmployeeConfirm } from "./dto/employee.confirm.interface";
+import { IEmployeeCreate } from "src/api.admin/employees/dto/employee.create.interface";
+import { IEmployeeUpdate } from "src/api.admin/employees/dto/employee.update.interface";
+import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {
@@ -29,7 +32,7 @@ export class EmployeesController {
     // check and reload
     @UseGuards(AuthGuard)
     @Post("check/:id")
-    public one(@Param("id") id: string): Promise<IAnswer<IEmployee>> {
+    public check(@Param("id") id: string): Promise<IAnswer<IEmployee>> {
         return this.employeesService.check(parseInt(id));
     }
 
@@ -59,5 +62,33 @@ export class EmployeesController {
     @Post("delete/:id")
     public delete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.employeesService.delete(parseInt(id));
+    }
+
+    // create
+    @UseGuards(AuthGuard)
+    @Post("create")
+    public create(@Body() dto: IEmployeeCreate): Promise<IAnswer<void>> {
+        return this.employeesService.create(dto);
+    }
+
+    // get one
+    @UseGuards(AuthGuard)
+    @Post("one/:id")
+    public one(@Param("id") id: string): Promise<IAnswer<IEmployee>> {
+        return this.employeesService.one(parseInt(id));
+    }
+
+    // update
+    @UseGuards(AuthGuard)
+    @Post("update")
+    public update(@Body() dto: IEmployeeUpdate): Promise<IAnswer<void>> {
+        return this.employeesService.update(dto);
+    }
+
+    // update password
+    @UseGuards(AuthGuard)
+    @Post("update-password")
+    public updatePassword(@Body() dto: IEmployeeUpdatePassword): Promise<IAnswer<void>> {
+        return this.employeesService.updatePassword(dto);
     }
 }

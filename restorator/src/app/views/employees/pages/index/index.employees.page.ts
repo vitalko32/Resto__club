@@ -12,7 +12,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "index-employees-page",
     templateUrl: "index.employees.page.html",
-    styleUrls: ["../../../common.styles/data.scss"],
+    styleUrls: ["../../../../common.styles/data.scss"],
 })
 export class IndexEmployeesPage implements OnInit {
     public langSubscription: Subscription = null;

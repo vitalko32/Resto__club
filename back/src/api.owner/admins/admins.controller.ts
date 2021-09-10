@@ -26,7 +26,7 @@ export class AdminsController {
     // update password
     @UseGuards(AuthGuard)
     @Post("update-password")
-    public update(@Body() dto: IAdminUpdatePassword): Promise<IAnswer<void>> {
+    public updatePassword(@Body() dto: IAdminUpdatePassword): Promise<IAnswer<void>> {
         return this.adminsService.updatePassword(dto);
     }
 }
