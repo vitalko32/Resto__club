@@ -14,6 +14,7 @@ import { EmployeeStatusesModule } from './views/employee.statuses/employee.statu
 import { RestaurantsModule } from './views/restaurants/restaurants.module';
 import { EmployeesModule } from './views/employees/employees.module';
 import { TransactionsModule } from './views/transactions/transactions.module';
+import { HallsModule } from './views/halls/halls.module';
 
 const routes: Routes = [
 	{path: "", redirectTo: "/settings", pathMatch: "full"},
@@ -27,6 +28,7 @@ const routes: Routes = [
 	{path: "restaurants/restaurants", loadChildren: () => RestaurantsModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/employees", loadChildren: () => EmployeesModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/employee-statuses", loadChildren: () => EmployeeStatusesModule, canActivate: [AuthGuard]}, 				
+	{path: "restaurants/halls", loadChildren: () => HallsModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/transactions", loadChildren: () => TransactionsModule, canActivate: [AuthGuard]}, 				
 	{path: "utils/mailtemplates", loadChildren: () => MailtemplatesModule, canActivate: [AuthGuard]}, 		
 	{path: "**", redirectTo: "/settings"},

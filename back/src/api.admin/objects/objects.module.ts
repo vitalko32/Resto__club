@@ -15,6 +15,7 @@ import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { Employee } from "src/model/orm/employee.entity";
+import { Hall } from "src/model/orm/hall.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -32,6 +33,7 @@ import { Employee } from "src/model/orm/employee.entity";
 			EmployeeStatus,
 			EmployeeStatusTranslation,
 			Restaurant,
+			Hall,
 		]),
 	],
 })

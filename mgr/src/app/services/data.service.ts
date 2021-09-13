@@ -21,6 +21,7 @@ import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { Restaurant } from "../model/orm/restaurant.model";
 import { Employee } from "../model/orm/employee.model";
 import { Transaction } from "../model/orm/transaction.model";
+import { Hall } from "../model/orm/hall.model";
 
 @Injectable()
 export class DataService {
@@ -102,6 +103,14 @@ export class DataService {
     public restaurantsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("restaurants/delete-bulk", ids, true);}
     public restaurantsCreate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/create", x, true);}
     public restaurantsUpdate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/update", x, true);}     
+
+    public hallsAll(dto: IGetAll): Observable<IAnswer<Hall[]>> {return this.sendRequest(`halls/all`, dto, true);}    
+    public hallsChunk(dto: IGetChunk): Observable<IAnswer<Hall[]>> {return this.sendRequest("halls/chunk", dto, true);}
+    public hallsOne(id: number): Observable<IAnswer<Hall>> {return this.sendRequest(`halls/one/${id}`, null, true);}
+    public hallsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`halls/delete/${id}`, null, true);}
+    public hallsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("halls/delete-bulk", ids, true);}
+    public hallsCreate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/create", x, true);}
+    public hallsUpdate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/update", x, true);}     
 
     public transactionsChunk(dto: IGetChunk): Observable<IAnswer<Transaction[]>> {return this.sendRequest("transactions/chunk", dto, true);}
     

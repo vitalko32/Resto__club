@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { DeleteResult, IsNull, Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
 import { Hall } from "../../model/orm/hall.entity";
@@ -10,10 +10,14 @@ import { IHallCreate } from "./dto/hall.create.interface";
 import { IHallUpdate } from "./dto/hall.update.interface";
 import { Sortdir } from "src/model/sortdir.type";
 import { IGetAll } from "src/model/dto/getall.interface";
+import { Table } from "src/model/orm/table.entity";
 
 @Injectable()
 export class HallsService extends APIService {
-    constructor (@InjectRepository(Hall) private hallRepository: Repository<Hall>) {
+    constructor (
+        @InjectRepository(Hall) private hallRepository: Repository<Hall>,
+        @InjectRepository(Table) private tableRepository: Repository<Table>,
+    ) {
         super();
     }    
 
@@ -52,7 +56,7 @@ export class HallsService extends APIService {
 
     public async one(id: number): Promise<IAnswer<Hall>> {
         try {
-            let data: Hall = await this.hallRepository.findOne(id);
+            let data: Hall = await this.hallRepository.findOne(id, {relations: ["tables"]});
             return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in HallsService.one: ${String(err)}`;
@@ -106,12 +110,17 @@ export class HallsService extends APIService {
             }            
 
             let x: Hall = this.hallRepository.create(dto);
-            await this.hallRepository.save(x);       
+            await this.hallRepository.save(x);  
+            await this.deleteUnbindedTables();     
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in HallsService.update: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         } 
-    }    
+    }  
+    
+    private deleteUnbindedTables(): Promise<DeleteResult> {
+        return this.tableRepository.delete({hall_id: IsNull()});
+    }  
 }

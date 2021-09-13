@@ -18,6 +18,7 @@ import { Mailtemplate } from './model/orm/mailtemplate.entity';
 import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.entity';
 import { Restaurant } from './model/orm/restaurant.entity';
 import { Setting } from './model/orm/setting.entity';
+import { Table } from './model/orm/table.entity';
 import { Transaction } from './model/orm/transaction.entity';
 import { Word } from './model/orm/word.entity';
 import { WordTranslation } from './model/orm/word.translation.entity';
@@ -52,6 +53,7 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				EmployeeStatusTranslation,		
 				Transaction,		
 				Hall,
+				Table,
 			],
 			synchronize: true,
 		}),

@@ -269,6 +269,44 @@ ALTER SEQUENCE "default".vne_employees_id_seq OWNED BY "default".vne_employees.i
 
 
 --
+-- Name: vne_halls; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_halls (
+    id integer NOT NULL,
+    restaurant_id integer,
+    name character varying,
+    nx integer DEFAULT 5 NOT NULL,
+    ny integer DEFAULT 5 NOT NULL,
+    pos integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE "default".vne_halls OWNER TO vio;
+
+--
+-- Name: vne_halls_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_halls_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_halls_id_seq OWNER TO vio;
+
+--
+-- Name: vne_halls_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_halls_id_seq OWNED BY "default".vne_halls.id;
+
+
+--
 -- Name: vne_langs; Type: TABLE; Schema: default; Owner: vio
 --
 
@@ -390,7 +428,7 @@ CREATE TABLE "default".vne_restaurants (
     id integer NOT NULL,
     currency_id integer,
     name character varying,
-    domain character varying NOT NULL,
+    domain character varying,
     ownername character varying,
     phone character varying,
     address character varying,
@@ -464,6 +502,44 @@ ALTER TABLE "default".vne_settings_id_seq OWNER TO vio;
 --
 
 ALTER SEQUENCE "default".vne_settings_id_seq OWNED BY "default".vne_settings.id;
+
+
+--
+-- Name: vne_tables; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_tables (
+    id integer NOT NULL,
+    hall_id integer,
+    no integer DEFAULT 0 NOT NULL,
+    seats integer DEFAULT 0 NOT NULL,
+    x integer DEFAULT 0 NOT NULL,
+    y integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE "default".vne_tables OWNER TO vio;
+
+--
+-- Name: vne_tables_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_tables_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_tables_id_seq OWNER TO vio;
+
+--
+-- Name: vne_tables_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_tables_id_seq OWNED BY "default".vne_tables.id;
 
 
 --
@@ -654,6 +730,13 @@ ALTER TABLE ONLY "default".vne_employees ALTER COLUMN id SET DEFAULT nextval('"d
 
 
 --
+-- Name: vne_halls id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_halls ALTER COLUMN id SET DEFAULT nextval('"default".vne_halls_id_seq'::regclass);
+
+
+--
 -- Name: vne_langs id; Type: DEFAULT; Schema: default; Owner: vio
 --
 
@@ -686,6 +769,13 @@ ALTER TABLE ONLY "default".vne_restaurants ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY "default".vne_settings ALTER COLUMN id SET DEFAULT nextval('"default".vne_settings_id_seq'::regclass);
+
+
+--
+-- Name: vne_tables id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_tables ALTER COLUMN id SET DEFAULT nextval('"default".vne_tables_id_seq'::regclass);
 
 
 --
@@ -784,13 +874,25 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 29	9	\N	7573497777@gmail.com	$2b$10$lrWJKgjzIhv6qDzSD6AcZOjh2KO9k5x3K5tVjQJ3q58ZgF/uSQKj6	Петров Андрей	+380664000050	t	2021-09-03 01:41:45.691878	f
 31	46	\N	7573497rr@gmail.com	$2b$10$4KyYx5FqOrFutyLB7Ls2oe82rMzNIGvQ/24YWJ1QivWSTFs4gSEpm	\N	\N	t	2021-09-07 01:16:30.429325	t
 32	15	\N	7573497999@gmail.com	$2b$10$IjNiwNYzTFdFc.r.fMYWo.sa5Mbm9ebMnABxBYaYfXDKdeJJnL9om	Пушкин А.	+380664028899	t	2021-09-07 02:03:30.360362	f
-9	21	2	7573497@gmail.com	$2b$10$DzU7zXBuoYgLpD3dv82nFuMKtOnTofGCuxzsrr8DD2E5u7fqSS.R2	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
+3	21	1	viovalya@gmail.com	$2b$10$8HdjDJmla3PgEFlM6lqe/Owei5EC8RX5WOEy1sOOW2ck4XYGvuJae	Лисичкин Виктор	+38123444444443	f	2021-08-26 22:03:00.332342	f
 36	21	1	bednenko@gmail.com	$2b$10$YxvpyUA1UJXhZnBUrsbXCOzUtFRbhx7ibOGkTHBeeECV0ZiLqDpPi	Бедненко Федор Иванович	\N	f	2021-09-08 17:44:35.220428	f
 30	43	\N	7573497111@gmail.com	$2b$10$ZugM9ReCVctvQ9CdfPF7wucHDF8Tu7cTJyC9zXfbCgkZEMn12xgsm	Безымянный Андрей	+380664000000	f	2021-09-04 12:48:30.239362	f
 27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Чепига Алексей	+380660000000	f	2021-09-02 12:59:04.543675	f
 10	22	\N	757349788@gmail.com	123	Петров Алексей	\N	t	2021-08-28 11:27:23.119406	t
 24	38	\N	viovalya3@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	Иванов Алексей	+380664021350	t	2021-08-30 12:54:22.738402	t
-3	21	1	viovalya@gmail.com	$2b$10$8HdjDJmla3PgEFlM6lqe/Owei5EC8RX5WOEy1sOOW2ck4XYGvuJae	Лисичкин Виктор	+38123444444443	f	2021-08-26 22:03:00.332342	f
+9	21	2	7573497@gmail.com	$2b$10$VLchyc5Yx2aW5u2lgT9ei.A33T0Zh8I.5gvjIg3Uy8qyoDii2IY92	Булкин Олег	\N	t	2021-08-28 11:12:59.882811	t
+\.
+
+
+--
+-- Data for Name: vne_halls; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_halls (id, restaurant_id, name, nx, ny, pos) FROM stdin;
+2	21	Синий	5	5	2
+3	9	Зал 1	5	5	1
+1	21	Красный	5	5	1
+4	21	Зеленый	5	5	3
 \.
 
 
@@ -837,7 +939,6 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	1500
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
 46	1	RRR!		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
@@ -845,15 +946,16 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0
 15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	-6
 7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0
+19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	20
+1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	65515
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	1460
 18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	2021-08-27 22:30:50.941314	1	-7
+43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	745
 10	1	Сто пудов	test8	Алексей Сидоров	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:25:50.223075	1	-30
 9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:34.269246	1	-20
 5	1	У Ашота	test3	Алексей Козлов	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:24:34.213564	2	0
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	10
 22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-40
-19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	30
-43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	755
-1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	65525
 11	1	В гостях у сказки	test9	\N	\N	\N	\N	\N	\N	2021-08-27 00:26:05.774306	1	46588
 38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-9
 12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	9476
@@ -871,12 +973,22 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 6	smtp-port	587	\N	101	f	f
 7	smtp-login	viodev.robot@gmail.com	\N	102	f	f
 8	smtp-pw	6vl1TfeXq	\N	103	f	f
+12	restorator-msg		сообщение для рестораторов	5	t	f
 2	google-clientid	63103186909-5ut3m449vpr9uqp0v7jv02phea85mub0.apps.googleusercontent.com	Google Oauth API client ID	200	t	f
 4	owner-app-url	https://owner.restclick.vio.net.ua	URL админки владельца	1	t	f
 9	price	10	цена человеко-дня	3	t	f
 11	restorator-app-url	https://restorator.restclick.vio.net.ua	URL админки рестораторов	2	t	f
 10	pay-time	1:00	время снятия денег со счетов	4	t	f
-12	restorator-msg	Внимание! В 3:00 Мск сервер будет перезагружен. Ожидаемое время простоя - 1 минута. &bull; Attention! The server will be restarted at 3:00 Moscow time. The expected downtime is 1 minute.	сообщение для рестораторов	5	t	f
+\.
+
+
+--
+-- Data for Name: vne_tables; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_tables (id, hall_id, no, seats, x, y) FROM stdin;
+2	1	1	3	1	1
+3	4	1	4	0	1
 \.
 
 
@@ -1999,6 +2111,10 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1113	13	0	2021-09-08 02:10:00.060354	auto
 1114	11	0	2021-09-08 02:10:00.062256	auto
 1115	12	0	2021-09-08 02:10:00.064125	auto
+1118	19	-10	2021-09-14 01:00:00.022898	auto
+1119	1	-10	2021-09-14 01:00:00.032463	auto
+1120	21	-30	2021-09-14 01:00:00.037544	auto
+1121	43	-10	2021-09-14 01:00:00.041848	auto
 \.
 
 
@@ -2273,6 +2389,12 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 371	168	2	Passwords don't match
 372	169	1	Пароль сохранен
 373	169	2	Password saved
+374	170	1	Карта столов
+375	170	2	Table map
+376	171	1	Залы
+377	171	2	Halls
+378	172	1	Залы
+379	172	2	Halls
 \.
 
 
@@ -2292,6 +2414,8 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 9	restorator-home	10
 10	restorator-employees	11
 11	restorator-password	9
+12	restorator-tables	13
+13	restorator-halls	12
 \.
 
 
@@ -2398,6 +2522,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 131	7	5	menu-products	\N
 132	7	6	menu-stat	\N
 127	7	7	menu-employees	\N
+170	12	1	title	\N
 136	9	0	signed-as	\N
 137	9	0	restaurant	\N
 138	9	0	acc-state	\N
@@ -2412,6 +2537,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 146	5	124	lang	\N
 147	5	125	actions	\N
 148	5	126	edit	\N
+171	7	9	menu-halls	\N
+172	13	1	title-index	\N
 149	10	100	created-at	\N
 150	10	101	name	\N
 151	10	102	admin	\N
@@ -2475,7 +2602,14 @@ SELECT pg_catalog.setval('"default".vne_employee_statuses_id_seq', 3, true);
 -- Name: vne_employees_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employees_id_seq', 42, true);
+SELECT pg_catalog.setval('"default".vne_employees_id_seq', 44, true);
+
+
+--
+-- Name: vne_halls_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_halls_id_seq', 4, true);
 
 
 --
@@ -2503,7 +2637,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_restaurants_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 46, true);
+SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 48, true);
 
 
 --
@@ -2514,31 +2648,38 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 12, true);
 
 
 --
+-- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 3, true);
+
+
+--
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1115, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1121, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 373, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 379, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 11, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 13, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 169, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 172, true);
 
 
 --
@@ -2563,6 +2704,14 @@ ALTER TABLE ONLY "default".vne_words
 
 ALTER TABLE ONLY "default".vne_restaurants
     ADD CONSTRAINT "PK_0875461f4afdd97af48b6444eff" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_halls PK_0989b8637f146421fd51f440a9e; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_halls
+    ADD CONSTRAINT "PK_0989b8637f146421fd51f440a9e" PRIMARY KEY (id);
 
 
 --
@@ -2630,6 +2779,14 @@ ALTER TABLE ONLY "default".vne_mailtemplate_translations
 
 
 --
+-- Name: vne_tables PK_bb89d6ca78aa6b3905e302fde95; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_tables
+    ADD CONSTRAINT "PK_bb89d6ca78aa6b3905e302fde95" PRIMARY KEY (id);
+
+
+--
 -- Name: vne_employees PK_be6da89c037f846b6b791a35f8b; Type: CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -2675,14 +2832,6 @@ ALTER TABLE ONLY "default".vne_admins
 
 ALTER TABLE ONLY "default".vne_employees
     ADD CONSTRAINT "UQ_752fad6244eb8729bba8e6558da" UNIQUE (email);
-
-
---
--- Name: vne_restaurants UQ_83e1ce98acfb064fa10c6dbb9b6; Type: CONSTRAINT; Schema: default; Owner: vio
---
-
-ALTER TABLE ONLY "default".vne_restaurants
-    ADD CONSTRAINT "UQ_83e1ce98acfb064fa10c6dbb9b6" UNIQUE (domain);
 
 
 --
@@ -2814,6 +2963,14 @@ ALTER TABLE ONLY "default".vne_employees
 
 
 --
+-- Name: vne_halls FK_76a8663a8771558c69ef1e51fef; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_halls
+    ADD CONSTRAINT "FK_76a8663a8771558c69ef1e51fef" FOREIGN KEY (restaurant_id) REFERENCES "default".vne_restaurants(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: vne_mailtemplate_translations FK_967e7082c5cd07daaa63df4a36b; Type: FK CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -2843,6 +3000,14 @@ ALTER TABLE ONLY "default".vne_restaurants
 
 ALTER TABLE ONLY "default".vne_word_translations
     ADD CONSTRAINT "FK_c7d449bf6c30c1b0c83af297543" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_tables FK_d70db2be1204137303fa4cf72b4; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_tables
+    ADD CONSTRAINT "FK_d70db2be1204137303fa4cf72b4" FOREIGN KEY (hall_id) REFERENCES "default".vne_halls(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

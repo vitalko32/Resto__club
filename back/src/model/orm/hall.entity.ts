@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Restaurant } from "./restaurant.entity";
+import { Table } from "./table.entity";
 
 @Entity({name: "vne_halls"})
 export class Hall {
@@ -25,4 +26,7 @@ export class Hall {
     @ManyToOne(type => Restaurant, {onDelete: "CASCADE", onUpdate: "CASCADE"})
     @JoinColumn({name: "restaurant_id"})
     restaurant: Restaurant;
+
+    @OneToMany(type => Table, table => table.hall, {cascade: true})
+    tables: Table[];
 }

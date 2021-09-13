@@ -19,6 +19,7 @@ import { EmployeeStatusRepository } from './repositories/employee.status.reposit
 import { RestaurantRepository } from './repositories/restaurant.repository';
 import { EmployeeRepository } from './repositories/employee.repository';
 import { TransactionRepository } from './repositories/transaction.repository';
+import { HallRepository } from './repositories/hall.repository';
 
 @NgModule({
     declarations: [],
@@ -43,6 +44,7 @@ import { TransactionRepository } from './repositories/transaction.repository';
 		EmployeeStatusRepository,
 		RestaurantRepository,
 		TransactionRepository,
+		HallRepository,
 	],
 })
 export class ServicesModule { }
