@@ -13,6 +13,7 @@ import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.mo
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { EmployeesModule } from "./employees/employees.module";
 import { TransactionsModule } from "./transactions/transactions.module";
+import { HallsModule } from "./halls/halls.module";
 
 @Module({
     imports: [        
@@ -29,6 +30,7 @@ import { TransactionsModule } from "./transactions/transactions.module";
         EmployeeStatusesModule,        
         RestaurantsModule,        
         TransactionsModule,
+        HallsModule,
     ],
     providers: [],
 })

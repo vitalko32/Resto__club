@@ -4,25 +4,10 @@
     height: 45px; justify-content: center; width:100%; position: relative; margin-bottom: 15px;
     .hd-left {position: absolute; left: 0; top: 0;}
     .hd-right {position: absolute; right: 0; top: 0; display: flex;}    
-    .hd-title {font-weight: bold; height: 40px; display: flex; align-items: center; font-size: 16px;}    
+    .hd-title {font-weight: bold; height: 40px; display: flex; align-items: center; font-size: 16px;}        
     .hd-langs {
-        position: relative; margin: 0 0 0 7px;
-        .hdl-btn {
-            height: 45px; width: 45px; line-height: 45px; text-align: center; border-radius: 23px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block;
-            span::before {font-family: "fa-solid"; content:"\f57d"; font-size: 20px;}
-        }        
-        .hdl-panel {
-            position: absolute; right: 0; top:0; width:60px; border: 1px white solid; border-radius: 15px; padding: 15px; z-index: 2; background-color: var(--color-bg); box-shadow: var(--block-shadow); top: -10000px; opacity: 0; transition: top 0s linear 0.3s, opacity 0.3s ease 0s;
-            &.active {top: 0; opacity: 1; transition: top 0s linear 0s, opacity 0.3s ease 0s;}
-            ul {
-                list-style: none; margin: 0; padding: 0;
-                li {
-                    cursor: pointer; text-align: center;
-                    &.active {font-weight: bold;}
-                    &:hover {text-decoration: underline;}                    
-                }                
-            }
-        }
+        height: 45px; width: 45px; line-height: 45px; text-align: center; border-radius: 23px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; margin: 0 0 0 7px;
+        span::before {font-family: "fa-solid"; content:"\f57d"; font-size: 20px;}        
     }
     .hd-logout {
         height: 45px; width: 45px; display: flex; justify-content: center; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; cursor: pointer; color: var(--color-txt); margin: 0 7px;

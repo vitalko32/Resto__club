@@ -81,6 +81,10 @@
                     <div class="dlmi-title">{{words['restorator-employees']['status'][currentLang.slug]}}:</div>
                     <div class="dlmi-value"><span *ngIf="e.status" [style.color]="e.status.color">{{e.status.translationByLang(currentLang.id)?.name}}</span></div>
                 </div>
+                <div class="dlmi-actions">
+                    <a class="datalist-btn edit" [routerLink]="'/employees/edit/'+e.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
+                    <a class="datalist-btn delete" (click)="onDelete(e)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                </div>   
             </div>
         </ng-container>
         <ng-container *ngIf="!el.length">

@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Currency } from "./currency.entity";
 import { Employee } from "./employee.entity";
+import { Hall } from "./hall.entity";
 import { Lang } from "./lang.entity";
 
 @Entity({name: "vne_restaurants"})
@@ -18,7 +19,7 @@ export class Restaurant {
     @Column({nullable: true, default: null})
     name: string;
     
-    @Column({nullable: false, unique: true})
+    @Column({nullable: true, default: null})
     domain: string;
 
     @Column({nullable: true, default: null})
@@ -56,4 +57,7 @@ export class Restaurant {
 
     @OneToMany(type => Employee, employee => employee.restaurant, {cascade: true})
     employees: Employee[];
+
+    @OneToMany(type => Hall, hall => hall.restaurant, {cascade: false})
+    halls: Hall[];
 }

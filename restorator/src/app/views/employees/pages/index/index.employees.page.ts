@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
@@ -14,7 +14,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "index.employees.page.html",
     styleUrls: ["../../../../common.styles/data.scss"],
 })
-export class IndexEmployeesPage implements OnInit {
+export class IndexEmployeesPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public elLoading: boolean = false;

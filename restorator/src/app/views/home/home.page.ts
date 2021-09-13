@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { EmployeeStatus } from "src/app/model/orm/employee.status.model";
@@ -15,7 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "home.page.html",
     styleUrls: ["../../common.styles/data.scss"],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public localPayTime: string = "";
 

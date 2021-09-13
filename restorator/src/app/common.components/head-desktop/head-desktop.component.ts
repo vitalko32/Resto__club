@@ -13,9 +13,6 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["head-desktop.component.scss"],
 })
 export class HeadDesktopComponent {        
-    public langPanelActive: boolean = false;
-    public langPanelTimer: number = null;
-    
     constructor(
         private appService: AppService,
         private wordRepository: WordRepository,
@@ -30,15 +27,5 @@ export class HeadDesktopComponent {
     get showLogout(): boolean {return this.authService.authData.value !== null;}  
     get showMoney(): boolean {return this.authService.authData.value !== null && this.authService.authData.value.employee.is_admin;}  
     get restaurant(): Restaurant {return this.authService.authData.value.employee.restaurant;}
-
-    public activateLangPanel(): void {
-        this.langPanelActive = true;
-        this.langPanelTimer ? window.clearTimeout(this.langPanelTimer) : null;        
-        this.langPanelTimer = window.setTimeout(() => this.langPanelActive = false, 5000);
-    }
-
-    public setLang(l: Lang): void {
-        this.appService.setLang(l);
-        this.langPanelActive = false;
-    }    
+    set langPanelActive(v: boolean) {this.appService.langPanelActive = v;}    
 }

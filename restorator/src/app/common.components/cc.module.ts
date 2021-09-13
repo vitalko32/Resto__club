@@ -14,6 +14,7 @@ import { HeadDesktopComponent } from './head-desktop/head-desktop.component';
 import { HeadMobileComponent } from './head-mobile/head-mobile.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InputSearchComponent } from './input-search/input-search.component';
+import { LangPanelComponent } from './lang-panel/lang-panel.component';
 import { MenuComponent } from './menu/menu.component';
 import { MsgDesktopComponent } from './msg-desktop/msg-desktop.component';
 import { PaginationComponent } from './pagination/pagination.component';
@@ -40,6 +41,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSimpleComponent,
         CheckboxSliderComponent,
         MsgDesktopComponent,
+        LangPanelComponent,
     ],
     exports: [
         MenuComponent,
@@ -57,6 +59,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSimpleComponent,
         CheckboxSliderComponent,
         MsgDesktopComponent,
+        LangPanelComponent,
     ],    
 })
 export class CCModule {}

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { IEmployeeLogin } from "src/app/model/dto/employee.login.interface";
@@ -15,7 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "login.auth.page.html",
     styleUrls: ["../../../common.styles/forms.scss"],
 })
-export class LoginAuthPage {
+export class LoginAuthPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public email: string = "";
     public password: string = "";

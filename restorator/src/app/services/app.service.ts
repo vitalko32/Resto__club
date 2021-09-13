@@ -8,7 +8,8 @@ export class AppService {
     public url: string[] = [];
     public currentLang: BehaviorSubject<Lang> = new BehaviorSubject(null);      
     // iface
-    public title: string = "";            
+    public title: string = "";  
+    public langPanelActive: boolean = false;          
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";

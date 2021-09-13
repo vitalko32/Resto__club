@@ -21,6 +21,20 @@
                 }
                 .pwf-error {color: var(--color-red); text-align: center; font-size: 12px;}
             }
+            .pw-list {
+                ul {             
+                    list-style: none; margin: 0; padding: 0;
+                    li {
+                        margin-bottom: 15px; display: flex; justify-content: center;         
+                        &:last-child {margin-bottom: 0;}               
+                        a {
+                            height: 40px; line-height: 40px; width: 200px; border-radius: 20px; border:3px var(--color-bg) solid; background-color: var(--color-bg); box-shadow: var(--block-shadow); text-decoration: none; display: flex; justify-content: center; align-items: center; font-weight: bold; white-space: nowrap; cursor: pointer; color: var(--color-txt);
+                            &.active {box-shadow: var(--activebtn-shadow);}
+                        }
+                    }
+                } 
+            }
+            .pw-hr {margin: 15px 0; height: 1px; background-color: white;}
         }
         .pw-buttons {
             display: flex; justify-content: center;

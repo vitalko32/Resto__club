@@ -12,6 +12,7 @@ import { Currency } from './model/orm/currency.entity';
 import { Employee } from './model/orm/employee.entity';
 import { EmployeeStatus } from './model/orm/employee.status.entity';
 import { EmployeeStatusTranslation } from './model/orm/employee.status.translation.entity';
+import { Hall } from './model/orm/hall.entity';
 import { Lang } from './model/orm/lang.entity';
 import { Mailtemplate } from './model/orm/mailtemplate.entity';
 import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.entity';
@@ -50,6 +51,7 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				EmployeeStatus,
 				EmployeeStatusTranslation,		
 				Transaction,		
+				Hall,
 			],
 			synchronize: true,
 		}),

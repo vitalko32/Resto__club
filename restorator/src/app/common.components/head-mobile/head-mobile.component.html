@@ -7,14 +7,15 @@
         <ul>
             <li><a routerLink="/" [class.active]="!url[1]" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-home'][currentLang.slug]}}</a></li>            
             <li *ngIf="employee.is_admin"><a routerLink="/employees" [class.active]="url[1] === 'employees'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-employees'][currentLang.slug]}}</a></li>            
+            <li *ngIf="employee.is_admin"><a routerLink="/halls" [class.active]="url[1] === 'halls'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-halls'][currentLang.slug]}}</a></li>            
+            <li *ngIf="employee.is_admin"><a routerLink="/tables" [class.active]="url[1] === 'tables'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></li>            
             <!--
             <li><a routerLink="/my-tables" [class.active]="url[1] === 'my-tables'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-my-tables'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/orders" [class.active]="url[1] === 'orders'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-orders'][currentLang.slug]}}</a></li>            
-            <li><a routerLink="/tables" [class.active]="url[1] === 'tables'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></li>            
+            <li><a routerLink="/orders" [class.active]="url[1] === 'orders'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-orders'][currentLang.slug]}}</a></li>                        
             <li><a routerLink="/products" [class.active]="url[1] === 'products'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-products'][currentLang.slug]}}</a></li>            
             <li><a routerLink="/stat" [class.active]="url[1] === 'stat'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-stat'][currentLang.slug]}}</a></li>                
             -->
-            <li *ngIf="!employee.is_admin"><a routerLink="/auth/password" [class.active]="url[1] === 'auth' && url[2] === 'password'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-pw'][currentLang.slug]}}</a></li>                
+            <li><a routerLink="/auth/password" [class.active]="url[1] === 'auth' && url[2] === 'password'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-pw'][currentLang.slug]}}</a></li>                
             <li><a routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['common']['logout'][currentLang.slug]}}</a></li>            
         </ul>
     </div>

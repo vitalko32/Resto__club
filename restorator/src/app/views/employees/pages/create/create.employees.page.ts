@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
@@ -15,7 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../../../common.styles/data.scss"],
     encapsulation: ViewEncapsulation.None,
 })
-export class CreateEmployeesPage implements OnInit {
+export class CreateEmployeesPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public employee: Employee = null;

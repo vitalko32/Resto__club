@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { IEmployeeUpdatePassword } from "src/app/model/dto/employee.updatepassword.interface";
 import { Employee } from "src/app/model/orm/employee.model";
@@ -13,7 +13,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "password.auth.page.html",    
     styleUrls: ["../../../common.styles/data.scss"],
 })
-export class PasswordAuthPage {
+export class PasswordAuthPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public password1: string = "";
     public password2: string = "";
