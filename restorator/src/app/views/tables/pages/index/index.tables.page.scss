@@ -1,6 +1,6 @@
 .tables {
     border-radius: 45px; background-color: var(--color-bg); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow-inner); padding: 15px; margin-bottom: 30px; position: relative; 
-    .t-items {
+    .t-places {
         display: grid; gap: 15px; overflow-x: auto; padding: 0 0 15px 0;
         @media (min-width:500px) {
             &::-webkit-scrollbar {-webkit-appearance: none;}
@@ -8,10 +8,32 @@
             &::-webkit-scrollbar-thumb {background-color: var(--color-bg-highlight2);}            
             &::-webkit-scrollbar-track {background-color: white;}
         } 
-        .t-item {
-            height: 125px; box-shadow: inset 3px 3px 8px #00000052; border: 1px var(--color-bg) solid; border-radius: 15px;
-        }
+        .t-place {height: 125px; box-shadow: inset 3px 3px 8px #00000052; border: 1px var(--color-bg) solid; border-radius: 15px;}
     }
+    .t-newplace {width: 125px; height: 125px; border-radius: 15px; margin-bottom: 15px; border: 2px var(--color-bg-highlight2) dashed;}    
+}
+
+.t-table {
+    width: 125px; height: 125px; border-radius: 15px; background-color: var(--color-bg); box-shadow: -1px -1px 1px white, 3px 3px 8px #00000052; padding: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: move; user-select: none; position: relative;
+    .tt-no {font-weight: bold;}
+    .tt-seats {font-weight: bold;}
+    .tt-img {
+        width:80px; height: 45px; display: flex; justify-content: center; align-items: center; pointer-events: none;
+        img {max-width: 100%; max-height: 100%;}
+    }
+    .tt-btn {
+        position: absolute; height: 24px; width: 24px; line-height: 24px; text-align: center; border-radius: 12px; background: var(--color-bg); box-shadow: 3px 3px 8px #00000052; cursor: pointer; 
+        span::before {font-size: 14px; font-family: "fa-solid";}            
+        &.delete {
+            right: 5px; top: 5px;
+            span::before {content: "\f00d"; color: var(--color-red);}
+        }
+        &.qr {
+            left: 5px; top: 5px;
+            span::before {content: "\f029";}
+        }
+    } 
+    &.cdk-drag-preview {opacity: 0.7;}
 }
 
 .halls {

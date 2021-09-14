@@ -889,10 +889,11 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 --
 
 COPY "default".vne_halls (id, restaurant_id, name, nx, ny, pos) FROM stdin;
-2	21	Синий	5	5	2
 3	9	Зал 1	5	5	1
-1	21	Красный	5	5	1
 4	21	Зеленый	5	5	3
+5	21	Желтый	4	6	4
+2	21	Синий	4	4	2
+1	21	Красный	10	3	1
 \.
 
 
@@ -940,19 +941,19 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
-46	1	RRR!		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
 4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0
 15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	-6
 7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0
-19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	20
 1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	65515
 21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	1460
 18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	2021-08-27 22:30:50.941314	1	-7
 43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	745
+46	1	RRR		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
 10	1	Сто пудов	test8	Алексей Сидоров	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:25:50.223075	1	-30
 9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:34.269246	1	-20
+19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	1020
 5	1	У Ашота	test3	Алексей Козлов	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:24:34.213564	2	0
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	10
 22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-40
@@ -987,8 +988,9 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 --
 
 COPY "default".vne_tables (id, hall_id, no, seats, x, y) FROM stdin;
-2	1	1	3	1	1
 3	4	1	4	0	1
+2	1	1	3	0	0
+4	1	2	4	2	1
 \.
 
 
@@ -2115,6 +2117,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1119	1	-10	2021-09-14 01:00:00.032463	auto
 1120	21	-30	2021-09-14 01:00:00.037544	auto
 1121	43	-10	2021-09-14 01:00:00.041848	auto
+1122	19	1000	2021-09-14 13:58:04.619364	admin
 \.
 
 
@@ -2395,6 +2398,24 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 377	171	2	Halls
 378	172	1	Залы
 379	172	2	Halls
+380	173	1	Название
+381	173	2	Name
+382	174	1	Места по горизонтали
+383	174	2	Places horizontally
+384	175	1	Места по вертикали
+385	175	2	Places vertically
+386	176	1	Позиция в списке
+387	176	2	Position
+388	177	1	Залы - Добавление
+389	177	2	Halls - Add
+390	178	1	Залы - Редактирование
+391	178	2	Halls - Edit
+392	179	1	Места
+393	179	2	Places
+394	180	1	Залы
+395	180	2	Halls
+396	181	1	чел.
+397	181	2	pers.
 \.
 
 
@@ -2545,6 +2566,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 152	10	103	status	\N
 153	5	127	password	\N
 154	5	128	your-password	\N
+173	13	100	name	\N
 155	10	2	title-create	\N
 156	10	104	email	\N
 157	10	105	password	\N
@@ -2560,6 +2582,14 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 167	11	0	login	\N
 168	11	0	error-mismatch	\N
 169	11	0	saved	\N
+174	13	101	nx	\N
+175	13	102	ny	\N
+176	13	103	pos	\N
+177	13	2	title-create	\N
+178	13	3	title-edit	\N
+179	13	104	places	\N
+180	12	2	halls	\N
+181	5	130	pers	\N
 \.
 
 
@@ -2609,7 +2639,7 @@ SELECT pg_catalog.setval('"default".vne_employees_id_seq', 44, true);
 -- Name: vne_halls_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_halls_id_seq', 4, true);
+SELECT pg_catalog.setval('"default".vne_halls_id_seq', 7, true);
 
 
 --
@@ -2651,21 +2681,21 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 12, true);
 -- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_tables_id_seq', 3, true);
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 4, true);
 
 
 --
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1121, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1122, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 379, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 397, true);
 
 
 --
@@ -2679,7 +2709,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 13, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 172, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 181, true);
 
 
 --

@@ -2,10 +2,21 @@
     <a class="dash-btn create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="tables" *ngIf="currentHall">
-    <div class="t-items" [style.grid-template-columns]="'repeat('+currentHall.nx+', 125px)'">
-        <div class="t-item" *ngFor="let p of places">
-            {{p.x}},{{p.y}}
-        </div>
+    <div class="t-newplace">
+
+    </div>    
+    <div class="t-places" [style.grid-template-columns]="'repeat('+currentHall.nx+', 125px)'" cdkDropListGroup>
+        <ng-container *ngFor="let p of places">
+            <div class="t-place" cdkDropList [cdkDropListEnterPredicate]="canDrop(p)" (cdkDropListDropped)="onDrop($event, p)">
+                    <div class="t-table" *ngIf="getTable(p) as t" cdkDrag [cdkDragData]="t.id">
+                        <div class="tt-no"># {{t.no}}</div>
+                        <div class="tt-seats">{{t.seats}} {{words['common']['pers'][currentLang.slug]}}</div>   
+                        <div class="tt-img"><img src="/assets/images/table.svg"></div>
+                        <div class="tt-btn delete"><span></span></div>
+                        <div class="tt-btn qr"><span></span></div>
+                    </div>
+            </div>            
+        </ng-container>        
     </div>
 </div>
 <div class="halls">        

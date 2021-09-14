@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
 import { IndexTablesPage } from "./pages/index/index.tables.page";
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexTablesPage, pathMatch: "full"},
@@ -15,6 +16,7 @@ let routes = RouterModule.forChild ([
 		CommonModule,
 		RouterModule,
         FormsModule,
+		DragDropModule,
         
         routes,
 		CCModule,

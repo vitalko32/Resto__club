@@ -1,9 +1,11 @@
+import { CdkDrag, CdkDragDrop, CdkDropList } from "@angular/cdk/drag-drop";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ICoord } from "src/app/model/coord.interface";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
+import { Table } from "src/app/model/orm/table.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -87,7 +89,7 @@ export class IndexTablesPage implements OnInit, OnDestroy {
 
         for (let i = 0; i < this.currentHall.ny; i++) {            
             for (let j = 0; j < this.currentHall.nx; j++) {
-                this.places.push({x: i, y: j});
+                this.places.push({x: j, y: i});
             }
         }
     }
@@ -96,5 +98,29 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         this.currentHallId = hall.id;
         this.currentHall = hall;
         this.initPlaces();
+    }
+
+    public getTable(place: ICoord): Table {        
+        return this.currentHall.tables.find(t => t.x === place.x && t.y === place.y);
+    }
+
+    public async onDrop(event: CdkDragDrop<any>, place: ICoord): Promise<void> {
+        try {
+            const tableId: number = event.item.data;
+            const movingTable: Table = this.currentHall.tables.find(t => t.id === tableId);
+            const existedTable: Table = this.currentHall.tables.find(t => t.x === place.x && t.y === place.y);
+    
+            if (!existedTable) {
+                movingTable.x = place.x;
+                movingTable.y = place.y;
+                await this.hallRepository.update(this.currentHall);
+            }
+        } catch (err) {
+            this.appService.showError(err);
+        }        
+    }
+
+    public canDrop(place: ICoord): any {
+        return (drag: CdkDrag, drop: CdkDropList) => !this.getTable(place);
     }
 }

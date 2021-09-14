@@ -56,7 +56,12 @@ export class HallsService extends APIService {
 
     public async one(id: number): Promise<IAnswer<Hall>> {
         try {
-            let data: Hall = await this.hallRepository.findOne(id, {relations: ["tables"]});
+            let data: Hall = await this.hallRepository
+                .createQueryBuilder("halls")
+                .leftJoinAndSelect("halls.tables", "tables")
+                .where({id})
+                .orderBy({"tables.no": "ASC"})
+                .getOne();
             return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in HallsService.one: ${String(err)}`;
