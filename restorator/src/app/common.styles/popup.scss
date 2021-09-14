@@ -7,7 +7,8 @@
         .pw-content {
             .pw-txt {display: flex; justify-content: center; text-align: center; font-weight: bold; margin-bottom: 30px;}
             .pw-form {
-                margin-bottom: 30px;
+                margin-bottom: 30px;         
+                &.centered {display: flex; justify-content: center;}       
                 .pwf-param {
                     margin-bottom: 10px;
                     .pwf-title {font-size: 12px; margin-bottom: 3px; padding: 0 5px;}
@@ -19,7 +20,7 @@
                         .pwf-txt {font-size: 14px; font-weight: bold; padding: 0 5px;}
                     }
                 }
-                .pwf-error {color: var(--color-red); text-align: center; font-size: 12px;}
+                .pwf-error {color: var(--color-red); text-align: center; font-size: 12px;}                
             }
             .pw-list {
                 ul {             

@@ -54,7 +54,7 @@ export class DataService {
     public hallsOne(id: number): Observable<IAnswer<Hall>> {return this.sendRequest(`halls/one/${id}`, null, true);}
     public hallsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`halls/delete/${id}`, null, true);}    
     public hallsCreate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/create", x, true);}
-    public hallsUpdate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/update", x, true);}     
+    public hallsUpdate(x: Hall): Observable<IAnswer<Hall>> {return this.sendRequest("halls/update", x, true);}     
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

@@ -44,7 +44,7 @@ export class HallsController {
     // update
     @UseGuards(AuthGuard)
     @Post("update")
-    public update(@Body() dto: IHallUpdate): Promise<IAnswer<void>> {
+    public update(@Body() dto: IHallUpdate): Promise<IAnswer<Hall>> {
         return this.hallsService.update(dto);
     }
     

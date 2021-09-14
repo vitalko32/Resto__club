@@ -13,6 +13,7 @@
     .t-newplace {width: 125px; height: 125px; border-radius: 15px; margin-bottom: 15px; border: 2px var(--color-bg-highlight2) dashed;}    
 }
 
+/*
 .t-table {
     width: 125px; height: 125px; border-radius: 15px; background-color: var(--color-bg); box-shadow: -1px -1px 1px white, 3px 3px 8px #00000052; padding: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: move; user-select: none; position: relative;
     .tt-no {font-weight: bold;}
@@ -35,6 +36,7 @@
     } 
     &.cdk-drag-preview {opacity: 0.7;}
 }
+*/
 
 .halls {
     display: flex; flex-wrap: wrap;

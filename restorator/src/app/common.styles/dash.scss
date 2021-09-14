@@ -5,14 +5,15 @@
     .dash-btn {
         @media (min-width: 0) {padding: 0 15px;}
         @media (min-width: 1200px) {padding: 0 30px;}
-        height: 100%; display: flex; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); color: var(--color-txt); font-weight: bold; text-decoration: none;
+        height: 100%; display: flex; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); color: var(--color-txt); font-weight: bold; text-decoration: none; user-select: none;
         span {
             display: flex; align-items: center;
             &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px;}
         }
         &.create {span::before {content: "\f067";}}		
         &.save {span::before {content: "\f0c7";}}		
-        &.back {span::before {content: "\f053";}}		
+        &.back {span::before {content: "\f053";}}	
+        &.disabled {pointer-events: none; background-color: var(--color-disabled);}	
     }
 }
 

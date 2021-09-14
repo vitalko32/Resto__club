@@ -88,12 +88,13 @@ export class HallsService extends APIService {
         }        
     }
     
-    public async update(dto: IHallUpdate): Promise<IAnswer<void>> {
+    public async update(dto: IHallUpdate): Promise<IAnswer<Hall>> {
         try {
             let x: Hall = this.hallRepository.create(dto);
             await this.hallRepository.save(x);     
-            await this.deleteUnbindedTables();                
-            return {statusCode: 200};
+            await this.deleteUnbindedTables();     
+            let data: Hall = await this.hallRepository.findOne(dto.id, {relations: ["tables"]});          
+            return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in HallsService.update: ${String(err)}`;
             console.log(errTxt);

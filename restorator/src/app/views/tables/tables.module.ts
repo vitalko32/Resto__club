@@ -5,6 +5,8 @@ import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
 import { IndexTablesPage } from "./pages/index/index.tables.page";
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CreateTableComponent } from "./components/create-table/create-table.component";
+import { TableComponent } from "./components/table/table.component";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexTablesPage, pathMatch: "full"},
@@ -22,7 +24,9 @@ let routes = RouterModule.forChild ([
 		CCModule,
 	],
 	declarations: [
-		IndexTablesPage,		
+		IndexTablesPage,	
+		CreateTableComponent,	
+		TableComponent,
 	],    		    
 })
 export class TablesModule {}

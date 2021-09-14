@@ -114,11 +114,11 @@ export class HallRepository extends Repository<Hall> {
         });
     }
 
-    public update(x: Hall): Promise<void> {
+    public update(x: Hall): Promise<Hall> {
         return new Promise((resolve, reject) => {
             this.dataService.hallsUpdate(x).subscribe(res => {
                 if (res.statusCode === 200) {
-                    resolve();
+                    resolve(res.data);
                 } else {                    
                     reject(res.error);
                 }

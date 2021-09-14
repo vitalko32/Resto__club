@@ -1,0 +1,7 @@
+<div class="the-table">
+    <div class="tt-no"># {{table.no}}</div>
+    <div class="tt-seats">{{table.seats}} {{words['common']['pers'][currentLang.slug]}}</div>   
+    <div class="tt-img"><img src="/assets/images/table.svg"></div>
+    <div class="tt-btn delete" *ngIf="canDelete" (click)="onDelete()"><span></span></div> 
+    <div class="tt-btn qr" *ngIf="table.id"><span></span></div>           
+</div>

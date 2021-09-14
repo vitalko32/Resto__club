@@ -9,6 +9,7 @@ export class Table extends Model {
     public y: number;
 
     public init(): Table {
+        this.id = null;
         this.no = 0;
         this.seats = 1;
         this.x = null;

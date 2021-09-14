@@ -22,6 +22,11 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;
     public currentHall: Hall = null;
     public places: ICoord[] = [];
+    public tableCreatePanelActive: boolean = false;
+    public tableNew: Table = null;
+    public tableDeleteId: number = null;
+    public tableDeleteConfirmActive: boolean = false;
+    public tableDeleteConfirmMsg: string = "";
 
     constructor(
         private appService: AppService,        
@@ -104,23 +109,49 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         return this.currentHall.tables.find(t => t.x === place.x && t.y === place.y);
     }
 
-    public async onDrop(event: CdkDragDrop<any>, place: ICoord): Promise<void> {
+    public async tableOnDrop(event: CdkDragDrop<any>, place: ICoord): Promise<void> {
         try {
             const tableId: number = event.item.data;
-            const movingTable: Table = this.currentHall.tables.find(t => t.id === tableId);
-            const existedTable: Table = this.currentHall.tables.find(t => t.x === place.x && t.y === place.y);
-    
-            if (!existedTable) {
-                movingTable.x = place.x;
-                movingTable.y = place.y;
-                await this.hallRepository.update(this.currentHall);
-            }
+            
+            if (tableId) {
+                const table: Table = this.currentHall.tables.find(t => t.id === tableId);                    
+                table.x = place.x;
+                table.y = place.y;            
+            } else {
+                this.tableNew.x = place.x;
+                this.tableNew.y = place.y;
+                this.currentHall.tables.push(this.tableNew);
+                this.tableNew = null;
+            }            
+            
+            this.currentHall = await this.hallRepository.update(this.currentHall);                
         } catch (err) {
             this.appService.showError(err);
         }        
     }
 
-    public canDrop(place: ICoord): any {
+    public tableCanDrop(place: ICoord): any {
         return (drag: CdkDrag, drop: CdkDropList) => !this.getTable(place);
+    }
+
+    public tableCantDrop(drag: CdkDrag, drop: CdkDropList): boolean {
+        return false;
+    }
+
+    public tableOnDelete(t: Table): void {
+        this.tableDeleteId = t.id;
+        this.tableDeleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} ${this.words['restorator-tables']['table'][this.currentLang.slug]} #${t.no}?`;
+        this.tableDeleteConfirmActive = true;
+    }
+
+    public async tableDelete(): Promise<void> {
+        try {
+            this.tableDeleteConfirmActive = false;
+            let index = this.currentHall.tables.findIndex(t => t.id === this.tableDeleteId);
+            this.currentHall.tables.splice(index, 1);
+            this.hallRepository.update(this.currentHall);
+        } catch (err) {
+            this.appService.showError(err);
+        }
     }
 }

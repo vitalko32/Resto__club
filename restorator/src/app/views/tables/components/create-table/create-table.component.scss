@@ -1,0 +1,4 @@
+.ct {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px;
+    .ct-title {font-size: 12px; line-height: 25px;}
+}
