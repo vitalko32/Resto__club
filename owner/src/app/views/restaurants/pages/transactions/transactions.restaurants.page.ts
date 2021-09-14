@@ -33,7 +33,7 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
     get type(): string {return this.route.snapshot.params["type"];}
-    get tl(): Transaction[] {return this.transactionRepository.xl;}
+    get tl(): Transaction[] {return this.transactionRepository.xlChunk;}
     get tlCurrentPart(): number {return this.transactionRepository.chunkCurrentPart;}
     set tlCurrentPart(v: number) {this.transactionRepository.chunkCurrentPart = v;}
     get tlAllLength(): number {return this.transactionRepository.allLength;}  
@@ -42,10 +42,10 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     set tlFilterCreatedAt(v: Date[]) {this.transactionRepository.filterCreatedAt = v;}
     get tlFilterType(): TransactionType {return this.transactionRepository.filterType;}
     set tlFilterType(v: TransactionType) {this.transactionRepository.filterType = v;}
-    get tlSortBy(): string {return this.transactionRepository.sortBy;}
-    get tlSortDir(): number {return this.transactionRepository.sortDir;}
-    set tlSortBy(v: string) {this.transactionRepository.sortBy = v;}
-    set tlSortDir(v: number) {this.transactionRepository.sortDir = v;}
+    get tlSortBy(): string {return this.transactionRepository.chunkSortBy;}
+    get tlSortDir(): number {return this.transactionRepository.chunkSortDir;}
+    set tlSortBy(v: string) {this.transactionRepository.chunkSortBy = v;}
+    set tlSortDir(v: number) {this.transactionRepository.chunkSortDir = v;}
     get tlSum(): number {return this.transactionRepository.sum;}
         
     public ngOnInit(): void {
@@ -72,8 +72,14 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
             this.tlLoading = true;
             this.transactionRepository.filterRestaurantId = parseInt(this.route.snapshot.params["id"]);
             await this.transactionRepository.loadChunk();            
-            await this.appService.pause(500);
-            this.tlLoading = false;            
+            
+            if (this.tlCurrentPart > 0 && this.tlCurrentPart > Math.ceil(this.tlAllLength / this.tlLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
+                this.tlCurrentPart = 0;
+                this.initTransactions();
+            } else {
+                await this.appService.pause(500);
+                this.tlLoading = false;
+            } 
         } catch (err) {
             this.appService.showError(err);
             this.tlLoading = false;

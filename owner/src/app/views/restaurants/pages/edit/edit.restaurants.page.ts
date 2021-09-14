@@ -40,8 +40,8 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get cl(): Currency[] {return this.currencyRepository.xl;}
-    get ll(): Lang[] {return this.langRepository.xl;}
+    get cl(): Currency[] {return this.currencyRepository.xlAll;}
+    get ll(): Lang[] {return this.langRepository.xlAll;}
     get type(): string {return this.route.snapshot.params["type"];}
     
     public ngOnInit(): void {

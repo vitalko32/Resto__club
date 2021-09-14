@@ -159,20 +159,7 @@
                 .dv-txtwrap {
                     font-size: 14px;
                     &.margined {margin-bottom: 10px;}
-                }
-                .dv-rechargewrap {
-                    @media (min-width:0) {display: block;}
-                    @media (min-width:500px) {display: flex;}                    
-                    .dv-recharge {
-                        @media (min-width: 0) {padding: 0 15px;}
-                        @media (min-width: 1200px) {padding: 0 30px;}
-                        height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer;
-                        span {
-                            display: flex; align-items: center;
-                            &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px; content: "\f53c";}
-                        }                        
-                    }
-                }
+                }                
                 .dv-statuseswrap {
                     display: flex; flex-wrap: wrap;
                     .dv-status {                          

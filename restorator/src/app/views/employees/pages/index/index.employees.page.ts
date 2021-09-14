@@ -34,7 +34,7 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get el(): Employee[] {return this.employeeRepository.xl;}
+    get el(): Employee[] {return this.employeeRepository.xlChunk;}
     get elCurrentPart(): number {return this.employeeRepository.chunkCurrentPart;}
     set elCurrentPart(v: number) {this.employeeRepository.chunkCurrentPart = v;}
     get elAllLength(): number {return this.employeeRepository.allLength;}  
@@ -43,10 +43,10 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
     set elFilterCreatedAt(v: Date[]) {this.employeeRepository.filterCreatedAt = v;}
     get elFilterName(): string {return this.employeeRepository.filterName;}
     set elFilterName(v: string) {this.employeeRepository.filterName = v;}
-    get elSortBy(): string {return this.employeeRepository.sortBy;}
-    get elSortDir(): number {return this.employeeRepository.sortDir;}
-    set elSortBy(v: string) {this.employeeRepository.sortBy = v;}
-    set elSortDir(v: number) {this.employeeRepository.sortDir = v;}
+    get elSortBy(): string {return this.employeeRepository.chunkSortBy;}
+    get elSortDir(): number {return this.employeeRepository.chunkSortDir;}
+    set elSortBy(v: string) {this.employeeRepository.chunkSortBy = v;}
+    set elSortDir(v: number) {this.employeeRepository.chunkSortDir = v;}
 
     public ngOnInit(): void {        
         this.initTitle();  

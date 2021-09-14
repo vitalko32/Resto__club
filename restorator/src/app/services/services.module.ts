@@ -9,6 +9,7 @@ import { ErrorService } from './error.service';
 import { GoogleService } from './google.service';
 import { EmployeeRepository } from './repositories/employee.repository';
 import { EmployeeStatusRepository } from './repositories/employee.status.repository';
+import { HallRepository } from './repositories/hall.repository';
 import { LangRepository } from './repositories/lang.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
@@ -30,6 +31,7 @@ import { WordRepository } from './repositories/word.repository';
         SettingRepository,     
         EmployeeStatusRepository,     
         EmployeeRepository,
+        HallRepository,
     ],
 })
 export class ServicesModule {}

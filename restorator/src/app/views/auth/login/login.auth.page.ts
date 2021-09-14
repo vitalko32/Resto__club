@@ -33,7 +33,7 @@ export class LoginAuthPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xl;}
+    get langs(): Lang[] {return this.langRepository.xlAll;}
 
     public ngOnInit(): void {
         this.authService.authData.value !== null ? this.router.navigateByUrl("/") : null;

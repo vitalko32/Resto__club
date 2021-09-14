@@ -22,7 +22,7 @@ export class HeadDesktopComponent {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xl;}
+    get langs(): Lang[] {return this.langRepository.xlAll;}
     get title(): string {return this.appService.title;}    
     get showLogout(): boolean {return this.authService.authData.value !== null;}  
     get showMoney(): boolean {return this.authService.authData.value !== null && this.authService.authData.value.employee.is_admin;}  

@@ -4,8 +4,8 @@ import { RestaurantRepository } from './restaurant.repository';
 
 @Injectable()
 export class RestaurantActiveRepository extends RestaurantRepository {    
-    constructor(protected dateService: DataService) {
-        super(dateService);
+    constructor(protected dataService: DataService) {
+        super(dataService);
         this.filterActive = true;        
         this.filterName = "";      
         this.filterDaysleft = "";

@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { Currency } from '../../model/orm/currency.model';
 import { DataService } from '../data.service';
-import { SimpleRepository } from './_simple.repository';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository } from './_repository';
 
 @Injectable()
-export class CurrencyRepository extends SimpleRepository<Currency> {    
+export class CurrencyRepository extends Repository<Currency> {    
     constructor(protected dataService: DataService) {
         super();
-        this.sortBy = "pos";
+        this.allSortBy = "pos";
     }
     
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const dto: IGetAll = {sortBy: this.sortBy, sortDir: this.sortDir};
+            const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
             this.dataService.currenciesAll(dto).subscribe(res => {                    
                 if (res.statusCode === 200) {
-                    this.xl = res.data.length ? res.data.map(d => new Currency().build(d)) : [];                          
+                    this.xlAll = res.data.length ? res.data.map(d => new Currency().build(d)) : [];                          
                     resolve();
                 } else {                        
                     reject(res.statusCode+": "+res.error);

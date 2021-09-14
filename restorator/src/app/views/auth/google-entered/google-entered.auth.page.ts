@@ -24,7 +24,7 @@ export class GoogleEnteredAuthPage implements OnInit {
 
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get words(): Words {return this.wordRepository.words;}
-    get langs(): Lang[] {return this.langRepository.xl;}
+    get langs(): Lang[] {return this.langRepository.xlAll;}
 
     public ngOnInit(): void {        
         this.processGoogleData();           

@@ -17,6 +17,7 @@ import { EmployeeStatus } from "../model/orm/employee.status.model";
 import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
 import { IEmployeeUpdatePassword } from "../model/dto/employee.updatepassword.interface";
+import { Hall } from "../model/orm/hall.model";
 
 @Injectable()
 export class DataService {
@@ -47,6 +48,13 @@ export class DataService {
     public employeesUpdatePassword(dto: IEmployeeUpdatePassword): Observable<IAnswer<void>> {return this.sendRequest("employees/update-password", dto, true);}
 
     public employeeStatusesAll(dto: IGetAll): Observable<IAnswer<EmployeeStatus[]>> {return this.sendRequest(`employee-statuses/all`, dto, true);}    
+
+    public hallsAll(dto: IGetAll): Observable<IAnswer<Hall[]>> {return this.sendRequest(`halls/all`, dto, true);}    
+    public hallsChunk(dto: IGetChunk): Observable<IAnswer<Hall[]>> {return this.sendRequest("halls/chunk", dto, true);}
+    public hallsOne(id: number): Observable<IAnswer<Hall>> {return this.sendRequest(`halls/one/${id}`, null, true);}
+    public hallsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`halls/delete/${id}`, null, true);}    
+    public hallsCreate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/create", x, true);}
+    public hallsUpdate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/update", x, true);}     
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

@@ -28,7 +28,7 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get rl(): Restaurant[] {return this.restaurantRepository.xl;}
+    get rl(): Restaurant[] {return this.restaurantRepository.xlChunk;}
     get rlCurrentPart(): number {return this.restaurantRepository.chunkCurrentPart;}
     set rlCurrentPart(v: number) {this.restaurantRepository.chunkCurrentPart = v;}
     get rlAllLength(): number {return this.restaurantRepository.allLength;}  
@@ -37,10 +37,10 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     set rlFilterName(v: string) {this.restaurantRepository.filterName = v;}
     get rlFilterDaysleft(): string {return this.restaurantRepository.filterDaysleft;}  
     set rlFilterDaysleft(v: string) {this.restaurantRepository.filterDaysleft = v;}
-    get rlSortBy(): string {return this.restaurantRepository.sortBy;}
-    get rlSortDir(): number {return this.restaurantRepository.sortDir;}
-    set rlSortBy(v: string) {this.restaurantRepository.sortBy = v;}
-    set rlSortDir(v: number) {this.restaurantRepository.sortDir = v;}
+    get rlSortBy(): string {return this.restaurantRepository.chunkSortBy;}
+    get rlSortDir(): number {return this.restaurantRepository.chunkSortDir;}
+    set rlSortBy(v: string) {this.restaurantRepository.chunkSortBy = v;}
+    set rlSortDir(v: number) {this.restaurantRepository.chunkSortDir = v;}
 
     public ngOnInit(): void {        
         this.initTitle();

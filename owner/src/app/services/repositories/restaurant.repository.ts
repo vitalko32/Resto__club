@@ -3,18 +3,18 @@ import { IGetChunk } from "src/app/model/dto/getchunk.interface";
 import { IRestaurantRecharge } from "src/app/model/dto/restaurant.recharge.interface";
 import { Restaurant } from "src/app/model/orm/restaurant.model";
 import { DataService } from "../data.service";
-import { SimpleRepository } from "./_simple.repository";
+import { Repository } from "./_repository";
 
 @Injectable()
-export class RestaurantRepository extends SimpleRepository<Restaurant> {
+export class RestaurantRepository extends Repository<Restaurant> {
     public filterActive: boolean;
     public filterName: string;
     public filterDaysleft: string;    
 
     constructor(protected dataService: DataService) {
         super();
-        this.sortBy = "created_at";
-        this.sortDir = -1;
+        this.chunkSortBy = "created_at";
+        this.chunkSortDir = -1;
     }    
 
     public loadChunk(): Promise<void> {
@@ -23,13 +23,13 @@ export class RestaurantRepository extends SimpleRepository<Restaurant> {
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
-                sortBy: this.sortBy,
-                sortDir: this.sortDir, 
+                sortBy: this.chunkSortBy,
+                sortDir: this.chunkSortDir, 
                 filter,                               
             };
             this.dataService.restaurantsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xl = res.data.length ? res.data.map(d => new Restaurant().build(d)) : [];
+                    this.xlChunk = res.data.length ? res.data.map(d => new Restaurant().build(d)) : [];
                     this.allLength = res.allLength;            
                     resolve();
                 } else {                        

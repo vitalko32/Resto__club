@@ -24,7 +24,7 @@ export class HeadMobileComponent {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xl;}
+    get langs(): Lang[] {return this.langRepository.xlAll;}
     get url(): string[] {return this.appService.url;}
     get title(): string {return this.appService.title;}
     get showMenuBtn(): boolean {return this.authService.authData !== null;}

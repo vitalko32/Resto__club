@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	private async initLangs(): Promise<void> {
 		try {
 			await this.langRepository.loadAll();			
-			this.appService.initLang(this.langRepository.xl);			
+			this.appService.initLang(this.langRepository.xlAll);			
 			this.langsReady = true;		
 		} catch (err) {
 			this.appService.showError(err);			

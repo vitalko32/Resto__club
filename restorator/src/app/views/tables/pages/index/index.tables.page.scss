@@ -1,3 +1,24 @@
 .tables {
     border-radius: 45px; background-color: var(--color-bg); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow-inner); padding: 15px; margin-bottom: 30px; position: relative; 
+    .t-items {
+        display: grid; gap: 15px; overflow-x: auto; padding: 0 0 15px 0;
+        @media (min-width:500px) {
+            &::-webkit-scrollbar {-webkit-appearance: none;}
+            &::-webkit-scrollbar:horizontal {height: 8px;}
+            &::-webkit-scrollbar-thumb {background-color: var(--color-bg-highlight2);}            
+            &::-webkit-scrollbar-track {background-color: white;}
+        } 
+        .t-item {
+            height: 125px; box-shadow: inset 3px 3px 8px #00000052; border: 1px var(--color-bg) solid; border-radius: 15px;
+        }
+    }
+}
+
+.halls {
+    display: flex; flex-wrap: wrap;
+    .h-title {margin-right: 15px; white-space: nowrap; line-height: 30px;}
+    .h-item {
+        height: 30px; border-radius: 15px; transition: 0.3s; white-space: nowrap; display: flex; align-items: center; padding: 0 15px; margin: 0 15px 15px 0; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer;
+        &.active {background-color: black; color: white;}
+    }    
 }

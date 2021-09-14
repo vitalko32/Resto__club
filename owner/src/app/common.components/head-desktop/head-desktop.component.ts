@@ -21,7 +21,7 @@ export class HeadDesktopComponent {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xl;}
+    get langs(): Lang[] {return this.langRepository.xlAll;}
     get title(): string {return this.appService.title;}    
     get showLogout(): boolean {return this.authService.authData !== null;}   
     set langPanelActive(v: boolean) {this.appService.langPanelActive = v;}     

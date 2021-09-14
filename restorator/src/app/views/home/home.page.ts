@@ -31,7 +31,7 @@ export class HomePage implements OnInit, OnDestroy {
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get employee(): Employee {return this.authService.authData.value.employee;}
     get payTime(): string {return this.settingRepository.settings['pay-time'];}   
-    get esl(): EmployeeStatus[] {return this.employeeStatusRepository.xl;}
+    get esl(): EmployeeStatus[] {return this.employeeStatusRepository.xlAll;}
 
     public ngOnInit(): void {        
         this.initTitle();

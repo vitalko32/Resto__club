@@ -2,18 +2,18 @@ import { Injectable } from "@angular/core";
 import { IGetChunk } from "src/app/model/dto/getchunk.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { DataService } from "../data.service";
-import { SimpleRepository } from "./_simple.repository";
+import { Repository } from "./_repository";
 
 @Injectable()
-export class EmployeeRepository extends SimpleRepository<Employee> {    
+export class EmployeeRepository extends Repository<Employee> {    
     public filterRestaurantId = null;
     public filterName: string = "";
     public filterCreatedAt: Date[] = [null, null];         
 
     constructor(protected dataService: DataService) {
         super();
-        this.sortBy = "created_at";
-        this.sortDir = 1;
+        this.chunkSortBy = "created_at";
+        this.chunkSortDir = 1;
     }    
 
     public loadChunk(): Promise<void> {
@@ -22,13 +22,13 @@ export class EmployeeRepository extends SimpleRepository<Employee> {
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
-                sortBy: this.sortBy,
-                sortDir: this.sortDir, 
+                sortBy: this.chunkSortBy,
+                sortDir: this.chunkSortDir, 
                 filter,                               
             };
             this.dataService.employeesChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xl = res.data.length ? res.data.map(d => new Employee().build(d)) : [];
+                    this.xlChunk = res.data.length ? res.data.map(d => new Employee().build(d)) : [];
                     this.allLength = res.allLength;            
                     resolve();
                 } else {                        

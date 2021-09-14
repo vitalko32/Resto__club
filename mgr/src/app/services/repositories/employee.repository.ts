@@ -23,7 +23,7 @@ export class EmployeeRepository extends Repository<Employee> {
                 sortBy: this.allSortBy,
                 sortDir: this.allSortDir,                    
             };
-            this.dataService.langsAll(dto).subscribe(res => {
+            this.dataService.employeesAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.xlAll = res.data.length ? res.data.map(d => new Employee().build(d)) : [];                                    
                     resolve();

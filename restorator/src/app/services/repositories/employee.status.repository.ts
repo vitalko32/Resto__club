@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { EmployeeStatus } from '../../model/orm/employee.status.model';
 import { DataService } from '../data.service';
-import { SimpleRepository } from './_simple.repository';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository } from './_repository';
 
 @Injectable()
-export class EmployeeStatusRepository extends SimpleRepository<EmployeeStatus> {    
+export class EmployeeStatusRepository extends Repository<EmployeeStatus> {    
     constructor(protected dataService: DataService) {
         super();
-        this.sortBy = "pos";
+        this.allSortBy = "pos";
     }
     
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {
-            const dto: IGetAll = {sortBy: this.sortBy, sortDir: this.sortDir};
+            const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
             this.dataService.employeeStatusesAll(dto).subscribe(res => {                    
                 if (res.statusCode === 200) {
-                    this.xl = res.data.length ? res.data.map(d => new EmployeeStatus().build(d)) : [];                          
+                    this.xlAll = res.data.length ? res.data.map(d => new EmployeeStatus().build(d)) : [];                          
                     resolve();
                 } else {                        
                     reject(res.statusCode+": "+res.error);

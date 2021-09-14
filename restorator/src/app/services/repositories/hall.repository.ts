@@ -7,21 +7,24 @@ import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
 
 @Injectable()
-export class HallRepository extends Repository<Hall> {
-    public schema: string = "hall";        
-    public allSortBy: string = "pos";
-    public chunkSortBy: string = "pos";    
-    public filterRestaurantId: number = null;    
+export class HallRepository extends Repository<Hall> {    
+    public filterRestaurantId: number = null;   
+    public currentId: number = null;
     
     constructor(protected dataService: DataService) {
-        super(dataService);
+        super();
+        this.allSortBy = "pos";
+        this.chunkSortBy = "pos";
     }        
     
     public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {            
+            let filter: any = {};
+            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;
             const dto: IGetAll = {
                 sortBy: this.allSortBy,
-                sortDir: this.allSortDir,                    
+                sortDir: this.allSortDir,      
+                filter,              
             };
             this.dataService.hallsAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {
@@ -94,21 +97,7 @@ export class HallRepository extends Repository<Hall> {
                 
             });
         });
-    }
-
-    public deleteBulk(ids: number[]): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.dataService.hallsDeleteBulk(ids).subscribe(res => {
-                if (res.statusCode === 200) {
-                    resolve();
-                } else {                    
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);
-            });
-        });
-    }
+    }    
 
     public create(x: Hall): Promise<void> {
         return new Promise((resolve, reject) => {
