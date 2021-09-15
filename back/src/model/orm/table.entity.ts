@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Hall } from "./hall.entity";
 
 @Entity({name: "vne_tables"})
@@ -20,6 +20,9 @@ export class Table {
 
     @Column({nullable: false, default: 0})
     y: number;
+    
+    @Column({nullable: true, default: null, unique: true})
+    code: string;
 
     // relations
     @ManyToOne(type => Hall, {onDelete: "CASCADE", onUpdate: "CASCADE"})

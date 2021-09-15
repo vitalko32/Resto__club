@@ -52,6 +52,9 @@
             <div class="df-title">{{currentLang.phrases['workspace-halls-y']}}:</div>
             <div class="df-inputwrap"><input type="number" class="small" [(ngModel)]="table.y" (keydown)="tablesOnSubformKeyDown($event);"></div>                                              
 
+            <div class="df-title">{{currentLang.phrases['workspace-halls-code']}}:</div>
+            <div class="df-inputwrap"><input type="text" [(ngModel)]="table.code" (keydown)="tablesOnSubformKeyDown($event);"></div>                                              
+
             <div class="df-title"></div>
             <div class="df-inputwrap"><button type="button" (click)="tablesAdd();">OK</button></div> 
         </div>       
@@ -62,6 +65,7 @@
                 <th><label [class]="tablesSortBy === 'seats' ? (tablesSortDir === 1 ? 'sorted-forward' : 'sorted-backward') : 'sortable'" (click)="tablesChangeSorting('seats');">{{currentLang.phrases['workspace-halls-seats']}}</label></th>
                 <th><label>{{currentLang.phrases['workspace-halls-x']}}</label></th>
                 <th><label>{{currentLang.phrases['workspace-halls-y']}}</label></th>
+                <th><label>{{currentLang.phrases['workspace-halls-code']}}</label></th>
                 <th>{{currentLang.phrases['workspace-actions']}}</th>
             </tr>   
             <ng-container *ngIf="x.tables.length">
@@ -70,6 +74,7 @@
                     <td><div class="dt-inputwrap"><input type="number" class="small" [(ngModel)]="t.seats"></div></td>
                     <td><div class="dt-inputwrap"><input type="number" class="small" [(ngModel)]="t.x"></div></td>
                     <td><div class="dt-inputwrap"><input type="number" class="small" [(ngModel)]="t.y"></div></td>                    
+                    <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="t.code"></div></td>                    
                     <td>
                         <div class="dt-actions">                    
                             <div class="dt-btn delete" [title]="currentLang.phrases['workspace-delete']" (click)="tablesDelete(i);"><span></span></div>

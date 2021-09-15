@@ -141,6 +141,7 @@
             "workspace-halls-seats": "Места",
             "workspace-halls-x": "Позиция по горизонтали",
             "workspace-halls-y": "Позиция по вертикали",
+            "workspace-halls-code": "Код",
 
             "workspace-transactions-h1": "Транзакции",
             "workspace-transactions-restaurant": "Ресторан",
@@ -296,6 +297,7 @@
             "workspace-halls-seats": "Seats",
             "workspace-halls-x": "Position horizontally ",
             "workspace-halls-y": "Position vertically",
+            "workspace-halls-code": "Code",
             
             "workspace-transactions-h1": "Transactions",
             "workspace-transactions-restaurant": "Restaurants",

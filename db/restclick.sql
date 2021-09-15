@@ -514,7 +514,8 @@ CREATE TABLE "default".vne_tables (
     no integer DEFAULT 0 NOT NULL,
     seats integer DEFAULT 0 NOT NULL,
     x integer DEFAULT 0 NOT NULL,
-    y integer DEFAULT 0 NOT NULL
+    y integer DEFAULT 0 NOT NULL,
+    code character varying
 );
 
 
@@ -987,17 +988,18 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 -- Data for Name: vne_tables; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_tables (id, hall_id, no, seats, x, y) FROM stdin;
-4	1	2	4	1	1
-3	4	1	4	0	1
-24	1	3	5	2	2
-25	4	2	4	1	0
-26	2	1	3	0	0
-27	2	2	3	1	2
-28	2	3	4	2	1
-29	5	2	6	0	0
-30	5	1	4	2	0
-23	1	1	4	0	0
+COPY "default".vne_tables (id, hall_id, no, seats, x, y, code) FROM stdin;
+23	1	1	4	0	0	hf734kjfhf6
+4	1	2	4	1	1	ajf874ghfj
+24	1	3	5	2	2	orkdnfu37d
+26	2	1	3	0	0	sdfjh98fdnh4
+27	2	2	3	1	2	ao48dfb
+28	2	3	4	2	1	de84nbhdfj
+3	4	1	4	0	1	anfiw74hbds
+25	4	2	4	1	0	losd84dj
+30	5	1	4	2	0	sdlkfjh8fnh
+29	5	2	6	0	0	sdlkfjh8fnh2
+32	1	4	3	3	1	8n9rywg2ap
 \.
 
 
@@ -2701,7 +2703,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 12, true);
 -- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_tables_id_seq', 30, true);
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 32, true);
 
 
 --
@@ -2890,6 +2892,14 @@ ALTER TABLE ONLY "default".vne_employees
 
 ALTER TABLE ONLY "default".vne_mailtemplates
     ADD CONSTRAINT "UQ_8dcdd7fca3bc0ba922e66e6e632" UNIQUE (name);
+
+
+--
+-- Name: vne_tables UQ_af6e48dc3768cbad3f140aa3aca; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_tables
+    ADD CONSTRAINT "UQ_af6e48dc3768cbad3f140aa3aca" UNIQUE (code);
 
 
 --

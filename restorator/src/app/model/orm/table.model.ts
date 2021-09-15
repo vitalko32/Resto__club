@@ -7,6 +7,7 @@ export class Table extends Model {
     public seats: number;
     public x: number;
     public y: number;
+    public code: string;
 
     public init(): Table {
         this.id = null;
@@ -14,6 +15,7 @@ export class Table extends Model {
         this.seats = 1;
         this.x = null;
         this.y = null;
+        this.code = this.randomString(10, "lowercase");
         
         return this;
     }
