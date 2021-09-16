@@ -27,6 +27,8 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     public tableDeleteId: number = null;
     public tableDeleteConfirmActive: boolean = false;
     public tableDeleteConfirmMsg: string = "";
+    public tableQr: Table = null;
+    public tableQrPanelActive: boolean = false;
 
     constructor(
         private appService: AppService,        
@@ -99,13 +101,13 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         }
     }
 
-    public setCurrentHall(hall: Hall): void {
+    public currentHallSet(hall: Hall): void {
         this.currentHallId = hall.id;
         this.currentHall = hall;
         this.initPlaces();
     }
 
-    public getTable(place: ICoord): Table {        
+    public tableGet(place: ICoord): Table {        
         return this.currentHall.tables.find(t => t.x === place.x && t.y === place.y);
     }
 
@@ -131,7 +133,7 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     }
 
     public tableCanDrop(place: ICoord): any {
-        return (drag: CdkDrag, drop: CdkDropList) => !this.getTable(place);
+        return (drag: CdkDrag, drop: CdkDropList) => !this.tableGet(place);
     }
 
     public tableCantDrop(drag: CdkDrag, drop: CdkDropList): boolean {
@@ -153,5 +155,10 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
+    }
+
+    public tableOnQr(t: Table): void {
+        this.tableQr = t;
+        this.tableQrPanelActive = true;
     }
 }

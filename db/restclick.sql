@@ -975,12 +975,13 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 6	smtp-port	587	\N	101	f	f
 7	smtp-login	viodev.robot@gmail.com	\N	102	f	f
 8	smtp-pw	6vl1TfeXq	\N	103	f	f
-12	restorator-msg		сообщение для рестораторов	5	t	f
+9	price	10	цена человеко-дня	4	t	f
+10	pay-time	1:00	время снятия денег со счетов	5	t	f
+12	restorator-msg		сообщение для рестораторов	6	t	f
 2	google-clientid	63103186909-5ut3m449vpr9uqp0v7jv02phea85mub0.apps.googleusercontent.com	Google Oauth API client ID	200	t	f
+13	customer-app-url	https://customer.restclick.vio.net.ua	URL приложения посетителей	3	t	f
 4	owner-app-url	https://owner.restclick.vio.net.ua	URL админки владельца	1	t	f
-9	price	10	цена человеко-дня	3	t	f
 11	restorator-app-url	https://restorator.restclick.vio.net.ua	URL админки рестораторов	2	t	f
-10	pay-time	1:00	время снятия денег со счетов	4	t	f
 \.
 
 
@@ -989,9 +990,6 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 --
 
 COPY "default".vne_tables (id, hall_id, no, seats, x, y, code) FROM stdin;
-23	1	1	4	0	0	hf734kjfhf6
-4	1	2	4	1	1	ajf874ghfj
-24	1	3	5	2	2	orkdnfu37d
 26	2	1	3	0	0	sdfjh98fdnh4
 27	2	2	3	1	2	ao48dfb
 28	2	3	4	2	1	de84nbhdfj
@@ -999,7 +997,12 @@ COPY "default".vne_tables (id, hall_id, no, seats, x, y, code) FROM stdin;
 25	4	2	4	1	0	losd84dj
 30	5	1	4	2	0	sdlkfjh8fnh
 29	5	2	6	0	0	sdlkfjh8fnh2
-32	1	4	3	3	1	8n9rywg2ap
+33	1	1	1	0	0	z2nb4kfbva
+42	1	2	3	1	1	295rfgqpzd
+43	1	3	4	2	2	crjg85mjns
+44	1	4	6	3	1	p7s5o02uhk
+45	1	5	8	4	0	ztk4xx23iu
+46	1	6	12	5	1	5qskgfyuhg
 \.
 
 
@@ -2435,6 +2438,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 401	183	2	Seats qty
 402	184	1	стол
 403	184	2	table
+404	185	1	Версия для печати
+405	185	2	Print version
 \.
 
 
@@ -2612,6 +2617,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 182	12	3	no	\N
 183	12	4	seats	\N
 184	12	5	table	\N
+185	12	6	print-version	\N
 \.
 
 
@@ -2696,14 +2702,14 @@ SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 48, true);
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_settings_id_seq', 12, true);
+SELECT pg_catalog.setval('"default".vne_settings_id_seq', 13, true);
 
 
 --
 -- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_tables_id_seq', 32, true);
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 46, true);
 
 
 --
@@ -2717,7 +2723,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1126, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 403, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 405, true);
 
 
 --
@@ -2731,7 +2737,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 13, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 184, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 185, true);
 
 
 --

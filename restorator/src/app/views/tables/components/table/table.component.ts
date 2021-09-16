@@ -15,6 +15,7 @@ export class TableComponent {
     @Input() table: Table;
     @Input() canDelete: boolean = true;
     @Output() delete: EventEmitter<void> = new EventEmitter();
+    @Output() qr: EventEmitter<void> = new EventEmitter();
 
     constructor(
         private appService: AppService,        
@@ -26,5 +27,9 @@ export class TableComponent {
 
     public onDelete(): void {
         this.delete.emit();
+    }
+
+    public onQr(): void {
+        this.qr.emit();
     }
 }

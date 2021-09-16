@@ -3,6 +3,7 @@ import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.mo
 import { EmployeesModule } from "./employees/employees.module";
 import { HallsModule } from "./halls/halls.module";
 import { LangsModule } from "./langs/langs.module";
+import { QRModule } from "./qr/qr.module";
 import { SettingsModule } from "./settings/settings.module";
 import { WordsModule } from "./words/words.module";
 
@@ -14,6 +15,7 @@ import { WordsModule } from "./words/words.module";
         EmployeesModule,
         EmployeeStatusesModule,
         HallsModule,
+        QRModule,
     ],
     providers: [],
 })

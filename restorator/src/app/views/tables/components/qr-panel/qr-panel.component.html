@@ -1,0 +1,15 @@
+<div class="popup" [class.active]="active">
+    <div class="p-overlay" (click)="close()"></div>
+    <div class="p-win">
+        <ng-container *ngIf="table">
+            <div class="pw-content">            
+                <div class="pw-txt"># {{table.no}}</div>
+                <div class="pw-qr"><img [src]="imgUrl"></div>
+            </div>
+            <div class="pw-btnwrap">            
+                <a class="print" [href]="imgLink" target="_blank"><span>{{words['restorator-tables']['print-version'][currentLang.slug]}}</span></a>
+            </div>
+        </ng-container>
+        <div class="pw-close" (click)="close()"><span></span></div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
     .p-win {
         @media (min-width:0) {width: 90%;}
         @media (min-width:500px) {width:320px; }
-        position: fixed; z-index: 100; left: -100%; top:50%; transform: translate(-50%, -50%); background-color: var(--color-bg); padding: 30px; border-radius: 15px; transition: 0.3s; will-change: left;
+        position: fixed; z-index: 100; left: -100%; top:50%; transform: translate(-50%, -50%); background-color: var(--color-bg); padding: 30px; border-radius: 15px; transition: 0.3s; will-change: left; overflow: hidden;
         .pw-content {
             .pw-txt {display: flex; justify-content: center; text-align: center; font-weight: bold; margin-bottom: 30px;}
             .pw-form {
@@ -36,6 +36,10 @@
                 } 
             }
             .pw-hr {margin: 15px 0; height: 1px; background-color: white;}
+            .pw-qr {
+                text-align: center; margin-bottom: 30px;
+                img {max-width: 100%; border-radius: 15px; box-shadow: var(--block-shadow);}
+            }            
         }
         .pw-buttons {
             display: flex; justify-content: center;
@@ -49,6 +53,11 @@
             button {
                 height: 30px; width: 200px; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none; font-size: 14px;
                 &:disabled {background-color: var(--color-disabled);}
+            }
+            a {
+                display: inline-flex; justify-content: center; align-items: center; height: 30px; padding: 0 15px; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; font-size: 14px; text-decoration: none; user-select: none;
+                span::before {font-family: "fa-solid"; margin-right: 5px; font-size: 18px;}
+                &.print {span::before {content: "\f02f";}}
             }
         }
         .pw-close {
