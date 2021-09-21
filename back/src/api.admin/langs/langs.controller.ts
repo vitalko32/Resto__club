@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { LangsService } from "./langs.service";
 import { Lang } from "../../model/orm/lang.entity";
 import { ILangCreate } from "./dto/lang.create.interface";

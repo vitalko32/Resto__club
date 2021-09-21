@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { Setting } from "src/model/orm/setting.entity";
 import { APIService } from "../../common/api.service";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { Settings } from "src/model/settings.type";
 
 @Injectable()

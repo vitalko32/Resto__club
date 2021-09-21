@@ -1,5 +1,5 @@
 import { Body, Controller, Param, Post, UseGuards } from "@nestjs/common";
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { EmployeesService } from "./employees.service";
 import { IEmployeeAuthData } from "./dto/employee.authdata.interface";
 import { IEmployeeLogin } from "./dto/employee.login.interface";
@@ -11,7 +11,7 @@ import { IEmployeeConfirm } from "./dto/employee.confirm.interface";
 import { IEmployeeCreate } from "src/api.admin/employees/dto/employee.create.interface";
 import { IEmployeeUpdate } from "src/api.admin/employees/dto/employee.update.interface";
 import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
-import { EmployeesGuard } from "./employees.guard";
+import { EmployeesGuard } from "src/common/guards/employees.guard";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {

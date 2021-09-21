@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { Wordbook } from "src/model/orm/wordbook.entity";
 import { Words } from "src/model/words.type";
 import { Lang } from "src/model/orm/lang.entity";

@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
 import { IUpdateParam } from "./dto/updateparam.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { Admin } from "../../model/orm/admin.entity";
 import { Setting } from "src/model/orm/setting.entity";
 import { Lang } from "src/model/orm/lang.entity";

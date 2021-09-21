@@ -1,6 +1,6 @@
 import { Controller, Post } from "@nestjs/common";
 
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { WordsService } from "./words.service";
 import { Words } from "src/model/words.type";
 

@@ -15,6 +15,7 @@
     }
     .menu-sub {
         max-height: 0; overflow: hidden; margin-bottom: 15px; transition: 0.3s;
+        &.sub0.active {max-height: 90px;}
         &.sub1.active {max-height: 90px;}
         .menu-sub-item {
             height: 30px; margin-bottom: 15px; text-align: center; display: flex; align-items: center; justify-content: center;

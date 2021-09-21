@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcrypt";
 import { Not, Repository } from "typeorm";
 import { APIService } from "src/common/api.service";
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { Admin } from "src/model/orm/admin.entity";
 import { IAdminAuthData } from "./dto/admin.authdata.interface";
 import { IAdminLogin } from "./dto/admin.login.interface";

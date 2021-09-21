@@ -1,11 +1,11 @@
 import { Controller, Post, UseGuards, Param, UseInterceptors, UploadedFile, Body } from '@nestjs/common';
 import { FileInterceptor } from "@nestjs/platform-express";
 
-import { IAnswer } from "../../model/answer.interface";
-import { IPathable } from 'src/model/pathable.interface';
 import { IImgUpload } from 'src/model/dto/imgupload.interface';
 import { FilesService } from 'src/common/files.service';
 import { AdminsGuard } from "src/common/guards/admins.guard";
+import { IPathable } from 'src/model/dto/pathable.interface';
+import { IAnswer } from 'src/model/dto/answer.interface';
 
 @Controller('api/admin/files')
 export class FilesController {

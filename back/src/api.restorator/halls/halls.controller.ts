@@ -1,13 +1,13 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { HallsService } from "./halls.service";
 import { Hall } from "../../model/orm/hall.entity";
 import { IHallUpdate } from "./dto/hall.update.interface";
 import { IHallCreate } from "./dto/hall.create.interface";
 import { IGetAll } from "src/model/dto/getall.interface";
-import { EmployeesGuard } from "../employees/employees.guard";
+import { EmployeesGuard } from "src/common/guards/employees.guard";
 
 @Controller('api/restorator/halls')
 export class HallsController {

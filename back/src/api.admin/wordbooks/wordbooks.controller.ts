@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { WordbooksService } from "./wordbooks.service";
 import { Wordbook } from "../../model/orm/wordbook.entity";
 import { IWordbookUpdate } from "./dto/wordbook.update.interface";

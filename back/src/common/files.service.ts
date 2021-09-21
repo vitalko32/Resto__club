@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import * as sharp from 'sharp';
 import * as fs from "fs";
 import { extname } from 'path';
-import { IPathable } from 'src/model/pathable.interface';
-import { IAnswer } from 'src/model/answer.interface';
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IImgUpload } from 'src/model/dto/imgupload.interface';
+import { IPathable } from 'src/model/dto/pathable.interface';
 
 @Injectable()
 export class FilesService {

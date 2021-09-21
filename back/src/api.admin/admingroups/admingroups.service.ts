@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
 import { Admingroup } from "../../model/orm/admingroup.entity";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetAll } from "../../model/dto/getall.interface";
 import { Sortdir } from "src/model/sortdir.type";
 

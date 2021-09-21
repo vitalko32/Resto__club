@@ -6,7 +6,7 @@ import { JwtService } from "@nestjs/jwt";
 
 import { APIService } from "../../common/api.service";
 import { Employee } from "../../model/orm/employee.entity";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IEmployeeCreate } from "./dto/employee.create.interface";
 import { IEmployeeUpdate } from "./dto/employee.update.interface";

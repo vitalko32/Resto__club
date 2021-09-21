@@ -3,7 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Not, Repository } from "typeorm";
 import { APIService } from "src/common/api.service";
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { Employee } from "src/model/orm/employee.entity";
 import { IEmployeeAuthData } from "./dto/employee.authdata.interface";
 import { IEmployeeLogin } from "./dto/employee.login.interface";
@@ -99,7 +99,7 @@ export class EmployeesService extends APIService {
     public async check(id: number): Promise<IAnswer<IEmployee>> { 
         try {                                    
             let employee: IEmployee = await this.getEmployeeById(id);            
-            employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant);
+            employee.restaurant ? employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant) : null;
             return {statusCode: 200, data: employee};
         } catch (err) {
             let errTxt: string = `Error in EmployeesService.check: ${String(err)}`;
@@ -318,7 +318,7 @@ export class EmployeesService extends APIService {
         }
     }
 
-    private async getRestaurantDaysleft(r: IRestaurant): Promise<number> {
+    private async getRestaurantDaysleft(r: IRestaurant): Promise<number> {        
         const strPrice: string = (await this.settingRepository.findOne({where: {p: "price"}}))?.v;
         const price: number = strPrice ? parseFloat(strPrice) : 999999999;
 

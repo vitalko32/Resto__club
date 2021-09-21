@@ -7,10 +7,10 @@ import { MailOptions } from "nodemailer/lib/sendmail-transport";
 import { Setting } from "src/model/orm/setting.entity";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
 import { MailtemplateTranslation } from "src/model/orm/mailtemplate.translation.entity";
-import { IMailtemplateData } from "src/model/mailtemplatedata.interface";
 import { APIService } from "./api.service";
 import { Restaurant } from "src/model/orm/restaurant.entity";
-import { IRestaurantMailable } from "./dto/restaurant.mailable.interface";
+import { IRestaurantMailable } from "src/model/dto/restaurant.mailable.interface";
+import { IMailtemplateData } from "src/model/dto/mailtemplatedata.interface";
 
 @Injectable()
 export class MailService extends APIService {

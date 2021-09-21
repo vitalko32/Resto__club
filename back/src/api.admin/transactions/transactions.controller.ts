@@ -1,6 +1,6 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { TransactionsService } from "./transactions.service";
 import { Transaction } from "../../model/orm/transaction.entity";
 import { AdminsGuard } from "src/common/guards/admins.guard";

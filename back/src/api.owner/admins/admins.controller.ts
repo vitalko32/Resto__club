@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { AdminsGuard } from "src/common/guards/admins.guard";
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { AdminsService } from "./admins.service";
 import { IAdminAuthData } from "./dto/admin.authdata.interface";
 import { IAdminLogin } from "./dto/admin.login.interface";

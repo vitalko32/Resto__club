@@ -1,9 +1,9 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { EmployeeStatusesService } from "./employee.statuses.service";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { IEmployeeStatus } from "./dto/employee.status.interface";
-import { EmployeesGuard } from "../employees/employees.guard";
+import { EmployeesGuard } from "src/common/guards/employees.guard";
 
 @Controller('api/restorator/employee-statuses')
 export class EmployeeStatusesController {

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { IRestaurantMailable } from "src/common/dto/restaurant.mailable.interface";
 import { MailService } from "src/common/mail.service";
+import { IRestaurantMailable } from "src/model/dto/restaurant.mailable.interface";
 import { Admin } from "src/model/orm/admin.entity";
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { Setting } from "src/model/orm/setting.entity";

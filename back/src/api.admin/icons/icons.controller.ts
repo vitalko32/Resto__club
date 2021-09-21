@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetAll } from "src/model/dto/getall.interface";
 import { IconsService } from "./icons.service";
 import { Icon } from "src/model/orm/icon.entity";

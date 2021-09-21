@@ -1,6 +1,6 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { CurrenciesService } from "./currencies.service";
 import { Currency } from "../../model/orm/currency.entity";
 import { IGetAll } from "src/model/dto/getall.interface";

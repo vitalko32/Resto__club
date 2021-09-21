@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { IAnswer } from "src/model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
 import { Cat } from "../../model/orm/cat.entity";

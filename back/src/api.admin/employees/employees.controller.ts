@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { EmployeesService } from "./employees.service";
 import { Employee } from "../../model/orm/employee.entity";
 import { IEmployeeUpdate } from "./dto/employee.update.interface";

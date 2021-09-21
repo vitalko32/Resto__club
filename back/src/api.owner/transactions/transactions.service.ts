@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { getManager, Repository } from "typeorm";
 import { APIService } from "../../common/api.service";
 import { Transaction } from "../../model/orm/transaction.entity";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { Sortdir } from "src/model/sortdir.type";
 import { db_name, db_schema } from "src/options";

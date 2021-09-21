@@ -6,13 +6,12 @@ export class SimpleGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
 
     public canActivate(context: ExecutionContext): boolean {        
-        let token: string = context.switchToHttp().getRequest().headers["token"];        
-        
         try {
+            let token: string = context.switchToHttp().getRequest().headers["token"];        
             this.jwtService.verify(token);            
             return true;
         } catch (err) {
-            throw new HttpException({statusCode: 403, error: err.name}, 200);
+            throw new HttpException({statusCode: 403, error: "unauthorized"}, 200);
         }        
     }
 }

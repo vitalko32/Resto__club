@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { Setting } from "src/model/orm/setting.entity";
 import { APIService } from "../../common/api.service";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { ISettingCreate } from "./dto/setting.create.interface";
 import { Sortdir } from "src/model/sortdir.type";

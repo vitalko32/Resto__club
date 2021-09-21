@@ -1,6 +1,6 @@
 import { Controller, Post, Body, UseGuards } from "@nestjs/common";
 
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetAll } from "../../model/dto/getall.interface";
 import { AdmingroupsService } from "./admingroups.service";
 import { Admingroup } from "../../model/orm/admingroup.entity";

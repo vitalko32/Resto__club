@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/admin.guard';
 import { AuthGuard } from './services/auth.guard';
 import { AuthModule } from './views/auth/auth.module';
+import { CatsModule } from './views/cats/cats.module';
 import { EmployeesModule } from './views/employees/employees.module';
 import { HallsModule } from './views/halls/halls.module';
 import { HomePage } from './views/home/home.page';
@@ -14,6 +15,7 @@ const routes: Routes = [
 	{path: "employees", loadChildren: () => EmployeesModule, canActivate: [AuthGuard, AdminGuard]}, 		
 	{path: "halls-tables/halls", loadChildren: () => HallsModule, canActivate: [AuthGuard, AdminGuard]}, 		
 	{path: "halls-tables/tables", loadChildren: () => TablesModule, canActivate: [AuthGuard, AdminGuard]}, 		
+	{path: "kitchen/cats", loadChildren: () => CatsModule, canActivate: [AuthGuard, AdminGuard]}, 		
 	{path: "**", redirectTo: "/"},
 ];
 

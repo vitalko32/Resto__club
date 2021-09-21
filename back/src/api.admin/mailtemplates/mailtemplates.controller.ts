@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { MailtemplatesService } from "./mailtemplates.service";
 import { Mailtemplate } from "../../model/orm/mailtemplate.entity";
 import { IMailtemplateUpdate } from "./dto/mailtemplate.update.interface";

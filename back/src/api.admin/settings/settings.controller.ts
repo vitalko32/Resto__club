@@ -1,7 +1,7 @@
 import { Controller, Param, Post, Body, Delete, UseGuards } from "@nestjs/common";
 
 import { IGetChunk } from "../../model/dto/getchunk.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { SettingsService } from "./settings.service";
 import { Setting } from "src/model/orm/setting.entity";
 import { ISettingCreate } from "./dto/setting.create.interface";

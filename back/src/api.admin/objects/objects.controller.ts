@@ -2,7 +2,7 @@ import { Controller, Post, Body, UseGuards } from "@nestjs/common";
 
 import { ObjectsService } from "./objects.service";
 import { IUpdateParam } from "./dto/updateparam.interface";
-import { IAnswer } from "../../model/answer.interface";
+import { IAnswer } from 'src/model/dto/answer.interface';
 import { AdminsGuard } from "src/common/guards/admins.guard";
 
 @Controller('api/admin/objects')
