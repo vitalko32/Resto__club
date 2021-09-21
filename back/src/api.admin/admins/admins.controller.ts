@@ -1,6 +1,6 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
 
-import { AuthGuard } from "../../common/auth.guard";
+
 import { IGetChunk } from "../../model/dto/getchunk.interface";
 import { IAnswer } from "../../model/answer.interface";
 import { AdminsService } from "./admins.service";
@@ -9,48 +9,50 @@ import { IAdminCreate } from "./dto/admin.create.interface";
 import { IAdminUpdate } from "./dto/admin.update.interface";
 import { IAdminLogin } from "./dto/admin.login.interface";
 import { IAdminAuthData } from "./dto/admin.authdata.interface";
+import { AdminsGuard } from "src/common/guards/admins.guard";
+//import { AdminsGuard } from "src/common/guards/admins.guard";
 
 @Controller('api/admin/admins')
 export class AdminsController {
     constructor (private adminsService: AdminsService) {}    
 
     // get fragment
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("chunk")
     public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Admin[]>> {
         return this.adminsService.chunk(dto);
     }
 
     // get one
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("one/:id")
     public one(@Param("id") id: string): Promise<IAnswer<Admin>> {
         return this.adminsService.one(parseInt(id));
     }
 
     // delete one
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("delete/:id")
     public delete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.adminsService.delete(parseInt(id));
     }
 
     // delete many
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("delete-bulk")
     public deleteBulk(@Body() ids: number[]): Promise<IAnswer<void>> {
         return this.adminsService.deleteBulk(ids);
     }
 
     // create
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("create")
     public create(@Body() dto: IAdminCreate): Promise<IAnswer<void>> {
         return this.adminsService.create(dto);
     }
 
     // update
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("update")
     public update(@Body() dto: IAdminUpdate): Promise<IAnswer<void>> {
         return this.adminsService.update(dto);

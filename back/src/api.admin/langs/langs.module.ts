@@ -1,8 +1,11 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { Admin } from "src/model/orm/admin.entity";
 import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
+import { Icon } from "src/model/orm/icon.entity";
+import { IconTranslation } from "src/model/orm/icon.translation.entity";
 
 import { Lang } from "src/model/orm/lang.entity";
 import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
@@ -23,6 +26,9 @@ import { LangsService } from "./langs.service";
             MailtemplateTranslation,
             EmployeeStatus,
             EmployeeStatusTranslation,
+            Icon,
+            IconTranslation,
+            Admin,
         ]),
         JwtModule.register(jwtConstants),
     ],    

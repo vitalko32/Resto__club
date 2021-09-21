@@ -68,7 +68,7 @@ export class EditHallsPage implements OnInit, OnDestroy {
                 this.formLoading = true;            
                 await this.hallRepository.update(this.hall);
                 this.formLoading = false;            
-                this.router.navigateByUrl("/halls");
+                this.router.navigateByUrl("/halls-tables/halls");
             }            
         } catch (err) {
             this.formLoading = false;

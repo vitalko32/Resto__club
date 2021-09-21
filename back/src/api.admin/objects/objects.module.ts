@@ -16,6 +16,9 @@ import { EmployeeStatusTranslation } from "src/model/orm/employee.status.transla
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { Employee } from "src/model/orm/employee.entity";
 import { Hall } from "src/model/orm/hall.entity";
+import { Icon } from "src/model/orm/icon.entity";
+import { IconTranslation } from "src/model/orm/icon.translation.entity";
+import { Cat } from "src/model/orm/cat.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -34,6 +37,9 @@ import { Hall } from "src/model/orm/hall.entity";
 			EmployeeStatusTranslation,
 			Restaurant,
 			Hall,
+			Icon,
+			IconTranslation,
+			Cat,
 		]),
 	],
 })

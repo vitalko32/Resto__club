@@ -44,7 +44,7 @@ export class AdminsService extends APIService {
     public async one(id: number): Promise<IAnswer<Admin>> {
         try {
             let data: Admin = await this.adminRepository.findOne(id);
-            return {statusCode: 200, data};
+            return data ? {statusCode: 200, data} : {statusCode: 404, error: "admin not found"};
         } catch (err) {
             let errTxt: string = `Error in AdminsService.one: ${String(err)}`;
             console.log(errTxt);
@@ -119,7 +119,7 @@ export class AdminsService extends APIService {
             let admin: Admin | null = await this.validateUser(dto.email, dto.password);
 
             if (admin) {
-                const payload: Object = {username: admin.email, sub: admin.id};
+                const payload: Object = {username: admin.email, id: admin.id};
                 return {statusCode: 200, data: {token: this.jwtService.sign(payload), admin}};
             } else {
                 return {statusCode: 401, error: "Unauthorized"};

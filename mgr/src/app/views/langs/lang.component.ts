@@ -10,4 +10,5 @@ import { ObjectComponent } from '../_object.component';
 export class LangComponent extends ObjectComponent<Lang> {
     public imgFolder: string = "langs";
 	public imgDisk: string = "langs";
+    public imgResizeWidth: number[] = [100];    
 }

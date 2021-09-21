@@ -1,18 +1,18 @@
 import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "../../common/auth.guard";
 import { IAnswer } from "../../model/answer.interface";
 import { EmployeeStatusesService } from "./employee.statuses.service";
-import { EmployeeStatus } from "../../model/orm/employee.status.entity";
 import { IGetAll } from "src/model/dto/getall.interface";
+import { IEmployeeStatus } from "./dto/employee.status.interface";
+import { EmployeesGuard } from "../employees/employees.guard";
 
 @Controller('api/restorator/employee-statuses')
 export class EmployeeStatusesController {
     constructor (private employeeStatusesService: EmployeeStatusesService) {}            
 
     // get all
-    @UseGuards(AuthGuard)
+    @UseGuards(EmployeesGuard)
     @Post("all")
-    public all(@Body() dto: IGetAll): Promise<IAnswer<EmployeeStatus[]>> {
+    public all(@Body() dto: IGetAll): Promise<IAnswer<IEmployeeStatus[]>> {
         return this.employeeStatusesService.all(dto);
     }      
 }

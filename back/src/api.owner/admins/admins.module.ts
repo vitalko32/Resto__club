@@ -13,7 +13,9 @@ import { AdminsService } from "./admins.service";
         JwtModule.register(jwtConstants),
         CommonModule,
     ],    
-    providers: [AdminsService],
+    providers: [
+        AdminsService,        
+    ],
     controllers: [AdminsController],
 })
 export class AdminsModule {}

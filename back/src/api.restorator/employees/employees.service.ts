@@ -20,6 +20,10 @@ import * as bcrypt from "bcrypt";
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { IEmployeeUpdate } from "./dto/employee.update.interface";
 import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
+import { Lang } from "src/model/orm/lang.entity";
+import { EmployeeStatus } from "src/model/orm/employee.status.entity";
+import { IEmployeeStatus } from "../employee.statuses/dto/employee.status.interface";
+import { EmployeeStatusesService } from "../employee.statuses/employee.statuses.service";
 
 @Injectable()
 export class EmployeesService extends APIService {
@@ -27,7 +31,9 @@ export class EmployeesService extends APIService {
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Setting) private settingRepository: Repository<Setting>,
         @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
+        @InjectRepository(Lang) private langRepository: Repository<Lang>,
         private jwtService: JwtService,               
+        private employeeStatusesService: EmployeeStatusesService,
     ) {
         super();
     }
@@ -42,7 +48,7 @@ export class EmployeesService extends APIService {
             }             
 
             employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant);
-            const payload: Object = {username: employee.email, sub: employee.id};
+            const payload: Object = {username: employee.email, id: employee.id};
             return {statusCode: 200, data: {token: this.jwtService.sign(payload), employee}};
         } catch (err) {
             let errTxt: string = `Error in EmployeesService.login: ${String(err)}`;
@@ -61,7 +67,7 @@ export class EmployeesService extends APIService {
             }
 
             employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant);
-            const payload: Object = {username: employee.email, sub: employee.id};    
+            const payload: Object = {username: employee.email, id: employee.id};    
             return {statusCode: 200, data: {token: this.jwtService.sign(payload), employee}};            
         } catch (err) {
             let errTxt: string = `Error in EmployeesService.loginByEmail: ${String(err)}`;
@@ -92,12 +98,7 @@ export class EmployeesService extends APIService {
     // проверка актуальности аккаунта и подгрузка актуальных данных
     public async check(id: number): Promise<IAnswer<IEmployee>> { 
         try {                                    
-            let employee: IEmployee = await this.getEmployeeById(id);
-                        
-            if (!employee || !employee.restaurant) {
-                return {statusCode: 403, error: "access forbidden"};
-            }
-            
+            let employee: IEmployee = await this.getEmployeeById(id);            
             employee.restaurant.daysleft = await this.getRestaurantDaysleft(employee.restaurant);
             return {statusCode: 200, data: employee};
         } catch (err) {
@@ -137,15 +138,15 @@ export class EmployeesService extends APIService {
     // фрагмент
     public async chunk(dto: IGetChunk): Promise<IAnswer<IEmployee[]>> {
         try {
-            let sortBy: string = dto.sortBy;
-            let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-            let from: number = dto.from;
-            let q: number = dto.q;
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const from: number = dto.from;
+            const q: number = dto.q;
             let filter: string = "TRUE"; 
 
             if (dto.filter.created_at[0]) {
-                let from: string = this.mysqlDate(new Date(dto.filter.created_at[0]));
-                let to: string = dto.filter.created_at[1] ? this.mysqlDate(new Date(dto.filter.created_at[1])) : from;
+                const from: string = this.mysqlDate(new Date(dto.filter.created_at[0]));
+                const to: string = dto.filter.created_at[1] ? this.mysqlDate(new Date(dto.filter.created_at[1])) : from;
                 filter += ` AND e.created_at BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
             }
 
@@ -157,16 +158,21 @@ export class EmployeesService extends APIService {
                 filter += ` AND e.restaurant_id = '${dto.filter.restaurant_id}'`;
             }
 
-            let query = this.employeeRepository.createQueryBuilder("e").where(filter);
-            let data: IEmployee[] = await query
+            const query = this.employeeRepository.createQueryBuilder("e").where(filter);
+            const langs: Lang[] = await this.langRepository.find({where: {active: true}});
+            const data: Employee[] | IEmployee[] = await query
                 .leftJoinAndSelect("e.status", "status")
                 .leftJoinAndSelect("status.translations", "translations")
                 .orderBy({[`e.${sortBy}`]: sortDir})
                 .take(q)
                 .skip(from)
                 .getMany();
-            let allLength: number = await query.getCount();
 
+            for (let x of data) {                
+                x.status = this.employeeStatusesService.buildMlStatus((x as Employee).status, langs);                                
+            }
+        
+            const allLength: number = await query.getCount();
             return {statusCode: 200, data, allLength};
         } catch (err) {
             let errTxt: string = `Error in EmployeesService.chunk: ${String(err)}`;
@@ -317,5 +323,5 @@ export class EmployeesService extends APIService {
         const price: number = strPrice ? parseFloat(strPrice) : 999999999;
 
         return Math.floor(r.money / (price * r.employees_q));
-    }
+    }    
 }

@@ -16,6 +16,9 @@ import { EmployeeStatusTranslation } from "src/model/orm/employee.status.transla
 import { Restaurant } from "src/model/orm/restaurant.entity";
 import { Employee } from "src/model/orm/employee.entity";
 import { Hall } from "src/model/orm/hall.entity";
+import { Icon } from "src/model/orm/icon.entity";
+import { IconTranslation } from "src/model/orm/icon.translation.entity";
+import { Cat } from "src/model/orm/cat.entity";
 
 @Injectable()
 export class ObjectsService extends APIService {
@@ -31,6 +34,9 @@ export class ObjectsService extends APIService {
         @InjectRepository(EmployeeStatusTranslation) private employeeStatusTranslationRepository: Repository<EmployeeStatusTranslation>,        
         @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,        
         @InjectRepository(Hall) private hallRepository: Repository<Hall>,        
+        @InjectRepository(Icon) private iconRepository: Repository<Icon>,        
+        @InjectRepository(IconTranslation) private iconTranslationRepository: Repository<IconTranslation>,        
+        @InjectRepository(Cat) private catRepository: Repository<Cat>,        
     ) {
         super();
     }

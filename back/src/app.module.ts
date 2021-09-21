@@ -8,11 +8,14 @@ import { TestAPIModule } from './api.test/test.api.module';
 import { CronModule } from './cron/cron.module';
 import { Admin } from './model/orm/admin.entity';
 import { Admingroup } from './model/orm/admingroup.entity';
+import { Cat } from './model/orm/cat.entity';
 import { Currency } from './model/orm/currency.entity';
 import { Employee } from './model/orm/employee.entity';
 import { EmployeeStatus } from './model/orm/employee.status.entity';
 import { EmployeeStatusTranslation } from './model/orm/employee.status.translation.entity';
 import { Hall } from './model/orm/hall.entity';
+import { Icon } from './model/orm/icon.entity';
+import { IconTranslation } from './model/orm/icon.translation.entity';
 import { Lang } from './model/orm/lang.entity';
 import { Mailtemplate } from './model/orm/mailtemplate.entity';
 import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.entity';
@@ -54,6 +57,9 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				Transaction,		
 				Hall,
 				Table,
+				Icon,
+				IconTranslation,
+				Cat,
 			],
 			synchronize: true,
 		}),

@@ -14,13 +14,19 @@ export class FilesService {
             const diskSubfolder: string = `${new Date ().getFullYear ()}-${new Date().getMonth() + 1}`;
             const diskFullFolder: string = `${diskFolder}/${diskSubfolder}`;            
             !fs.existsSync(diskFullFolder) ? fs.mkdirSync(diskFullFolder) : null;            
-            let paths: string[] = [];            
-            let widths: number[] = JSON.parse(dto.resize);                
+            let paths: string[] = [];              
+            
+            if (dto.resize) {
+                let widths: number[] = JSON.parse(dto.resize);                
                 
-            for (let w of widths) {
-                let filename: string = await this.saveResizedImg(diskFullFolder, file, w);
+                for (let w of widths) {
+                    let filename: string = await this.saveResizedImg(diskFullFolder, file, w);
+                    paths.push(`${diskSubfolder}/${filename}`);
+                }                
+            } else {
+                let filename: string = await this.saveFile(diskFullFolder, file);
                 paths.push(`${diskSubfolder}/${filename}`);
-            }                
+            }            
 
             return {statusCode: 200, data: {paths}};
         } catch (err) {
@@ -30,21 +36,15 @@ export class FilesService {
         }
     }  
     
-    /*private saveFileToFolder(folder: string, file: Express.Multer.File): Promise<string> {
+    private saveFile(folder: string, file: Express.Multer.File): Promise<string> {
         return new Promise((resolve, reject) => {
             const fileName: string = Math.round(new Date().getTime()).toString();
             const fileExtension: string = extname(file.originalname);
             const fileFullName = `${fileName}${fileExtension}`;
             const fileFullNameWithFolder = `${folder}/${fileFullName}`;
-            fs.writeFile(fileFullNameWithFolder, file.buffer, (err) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(fileFullName);
-                }
-            });
+            fs.writeFile(fileFullNameWithFolder, file.buffer, (err) => err ? reject(err) : resolve(fileFullName));
         });
-    }*/
+    }
 
     private async saveResizedImg(folder: string, file: Express.Multer.File, width: number): Promise<string> {        
         const fileName: string = Math.round(new Date().getTime()).toString()+`_${width}`;        

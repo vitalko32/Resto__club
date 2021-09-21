@@ -25,7 +25,7 @@
                         <div>{{e.name}}</div>
                         <div class="small" *ngIf="e.is_admin">({{words['restorator-employees']['admin'][currentLang.slug]}})</div>
                     </td>                    
-                    <td class="align-center"><span *ngIf="e.status" [style.color]="e.status.color">{{e.status.translationByLang(currentLang.id)?.name}}</span></td>                    
+                    <td class="align-center"><span *ngIf="e.status" [style.color]="e.status.color">{{e.status.name[currentLang.slug]}}</span></td>                    
                     <td class="align-center nowrap">
                         <a class="datalist-btn edit" [routerLink]="'/employees/edit/'+e.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
                         <a class="datalist-btn delete" [class.disabled]="e.defended" (click)="onDelete(e)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="dlmi-param">
                     <div class="dlmi-title">{{words['restorator-employees']['status'][currentLang.slug]}}:</div>
-                    <div class="dlmi-value"><span *ngIf="e.status" [style.color]="e.status.color">{{e.status.translationByLang(currentLang.id)?.name}}</span></div>
+                    <div class="dlmi-value"><span *ngIf="e.status" [style.color]="e.status.color">{{e.status.name[currentLang.slug]}}</span></div>
                 </div>
                 <div class="dlmi-actions">
                     <a class="datalist-btn edit" [routerLink]="'/employees/edit/'+e.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    

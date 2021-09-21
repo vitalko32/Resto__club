@@ -40,7 +40,7 @@
             <div class="dv-value">
                 <div class="dv-statuseswrap">
                     <div class="dv-status" [class.black]="employee.employee_status_id === null" (click)="setEmployeeStatus(null)">{{words['restorator-home']['status-none'][currentLang.slug]}}</div>
-                    <div class="dv-status" *ngFor="let es of esl" [style.background-color]="employee.employee_status_id === es.id ? es.color : 'var(--color-bg)'" (click)="setEmployeeStatus(es.id)">{{es.translationByLang(currentLang.id).name}}</div>
+                    <div class="dv-status" *ngFor="let es of esl" [style.background-color]="employee.employee_status_id === es.id ? es.color : 'var(--color-bg)'" (click)="setEmployeeStatus(es.id)">{{es.name[currentLang.slug]}}</div>
                 </div>                
             </div>
         </div>       

@@ -12,8 +12,8 @@ const routes: Routes = [
 	{path: "", component: HomePage, pathMatch: "full", canActivate: [AuthGuard]},
 	{path: "auth", loadChildren: () => AuthModule}, 		
 	{path: "employees", loadChildren: () => EmployeesModule, canActivate: [AuthGuard, AdminGuard]}, 		
-	{path: "halls", loadChildren: () => HallsModule, canActivate: [AuthGuard, AdminGuard]}, 		
-	{path: "tables", loadChildren: () => TablesModule, canActivate: [AuthGuard, AdminGuard]}, 		
+	{path: "halls-tables/halls", loadChildren: () => HallsModule, canActivate: [AuthGuard, AdminGuard]}, 		
+	{path: "halls-tables/tables", loadChildren: () => TablesModule, canActivate: [AuthGuard, AdminGuard]}, 		
 	{path: "**", redirectTo: "/"},
 ];
 

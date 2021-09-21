@@ -12,7 +12,9 @@ import { AdminsService } from "./admins.service";
         TypeOrmModule.forFeature([Admin]),
         JwtModule.register(jwtConstants),
     ],    
-    providers: [AdminsService],
-    controllers: [AdminsController],
+    providers: [
+        AdminsService,        
+    ],
+    controllers: [AdminsController],    
 })
 export class AdminsModule {}

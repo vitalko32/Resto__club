@@ -17,7 +17,7 @@ export abstract class ObjectComponent<T> {
     
     public progressImg: number = 0;    
     public imgFolder: string;    
-    public imgResizeWidth: number[] = [100];
+    public imgResizeWidth: number[] = [];
     public imgToView: string = null;    
     public imgViewerActive: boolean = false;
 
@@ -37,9 +37,9 @@ export abstract class ObjectComponent<T> {
         
         if (fileToUpload && this.imgFolder) {
             let fd: FormData = new FormData ();
-            fd.append("folder", this.imgFolder);
-            fd.append("resize", JSON.stringify(this.imgResizeWidth));
+            fd.append("folder", this.imgFolder);            
             fd.append("file", fileToUpload, fileToUpload.name);            
+            this.imgResizeWidth.length ? fd.append("resize", JSON.stringify(this.imgResizeWidth)) : null;
             this.appService.monitorLog(`uploading image ${fileToUpload.name}...`);
             this.uploadService.uploadImg(fd).subscribe (event => {                
                 if (event.type == HttpEventType.UploadProgress) {

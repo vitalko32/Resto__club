@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { Employee } from "src/model/orm/employee.entity";
 
 import { Hall } from "src/model/orm/hall.entity";
 import { Table } from "src/model/orm/table.entity";
@@ -13,6 +14,7 @@ import { HallsService } from "./halls.service";
         TypeOrmModule.forFeature([
             Hall,
             Table,
+            Employee,
         ]),
         JwtModule.register(jwtConstants),
     ],    

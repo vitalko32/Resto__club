@@ -28,7 +28,7 @@ export class AdminsService extends APIService {
                 return {statusCode: 401, error: "Unauthorized"};               
             } 
 
-            const payload: Object = {username: admin.email, sub: admin.id};
+            const payload: Object = {username: admin.email, id: admin.id};
             return {statusCode: 200, data: {token: this.jwtService.sign(payload), admin}};
         } catch (err) {
             let errTxt: string = `Error in AdminsService.login: ${String(err)}`;
@@ -45,7 +45,7 @@ export class AdminsService extends APIService {
                 return {statusCode: 401, error: "Unauthorized"};
             }
 
-            const payload: Object = {username: admin.email, sub: admin.id};    
+            const payload: Object = {username: admin.email, id: admin.id};    
             return {statusCode: 200, data: {token: this.jwtService.sign(payload), admin}};            
         } catch (err) {
             let errTxt: string = `Error in AdminsService.loginByEmail: ${String(err)}`;

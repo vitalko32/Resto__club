@@ -22,6 +22,8 @@ import { Restaurant } from "../model/orm/restaurant.model";
 import { Employee } from "../model/orm/employee.model";
 import { Transaction } from "../model/orm/transaction.model";
 import { Hall } from "../model/orm/hall.model";
+import { Icon } from "../model/orm/icon.model";
+import { Cat } from "../model/orm/cat.model";
 
 @Injectable()
 export class DataService {
@@ -113,6 +115,22 @@ export class DataService {
     public hallsUpdate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/update", x, true);}     
 
     public transactionsChunk(dto: IGetChunk): Observable<IAnswer<Transaction[]>> {return this.sendRequest("transactions/chunk", dto, true);}
+
+    public iconsAll(dto: IGetAll): Observable<IAnswer<Icon[]>> {return this.sendRequest(`icons/all`, dto, true);}    
+    public iconsChunk(dto: IGetChunk): Observable<IAnswer<Icon[]>> {return this.sendRequest("icons/chunk", dto, true);}
+    public iconsOne(id: number): Observable<IAnswer<Icon>> {return this.sendRequest(`icons/one/${id}`, null, true);}
+    public iconsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`icons/delete/${id}`, null, true);}
+    public iconsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("icons/delete-bulk", ids, true);}
+    public iconsCreate(x: Icon): Observable<IAnswer<void>> {return this.sendRequest("icons/create", x, true);}
+    public iconsUpdate(x: Icon): Observable<IAnswer<void>> {return this.sendRequest("icons/update", x, true);}    
+
+    public catsAll(dto: IGetAll): Observable<IAnswer<Cat[]>> {return this.sendRequest(`cats/all`, dto, true);}    
+    public catsChunk(dto: IGetChunk): Observable<IAnswer<Cat[]>> {return this.sendRequest("cats/chunk", dto, true);}
+    public catsOne(id: number): Observable<IAnswer<Cat>> {return this.sendRequest(`cats/one/${id}`, null, true);}
+    public catsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`cats/delete/${id}`, null, true);}
+    public catsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("cats/delete-bulk", ids, true);}
+    public catsCreate(x: Cat): Observable<IAnswer<void>> {return this.sendRequest("cats/create", x, true);}
+    public catsUpdate(x: Cat): Observable<IAnswer<void>> {return this.sendRequest("cats/update", x, true);}    
     
     public mailtemplatesChunk(dto: IGetChunk): Observable<IAnswer<Mailtemplate[]>> {return this.sendRequest("mailtemplates/chunk", dto, true);}
     public mailtemplatesOne(id: number): Observable<IAnswer<Mailtemplate>> {return this.sendRequest(`mailtemplates/one/${id}`, null, true);}

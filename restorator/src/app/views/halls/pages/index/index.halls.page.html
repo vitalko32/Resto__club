@@ -1,5 +1,5 @@
 <div class="dash">
-    <a class="dash-btn create" routerLink="/halls/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
+    <a class="dash-btn create" routerLink="/halls-tables/halls/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="data">
     <!-- desktop -->
@@ -18,7 +18,7 @@
                     <td class="align-center">{{h.nx}}x{{h.ny}}</td>
                     <td class="align-center">{{h.pos}}</td>                    
                     <td class="align-center nowrap">
-                        <a class="datalist-btn edit" [routerLink]="'/halls/edit/'+h.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
+                        <a class="datalist-btn edit" [routerLink]="'/halls-tables/halls/edit/'+h.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
                         <a class="datalist-btn delete" (click)="onDelete(h)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                     </td>
                 </tr>   
@@ -59,7 +59,7 @@
                     <div class="dlmi-value">{{h.pos}}</div>
                 </div>
                 <div class="dlmi-actions">
-                    <a class="datalist-btn edit" [routerLink]="'/halls/edit/'+h.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
+                    <a class="datalist-btn edit" [routerLink]="'/halls-tables/halls/edit/'+h.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
                     <a class="datalist-btn delete" (click)="onDelete(h)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                 </div>   
             </div>

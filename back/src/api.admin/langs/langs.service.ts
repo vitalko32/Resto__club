@@ -16,6 +16,8 @@ import { Mailtemplate } from "src/model/orm/mailtemplate.entity";
 import { MailtemplateTranslation } from "src/model/orm/mailtemplate.translation.entity";
 import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
+import { Icon } from "src/model/orm/icon.entity";
+import { IconTranslation } from "src/model/orm/icon.translation.entity";
 
 @Injectable()
 export class LangsService extends APIService {
@@ -27,6 +29,8 @@ export class LangsService extends APIService {
         @InjectRepository(MailtemplateTranslation) private mailtemplateTranslationRepository: Repository<MailtemplateTranslation>,                
         @InjectRepository(EmployeeStatus) private employeeStatusRepository: Repository<EmployeeStatus>,
         @InjectRepository(EmployeeStatusTranslation) private employeeStatusTranslationRepository: Repository<EmployeeStatusTranslation>,                
+        @InjectRepository(Icon) private iconRepository: Repository<Icon>,
+        @InjectRepository(IconTranslation) private iconTranslationRepository: Repository<IconTranslation>,
     ) {
         super();
     } 
@@ -153,5 +157,10 @@ export class LangsService extends APIService {
         let estl: EmployeeStatusTranslation[] = [];
         esl.forEach(es => estl.push(this.employeeStatusTranslationRepository.create({employee_status_id: es.id, lang_id})));        
         await this.employeeStatusTranslationRepository.save(estl);
+
+        let il: Icon[] = await this.iconRepository.find();
+        let itl: IconTranslation[] = [];
+        il.forEach(i => itl.push(this.iconTranslationRepository.create({icon_id: i.id, lang_id})));        
+        await this.iconTranslationRepository.save(itl);
     }    
 }

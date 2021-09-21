@@ -22,7 +22,9 @@
             "sidebar-submodule-employees": "Сотрудники", 
             "sidebar-submodule-employee-statuses": "Статусы сотрудников", 
             "sidebar-submodule-halls": "Залы", 
+            "sidebar-submodule-icons": "Иконки", 
             "sidebar-submodule-transactions": "Транзакции", 
+            "sidebar-submodule-cats": "Категории", 
             "sidebar-module-utils": "Служебные",    
             "sidebar-submodule-mailtemplates": "Шаблоны писем",                                                                                      
             
@@ -149,6 +151,18 @@
             "workspace-transactions-amount": "Сумма",
             "workspace-transactions-created-at": "Дата создания",
 
+            "workspace-icons-h1": "Иконки",
+            "workspace-icons-name": "Название",
+            "workspace-icons-img": "Изображение",
+            "workspace-icons-pos": "Позиция",
+
+            "workspace-cats-h1": "Категории",
+            "workspace-cats-restaurant": "Ресторан",
+            "workspace-cats-icon": "Иконка",
+            "workspace-cats-name": "Название",
+            "workspace-cats-pos": "Позиция",
+            "workspace-cats-active": "Активность",
+
             "workspace-mailtemplates-h1": "Шаблоны писем",     
             "workspace-mailtemplates-name": "Название",     
             "workspace-mailtemplates-subject": "Тема",     
@@ -178,7 +192,9 @@
             "sidebar-submodule-employees": "Employees",   
             "sidebar-submodule-employee-statuses": "Employee statuses",    
             "sidebar-submodule-halls": "Halls",    
-            "sidebar-submodule-transactions": "Transactions",          
+            "sidebar-submodule-icons": "Icons", 
+            "sidebar-submodule-transactions": "Transactions",      
+            "sidebar-submodule-cats": "Categories",     
             "sidebar-module-utils": "Utilities",    
             "sidebar-submodule-mailtemplates": "Mail templates",   
 
@@ -304,6 +320,18 @@
             "workspace-transactions-type": "Type",
             "workspace-transactions-amount": "Amount",
             "workspace-transactions-created-at": "Created at",
+
+            "workspace-icons-h1": "Icons",
+            "workspace-icons-name": "Name",
+            "workspace-icons-img": "Image",
+            "workspace-icons-pos": "Position",
+
+            "workspace-cats-h1": "Categories",
+            "workspace-cats-restaurant": "Restaurant",
+            "workspace-cats-icon": "Icon",
+            "workspace-cats-name": "Name",
+            "workspace-cats-pos": "Position",
+            "workspace-cats-active": "Active",
 
             "workspace-mailtemplates-h1": "Mail templates",     
             "workspace-mailtemplates-name": "Name",     

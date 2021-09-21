@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "src/common/auth.guard";
+import { AdminsGuard } from "src/common/guards/admins.guard";
 import { IAnswer } from "src/model/answer.interface";
 import { AdminsService } from "./admins.service";
 import { IAdminAuthData } from "./dto/admin.authdata.interface";
@@ -24,7 +24,7 @@ export class AdminsController {
     }
 
     // update password
-    @UseGuards(AuthGuard)
+    @UseGuards(AdminsGuard)
     @Post("update-password")
     public updatePassword(@Body() dto: IAdminUpdatePassword): Promise<IAnswer<void>> {
         return this.adminsService.updatePassword(dto);
