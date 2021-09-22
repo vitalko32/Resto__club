@@ -11,7 +11,7 @@ export class EmployeeRepository extends Repository<Employee> {
     public filterCreatedAt: Date[] = [null, null];         
 
     constructor(protected dataService: DataService) {
-        super();
+        super(dataService);
         this.chunkSortBy = "created_at";
         this.chunkSortDir = 1;
     }    
@@ -41,18 +41,7 @@ export class EmployeeRepository extends Repository<Employee> {
     }
 
     public loadOne(id: number): Promise<Employee> {
-        return new Promise((resolve, reject) => {
-            this.dataService.employeesOne(id).subscribe(res => {
-                if (res.statusCode === 200) {
-                    let x: Employee = new Employee().build(res.data);
-                    resolve(x);
-                } else {                    
-                    reject(res.error);
-                }
-            }, err => {
-                reject(err.message);                
-            });
-        });
+        return new Promise((resolve, reject) => this.dataService.employeesOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Employee().build(res.data)) : reject(res.error), err => reject(err.message)));
     } 
 
     public update(x: Employee): Promise<number> {

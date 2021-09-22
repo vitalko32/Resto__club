@@ -1,0 +1,73 @@
+<div class="dash">
+    <a class="dash-btn create" routerLink="/kitchen/cats/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
+</div>
+<div class="data">
+    <!-- desktop -->
+    <div class="datalist-desktop">
+        <div class="datalist-overlay" [class.active]="clLoading"></div>
+        <table>
+            <tr>                                
+                <th class="align-left"><label class="sortable" [class.sorted-forward]="clSortBy === 'name' && clSortDir === 1" [class.sorted-backward]="clSortBy === 'name' && clSortDir === -1" (click)="changeSorting('name')">{{words['restorator-cats']['name'][currentLang.slug]}}</label></th>                                
+                <th class="align-center"><label class="sortable" [class.sorted-forward]="clSortBy === 'pos' && clSortDir === 1" [class.sorted-backward]="clSortBy === 'pos' && clSortDir === -1" (click)="changeSorting('pos')">{{words['restorator-cats']['pos'][currentLang.slug]}}</label></th>                                        
+                <th class="align-center"><label>{{words['restorator-cats']['active'][currentLang.slug]}}</label></th>
+                <th class="align-center"><label>{{words['common']['actions'][currentLang.slug]}}</label></th>
+            </tr>
+            <ng-container *ngIf="cl.length">
+                <tr *ngFor="let c of cl">                    
+                    <td [innerHTML]="c.name"></td>                                    
+                    <td class="align-center">{{c.pos}}</td>    
+                    <td class="align-center"><checkbox-slider [(value)]="c.active" (valueChange)="updateParam(c.id, 'active', c.active)"></checkbox-slider></td>                
+                    <td class="align-center nowrap">
+                        <a class="datalist-btn edit" [routerLink]="'/kitchen/cats/edit/'+c.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
+                        <a class="datalist-btn delete" (click)="onDelete(c)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                    </td>
+                </tr>   
+            </ng-container>            
+            <ng-container *ngIf="!cl.length">
+                <tr><td>{{words['common']['none'][currentLang.slug]}}</td></tr>
+            </ng-container>     
+        </table>
+    </div>
+    <!-- mobile -->
+    <div class="datalist-mobile">
+        <div class="datalist-overlay" [class.active]="clLoading"></div>
+        <div class="dlm-dash">   
+            <div class="dlmd-head">{{words['common']['sorting'][currentLang.slug]}}</div>
+            <div class="dlmd-param">
+                <div class="dlmd-selectwrap">
+                    <select #mobsorting (change)="setSorting(mobsorting.value)">
+                        <option [selected]="clSortBy === 'name' && clSortDir === 1" [value]="0">{{words['restorator-cats']['name'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="clSortBy === 'name' && clSortDir === -1" [value]="1">{{words['restorator-cats']['name'][currentLang.slug]}} &#9650;</option>
+                        <option [selected]="clSortBy === 'pos' && clSortDir === 1" [value]="2">{{words['restorator-cats']['pos'][currentLang.slug]}} &#9660;</option>
+                        <option [selected]="clSortBy === 'pos' && clSortDir === -1" [value]="3">{{words['restorator-cats']['pos'][currentLang.slug]}} &#9650;</option>                        
+                    </select>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="cl.length">
+            <div class="dlm-item" *ngFor="let c of cl">     
+                <div class="dlmi-param">
+                    <div class="dlmi-title">{{words['restorator-cats']['name'][currentLang.slug]}}:</div>
+                    <div class="dlmi-value" [innerHTML]="c.name"></div>
+                </div>                
+                <div class="dlmi-param">
+                    <div class="dlmi-title">{{words['restorator-cats']['pos'][currentLang.slug]}}:</div>
+                    <div class="dlmi-value">{{c.pos}}</div>
+                </div>
+                <div class="dlmi-param">
+                    <div class="dlmi-title">{{words['restorator-cats']['active'][currentLang.slug]}}:</div>
+                    <div class="dlmi-value"><checkbox-slider [(value)]="c.active" (valueChange)="updateParam(c.id, 'active', c.active)"></checkbox-slider></div>
+                </div>
+                <div class="dlmi-actions">
+                    <a class="datalist-btn edit" [routerLink]="'/kitchen/cats/edit/'+c.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
+                    <a class="datalist-btn delete" (click)="onDelete(c)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                </div>   
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!cl.length">
+            <div class="dlm-item">{{words['common']['none'][currentLang.slug]}}</div>
+        </ng-container> 
+    </div>
+    <!-- paging -->
+    <pagination [allLength]="clAllLength" [length]="clLength" [current]="clCurrentPart" (currentChanged)="clCurrentPart = $event; initCats();"></pagination>
+</div>

@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
 
 import { Repository } from './_repository';
-import { Hall } from '../../model/orm/hall.model';
+import { Cat } from '../../model/orm/cat.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
 
 @Injectable()
-export class HallRepository extends Repository<Hall> {    
-    public filterRestaurantId: number = null;   
-    public currentId: number = null;
+export class CatRepository extends Repository<Cat> {
+    public filterRestaurantId: number = null;    
     
     constructor(protected dataService: DataService) {
         super(dataService);
+        this.schema = "cat";
         this.allSortBy = "pos";
         this.chunkSortBy = "pos";
     }        
     
     public loadAll(): Promise<void> {
-        return new Promise((resolve, reject) => {            
+        return new Promise((resolve, reject) => {    
             let filter: any = {};
-            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;
+            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;        
             const dto: IGetAll = {
                 sortBy: this.allSortBy,
-                sortDir: this.allSortDir,      
-                filter,              
+                sortDir: this.allSortDir,
+                filter,                    
             };
-            this.dataService.hallsAll(dto).subscribe(res => {
+            this.dataService.catsAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Hall().build(d)) : [];                                    
+                    this.xlAll = res.data.length ? res.data.map(d => new Cat().build(d)) : [];                                    
                     resolve();
                 } else {                        
                     reject(res.error);
@@ -50,9 +50,9 @@ export class HallRepository extends Repository<Hall> {
                 sortDir: this.chunkSortDir,        
                 filter,                        
             };
-            this.dataService.hallsChunk(dto).subscribe(res => {
+            this.dataService.catsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Hall().build(d)) : [];
+                    this.xlChunk = res.data.length ? res.data.map(d => new Cat().build(d)) : [];
                     this.allLength = res.allLength;            
                     resolve();
                 } else {                        
@@ -64,19 +64,19 @@ export class HallRepository extends Repository<Hall> {
         });
     }
 
-    public loadOne(id: number): Promise<Hall> {
-        return new Promise((resolve, reject) => this.dataService.hallsOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Hall().build(res.data)) : reject(res.error), err => reject(err.message)));
+    public loadOne(id: number): Promise<Cat> {
+        return new Promise((resolve, reject) => this.dataService.catsOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Cat().build(res.data)) : reject(res.error), err => reject(err.message)));
     }    
 
     public delete(id: number): Promise<void> {
-        return new Promise((resolve, reject) => this.dataService.hallsDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+        return new Promise((resolve, reject) => this.dataService.catsDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     }    
 
-    public create(x: Hall): Promise<void> {
-        return new Promise((resolve, reject) => this.dataService.hallsCreate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    public create(x: Cat): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.catsCreate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     }
 
-    public update(x: Hall): Promise<Hall> {
-        return new Promise((resolve, reject) => this.dataService.hallsUpdate(x).subscribe(res => res.statusCode === 200 ? resolve(res.data) : reject(res.error), err => reject(err.message)));
+    public update(x: Cat): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.catsUpdate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     }
 }

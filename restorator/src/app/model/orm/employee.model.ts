@@ -25,8 +25,6 @@ export class Employee extends Model {
                 this[field] = o[field] ? new Date (o[field]) : null;
             } else if (field === "restaurant") {
                 this[field] = o[field] ? new Restaurant().build(o[field]) : null;
-            } else if (field === "status") {                
-                this[field] = o[field] ? new EmployeeStatus().build(o[field]) : null;
             } else {
                 this[field] = o[field];
             }            

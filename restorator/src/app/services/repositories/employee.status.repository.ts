@@ -7,7 +7,7 @@ import { Repository } from './_repository';
 @Injectable()
 export class EmployeeStatusRepository extends Repository<EmployeeStatus> {    
     constructor(protected dataService: DataService) {
-        super();
+        super(dataService);
         this.allSortBy = "pos";
     }
     

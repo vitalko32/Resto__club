@@ -3,7 +3,6 @@ import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
-import { SettingRepository } from "src/app/services/repositories/setting.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
@@ -18,8 +17,7 @@ export class HallComponent {
 
     constructor(
         protected appService: AppService,
-        protected wordRepository: WordRepository,    
-        protected settingRepository: SettingRepository,    
+        protected wordRepository: WordRepository,            
     ) {}
 
     get words(): Words {return this.wordRepository.words;}

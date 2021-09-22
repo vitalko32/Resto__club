@@ -1,4 +1,8 @@
+import { DataService } from "../data.service";
+
 export abstract class Repository<T> {    
+    public schema: string = ""; // name of ORM model or Mongoose schema
+
     public xlChunk: T[] = []; // fragment
     public chunkCurrentPart: number = 0; // current paging state for fragment
     public chunkSortBy: string = "id"; // current sort by for fragment
@@ -12,4 +16,10 @@ export abstract class Repository<T> {
 
     public exhausted: boolean = false; // no more chunks   
     public sum: number = 0; // sometimes we need to sum a column 
+
+    constructor(protected dataService: DataService) {}
+    
+    public updateParam (id: number, p: string, v: any): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.updateParam (this.schema, id, p, v).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));        
+    }
 }

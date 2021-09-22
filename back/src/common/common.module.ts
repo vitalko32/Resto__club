@@ -14,18 +14,18 @@ import { SlugService } from "./slug.service";
             Mailtemplate,
             Setting,
             Wordbook,
-            Word,
-        ]),        
+            Word,            
+        ]),            
     ],
     providers: [
         MailService,
         FilesService,
-        SlugService,        
+        SlugService,              
     ],
     exports: [
         MailService,
         FilesService,
-        SlugService,     
+        SlugService,             
     ],
 })
 export class CommonModule {}

@@ -3,12 +3,15 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { IndexCatsPage } from "./index/index.cats.page";
+import { CatComponent } from "./components/cat/cat.component";
+import { CreateCatsPage } from "./pages/create/create.cats.page";
+import { EditCatsPage } from "./pages/edit/edit.cats.page";
+import { IndexCatsPage } from "./pages/index/index.cats.page";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexCatsPage, pathMatch: "full"},
-	//{path: "create", component: CreateCatsPage, pathMatch: "full"},
-	//{path: "edit/:id", component: EditCatsPage},
+	{path: "create", component: CreateCatsPage, pathMatch: "full"},
+	{path: "edit/:id", component: EditCatsPage},
 	{path: "**", redirectTo: "/kitchen/cats"},
 ]);
 
@@ -23,6 +26,9 @@ let routes = RouterModule.forChild ([
 	],
 	declarations: [
 		IndexCatsPage,		
+		CreateCatsPage,
+		EditCatsPage,
+		CatComponent,
 	],    		    
 })
 export class CatsModule {}

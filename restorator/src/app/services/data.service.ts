@@ -18,6 +18,8 @@ import { IEmployeeSetStatus } from "../model/dto/employee.setstatus.interface";
 import { IEmployeeConfirm } from "../model/dto/employee.confirm.interface";
 import { IEmployeeUpdatePassword } from "../model/dto/employee.updatepassword.interface";
 import { Hall } from "../model/orm/hall.model";
+import { Cat } from "../model/orm/cat.model";
+import { Icon } from "../model/orm/icon.model";
 
 @Injectable()
 export class DataService {
@@ -27,7 +29,9 @@ export class DataService {
     constructor (
         private http: HttpClient,
         private errorService: ErrorService,
-    ) {}    
+    ) {}   
+    
+    public updateParam (obj: string, id: number, p: string, v:any): Observable<IAnswer<void>> {return this.sendRequest("objects/update-param", {obj, id, p, v}, true);}    
     
     public langsAll(dto: IGetAll): Observable<IAnswer<Lang[]>> {return this.sendRequest("langs/all", dto);}     
     
@@ -54,7 +58,16 @@ export class DataService {
     public hallsOne(id: number): Observable<IAnswer<Hall>> {return this.sendRequest(`halls/one/${id}`, null, true);}
     public hallsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`halls/delete/${id}`, null, true);}    
     public hallsCreate(x: Hall): Observable<IAnswer<void>> {return this.sendRequest("halls/create", x, true);}
-    public hallsUpdate(x: Hall): Observable<IAnswer<Hall>> {return this.sendRequest("halls/update", x, true);}     
+    public hallsUpdate(x: Hall): Observable<IAnswer<Hall>> {return this.sendRequest("halls/update", x, true);}   
+    
+    public catsAll(dto: IGetAll): Observable<IAnswer<Cat[]>> {return this.sendRequest(`cats/all`, dto, true);}    
+    public catsChunk(dto: IGetChunk): Observable<IAnswer<Cat[]>> {return this.sendRequest("cats/chunk", dto, true);}
+    public catsOne(id: number): Observable<IAnswer<Cat>> {return this.sendRequest(`cats/one/${id}`, null, true);}
+    public catsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`cats/delete/${id}`, null, true);}    
+    public catsCreate(x: Cat): Observable<IAnswer<void>> {return this.sendRequest("cats/create", x, true);}
+    public catsUpdate(x: Cat): Observable<IAnswer<void>> {return this.sendRequest("cats/update", x, true);}   
+
+    public iconsAll(dto: IGetAll): Observable<IAnswer<Icon[]>> {return this.sendRequest(`icons/all`, dto, true);}   
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

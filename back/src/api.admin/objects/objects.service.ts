@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { APIService } from "../../common/api.service";
-import { IUpdateParam } from "./dto/updateparam.interface";
 import { IAnswer } from 'src/model/dto/answer.interface';
 import { Admin } from "../../model/orm/admin.entity";
 import { Setting } from "src/model/orm/setting.entity";
@@ -19,6 +18,7 @@ import { Hall } from "src/model/orm/hall.entity";
 import { Icon } from "src/model/orm/icon.entity";
 import { IconTranslation } from "src/model/orm/icon.translation.entity";
 import { Cat } from "src/model/orm/cat.entity";
+import { IUpdateParam } from "src/model/dto/updateparam.interface";
 
 @Injectable()
 export class ObjectsService extends APIService {

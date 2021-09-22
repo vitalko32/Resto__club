@@ -8,7 +8,7 @@ import { Repository } from './_repository';
 @Injectable()
 export class LangRepository extends Repository<Lang> {    
     constructor(protected dataService: DataService) {
-        super();
+        super(dataService);
         this.allSortBy = "pos";
     }
     

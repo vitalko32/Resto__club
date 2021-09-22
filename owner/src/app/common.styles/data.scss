@@ -38,7 +38,7 @@
             &:last-child {margin-bottom: 0;}            
             .dlmi-param {
                 margin-bottom: 5px;
-                .dlmi-title {font-size: 10px;}
+                .dlmi-title {font-size: 10px; font-weight: bold;}
             }   
             .dlmi-actions {display: flex; justify-content: center;}         
         }
@@ -48,7 +48,7 @@
             .dlmd-param {
                 margin-bottom: 10px;
                 &:last-child {margin-bottom: 0;}
-                .dlmd-title {font-size: 10px; margin-bottom: 3px;}
+                .dlmd-title {font-size: 10px; margin-bottom: 3px; font-weight: bold;}
                 .dlmd-inputwrap {}
                 .dlmd-selectwrap {        
                     @media (min-width:0) {display: block;}
@@ -85,8 +85,8 @@
             @media (min-width:1200px) {display: flex;}
             margin-bottom: 15px; align-items: center;            
             .de-title {
-                @media (min-width:0) {width:100%; margin-bottom: 3px; font-size: 12px; padding: 0 10px;}
-                @media (min-width:1200px) {width: 200px; margin-bottom: 0; font-size: 14px; padding: 0;}
+                @media (min-width:0) {width:100%; margin-bottom: 3px; font-size: 12px; font-weight: bold;}
+                @media (min-width:1200px) {width: 200px; margin-bottom: 0; font-size: 14px; font-weight: normal;}
             }
             .de-value {
                 @media (min-width:0) {max-width: 100%;}
