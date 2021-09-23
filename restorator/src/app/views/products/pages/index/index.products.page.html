@@ -8,13 +8,29 @@
         <div><span [innerHTML]="c.name"></span><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}"></div>
     </div>                
 </div>
+
 <!-- products -->
 <div class="products">
-    <div class="p-search"></div>
+    <div class="p-search">
+        <div class="ps-title">{{words['restorator-products']['filter'][currentLang.slug]}}:</div>
+        <div class="ps-input"><input-search [(value)]="plSearchString" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
+    </div>
     <div class="p-items" *ngIf="pl.length">
         <div class="p-item" *ngFor="let p of pl">
-            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'none'"></div>
+            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'none'">
+                <div class="pi-recommended" *ngIf="p.recommended"><span></span></div>
+            </div>
             <div class="pi-name" [innerHTML]="p.name"></div>
+            <div class="pi-params">
+                <div>
+                    <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
+                    <div class="pi-param">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
+                </div>
+                <div>
+                    <div class="pi-param right">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
+                    <div class="pi-param right time"><span>{{p.time}}</span></div>
+                </div>
+            </div>
         </div>
     </div>
     <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>

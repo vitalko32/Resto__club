@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 export class InputSearchComponent {
     @Input() value: string;
     @Input() cssClass: string = "block";
+    @Input() placeholder: string = "";
     @Output() valueChange: EventEmitter<string> = new EventEmitter();
     @Output() apply: EventEmitter<void> = new EventEmitter();
 

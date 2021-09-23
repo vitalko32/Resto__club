@@ -27,7 +27,8 @@ export class ProductRepository extends Repository<Product> {
             };
             this.dataService.productsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Product().build(d)) : [];
+                    const data: Product[] =  res.data.length ? res.data.map(d => new Product().build(d)) : [];                      
+                    this.xlAll = this.chunkCurrentPart ? [...this.xlAll, ...data] : data;
                     this.allLength = res.allLength;    
                     this.exhausted = !this.allLength || this.chunkCurrentPart + 1 === Math.ceil(this.allLength / this.chunkLength);          
                     resolve();

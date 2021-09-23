@@ -1,5 +1,5 @@
 .cats {
-    margin-bottom: 15px; display: flex; flex-wrap: wrap;
+    display: flex; flex-wrap: wrap;
     .c-title {margin-right: 15px; white-space: nowrap; line-height: 30px;}
     .c-item {
         height: 30px; border-radius: 15px; transition: 0.3s; white-space: nowrap; display: flex; align-items: center; padding: 0 15px; margin: 0 15px 15px 0; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer;            
@@ -12,12 +12,30 @@
 }
 
 .products {
+    .p-search {
+        margin-bottom: 15px; display: flex; align-items: center;
+        .ps-title {margin-right: 15px;}
+    }
     .p-items {
         @media (min-width:0) {grid-template-columns: 1fr;}
         @media (min-width:500px) {grid-template-columns: 1fr 1fr;}
         @media (min-width:1200px) {grid-template-columns: 1fr 1fr 1fr;}
         display: grid; gap: 30px;
-        .pi-img {padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px;}
+        .pi-img {
+            padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative;
+            .pi-recommended {
+                position: absolute; right: 10px; top: 10px; width: 25px; height: 20px; background-color: white; border-radius: 5px; display: flex; justify-content: center; align-items: center;
+                span::before {font-family: "fa-regular"; content: "\f005";}
+            }
+        }
         .pi-name {font-weight: bold; text-align: center; margin-bottom: 10px;}
+        .pi-params {
+            margin-bottom: 10px; display: flex; justify-content: space-between;
+            .pi-param {
+                font-size: 12px;
+                &.right {text-align: right;}
+                &.time {span::before {font-family: "fa-regular"; content: "\f017"; margin-right: 5px;}}
+            }
+        }
     }
 }
