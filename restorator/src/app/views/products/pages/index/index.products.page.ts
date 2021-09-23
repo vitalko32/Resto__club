@@ -18,10 +18,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 })
 export class IndexProductsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
-    public authSubscription: Subscription = null;  
-    public plSearch: BehaviorSubject<string> = new BehaviorSubject("");
-    private plSearchSubscription: Subscription = null;        
-    public plSearchString: string = "";
+    public authSubscription: Subscription = null;               
     public plLoadingMore: boolean = false;    
 
     constructor(
@@ -35,26 +32,26 @@ export class IndexProductsPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
+    get scrolledToBottom(): boolean {return window.scrollY + window.innerHeight > document.body.scrollHeight - 100;}	    
+    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}    
     get cl(): Cat[] {return this.catRepository.xlAll;}
     get pl(): Product[] {return this.productRepository.xlAll;}
     get plFilterCatId(): number {return this.productRepository.filterCatId;}
     set plFilterCatId(v: number) {this.productRepository.filterCatId = v;}
-    get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}   
-    get scrolledToBottom(): boolean {return window.scrollY + window.innerHeight > document.body.scrollHeight - 100;}	    
-    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}    
+    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}
+    set plFilterNameCode(v: string) {this.productRepository.filterNameCode = v;}
+    get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}       
 
     public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();     
         await this.initCats();      
-        this.initProducts();  
-        //this.initFilter();
+        this.initProducts();          
     }
 
     public ngOnDestroy(): void {
         this.langSubscription.unsubscribe();
-        this.authSubscription.unsubscribe();
-        this.plSearchSubscription?.unsubscribe();
+        this.authSubscription.unsubscribe();        
     }
 
     private initTitle(): void {
@@ -84,27 +81,12 @@ export class IndexProductsPage implements OnInit, OnDestroy {
 
     public async initProducts(): Promise<void> {
         try {
-            this.productRepository.chunkCurrentPart = 0;      
-            this.productRepository.filterNameCode = this.plSearchString;
+            this.productRepository.chunkCurrentPart = 0;                  
             this.productRepository.loadChunk();      
         } catch (err) {
             this.appService.showError(err);
         }
-    }
-
-    /*private initFilter(): void {
-        try {            
-            this.plSearchSubscription = this.plSearch.subscribe(s => {
-                if (this.productRepository.filterNameCode !== s) {                                    
-                    this.productRepository.filterNameCode = s;                    
-                    this.productRepository.chunkCurrentPart = 0;    
-                    this.productRepository.loadChunk();
-                }
-            });        
-        } catch (err) {
-            this.appService.showError(err);
-        }
-    } */ 
+    }    
 
     @HostListener('window:scroll', ['$event'])
     public async onScroll(event: any): Promise<void> {

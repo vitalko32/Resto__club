@@ -1,6 +1,7 @@
 <div class="dash">
     <a class="dash-btn create" routerLink="/kitchen/products/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
+
 <!-- cats -->
 <div class="cats">        
     <div class="c-title">{{words['restorator-products']['cats'][currentLang.slug]}}:</div>    
@@ -13,7 +14,7 @@
 <div class="products">
     <div class="p-search">
         <div class="ps-title">{{words['restorator-products']['filter'][currentLang.slug]}}:</div>
-        <div class="ps-input"><input-search [(value)]="plSearchString" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
+        <div class="ps-input"><input-search [(value)]="plFilterNameCode" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
     </div>
     <div class="p-items" *ngIf="pl.length">
         <div class="p-item" *ngFor="let p of pl">
