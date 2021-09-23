@@ -7,7 +7,7 @@
     <div class="data-form padded">    
         <div class="df-title" [class.required]="isRequired('restaurant_id')">{{currentLang.phrases['workspace-halls-restaurant']}}:</div>
         <div class="df-inputwrap">
-            <select [(ngModel)]="x.restaurant_id" [disabled]="x.defended">
+            <select [(ngModel)]="x.restaurant_id">
                 <option [ngValue]="null">{{currentLang.phrases['workspace-none']}}</option>
                 <option *ngFor="let r of rl" [ngValue]="r.id">{{r.name}}</option>
             </select>
@@ -77,7 +77,7 @@
                     <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="t.code"></div></td>                    
                     <td>
                         <div class="dt-actions">                    
-                            <div class="dt-btn delete" [title]="currentLang.phrases['workspace-delete']" (click)="tablesDelete(i);"><span></span></div>
+                            <div class="dt-btn delete" [title]="currentLang.phrases['workspace-delete']" (click)="tablesRemove(i);"><span></span></div>
                         </div>
                     </td>
                 </tr>                            

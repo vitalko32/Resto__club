@@ -13,6 +13,7 @@ import { EmployeeStatusRepository } from './repositories/employee.status.reposit
 import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { LangRepository } from './repositories/lang.repository';
+import { ProductRepository } from './repositories/product.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
 
@@ -36,6 +37,7 @@ import { WordRepository } from './repositories/word.repository';
         HallRepository,
         CatRepository,
         IconRepository,
+        ProductRepository,
     ],
 })
 export class ServicesModule {}

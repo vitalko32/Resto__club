@@ -35,6 +35,25 @@ export class RestaurantRepository extends Repository<Restaurant> {
         });
     }
 
+    public loadAllWithCats(): Promise<void> {
+        return new Promise((resolve, reject) => {            
+            const dto: IGetAll = {
+                sortBy: this.allSortBy,
+                sortDir: this.allSortDir,                    
+            };
+            this.dataService.restaurantsAllWithCats(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.xlAll = res.data.length ? res.data.map(d => new Restaurant().build(d)) : [];                                    
+                    resolve();
+                } else {                        
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);                
+            });                        
+        });
+    }
+
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
             const dto: IGetChunk = {

@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Cat } from "./cat.entity";
 import { Currency } from "./currency.entity";
 import { Employee } from "./employee.entity";
 import { Hall } from "./hall.entity";
@@ -40,7 +41,7 @@ export class Restaurant {
     @Column({nullable: true, default: null, type: "text"})
     comment: string;
 
-    @Column({nullable: false, default: 0})
+    @Column({nullable: false, default: 0, type: "float"})
     money: number;
 
     @CreateDateColumn()
@@ -60,4 +61,7 @@ export class Restaurant {
 
     @OneToMany(type => Hall, hall => hall.restaurant, {cascade: false})
     halls: Hall[];
+
+    @OneToMany(type => Cat, cat => cat.restaurant, {cascade: false})
+    cats: Cat[];
 }

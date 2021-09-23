@@ -1,0 +1,21 @@
+<div class="dash">
+    <a class="dash-btn create" routerLink="/kitchen/products/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
+</div>
+<!-- cats -->
+<div class="cats">        
+    <div class="c-title">{{words['restorator-products']['cats'][currentLang.slug]}}:</div>    
+    <div class="c-item" *ngFor="let c of cl" [class.active]="plFilterCatId === c.id" (click)="plFilterCatId = c.id; initProducts();">
+        <div><span [innerHTML]="c.name"></span><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}"></div>
+    </div>                
+</div>
+<!-- products -->
+<div class="products">
+    <div class="p-search"></div>
+    <div class="p-items" *ngIf="pl.length">
+        <div class="p-item" *ngFor="let p of pl">
+            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'none'"></div>
+            <div class="pi-name" [innerHTML]="p.name"></div>
+        </div>
+    </div>
+    <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>
+</div>

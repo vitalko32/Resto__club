@@ -18,30 +18,48 @@ export class RestaurantsService extends APIService {
     }   
     
     public async all(dto: IGetAll): Promise<IAnswer<Restaurant[]>> {
-        let sortBy: string = dto.sortBy;
-        let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-        let filter: Object = dto.filter;
-
         try {
-            let data: Restaurant[] = await this.restaurantRepository.find({where: filter, order: {[sortBy]: sortDir}});             
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const filter: Object = dto.filter;
+            const data: Restaurant[] = await this.restaurantRepository.find({where: filter, order: {[sortBy]: sortDir}});             
             return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.all: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    } 
+    }
+    
+    public async allWithCats(dto: IGetAll): Promise<IAnswer<Restaurant[]>> {
+        try {
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const filter: Object = dto.filter;            
+            const data: Restaurant[] = await this.restaurantRepository
+                .createQueryBuilder("restaurants")
+                .leftJoinAndSelect("restaurants.cats", "cats")
+                .where(this.filterToQbfilter(filter, "restaurants"))
+                .orderBy("restaurants."+sortBy, sortDir)
+                .addOrderBy("cats.name", "ASC")
+                .getMany();
+            return {statusCode: 200, data};
+        } catch (err) {
+            let errTxt: string = `Error in RestaurantsService.all: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
     
     public async chunk(dto: IGetChunk): Promise<IAnswer<Restaurant[]>> {
-        let sortBy: string = dto.sortBy;
-        let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-        let from: number = dto.from;
-        let q: number = dto.q;
-        let filter: Object = dto.filter;
-
         try {
-            let data: Restaurant[] = await this.restaurantRepository.find({where: filter, order: {[sortBy]: sortDir}, take: q, skip: from});
-            let allLength: number = await this.restaurantRepository.count(filter);
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const from: number = dto.from;
+            const q: number = dto.q;
+            const filter: Object = dto.filter;
+            const data: Restaurant[] = await this.restaurantRepository.find({where: filter, order: {[sortBy]: sortDir}, take: q, skip: from});
+            const allLength: number = await this.restaurantRepository.count(filter);
             return {statusCode: 200, data, allLength};
         } catch (err) {
             let errTxt: string = `Error in RestaurantsService.chunk: ${String(err)}`;

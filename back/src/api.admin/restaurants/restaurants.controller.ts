@@ -20,6 +20,13 @@ export class RestaurantsController {
         return this.restaurantsService.all(dto);
     }  
 
+    // get all with related cats
+    @UseGuards(AdminsGuard)
+    @Post("all-with-cats")
+    public allWithCats(@Body() dto: IGetAll): Promise<IAnswer<Restaurant[]>> {
+        return this.restaurantsService.allWithCats(dto);
+    }  
+
     // get fragment
     @UseGuards(AdminsGuard)
     @Post("chunk")

@@ -6,11 +6,13 @@ import { APIService } from "../../common/api.service";
 import { IAnswer } from 'src/model/dto/answer.interface';
 import { Cat } from "src/model/orm/cat.entity";
 import { IUpdateParam } from "src/model/dto/updateparam.interface";
+import { Product } from "src/model/orm/product.entity";
 
 @Injectable()
 export class ObjectsService extends APIService {
     constructor (        
         @InjectRepository(Cat) private catRepository: Repository<Cat>,        
+        @InjectRepository(Product) private productRepository: Repository<Product>,        
     ) {
         super();
     }

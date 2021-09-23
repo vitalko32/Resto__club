@@ -1,4 +1,5 @@
 import { Model } from "../model";
+import { Currency } from "./currency.model";
 
 export class Restaurant extends Model {
     public id: number;
@@ -15,6 +16,7 @@ export class Restaurant extends Model {
     public money: number;
     public created_at: Date;    
     
+    public currency?: Currency;
     public employees_q?: number;
     public daysleft?: number; 
 

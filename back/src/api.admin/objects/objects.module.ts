@@ -19,6 +19,7 @@ import { Hall } from "src/model/orm/hall.entity";
 import { Icon } from "src/model/orm/icon.entity";
 import { IconTranslation } from "src/model/orm/icon.translation.entity";
 import { Cat } from "src/model/orm/cat.entity";
+import { Product } from "src/model/orm/product.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -40,6 +41,7 @@ import { Cat } from "src/model/orm/cat.entity";
 			Icon,
 			IconTranslation,
 			Cat,
+			Product,
 		]),
 	],
 })

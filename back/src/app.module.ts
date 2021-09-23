@@ -16,9 +16,12 @@ import { EmployeeStatusTranslation } from './model/orm/employee.status.translati
 import { Hall } from './model/orm/hall.entity';
 import { Icon } from './model/orm/icon.entity';
 import { IconTranslation } from './model/orm/icon.translation.entity';
+import { Ingredient } from './model/orm/ingredient.entity';
 import { Lang } from './model/orm/lang.entity';
 import { Mailtemplate } from './model/orm/mailtemplate.entity';
 import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.entity';
+import { Product } from './model/orm/product.entity';
+import { ProductImage } from './model/orm/product.image.entity';
 import { Restaurant } from './model/orm/restaurant.entity';
 import { Setting } from './model/orm/setting.entity';
 import { Table } from './model/orm/table.entity';
@@ -60,6 +63,9 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				Icon,
 				IconTranslation,
 				Cat,
+				Product,
+				ProductImage,
+				Ingredient,
 			],
 			synchronize: true,
 		}),

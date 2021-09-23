@@ -7,13 +7,15 @@
         <div class="datalist-overlay" [class.active]="clLoading"></div>
         <table>
             <tr>                                
+                <th class="align-center"><label>{{words['restorator-cats']['icon'][currentLang.slug]}}</label></th>
                 <th class="align-left"><label class="sortable" [class.sorted-forward]="clSortBy === 'name' && clSortDir === 1" [class.sorted-backward]="clSortBy === 'name' && clSortDir === -1" (click)="changeSorting('name')">{{words['restorator-cats']['name'][currentLang.slug]}}</label></th>                                
                 <th class="align-center"><label class="sortable" [class.sorted-forward]="clSortBy === 'pos' && clSortDir === 1" [class.sorted-backward]="clSortBy === 'pos' && clSortDir === -1" (click)="changeSorting('pos')">{{words['restorator-cats']['pos'][currentLang.slug]}}</label></th>                                        
                 <th class="align-center"><label>{{words['restorator-cats']['active'][currentLang.slug]}}</label></th>
                 <th class="align-center"><label>{{words['common']['actions'][currentLang.slug]}}</label></th>
             </tr>
             <ng-container *ngIf="cl.length">
-                <tr *ngFor="let c of cl">                    
+                <tr *ngFor="let c of cl">        
+                    <td class="align-center"><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}" height="25"></td>            
                     <td [innerHTML]="c.name"></td>                                    
                     <td class="align-center">{{c.pos}}</td>    
                     <td class="align-center"><checkbox-slider [(value)]="c.active" (valueChange)="updateParam(c.id, 'active', c.active)"></checkbox-slider></td>                
@@ -47,6 +49,13 @@
         <ng-container *ngIf="cl.length">
             <div class="dlm-item" *ngFor="let c of cl">     
                 <div class="dlmi-param">
+                    <div class="dlmi-title">{{words['restorator-cats']['icon'][currentLang.slug]}}:</div>
+                    <div class="dlmi-value">
+                        <img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}" height="25">
+                        <span *ngIf="!c.icon">{{words['common']['not-set'][currentLang.slug]}}</span>
+                    </div>
+                </div>   
+                <div class="dlmi-param">
                     <div class="dlmi-title">{{words['restorator-cats']['name'][currentLang.slug]}}:</div>
                     <div class="dlmi-value" [innerHTML]="c.name"></div>
                 </div>                
@@ -71,3 +80,5 @@
     <!-- paging -->
     <pagination [allLength]="clAllLength" [length]="clLength" [current]="clCurrentPart" (currentChanged)="clCurrentPart = $event; initCats();"></pagination>
 </div>
+
+<the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>

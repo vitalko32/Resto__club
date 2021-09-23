@@ -15,12 +15,12 @@
                     <div class="df-imgwrap2"><img src="/images/{{imgFolder}}/{{x.img}}"></div>
                     <div class="df-imgbtns">
                         <div class="df-magnify" [title]="currentLang.phrases['workspace-viewimg']" (click)="imgViewerActive = true;"><span></span></div>
-                        <div class="df-deletefile" [title]="currentLang.phrases['workspace-removeimg']" (click)="deleteImg();"><span></span></div>                                   
+                        <div class="df-deletefile" [title]="currentLang.phrases['workspace-removeimg']" (click)="imgDelete();"><span></span></div>                                   
                     </div>                
                 </div>                                
             </ng-container>
-            <input #imginput type="file" (change)="uploadImg($event); imginput.value = null;">
-            <progressbar [progress]="progressImg" *ngIf="progressImg"></progressbar>
+            <input #imginput type="file" (change)="imgUpload($event); imginput.value = null;">
+            <progressbar [progress]="imgProgress" *ngIf="imgProgress"></progressbar>
         </div>
     
         <div [class]="isRequired('pos') ? 'df-title required' : 'df-title'">{{currentLang.phrases['workspace-langs-pos']}}:</div>

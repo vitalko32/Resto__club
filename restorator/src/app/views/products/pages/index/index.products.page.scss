@@ -1,0 +1,23 @@
+.cats {
+    margin-bottom: 15px; display: flex; flex-wrap: wrap;
+    .c-title {margin-right: 15px; white-space: nowrap; line-height: 30px;}
+    .c-item {
+        height: 30px; border-radius: 15px; transition: 0.3s; white-space: nowrap; display: flex; align-items: center; padding: 0 15px; margin: 0 15px 15px 0; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer;            
+        img {height: 20px; margin-left: 7px; transition: 0.3s;}
+        &.active {
+            background-color: black; color: white;
+            img {filter: invert(1);}
+        }            
+    }    
+}
+
+.products {
+    .p-items {
+        @media (min-width:0) {grid-template-columns: 1fr;}
+        @media (min-width:500px) {grid-template-columns: 1fr 1fr;}
+        @media (min-width:1200px) {grid-template-columns: 1fr 1fr 1fr;}
+        display: grid; gap: 30px;
+        .pi-img {padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px;}
+        .pi-name {font-weight: bold; text-align: center; margin-bottom: 10px;}
+    }
+}

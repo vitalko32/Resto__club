@@ -16,6 +16,7 @@ import { TransactionsModule } from "./transactions/transactions.module";
 import { HallsModule } from "./halls/halls.module";
 import { IconsModule } from "./icons/icons.module";
 import { CatsModule } from "./cats/cats.module";
+import { ProductsModule } from "./products/products.module";
 
 @Module({
     imports: [        
@@ -35,6 +36,7 @@ import { CatsModule } from "./cats/cats.module";
         HallsModule,
         IconsModule,
         CatsModule,
+        ProductsModule,
     ],
     providers: [],
 })

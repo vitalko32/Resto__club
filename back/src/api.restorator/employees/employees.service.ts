@@ -287,6 +287,7 @@ export class EmployeesService extends APIService {
         return this.employeeRepository
             .createQueryBuilder("employee")
             .leftJoinAndSelect("employee.restaurant", "restaurant")
+            .leftJoinAndSelect("restaurant.currency", "currency")
             .loadRelationCountAndMap("restaurant.employees_q", "restaurant.employees")
             .where({email})
             .getOne();
@@ -296,6 +297,7 @@ export class EmployeesService extends APIService {
         return this.employeeRepository
             .createQueryBuilder("employee")
             .leftJoinAndSelect("employee.restaurant", "restaurant")
+            .leftJoinAndSelect("restaurant.currency", "currency")
             .loadRelationCountAndMap("restaurant.employees_q", "restaurant.employees")
             .where({id})
             .getOne();
@@ -306,6 +308,7 @@ export class EmployeesService extends APIService {
             .createQueryBuilder("employee")
             .addSelect("employee.password")
             .leftJoinAndSelect("employee.restaurant", "restaurant")
+            .leftJoinAndSelect("restaurant.currency", "currency")
             .loadRelationCountAndMap("restaurant.employees_q", "restaurant.employees")
             .where({email})
             .getOne();      

@@ -43,7 +43,7 @@ export class HallComponent extends ObjectComponent<Hall> {
         this.appService.sort(this.x.tables, this.tablesSortBy, this.tablesSortDir);
     }
 
-    public tablesDelete(i: number): void {
+    public tablesRemove(i: number): void {
         if (confirm(this.currentLang.phrases['workspace-sure'])) {
             this.x.tables.splice(i, 1);            
         }        

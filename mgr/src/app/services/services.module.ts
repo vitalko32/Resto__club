@@ -22,6 +22,7 @@ import { TransactionRepository } from './repositories/transaction.repository';
 import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { CatRepository } from './repositories/cat.repository';
+import { ProductRepository } from './repositories/product.repository';
 
 @NgModule({
     declarations: [],
@@ -49,6 +50,7 @@ import { CatRepository } from './repositories/cat.repository';
 		HallRepository,
 		IconRepository,
 		CatRepository,
+		ProductRepository,
 	],
 })
 export class ServicesModule { }

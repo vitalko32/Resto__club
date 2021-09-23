@@ -20,6 +20,7 @@ import { IEmployeeUpdatePassword } from "../model/dto/employee.updatepassword.in
 import { Hall } from "../model/orm/hall.model";
 import { Cat } from "../model/orm/cat.model";
 import { Icon } from "../model/orm/icon.model";
+import { Product } from "../model/orm/product.model";
 
 @Injectable()
 export class DataService {
@@ -68,6 +69,12 @@ export class DataService {
     public catsUpdate(x: Cat): Observable<IAnswer<void>> {return this.sendRequest("cats/update", x, true);}   
 
     public iconsAll(dto: IGetAll): Observable<IAnswer<Icon[]>> {return this.sendRequest(`icons/all`, dto, true);}   
+    
+    public productsChunk(dto: IGetChunk): Observable<IAnswer<Product[]>> {return this.sendRequest("products/chunk", dto, true);}
+    public productsOne(id: number): Observable<IAnswer<Product>> {return this.sendRequest(`products/one/${id}`, null, true);}
+    public productsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/delete/${id}`, null, true);}    
+    public productsCreate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/create", x, true);}
+    public productsUpdate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/update", x, true);}  
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;
