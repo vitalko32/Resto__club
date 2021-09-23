@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
+import { SortableOptions } from "sortablejs";
 import { Cat } from "src/app/model/orm/cat.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Product } from "src/app/model/orm/product.model";
@@ -20,6 +21,15 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;               
     public plLoadingMore: boolean = false;    
+    public plSearch: string = "";
+    public deleteConfirmActive: boolean = false;
+    public deleteConfirmMsg: string = "";
+    private deleteId: number = null;
+    public sortableOptions: SortableOptions = {
+        onUpdate: this.onSortableUpdate.bind(this),         
+        animation: 150,
+        handle: ".pi-handle",
+    };
 
     constructor(
         private appService: AppService,        
@@ -38,8 +48,7 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     get pl(): Product[] {return this.productRepository.xlAll;}
     get plFilterCatId(): number {return this.productRepository.filterCatId;}
     set plFilterCatId(v: number) {this.productRepository.filterCatId = v;}
-    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}
-    set plFilterNameCode(v: string) {this.productRepository.filterNameCode = v;}
+    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}    
     get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}       
 
     public async ngOnInit(): Promise<void> {        
@@ -81,7 +90,8 @@ export class IndexProductsPage implements OnInit, OnDestroy {
 
     public async initProducts(): Promise<void> {
         try {
-            this.productRepository.chunkCurrentPart = 0;                  
+            this.productRepository.chunkCurrentPart = 0;      
+            this.productRepository.filterNameCode = this.plSearch;            
             this.productRepository.loadChunk();      
         } catch (err) {
             this.appService.showError(err);
@@ -101,5 +111,39 @@ export class IndexProductsPage implements OnInit, OnDestroy {
 			this.plLoadingMore = false;
 			this.appService.showError(err);
 		}
+    } 
+    
+    public async updateParam (id: number, p: string, v: any): Promise<void> {        
+        try {            
+            await this.productRepository.updateParam(id, p, v);                        
+        } catch (err) {
+            this.appService.showError(err);
+        }        
+    }
+
+    public onDelete(p: Product): void {
+        this.deleteId = p.id;
+        this.deleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${p.name}"?`;
+        this.deleteConfirmActive = true;
+    }
+
+    public async delete(): Promise<void> {
+        try {
+            this.deleteConfirmActive = false;            
+            this.productRepository.delete(this.deleteId);
+            const index = this.pl.findIndex(p => p.id === this.deleteId);
+            this.pl.splice(index, 1);
+        } catch (err) {
+            this.appService.showError(err);            
+        }
     }  
+
+    public async onSortableUpdate(): Promise<void> {
+        try {
+            this.pl.forEach((p, index) => p.pos = index);
+            this.productRepository.updatePositions(this.pl.map(p => ({id: p.id, pos: p.pos}))); 
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
 }

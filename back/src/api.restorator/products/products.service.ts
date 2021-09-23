@@ -11,6 +11,7 @@ import { Sortdir } from "src/model/sortdir.type";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { ProductImage } from "src/model/orm/product.image.entity";
 import { Ingredient } from "src/model/orm/ingredient.entity";
+import { IProductUpdatePos } from "./dto/product.updatepos.interface";
 
 @Injectable()
 export class ProductsService extends APIService {
@@ -35,7 +36,7 @@ export class ProductsService extends APIService {
             }
 
             if (dto.filter.nameCode) {
-                filter += ` AND (products.name LIKE '%${dto.filter.nameCode}%' OR products.code LIKE '%${dto.filter.nameCode}%')`;
+                filter += ` AND (LOWER(products.name) LIKE LOWER('%${dto.filter.nameCode}%') OR LOWER(products.code) LIKE LOWER('%${dto.filter.nameCode}%'))`;
             }
             
             const qb: SelectQueryBuilder<Product> = this.productRepository.createQueryBuilder("products").where(filter);
@@ -91,6 +92,17 @@ export class ProductsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         } 
+    }
+
+    public async updatePositions(dto: IProductUpdatePos[]): Promise<IAnswer<void>> {
+        try {
+            await this.productRepository.save(dto);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in ProductsService.updatePositions: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
     }
     
     public async delete(id: number): Promise<IAnswer<void>> {

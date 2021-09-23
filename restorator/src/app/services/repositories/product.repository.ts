@@ -3,6 +3,7 @@ import { Repository } from './_repository';
 import { Product } from '../../model/orm/product.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
+import { IProductUpdatePos } from 'src/app/model/dto/product.updatepos.interface';
 
 @Injectable()
 export class ProductRepository extends Repository<Product> {    
@@ -55,5 +56,9 @@ export class ProductRepository extends Repository<Product> {
 
     public update(x: Product): Promise<void> {
         return new Promise((resolve, reject) => this.dataService.productsUpdate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    }
+
+    public updatePositions(dto: IProductUpdatePos[]): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.productsUpdatePositions(dto).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     }
 }

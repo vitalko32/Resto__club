@@ -21,6 +21,7 @@ import { Hall } from "../model/orm/hall.model";
 import { Cat } from "../model/orm/cat.model";
 import { Icon } from "../model/orm/icon.model";
 import { Product } from "../model/orm/product.model";
+import { IProductUpdatePos } from "../model/dto/product.updatepos.interface";
 
 @Injectable()
 export class DataService {
@@ -75,6 +76,7 @@ export class DataService {
     public productsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/delete/${id}`, null, true);}    
     public productsCreate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/create", x, true);}
     public productsUpdate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/update", x, true);}  
+    public productsUpdatePositions(dto: IProductUpdatePos[]): Observable<IAnswer<void>> {return this.sendRequest("products/update-positions", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

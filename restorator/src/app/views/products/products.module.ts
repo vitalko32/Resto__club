@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+import { SortablejsModule } from 'ngx-sortablejs';
 import { CCModule } from "src/app/common.components/cc.module";
 //import { ProductComponent } from "./components/product/product.component";
 //import { CreateProductsPage } from "./pages/create/create.products.page";
@@ -20,6 +21,7 @@ let routes = RouterModule.forChild ([
 		CommonModule,
 		RouterModule,
         FormsModule,
+		SortablejsModule,
         
         routes,
 		CCModule,

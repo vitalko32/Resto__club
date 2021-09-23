@@ -6,6 +6,7 @@ import { Product } from "../../model/orm/product.entity";
 import { IProductUpdate } from "./dto/product.update.interface";
 import { IProductCreate } from "./dto/product.create.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
+import { IProductUpdatePos } from "./dto/product.updatepos.interface";
 
 @Controller('api/restorator/products')
 export class ProductsController {
@@ -37,6 +38,13 @@ export class ProductsController {
     @Post("update")
     public update(@Body() dto: IProductUpdate): Promise<IAnswer<void>> {
         return this.productsService.update(dto);
+    }
+
+    // update positions
+    @UseGuards(EmployeesGuard)
+    @Post("update-positions")
+    public updatePositions(@Body() dto: IProductUpdatePos[]): Promise<IAnswer<void>> {
+        return this.productsService.updatePositions(dto);
     }
     
     // delete one
