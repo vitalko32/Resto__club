@@ -1,4 +1,4 @@
-import { HttpEventType } from '@angular/common/http';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { IAnswer } from 'src/app/model/answer.interface';
 import { IHTMLInputEvent } from 'src/app/model/htmlinputevent.interface';
@@ -88,34 +88,18 @@ export class ProductComponent extends ObjectComponent<Product> {
     public imgDeleteImg(): void {
         this.img.img = null;        
         this.imgProgress = 0;
-    }
-
-    public imgUpload(event: IHTMLInputEvent): void {
-        this.imgProgress = 0;
-        let file: File = <File>event.target.files[0];        
-        
-        if (file) {
-            let fd: FormData = new FormData ();
-            fd.append ("folder", this.imgFolder);
-            fd.append("resize", JSON.stringify(this.imgResizeWidth));
-            fd.append ("file", file, file.name);
-            this.appService.monitorLog(`uploading image ${file.name}...`);
-            this.uploadService.uploadImg(fd).subscribe(event => {                
-                if (event.type == HttpEventType.UploadProgress) {
-                    this.imgProgress = Math.round (100 * event.loaded / event.total);                    
-                } else if (event.type == HttpEventType.Response) {
-                    const res: IAnswer<IPathable> = event.body;
+    }    
     
-                    if (res.statusCode === 200) {                        
-                        this.appService.monitorLog(`uploaded: ${res.data.paths[0]}`);
-                        this.img.img = res.data.paths[0];                        
-                    } else {
-                        this.appService.monitorLog (res.error, true);
-                    }                    
-                }                
-            }, err => {
-                this.appService.monitorLog (err.message, true);
-            });            
-        }  
-    }  
+    public imgProcessResponse(event: HttpEvent<IAnswer<IPathable>>): void {        
+        if (event.type === HttpEventType.UploadProgress) {
+            this.imgProgress = Math.round (100 * event.loaded / event.total);                    
+        } else if (event.type === HttpEventType.Response) {
+            if (event.body.statusCode !== 200) {                        
+                this.appService.monitorLog (event.body.error, true);                
+            } else {
+                this.appService.monitorLog(`uploaded: ${event.body.data.paths[0]}`);
+                this.img.img = event.body.data.paths[0];                        
+            }            
+        } 
+    }
 }

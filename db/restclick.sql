@@ -1092,7 +1092,7 @@ COPY "default".vne_admingroups (id, name, title, defended) FROM stdin;
 
 COPY "default".vne_admins (id, admingroup_id, name, email, password, img, active, defended) FROM stdin;
 1	1	Alex	7573497@gmail.com	$2b$10$BBFjulN8d2kWvPC6lbaOduhDRd0l59lOHEF6fKTd3yrSm6SW0q9t.	2021-8/1629929025223_150.jpg	t	t
-6	1	Иван Петров	viovalya@gmail.com	$2b$10$d/AHzrLN7/2iu9DjVOuIEuo4.AIg3mMNU0TWGkdNZZ5kSjn5oe7SW	2021-9/1632350801984_150.jpg	t	f
+6	1	Иван Петров	viovalya@gmail.com	$2b$10$d/AHzrLN7/2iu9DjVOuIEuo4.AIg3mMNU0TWGkdNZZ5kSjn5oe7SW	2021-9/1632435404692_150.jpg	t	f
 \.
 
 
@@ -1265,8 +1265,8 @@ COPY "default".vne_ingredients (id, product_id, name, pos, excludable) FROM stdi
 --
 
 COPY "default".vne_langs (id, slug, title, shorttitle, img, pos, active, slugable, dir, defended) FROM stdin;
-2	en	English	Eng	\N	2	t	f	ltr	f
 1	ru	Русский	Рус	\N	1	t	f	ltr	t
+2	en	English	Eng	\N	2	t	f	ltr	f
 \.
 
 
@@ -1646,10 +1646,10 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	0
 46	1	RRR		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
 15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	-10
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9980
 43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	-10
 22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-10
 38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-10
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9960
 12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	0
 8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0
 \.
@@ -2761,6 +2761,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1146	43	-10	2021-09-23 01:00:00.055712	auto
 1147	22	-10	2021-09-23 01:00:00.060855	auto
 1148	38	-10	2021-09-23 01:00:00.066082	auto
+1149	21	-20	2021-09-24 01:00:00.026534	auto
 \.
 
 
@@ -3406,14 +3407,14 @@ SELECT pg_catalog.setval('"default".vne_halls_id_seq', 11, true);
 -- Name: vne_icon_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_icon_translations_id_seq', 31, true);
+SELECT pg_catalog.setval('"default".vne_icon_translations_id_seq', 33, true);
 
 
 --
 -- Name: vne_icons_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_icons_id_seq', 15, true);
+SELECT pg_catalog.setval('"default".vne_icons_id_seq', 16, true);
 
 
 --
@@ -3448,7 +3449,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_product_images_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_product_images_id_seq', 349, true);
+SELECT pg_catalog.setval('"default".vne_product_images_id_seq', 351, true);
 
 
 --
@@ -3483,7 +3484,7 @@ SELECT pg_catalog.setval('"default".vne_tables_id_seq', 51, true);
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1148, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1149, true);
 
 
 --

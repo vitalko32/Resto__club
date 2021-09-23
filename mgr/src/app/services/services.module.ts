@@ -7,7 +7,6 @@ import { AuthGuard } from './auth.guard';
 import { ErrorService } from './error.service';
 import { AdmingroupRepository } from './repositories/admingroup.repository';
 import { AdminRepository } from './repositories/admin.repository';
-import { UploadService } from './upload.service';
 import { AdmLangRepository } from './repositories/admlang.repository';
 import { SlugService } from './slug.service';
 import { SettingRepository } from "./repositories/setting.repository";
@@ -23,6 +22,7 @@ import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { CatRepository } from './repositories/cat.repository';
 import { ProductRepository } from './repositories/product.repository';
+import { FilesService } from './files.service';
 
 @NgModule({
     declarations: [],
@@ -34,7 +34,7 @@ import { ProductRepository } from './repositories/product.repository';
 		AdmLangRepository,
 		AuthService,
 		AuthGuard,
-		UploadService,
+		FilesService,
 		SlugService,
 		AdmingroupRepository,
 		AdminRepository,		

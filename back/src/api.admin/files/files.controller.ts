@@ -12,10 +12,18 @@ export class FilesController {
     constructor (private filesService: FilesService) {}
     
     // upload image
-    @Post("upload-img")
+    @Post("img-upload")
     @UseInterceptors(FileInterceptor('file'))
     @UseGuards(AdminsGuard)
-    public uploadImg(@Body() dto: IImgUpload, @UploadedFile() file: Express.Multer.File): Promise<IAnswer<IPathable>> {        
-        return this.filesService.uploadImg(file, dto);
+    public imgUpload(@Body() dto: IImgUpload, @UploadedFile() file: Express.Multer.File): Promise<IAnswer<IPathable>> {        
+        return this.filesService.imgUpload(file, dto);
+    }
+
+    // upload and resize image
+    @Post("img-upload-resize")
+    @UseInterceptors(FileInterceptor('file'))
+    @UseGuards(AdminsGuard)
+    public imgUploadResize(@Body() dto: IImgUpload, @UploadedFile() file: Express.Multer.File): Promise<IAnswer<IPathable>> {        
+        return this.filesService.imgUploadResize(file, dto);
     }    
 }

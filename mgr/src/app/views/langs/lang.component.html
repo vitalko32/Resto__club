@@ -19,7 +19,7 @@
                     </div>                
                 </div>                                
             </ng-container>
-            <input #imginput type="file" (change)="imgUpload($event); imginput.value = null;">
+            <input #imginput type="file" (change)="imgUploadResize($event); imginput.value = null;">
             <progressbar [progress]="imgProgress" *ngIf="imgProgress"></progressbar>
         </div>
     

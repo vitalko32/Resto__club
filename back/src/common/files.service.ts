@@ -8,26 +8,37 @@ import { IPathable } from 'src/model/dto/pathable.interface';
 
 @Injectable()
 export class FilesService {
-    public async uploadImg(file: Express.Multer.File, dto: IImgUpload): Promise<IAnswer<IPathable>> {        
+    public async imgUploadResize(file: Express.Multer.File, dto: IImgUpload): Promise<IAnswer<IPathable>> {        
+        try {
+            const diskFolder: string = `../static/images/${dto.folder}`;
+            const diskSubfolder: string = `${new Date().getFullYear ()}-${new Date().getMonth() + 1}`;
+            const diskFullFolder: string = `${diskFolder}/${diskSubfolder}`;            
+            !fs.existsSync(diskFullFolder) ? fs.mkdirSync(diskFullFolder) : null;            
+            let paths: string[] = [];            
+            let widths: number[] = JSON.parse(dto.resize);                
+                
+            for (let w of widths) {
+                let filename: string = await this.saveResizedImg(diskFullFolder, file, w);
+                paths.push(`${diskSubfolder}/${filename}`);
+            }                                     
+
+            return {statusCode: 200, data: {paths}};
+        } catch (err) {
+            let errTxt: string = `Error in FilesService.uploadImg: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    } 
+
+    public async imgUpload(file: Express.Multer.File, dto: IImgUpload): Promise<IAnswer<IPathable>> {        
         try {
             const diskFolder: string = `../static/images/${dto.folder}`;
             const diskSubfolder: string = `${new Date ().getFullYear ()}-${new Date().getMonth() + 1}`;
             const diskFullFolder: string = `${diskFolder}/${diskSubfolder}`;            
             !fs.existsSync(diskFullFolder) ? fs.mkdirSync(diskFullFolder) : null;            
-            let paths: string[] = [];              
-            
-            if (dto.resize) {
-                let widths: number[] = JSON.parse(dto.resize);                
-                
-                for (let w of widths) {
-                    let filename: string = await this.saveResizedImg(diskFullFolder, file, w);
-                    paths.push(`${diskSubfolder}/${filename}`);
-                }                
-            } else {
-                let filename: string = await this.saveFile(diskFullFolder, file);
-                paths.push(`${diskSubfolder}/${filename}`);
-            }            
-
+            let paths: string[] = [];   
+            let filename: string = await this.saveFile(diskFullFolder, file);
+            paths.push(`${diskSubfolder}/${filename}`);
             return {statusCode: 200, data: {paths}};
         } catch (err) {
             let errTxt: string = `Error in FilesService.uploadImg: ${String(err)}`;

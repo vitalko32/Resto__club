@@ -7,7 +7,6 @@ import { AppService } from 'src/app/services/app.service';
 import { AdmLangRepository } from 'src/app/services/repositories/admlang.repository';
 import { LangRepository } from 'src/app/services/repositories/lang.repository';
 import { WordbookRepository } from 'src/app/services/repositories/wordbook.repository';
-import { UploadService } from 'src/app/services/upload.service';
 import { ObjectPage } from '../../_object.page';
 
 @Component({

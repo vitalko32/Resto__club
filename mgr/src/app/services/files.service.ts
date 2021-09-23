@@ -7,8 +7,9 @@ import { DataService } from './data.service';
 import { IPathable } from "../model/pathable.interface";
 
 @Injectable()
-export class UploadService {
+export class FilesService {
     constructor(private dataService: DataService) {}
 
-    public uploadImg(fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.dataService.filesUploadImg(fd);}    
+    public imgUpload(fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.dataService.filesImgUpload(fd);}    
+    public imgUploadResize(fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.dataService.filesImgUploadResize(fd);}    
 }

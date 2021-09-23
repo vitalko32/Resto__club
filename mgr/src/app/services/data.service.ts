@@ -42,7 +42,8 @@ export class DataService {
     public updateParam (obj: string, id: number, p: string, v:any): Observable<IAnswer<void>> {return this.sendRequest("objects/update-param", {obj, id, p, v}, true);}    
     public updateEgoisticParam (obj: string, id: number, p: string, v:boolean): Observable<IAnswer<void>> {return this.sendRequest("objects/update-egoistic-param", {obj, id, p, v}, true);}                
     
-    public filesUploadImg (fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.sendRequest(`files/upload-img`, fd, true, true);}    
+    public filesImgUpload (fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.sendRequest(`files/img-upload`, fd, true, true);}    
+    public filesImgUploadResize (fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.sendRequest(`files/img-upload-resize`, fd, true, true);}
 
     public settingsAll(dto: IGetAll): Observable<IAnswer<Setting[]>> {return this.sendRequest(`settings/all`, dto, true);}  
     public settingsChunk(dto: IGetChunk): Observable<IAnswer<Setting[]>> {return this.sendRequest("settings/chunk", dto, true);}
