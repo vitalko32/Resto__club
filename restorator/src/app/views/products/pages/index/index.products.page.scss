@@ -22,17 +22,18 @@
         @media (min-width:1200px) {grid-template-columns: 1fr 1fr 1fr;}
         display: grid; gap: 30px;
         .pi-img {
-            padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative;
+            padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative; cursor: pointer;
             .pi-recommended {
-                position: absolute; right: 10px; top: 10px; width: 25px; height: 20px; background-color: white; border-radius: 5px; display: flex; justify-content: center; align-items: center;
+                position: absolute; right: 10px; top: 10px; width: 25px; height: 25px; background-color: white; border-radius: 13px; display: flex; justify-content: center; align-items: center;
                 span::before {font-family: "fa-regular"; content: "\f005";}
             }
             .pi-handle {
-                position: absolute; left: 10px; top: 10px; width: 25px; height: 20px; background-color: white; border-radius: 5px; display: flex; justify-content: center; align-items: center;
-                span::before {font-family: "fa-solid"; content: "\f0b2"; cursor: grab;}
+                position: absolute; left: 10px; top: 10px; width: 25px; height: 25px; background-color: white; border-radius: 13px; display: flex; justify-content: center; align-items: center; cursor: move;
+                span::before {font-family: "fa-solid"; content: "\f0b2";}
             }
         }
-        .pi-name {font-weight: bold; text-align: center; margin-bottom: 10px;}
+        .pi-name {font-weight: bold; text-align: center;}
+        .pi-code {text-align: center; margin-bottom: 10px; font-size: 12px;}
         .pi-params {
             margin-bottom: 10px; display: flex; justify-content: space-between;
             .pi-param {

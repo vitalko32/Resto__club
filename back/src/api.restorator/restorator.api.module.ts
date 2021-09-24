@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { CatsModule } from "./cats/cats.module";
 import { EmployeeStatusesModule } from "./employee.statuses/employee.statuses.module";
 import { EmployeesModule } from "./employees/employees.module";
+import { FilesModule } from "./files/files.module";
 import { HallsModule } from "./halls/halls.module";
 import { IconsModule } from "./icons/icons.module";
 import { LangsModule } from "./langs/langs.module";
@@ -24,6 +25,7 @@ import { WordsModule } from "./words/words.module";
         ProductsModule,
         QRModule,       
         ObjectsModule, 
+        FilesModule,
     ],
     providers: [],
 })

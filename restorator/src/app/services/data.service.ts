@@ -22,6 +22,7 @@ import { Cat } from "../model/orm/cat.model";
 import { Icon } from "../model/orm/icon.model";
 import { Product } from "../model/orm/product.model";
 import { IProductUpdatePos } from "../model/dto/product.updatepos.interface";
+import { IPathable } from "../model/dto/pathable.interface";
 
 @Injectable()
 export class DataService {
@@ -34,6 +35,9 @@ export class DataService {
     ) {}   
     
     public updateParam (obj: string, id: number, p: string, v:any): Observable<IAnswer<void>> {return this.sendRequest("objects/update-param", {obj, id, p, v}, true);}    
+
+    public filesImgUpload (fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.sendRequest(`files/img-upload`, fd, true, true);}    
+    public filesImgUploadResize (fd: FormData): Observable<HttpEvent<IAnswer<IPathable>>> {return this.sendRequest(`files/img-upload-resize`, fd, true, true);}
     
     public langsAll(dto: IGetAll): Observable<IAnswer<Lang[]>> {return this.sendRequest("langs/all", dto);}     
     

@@ -4,15 +4,15 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { SortablejsModule } from 'ngx-sortablejs';
 import { CCModule } from "src/app/common.components/cc.module";
-//import { ProductComponent } from "./components/product/product.component";
+import { ProductComponent } from "./components/product/product.component";
 //import { CreateProductsPage } from "./pages/create/create.products.page";
-//import { EditProductsPage } from "./pages/edit/edit.products.page";
+import { EditProductsPage } from "./pages/edit/edit.products.page";
 import { IndexProductsPage } from "./pages/index/index.products.page";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexProductsPage, pathMatch: "full"},
 //	{path: "create", component: CreateProductsPage, pathMatch: "full"},
-//	{path: "edit/:id", component: EditProductsPage},
+	{path: "edit/:id", component: EditProductsPage},
 	{path: "**", redirectTo: "/kitchen/products"},
 ]);
 
@@ -29,8 +29,8 @@ let routes = RouterModule.forChild ([
 	declarations: [
 		IndexProductsPage,		
 //		CreateProductsPage,
-//		EditProductsPage,
-//		ProductComponent,
+		EditProductsPage,
+		ProductComponent,
 	],    		    
 })
 export class ProductsModule {}

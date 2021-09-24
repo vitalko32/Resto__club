@@ -18,18 +18,19 @@
     </div>
     <div class="p-items" *ngIf="pl.length" [sortablejs]="pl" [sortablejsOptions]="sortableOptions">
         <div class="p-item" *ngFor="let p of pl">
-            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'none'">
+            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'url(/images/no-image.jpg)'" [routerLink]="'/kitchen/products/edit/'+p.id">
                 <div class="pi-recommended" *ngIf="p.recommended"><span></span></div>
                 <div class="pi-handle" *ngIf="!plFilterNameCode"><span></span></div>
             </div>
             <div class="pi-name" [innerHTML]="p.name"></div>
+            <div class="pi-code">{{words['restorator-products']['code'][currentLang.slug]}}: {{p.code}}</div>
             <div class="pi-params">
                 <div>
                     <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
-                    <div class="pi-param">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
+                    <div class="pi-param" *ngIf="p.weight">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
                 </div>
                 <div>
-                    <div class="pi-param right">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
+                    <div class="pi-param right" *ngIf="p.cal">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
                     <div class="pi-param right time"><span>{{p.time}}</span></div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ErrorService } from './error.service';
+import { FilesService } from './files.service';
 import { GoogleService } from './google.service';
 import { CatRepository } from './repositories/cat.repository';
 import { EmployeeRepository } from './repositories/employee.repository';
@@ -28,7 +29,8 @@ import { WordRepository } from './repositories/word.repository';
         DataService,        
         ErrorService,
         GoogleService,
-        AuthService,        
+        AuthService,       
+        FilesService, 
         LangRepository,
         WordRepository,
         SettingRepository,     
