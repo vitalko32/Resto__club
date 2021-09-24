@@ -58,7 +58,7 @@ export class EditProductsPage implements OnInit, OnDestroy {
 
     private async initProduct(): Promise<void> {
         try {
-            this.product = await this.productRepository.loadOne(parseInt(this.route.snapshot.params["id"]));
+            this.product = await this.productRepository.loadOne(parseInt(this.route.snapshot.params["id"]));            
         } catch (err) {
             this.appService.showError(err);
         }        

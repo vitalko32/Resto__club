@@ -5,6 +5,7 @@ import { SortableOptions } from "sortablejs";
 import { IAnswer } from "src/app/model/dto/answer.interface";
 import { IPathable } from "src/app/model/dto/pathable.interface";
 import { IHTMLInputEvent } from "src/app/model/htmlinputevent.interface";
+import { Ingredient } from "src/app/model/orm/ingredient.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { ProductImage } from "src/app/model/orm/product.image.model";
 import { Product } from "src/app/model/orm/product.model";
@@ -16,6 +17,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "the-product",
     templateUrl: "product.component.html",
+    styleUrls: ["product.component.scss"],
 })
 export class ProductComponent {
     @Input() x: Product;        
@@ -47,7 +49,7 @@ export class ProductComponent {
         onUpdate: this.imgOnSortableUpdate.bind(this),      
         onMove: this.imgOnSortableMove,    
         animation: 150,
-        handle: ".de-image-handle",        
+        handle: ".de-image-handle",
     };
     
     public imgOnUploadClick(): void {                
@@ -74,7 +76,7 @@ export class ProductComponent {
         }        
     }
 
-    public imgProcessResponse(event: HttpEvent<IAnswer<IPathable>>): void {        
+    public async imgProcessResponse(event: HttpEvent<IAnswer<IPathable>>): Promise<void> {        
         if (event.type === HttpEventType.Response) {
             this.imgLoading = false;
             
@@ -85,12 +87,13 @@ export class ProductComponent {
                 
             const newImage = new ProductImage();
             newImage.img = event.body.data.paths[0];
-            newImage.pos = Math.max(...this.x.images.map(i => i.pos)) + 1;
-            
+            newImage.pos = Math.max(...this.x.images.map(i => i.pos)) + 1;            
             // костыль под глюк в sortable, иначе при добавлении рушится порядок
             const temp = this.x.images;
+            this.x.images = [];
             temp.push(newImage);
-            this.x.images = temp;
+            await this.appService.pause(1);
+            this.x.images = temp;            
         } 
     }
 
@@ -98,12 +101,12 @@ export class ProductComponent {
         return file && ["image/jpeg","image/png"].includes(file.type); 
     }  
 
-    public imgOnRemove(i: number): void {
+    public imgOnDelete(i: number): void {
         this.imgDeleteIndex = i;
         this.imgDeleteConfirmActive = true;
     }
     
-    public imgRemove(): void {
+    public imgDelete(): void {
         this.imgDeleteConfirmActive = false;
         this.x.images.splice(this.imgDeleteIndex, 1);
     }
@@ -115,4 +118,28 @@ export class ProductComponent {
     public imgOnSortableMove(event: Sortable.MoveEvent, originalEvent: any): boolean {                
         return !event.related.classList.contains("de-image-add");                
     }
+
+    // ingredients
+    public ingreDeleteConfirmActive: boolean = false;
+    public ingreDeleteConfirmMsg: string = "";
+    public ingreDeleteIndex: number = null;        
+
+    public async ingreAdd(): Promise<void> {
+        const ingredient = new Ingredient();
+        ingredient.name = "";
+        ingredient.excludable = false;
+        ingredient.pos = Math.max(...this.x.ingredients.map(i => i.pos)) + 1;
+        this.x.ingredients.push(ingredient);        
+    }
+
+    public ingreOnDelete(i: number): void {
+        this.ingreDeleteIndex = i;
+        this.ingreDeleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${this.x.ingredients[i].name}"?`;
+        this.ingreDeleteConfirmActive = true;
+    }
+
+    public ingreDelete(): void {
+        this.ingreDeleteConfirmActive = false;
+        this.x.ingredients.splice(this.ingreDeleteIndex, 1);
+    }    
 }
