@@ -58,7 +58,7 @@ export class Product {
     @ManyToOne(type => Cat, {onDelete: "CASCADE", onUpdate: "CASCADE"})
     @JoinColumn({name: "cat_id"})
     cat: Cat;
-
+    
     @OneToMany(type => ProductImage, image => image.product, {cascade: true})
     images: ProductImage[];
 

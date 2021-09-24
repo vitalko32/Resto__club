@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import * as Sortable from "sortablejs";
@@ -142,4 +143,9 @@ export class ProductComponent {
         this.ingreDeleteConfirmActive = false;
         this.x.ingredients.splice(this.ingreDeleteIndex, 1);
     }    
+
+    public ingreOnDrop(event: CdkDragDrop<string[]>): void {
+        moveItemInArray(this.x.ingredients, event.previousIndex, event.currentIndex);
+        this.x.ingredients.forEach((ingredient, index) => ingredient.pos = index);           
+    }
 }

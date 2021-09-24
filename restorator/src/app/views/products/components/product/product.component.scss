@@ -1,9 +1,24 @@
 .ingredients {
     @media (min-width:0) {width: 100%;}    
-    @media (min-width:500px) {width: 500px;}
-    margin-bottom: 15px; user-select: none;
-    .i-item {
-        background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; height: 80px; margin-bottom: 15px;        
+    @media (min-width:1200px) {width: 500px;}
+    margin-bottom: 15px; user-select: none;    
+    .i-add {
+        height: 80px; border-radius: 15px; border: 2px var(--color-bg-highlight2) dashed; color:var(--color-bg-highlight2); cursor: pointer; display: flex; justify-content: center; align-items: center;        
+        span::before {font-family: "fa-solid"; content:"\f067"; font-size: 36px;}        
+    }
+}
+
+.i-item {
+    background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; height: 80px; margin-bottom: 15px; display: flex; width:100%;      
+    .i-left {
+        width: 20px; 
+        .i-handle {
+            width:20px; height: 30px; cursor: move; display: flex; align-items: center;
+            span::before {font-family: "fa-solid"; content:"\f0b2";}
+        }
+    }
+    .i-right {
+        width: calc(100% - 20px);
         .i-name {  
             height: 30px; display: flex; justify-content: space-between; margin-bottom: 5px;
             input {height: 100%; width:calc(100% - 35px); border-radius: 15px; border:1px var(--color-grey) solid; padding: 0 10px; background: white;}
@@ -13,9 +28,5 @@
             }  
         }
         .i-excludable {height: 15px; overflow: hidden; font-size: 12px; display: flex; align-items: center;}        
-    }
-    .i-add {
-        height: 80px; border-radius: 15px; border: 2px var(--color-bg-highlight2) dashed; color:var(--color-bg-highlight2); cursor: pointer; display: flex; justify-content: center; align-items: center;        
-        span::before {font-family: "fa-solid"; content:"\f067"; font-size: 36px;}        
-    }
+    }        
 }

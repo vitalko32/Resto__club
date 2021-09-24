@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, IsNull, Repository, SelectQueryBuilder } from "typeorm";
+import { DeleteResult, getManager, IsNull, Repository, SelectQueryBuilder } from "typeorm";
 import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
@@ -12,6 +12,7 @@ import { IGetAll } from "src/model/dto/getall.interface";
 import { ProductImage } from "src/model/orm/product.image.entity";
 import { Ingredient } from "src/model/orm/ingredient.entity";
 import { IProductUpdatePos } from "./dto/product.updatepos.interface";
+import { db_name, db_schema } from "src/options";
 
 @Injectable()
 export class ProductsService extends APIService {
@@ -40,9 +41,14 @@ export class ProductsService extends APIService {
             }
             
             const qb: SelectQueryBuilder<Product> = this.productRepository.createQueryBuilder("products").where(filter);
-            const data: Product[] = await qb.leftJoinAndSelect("products.images", "images").orderBy(`products.${sortBy}`, sortDir).take(q).skip(from).getMany();
+            const data: Product[] = await qb.orderBy(`products.${sortBy}`, sortDir).take(q).skip(from).getMany();            
+
+            for (let x of data) {
+                const il: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
+                x.images = il;
+            }
+
             const allLength: number = await qb.getCount();            
-            
             return {statusCode: 200, data, allLength};
         } catch (err) {
             let errTxt: string = `Error in ProductsService.chunk: ${String(err)}`;

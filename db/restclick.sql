@@ -1247,16 +1247,17 @@ COPY "default".vne_icons (id, img, pos) FROM stdin;
 --
 
 COPY "default".vne_ingredients (id, product_id, name, pos, excludable) FROM stdin;
-3	1	Помидор	3	t
-4	1	Лист салата	4	t
 8	3	Зелень	4	t
 9	4	Апельсины	1	t
 10	4	Грейпфруты	2	t
 1	1	Хлеб	1	f
-2	1	Мясо	2	f
 5	3	Хлеб	1	f
 6	3	Мясо	2	f
 7	3	Сыр	3	f
+2	1	Мясо	0	f
+18	1	Кетчуп	2	t
+3	1	Помидор	3	t
+4	1	Лист салата	4	t
 \.
 
 
@@ -1303,18 +1304,16 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
-1	1	2021-9/1632350544594_500.jpg	0
-2	1	2021-9/1632350619186_500.jpg	1
-3	1	2021-9/1632350590230_500.jpg	2
 5	3	2021-9/1632351029146_500.jpg	0
 6	3	2021-9/1632351034607_500.jpg	1
 7	3	2021-9/1632351041578_500.jpg	2
 8	4	2021-9/1632351091004_500.jpg	0
 9	4	2021-9/1632351105494_500.jpg	1
 352	85	2021-9/1632499571768_500.jpg	0
-353	85	2021-9/1632499577953_500.jpg	2
-354	85	2021-9/1632499583250_500.jpg	3
 355	85	2021-9/1632499590140_500.jpg	4
+1	1	2021-9/1632350544594_500.jpg	1
+2	1	2021-9/1632350619186_500.jpg	2
+3	1	2021-9/1632350590230_500.jpg	3
 150	85	2021-9/1632350544594_500.jpg	5
 151	85	2021-9/1632350619186_500.jpg	7
 152	86	2021-9/1632350544594_500.jpg	0
@@ -1513,6 +1512,10 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 347	183	2021-9/1632350619186_500.jpg	0
 348	184	2021-9/1632350544594_500.jpg	0
 349	184	2021-9/1632350619186_500.jpg	0
+365	1	2021-9/1632527193075_500.jpg	6
+364	1	2021-9/1632527188680_500.jpg	4
+366	1	2021-9/1632527210468_500.jpg	5
+363	1	2021-9/1632527184307_500.jpg	0
 \.
 
 
@@ -1522,8 +1525,8 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 
 COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, active, likes, code, recommended, price, restaurant_id) FROM stdin;
 85	1	Гамбургер "Бостон"	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	2	t	0	hf0001	f	1000	21
-1	1	Гамбургер с телятиной	300	500	10 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	0	h0001	f	100	21
 2	6	Тестовое блюдо	0	0			1	t	0		f	0	9
+1	1	Гамбургер с телятиной	300	500	10 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	0	h0001	f	100	21
 97	1	Какое-то блюдо 13	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	14	t	0	hf00013	f	1000	21
 4	4	Цитрусовая нарезка	250	100	5 мин.	Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. 	1	t	1	f0001	f	200	21
 87	1	Какое-то блюдо 3	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	4	t	0	hf0003	f	1000	21
@@ -1651,7 +1654,7 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	-10
 22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-10
 38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-10
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9960
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9940
 12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	0
 8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0
 \.
@@ -2764,6 +2767,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1147	22	-10	2021-09-23 01:00:00.060855	auto
 1148	38	-10	2021-09-23 01:00:00.066082	auto
 1149	21	-20	2021-09-24 01:00:00.026534	auto
+1150	21	-20	2021-09-25 01:00:00.009742	auto
 \.
 
 
@@ -3138,6 +3142,10 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 620	218	2	Images
 621	219	1	Ингредиенты
 622	219	2	Ingredients
+625	221	1	Используйте файлы .jpg и .png.
+626	221	2	Use .jpg and .png files.
+623	220	1	исключаемое
+624	220	2	excludable
 \.
 
 
@@ -3352,6 +3360,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 216	15	113	filter	\N
 218	15	115	images	\N
 219	15	116	ingredients	\N
+220	15	117	excludable	\N
+221	15	118	images-note	\N
 \.
 
 
@@ -3429,7 +3439,7 @@ SELECT pg_catalog.setval('"default".vne_icons_id_seq', 16, true);
 -- Name: vne_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_ingredients_id_seq', 12, true);
+SELECT pg_catalog.setval('"default".vne_ingredients_id_seq', 19, true);
 
 
 --
@@ -3457,7 +3467,7 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_product_images_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_product_images_id_seq', 358, true);
+SELECT pg_catalog.setval('"default".vne_product_images_id_seq', 366, true);
 
 
 --
@@ -3492,14 +3502,14 @@ SELECT pg_catalog.setval('"default".vne_tables_id_seq', 51, true);
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1149, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1150, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 622, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 626, true);
 
 
 --
@@ -3513,7 +3523,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 15, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 219, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 221, true);
 
 
 --

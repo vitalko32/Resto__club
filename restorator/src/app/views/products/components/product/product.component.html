@@ -58,29 +58,34 @@
         <div class="de-value">
             <div class="de-inputwrap"><checkbox-slider [(value)]="x.recommended"></checkbox-slider></div>
         </div>
-    </div>
+    </div>    
     <div class="de-space"></div>    
     <!-- images -->     
     <div class="de-head">{{words['restorator-products']['images'][currentLang.slug]}}</div>
-    <div class="de-note">{{words['restorator-products']['images-note'][currentLang.slug]}}</div>
+    <div class="de-note">{{words['restorator-products']['images-note'][currentLang.slug]}}</div>    
     <div class="de-images" [sortablejs]="x.images" [sortablejsOptions]="imgSortableOptions">
-        <div class="de-image sortable" *ngFor="let img of x.images; let i = index;" [style.background-image]="'url(/images/products/'+img.img+')'">
+        <div class="de-image" *ngFor="let img of x.images; let i = index;" [style.background-image]="'url(/images/products/'+img.img+')'">
             <div class="de-image-remove" (click)="imgOnDelete(i)"><span></span></div>            
             <div class="de-image-handle"><span></span></div>
         </div>
         <div class="de-image-add" [class.loading]="imgLoading" (click)="imgOnUploadClick();"><div><span></span></div></div>             
     </div>    
     <div class="de-space"></div>
-    <!-- ingredients -->
+    <!-- ingredients -->    
     <div class="de-head margined">{{words['restorator-products']['ingredients'][currentLang.slug]}}</div>
-    <div class="ingredients">
-        <div class="i-item" *ngFor="let ig of x.ingredients; let i = index;">                                    
-            <div class="i-name"><input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="ig.name"><div class="i-remove" (click)="ingreOnDelete(i)"><span></span></div></div>
-            <div class="i-excludable" (click)="ig.excludable = !ig.excludable"><checkbox-simple [value]="ig.excludable"></checkbox-simple><span>{{words['restorator-products']['excludable'][currentLang.slug]}}</span></div>                       
+    <div class="ingredients" cdkDropList (cdkDropListDropped)="ingreOnDrop($event)">
+        <div class="i-item" *ngFor="let ig of x.ingredients; let i = index;" cdkDrag cdkDragLockAxis="y">                                    
+            <div class="i-left">
+                <div class="i-handle" cdkDragHandle><span></span></div>
+            </div>
+            <div class="i-right">
+                <div class="i-name"><input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="ig.name"><div class="i-remove" (click)="ingreOnDelete(i)"><span></span></div></div>
+                <div class="i-excludable" (click)="ig.excludable = !ig.excludable"><checkbox-simple [value]="ig.excludable"></checkbox-simple><span>{{words['restorator-products']['excludable'][currentLang.slug]}}</span></div>                       
+            </div>            
         </div>
         <div class="i-add" (click)="ingreAdd()"><span></span></div>
-    </div>   
-    <div class="de-space"></div>
+    </div>       
+    <div class="de-space"></div>    
     <div class="de-btnwrap"><button type="submit" [disabled]="loading">{{words['common']['save'][currentLang.slug]}}</button></div>
     <input class="hidden" type="file" #imgupload (change)="imgUpload($event); imgupload.value = null;" accept=".png,.jpg,.jpeg">     
 </form> 

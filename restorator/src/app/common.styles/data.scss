@@ -183,8 +183,7 @@
             @media (min-width:1200px) {grid-template-columns: repeat(5, 1fr);}
             display: grid; gap: 15px; margin-bottom: 15px; user-select: none;
             .de-image {
-                padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; border:1px var(--color-grey) solid; position: relative;
-                &.sortable {cursor: move;}
+                padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; border:1px var(--color-grey) solid; position: relative;                
                 .de-image-remove {                    
                     position: absolute; right: 10px; top: 10px; width: 25px; height: 25px; background-color: white; border-radius: 13px; display: flex; justify-content: center; align-items: center; cursor: pointer;
                     span::before {font-family: "fa-solid"; content: "\f00d"; color: var(--color-red);}                    
