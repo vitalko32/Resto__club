@@ -1,3 +1,3 @@
 <div class="cats">
-    <a *ngFor="let c of cl"><span [innerHTML]="c.name"></span><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}"></a>
+    <a *ngFor="let c of cl" routerLink="/table/{{table.code}}/cat/{{c.id}}"><span [innerHTML]="c.name"></span><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}"></a>
 </div>

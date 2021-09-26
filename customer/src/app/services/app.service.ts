@@ -5,6 +5,7 @@ import { Title } from "@angular/platform-browser";
 export class AppService {
     public url: string[] = [];        
     public title: string = "";    
+    public backLink: string = null;
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";

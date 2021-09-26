@@ -34,6 +34,6 @@ export class CatRepository extends Repository<ICat> {
     }    
 
     public loadOne(id: number): Promise<ICat> {
-        return new Promise((resolve, reject) => this.dataService.catsOne(id).subscribe(res => res.statusCode === 200 ? resolve(res.data) : reject(res.error), err => reject(err.message)));
+        return new Promise((resolve, reject) => this.dataService.catsOne(id).subscribe(res => res.statusCode === 200 ? resolve(res.data) : reject(res.statusCode), err => reject(err.message)));
     }
 }
