@@ -1,0 +1,28 @@
+@import "./common.styles/var.scss";
+
+html {	
+	height: 100%; background-color: var(--color-bg); color: var(--color-txt);	
+	body {
+		margin: 0; padding: 0; overscroll-behavior: none; font-family: "mont", Arial, Helvetica, sans-serif; height: 100%; 	
+		&.noselect {user-select: none;}
+		&.no-scroll {overflow: hidden;}		
+
+		* {box-sizing: border-box; outline: none; overflow-anchor: none; overscroll-behavior: none;}
+		img {vertical-align: top;}	
+		a {cursor: pointer; color: var(--color-link); text-decoration: underline;}				
+		.hidden {display: none;}
+		.flex {display: flex;}		
+		.align-left {text-align: left;}
+		.align-center {text-align: center;}
+		.align-right {text-align: right;}
+		.nowrap {white-space: nowrap;}
+		.red {color: var(--color-red);}
+		.grey {color: var(--color-grey);}
+		input, select, textarea {font-size: 16px; font-family: "mont", Arial, Helvetica, sans-serif;}
+		button {font-size: 14px; font-family: "mont", Arial, Helvetica, sans-serif;}			
+	
+		.wrap {			
+			position: relative; font-size: 14px; line-height: 18px; padding: 75px 15px; max-width: 500px; margin: 0 auto;			
+		}
+	}
+}

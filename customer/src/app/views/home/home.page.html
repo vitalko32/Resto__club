@@ -1,0 +1,3 @@
+<div class="cats">
+    <a *ngFor="let c of cl"><span [innerHTML]="c.name"></span><img *ngIf="c.icon" src="/images/icons/{{c.icon.img}}"></a>
+</div>

@@ -1,0 +1,7 @@
+<error-notification></error-notification>
+<div class="wrap" *ngIf="ready">        
+    <router-outlet></router-outlet>    
+    <the-header></the-header>
+    <the-footer></the-footer>    
+</div>
+<div *ngIf="tableNotFound">[table not found]</div>

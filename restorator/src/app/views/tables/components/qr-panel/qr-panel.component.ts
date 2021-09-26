@@ -25,7 +25,7 @@ export class QRPanelComponent {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get customerUrl(): string {return this.settingRepository.settings["customer-app-url"];}
-    get qrtext(): string {return `${this.customerUrl}/${this.table.code}`;}
+    get qrtext(): string {return `${this.customerUrl}/table/${this.table.code}`;}
     get imgUrl(): string {return `/qr/get-image?text=${this.qrtext}&width=200&mode=get`;}
     get imgLink(): string {return `/qr/get-image?text=${this.qrtext}&width=300&mode=get`;}
 

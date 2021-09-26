@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, getManager, IsNull, Repository, SelectQueryBuilder } from "typeorm";
+import { DeleteResult, IsNull, Repository, SelectQueryBuilder } from "typeorm";
 import { IAnswer } from 'src/model/dto/answer.interface';
 import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { APIService } from "../../common/api.service";
@@ -8,11 +8,9 @@ import { Product } from "../../model/orm/product.entity";
 import { IProductCreate } from "./dto/product.create.interface";
 import { IProductUpdate } from "./dto/product.update.interface";
 import { Sortdir } from "src/model/sortdir.type";
-import { IGetAll } from "src/model/dto/getall.interface";
 import { ProductImage } from "src/model/orm/product.image.entity";
 import { Ingredient } from "src/model/orm/ingredient.entity";
 import { IProductUpdatePos } from "./dto/product.updatepos.interface";
-import { db_name, db_schema } from "src/options";
 
 @Injectable()
 export class ProductsService extends APIService {

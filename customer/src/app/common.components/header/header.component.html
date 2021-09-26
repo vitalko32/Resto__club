@@ -1,0 +1,32 @@
+<header>
+    <div class="h-title">{{title}}</div>
+    <!--
+    <div *ngIf="showMenuBtn" class="hm-menubtn" [class.active]="menuPanelActive" (click)="menuPanelActive = !menuPanelActive; langPanelActive = false;"><span></span></div>    
+    <div *ngIf="showMenuBtn" class="hm-panel" [class.active]="menuPanelActive">
+        <div *ngIf="msg" class="hm-msg" [innerHTML]="msg"></div>
+        <div class="hm-list">
+            <div class="hml-item"><a class="hml-item-btn" routerLink="/" [class.active]="!url[1]" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-home'][currentLang.slug]}}</a></div>            
+            <div class="hml-item" *ngIf="employee.is_admin"><a class="hml-item-btn" routerLink="/employees" [class.active]="url[1] === 'employees'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-employees'][currentLang.slug]}}</a></div>            
+            <div class="hml-item expandable" *ngIf="employee.is_admin"><a class="hml-item-btn" [class.active]="url[1] === 'halls-tables'" (click)="toggleSub(0);"><span>{{words['restorator-common']['menu-halls-tables'][currentLang.slug]}}</span></a></div>
+            <div class="hml-sub sub0" [class.active]="subActive[0]">
+                <div class="hml-sub-item"><a routerLink="/halls-tables/halls" [class.active]="url[2] === 'halls'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-halls'][currentLang.slug]}}</a></div>            
+                <div class="hml-sub-item"><a routerLink="/halls-tables/tables" [class.active]="url[2] === 'tables'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></div>             
+            </div>
+            <div class="hml-item expandable" *ngIf="employee.is_admin"><a class="hml-item-btn" [class.active]="url[1] === 'kitchen'" (click)="toggleSub(1);"><span>{{words['restorator-common']['menu-kitchen'][currentLang.slug]}}</span></a></div>
+            <div class="hml-sub sub1" [class.active]="subActive[1]">
+                <div class="hml-sub-item"><a routerLink="/kitchen/cats" [class.active]="url[2] === 'cats'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-cats'][currentLang.slug]}}</a></div>            
+                <div class="hml-sub-item"><a routerLink="/kitchen/products" [class.active]="url[2] === 'products'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-products'][currentLang.slug]}}</a></div>             
+            </div>            
+            <div class="hml-item"><a class="hml-item-btn" routerLink="/auth/password" [class.active]="url[1] === 'auth' && url[2] === 'password'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-pw'][currentLang.slug]}}</a></div>                
+            <div class="hml-item"><a class="hml-item-btn" routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['common']['logout'][currentLang.slug]}}</a></div>            
+        </div>
+    </div>
+    
+    <div class="hm-langbtn" [class.active]="langPanelActive" (click)="langPanelActive = !langPanelActive; menuPanelActive = false;"><span></span></div>     
+    <div class="hm-panel" [class.active]="langPanelActive">
+        <div class="hm-list">
+            <div class="hml-item" *ngFor="let l of langs"><a class="hml-item-btn" (click)="setLang(l);" [class.active]="l.id === currentLang.id">{{l.shorttitle}}</a></div>
+        </div>
+    </div>       
+    -->
+</header>

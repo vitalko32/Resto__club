@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminAPIModule } from './api.admin/admin.api.module';
+import { CustomerAPIModule } from './api.customer/customer.api.module';
 import { OwnerAPIModule } from './api.owner/owner.api.module';
 import { RestoratorAPIModule } from './api.restorator/restorator.api.module';
 import { TestAPIModule } from './api.test/test.api.module';
@@ -72,6 +73,7 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 		AdminAPIModule,	
 		OwnerAPIModule,
 		RestoratorAPIModule,
+		CustomerAPIModule,
 		TestAPIModule,
 		CronModule,
 	],

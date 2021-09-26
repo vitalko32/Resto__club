@@ -88,7 +88,7 @@ export class ProductComponent {
                 
             const newImage = new ProductImage();
             newImage.img = event.body.data.paths[0];
-            newImage.pos = Math.max(...this.x.images.map(i => i.pos)) + 1;            
+            newImage.pos = this.x.images.length ? Math.max(...this.x.images.map(i => i.pos)) + 1 : 0;            
             // костыль под глюк в sortable, иначе при добавлении рушится порядок
             const temp = this.x.images;
             this.x.images = [];
@@ -129,7 +129,7 @@ export class ProductComponent {
         const ingredient = new Ingredient();
         ingredient.name = "";
         ingredient.excludable = false;
-        ingredient.pos = Math.max(...this.x.ingredients.map(i => i.pos)) + 1;
+        ingredient.pos = this.x.ingredients.length ? Math.max(...this.x.ingredients.map(i => i.pos)) + 1 : 0;
         this.x.ingredients.push(ingredient);        
     }
 
