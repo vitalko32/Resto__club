@@ -69,4 +69,11 @@ export class ProductMenuPage implements OnInit {
             this.appService.showError(err);
         }
     }
+
+    public async toCart(): Promise<void> {
+        this.appService.headCartHighlight = true;
+        this.orderService.cartAdd(this.product, this.q);
+        await this.appService.pause(300);
+        this.appService.headCartHighlight = false;
+    }
 }

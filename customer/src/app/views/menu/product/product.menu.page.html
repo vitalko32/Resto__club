@@ -44,7 +44,7 @@
             <div class="pq-title">{{words['customer-menu']['q']}}:</div>
             <div class="pq-dash">
                 <div class="pq-number"><input-number classname="big" [min]="1" [(value)]="q"></input-number></div>    
-                <div class="pq-tocart"><span>{{words['customer-menu']['to-cart']}}</span></div>
+                <div class="pq-tocart" (click)="toCart()"><span>{{words['customer-menu']['to-cart']}}</span></div>
             </div>            
         </div>        
     </div>
