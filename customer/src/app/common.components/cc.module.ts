@@ -8,6 +8,7 @@ import { CheckboxSliderComponent } from './checkbox-slider/checkbox-slider.compo
 import { ConfirmComponent } from './confirm/confirm.component';
 import { ErrorNotificationComponent } from './error-notification/errornotification.component';
 import { FooterComponent } from './footer/footer.component';
+import { GalleryComponent } from './gallery/gallery.component';
 import { HeaderComponent } from './header/header.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 
@@ -26,6 +27,7 @@ import { InputNumberComponent } from './input-number/input-number.component';
         CheckboxSliderComponent,
         HeaderComponent,
         FooterComponent,
+        GalleryComponent,
     ],
     exports: [
         ErrorNotificationComponent,        
@@ -36,6 +38,7 @@ import { InputNumberComponent } from './input-number/input-number.component';
         CheckboxSliderComponent,
         HeaderComponent,
         FooterComponent,
+        GalleryComponent,
     ],    
 })
 export class CCModule {}

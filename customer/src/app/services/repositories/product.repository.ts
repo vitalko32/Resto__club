@@ -25,7 +25,8 @@ export class ProductRepository extends Repository<IProduct> {
             };
             this.dataService.productsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    const data: IProduct[] =  res.data;                      
+                    const data: IProduct[] = res.data;                      
+                    res.data.forEach(d => d.ingredients.forEach(i => i.included = true)); // подготовка к заказу - по умолчанию ингредиенты должны быть выбраны
                     this.xlAll = this.chunkCurrentPart ? [...this.xlAll, ...data] : data;
                     this.allLength = res.allLength;    
                     this.exhausted = !this.allLength || this.chunkCurrentPart + 1 === Math.ceil(this.allLength / this.chunkLength);          
@@ -40,6 +41,16 @@ export class ProductRepository extends Repository<IProduct> {
     }
 
     public loadOne(id: number): Promise<IProduct> {
-        return new Promise((resolve, reject) => this.dataService.productsOne(id).subscribe(res => res.statusCode === 200 ? resolve(res.data) : reject(res.statusCode), err => reject(err.message)));
+        return new Promise((resolve, reject) => this.dataService.productsOne(id).subscribe(
+            res => {
+                if (res.statusCode === 200) {
+                    res.data.ingredients.forEach(i => i.included = true); // подготовка к заказу - по умолчанию ингредиенты должны быть выбраны
+                    resolve(res.data);
+                } else {
+                    reject(res.statusCode)
+                }                 
+            }, 
+            err => reject(err.message))
+        );
     }        
 }

@@ -9,6 +9,7 @@ export class InputNumberComponent {
     @Input() value: number = 0;
     @Input() min: number = 0;
     @Input() max: number = 999999999;
+    @Input() classname: string = "";
     @Output() valueChange: EventEmitter<number> = new EventEmitter();    
 
     public increase(): void {

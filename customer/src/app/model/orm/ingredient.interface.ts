@@ -4,4 +4,6 @@ export interface IIngredient {
     readonly name: string;
     readonly pos: number;
     readonly excludable: boolean;    
+    
+    included: boolean;
 }

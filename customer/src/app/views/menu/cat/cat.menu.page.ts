@@ -11,11 +11,11 @@ import { ProductRepository } from "src/app/services/repositories/product.reposit
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "cat-page",
-    templateUrl: "cat.page.html",
-    styleUrls: ["cat.page.scss"],
+    selector: "cat-menu-page",
+    templateUrl: "cat.menu.page.html",
+    styleUrls: ["cat.menu.page.scss"],
 })
-export class CatPage implements OnInit, OnDestroy {
+export class CatMenuPage implements OnInit, OnDestroy {
     public cat: ICat = null;    
     public plLoadingMore: boolean = false;    
     public plReady: boolean = false;
@@ -37,9 +37,9 @@ export class CatPage implements OnInit, OnDestroy {
     get pl(): IProduct[] {return this.productRepository.xlAll;}
     get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}     
 
-    public ngOnInit(): void {
-        this.initIface();
-        this.initCat();
+    public async ngOnInit(): Promise<void> {
+        await this.initCat();
+        this.initIface();        
         this.initProducts();
     }    
 
@@ -49,12 +49,12 @@ export class CatPage implements OnInit, OnDestroy {
 
     private initIface(): void {
         this.appService.backLink = `/table/${this.table.code}`;
+        this.appService.setTitle(this.cat.name);
     }
 
     private async initCat(): Promise<void> {
         try {            
-            this.cat = await this.catRepository.loadOne(parseInt(this.route.snapshot.params["cat_id"]));
-            this.appService.setTitle(this.cat.name);
+            this.cat = await this.catRepository.loadOne(parseInt(this.route.snapshot.params["cat_id"]));            
         } catch (err) {
             err === 404 ? this.router.navigateByUrl(`/table/${this.table.code}/error/404`) : this.appService.showError(err);            
         }

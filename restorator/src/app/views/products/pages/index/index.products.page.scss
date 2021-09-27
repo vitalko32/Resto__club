@@ -33,11 +33,10 @@
             }
         }
         .pi-name {font-weight: bold; text-align: center;}
-        .pi-code {text-align: center; margin-bottom: 10px; font-size: 12px;}
+        .pi-code {text-align: center; margin-bottom: 10px;}
         .pi-params {
             margin-bottom: 10px; display: flex; justify-content: space-between;
-            .pi-param {
-                font-size: 12px;
+            .pi-param {                
                 &.right {text-align: right;}
                 &.time {span::before {font-family: "fa-regular"; content: "\f017"; margin-right: 5px;}}
             }
@@ -45,8 +44,7 @@
         .pi-dash {
             display: flex; justify-content: space-between;
             .pi-dash-side {
-                .pi-dash-title {
-                    font-size: 12px;
+                .pi-dash-title {                    
                     &.right {text-align: right;}
                 }
                 .pi-dash-actions {

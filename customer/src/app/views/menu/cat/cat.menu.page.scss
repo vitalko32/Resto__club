@@ -1,8 +1,7 @@
 .products {    
     @media (min-width:0) {grid-template-columns: 1fr;}
-    @media (min-width:500px) {grid-template-columns: 1fr 1fr;}
-    @media (min-width:1200px) {grid-template-columns: 1fr 1fr 1fr;}
-    display: grid; gap: 30px;
+    @media (min-width:640px) {grid-template-columns: 1fr 1fr;}    
+    display: grid; gap: 15px 30px;
     .p-img {
         padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative; cursor: pointer;            
         .p-recommended {
@@ -13,14 +12,13 @@
     .p-name {font-weight: bold; text-align: center; margin-bottom: 10px;}    
     .p-params {
         margin-bottom: 10px; display: flex; justify-content: space-between;
-        .p-param {
-            font-size: 12px;
+        .p-param {            
             &.right {text-align: right;}
             &.time {span::before {font-family: "fa-regular"; content: "\f017"; margin-right: 5px;}}
         }
     }  
-    .p-cart {
-        display: flex; justify-content: center;
-        .p-cart-btn {background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 45px; line-height: 45px; padding: 0 30px; font-weight: bold; border-radius: 23px; cursor: pointer; }
+    .p-dash {
+        display: flex; justify-content: space-between; flex-wrap: wrap;
+        a {display: block; text-decoration: none; background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 30px; width: 130px; line-height: 30px; text-align: center; font-weight: bold; border-radius: 23px; cursor: pointer; margin-bottom: 15px; }
     }
 }
