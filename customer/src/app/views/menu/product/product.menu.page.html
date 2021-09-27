@@ -5,6 +5,10 @@
                 <the-gallery [images]="product.images" dir="products"></the-gallery>
             </div>
             <div class="pi-recommended" *ngIf="product.recommended"><span></span></div>
+            <div class="pi-like">
+                <div class="pil-number">{{product.likes}}</div>
+                <div class="pil-btn" (click)="like()"><span></span></div>
+            </div>
         </div>        
     </div>
     <div class="p-right">

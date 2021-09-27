@@ -16,40 +16,43 @@
         <div class="ps-title">{{words['restorator-products']['filter'][currentLang.slug]}}:</div>
         <div class="ps-input"><input-search [(value)]="plSearch" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
     </div>
-    <div class="p-items" *ngIf="pl.length" [sortablejs]="pl" [sortablejsOptions]="sortableOptions">
-        <div class="p-item" *ngFor="let p of pl">
-            <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'url(/images/no-image.jpg)'" [routerLink]="'/kitchen/products/edit/'+p.id">
-                <div class="pi-recommended" *ngIf="p.recommended"><span></span></div>
-                <div class="pi-handle" *ngIf="!plFilterNameCode"><span></span></div>
-            </div>
-            <div class="pi-name" [innerHTML]="p.name"></div>
-            <div class="pi-code">{{words['restorator-products']['code'][currentLang.slug]}}: {{p.code}}</div>
-            <div class="pi-params">
-                <div>
-                    <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
-                    <div class="pi-param" *ngIf="p.weight">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
+    <ng-container *ngIf="plReady">
+        <div class="p-items" *ngIf="pl.length" [sortablejs]="pl" [sortablejsOptions]="sortableOptions">
+            <div class="p-item" *ngFor="let p of pl">
+                <div class="pi-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'url(/images/no-image.jpg)'" [routerLink]="'/kitchen/products/edit/'+p.id">
+                    <div class="pi-recommended" *ngIf="p.recommended"><span></span></div>
+                    <div class="pi-handle" *ngIf="!plFilterNameCode"><span></span></div>
                 </div>
-                <div>
-                    <div class="pi-param right" *ngIf="p.cal">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
-                    <div class="pi-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>
+                <div class="pi-name" [innerHTML]="p.name"></div>
+                <div class="pi-code">{{words['restorator-products']['code'][currentLang.slug]}}: {{p.code}}</div>
+                <div class="pi-params">
+                    <div>
+                        <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
+                        <div class="pi-param" *ngIf="p.weight">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
+                    </div>
+                    <div>
+                        <div class="pi-param right" *ngIf="p.cal">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
+                        <div class="pi-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>
+                    </div>
                 </div>
-            </div>
-            <div class="pi-dash">
-                <div class="pi-dash-side">
-                    <div class="pi-dash-title">{{words['restorator-products']['active'][currentLang.slug]}}:</div>
-                    <div><checkbox-slider [(value)]="p.active" (valueChange)="updateParam(p.id, 'active', p.active)"></checkbox-slider></div>
-                </div>
-                <div class="pi-dash-side">
-                    <div class="pi-dash-title right">{{words['common']['actions'][currentLang.slug]}}:</div>
-                    <div class="pi-dash-actions">
-                        <a class="edit" [routerLink]="'/kitchen/products/edit/'+p.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
-                        <a class="delete" (click)="onDelete(p)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                <div class="pi-dash">
+                    <div class="pi-dash-side">
+                        <div class="pi-dash-title">{{words['restorator-products']['active'][currentLang.slug]}}:</div>
+                        <div><checkbox-slider [(value)]="p.active" (valueChange)="updateParam(p.id, 'active', p.active)"></checkbox-slider></div>
+                    </div>
+                    <div class="pi-dash-side">
+                        <div class="pi-dash-title right">{{words['common']['actions'][currentLang.slug]}}:</div>
+                        <div class="pi-dash-actions">
+                            <a class="edit" [routerLink]="'/kitchen/products/edit/'+p.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
+                            <a class="delete" (click)="onDelete(p)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>
+        <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>
+    </ng-container>
+    <ng-container *ngIf="!plReady">{{words['common']['loading'][currentLang.slug]}}</ng-container>
 </div>
 
 <the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>

@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
     }
 
     private initIface(): void {
-        this.appService.backLink = null;
+        this.appService.headBackLink = null;
         this.appService.setTitle(this.words['customer-home']['title']);
     }
 

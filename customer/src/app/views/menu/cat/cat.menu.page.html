@@ -16,7 +16,7 @@
                 </div>
             </div> 
             <div class="p-dash">
-                <a>{{words['customer-menu']['to-cart']}}</a>
+                <a (click)="toCart(p)">{{words['customer-menu']['to-cart']}}</a>
                 <a routerLink="/table/{{table.code}}/menu/{{p.cat_id}}/{{p.id}}">{{words['customer-menu']['more']}}</a>
             </div>                   
         </div>    

@@ -3,9 +3,11 @@ import { Title } from "@angular/platform-browser";
 
 @Injectable()
 export class AppService {
-    public url: string[] = [];        
-    public title: string = "";    
-    public backLink: string = null;
+    public url: string[] = []; 
+    // iface       
+    public headTitle: string = "";    
+    public headBackLink: string = null;
+    public headCartHighlight: boolean = false;
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";
@@ -29,7 +31,7 @@ export class AppService {
     }
 
     public setTitle (title: string) {
-        this.title = title;
+        this.headTitle = title;
         this.titleService.setTitle(this.decodeHTMLEntities(title));
     }    
 

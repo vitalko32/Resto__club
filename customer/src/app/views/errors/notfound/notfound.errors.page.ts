@@ -17,6 +17,6 @@ export class NotfoundErrorsPage implements OnInit {
 
     public ngOnInit(): void {
         this.appService.setTitle("404");
-        this.appService.backLink = `/table/${this.table.code}`;
+        this.appService.headBackLink = `/table/${this.table.code}`;
     }
 }

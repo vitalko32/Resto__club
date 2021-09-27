@@ -52,5 +52,20 @@ export class ProductRepository extends Repository<IProduct> {
             }, 
             err => reject(err.message))
         );
-    }        
+    }
+    
+    public like(id: number): Promise<number> {
+        return new Promise((resolve, reject) => {
+            const strLikes: string = localStorage.getItem("likes");
+            const likes: number[] = strLikes ? JSON.parse(strLikes) : [];
+
+            if (likes.includes(id)) {
+                resolve(409);
+            } else {
+                likes.push(id);
+                localStorage.setItem("likes", JSON.stringify(likes));
+                this.dataService.productsLike(id).subscribe(res => resolve(res.statusCode), err => reject(err.message));
+            }
+        });
+    }
 }

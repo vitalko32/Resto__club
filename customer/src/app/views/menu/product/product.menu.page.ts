@@ -41,7 +41,7 @@ export class ProductMenuPage implements OnInit {
     }    
     
     private initIface(): void {
-        this.appService.backLink = `/table/${this.table.code}/menu/${this.route.snapshot.params["cat_id"]}`;
+        this.appService.headBackLink = `/table/${this.table.code}/menu/${this.route.snapshot.params["cat_id"]}`;
         this.appService.setTitle(this.cat.name);
     }
 
@@ -59,5 +59,14 @@ export class ProductMenuPage implements OnInit {
         } catch (err) {
             err === 404 ? this.router.navigateByUrl(`/table/${this.table.code}/error/404`) : this.appService.showError(err);            
         }
-    }  
+    }
+    
+    public async like(): Promise<void> {
+        try {
+            const statusCode = await this.productRepository.like(this.product.id);
+            statusCode === 200 ? this.product.likes++ : null;
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
 }

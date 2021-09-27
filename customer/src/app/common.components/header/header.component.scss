@@ -4,5 +4,16 @@ header {
     .h-back {
         position: absolute; left: 0; top:0; height: 100%; padding: 0 15px; display: flex; align-items: center; cursor: pointer;
         span::before {font-family: "fa-solid"; content: "\f053"; font-size: 16px;}
-    }    
+    }   
+    .h-cart {
+        position: absolute; right: 0; top:0; height: 100%; padding: 0 15px; display: flex; justify-content: flex-end; align-items: center; cursor: pointer; transition: 0.3s;
+        .hc-number {font-size: 10px; transition: 0.3s;}
+        .hc-icon {
+            font-size: 16px; transition: 0.3s;
+            &::before {font-family: "fa-solid"; content: "\f07a";}
+        }        
+        &.highlight {            
+            .hc-icon {transform: scaleX(-1);}            
+        }
+    }
 }

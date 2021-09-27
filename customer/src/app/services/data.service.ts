@@ -24,6 +24,7 @@ export class DataService {
     
     public productsChunk(dto: IGetChunk): Observable<IAnswer<IProduct[]>> {return this.sendRequest("products/chunk", dto);}
     public productsOne(id: number): Observable<IAnswer<IProduct>> {return this.sendRequest(`products/one/${id}`);}    
+    public productsLike(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/like/${id}`);}    
     
     private sendRequest (url: string, body: Object = null): Observable<any> {        
         return this.http.post (`${this.root}/${url}`, body);                          

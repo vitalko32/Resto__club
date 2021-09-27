@@ -60,5 +60,23 @@ export class ProductsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    }    
+    } 
+    
+    public async like(id: number): Promise<IAnswer<void>> {
+        try {
+            const product = await this.productRepository.findOne(id);
+
+            if (!product) {
+                return {statusCode: 404, error: "product not found"};
+            }
+
+            product.likes++;
+            await this.productRepository.save(product);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in ProductsService.like: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
 }

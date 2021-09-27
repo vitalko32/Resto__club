@@ -13,25 +13,19 @@ export class ProductRepository extends Repository<Product> {
     constructor(protected dataService: DataService) {
         super(dataService);
         this.schema = "product";            
-        this.chunkSortBy = "pos";        
-        this.chunkLength = 12;
+        this.allSortBy = "pos";                
     }    
 
-    public loadChunk(): Promise<void> {
+    public loadAll(): Promise<void> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
+            const dto: IGetChunk = {                
+                sortBy: this.allSortBy,
+                sortDir: this.allSortDir,        
                 filter: {cat_id: this.filterCatId, nameCode: this.filterNameCode},
             };
-            this.dataService.productsChunk(dto).subscribe(res => {
+            this.dataService.productsAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    const data: Product[] =  res.data.length ? res.data.map(d => new Product().build(d)) : [];                      
-                    this.xlAll = this.chunkCurrentPart ? [...this.xlAll, ...data] : data;
-                    this.allLength = res.allLength;    
-                    this.exhausted = !this.allLength || this.chunkCurrentPart + 1 === Math.ceil(this.allLength / this.chunkLength);          
+                    this.xlAll = res.data;
                     resolve();
                 } else {                        
                     reject(res.error);
@@ -40,7 +34,7 @@ export class ProductRepository extends Repository<Product> {
                 reject(err.message);                
             });            
         });
-    }
+    }    
 
     public loadOne(id: number): Promise<Product> {
         return new Promise((resolve, reject) => this.dataService.productsOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Product().build(res.data)) : reject(res.error), err => reject(err.message)));

@@ -47,7 +47,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 				return false;
 			}			
 			
-			const statusCode = await this.orderService.init(url[2]);			
+			const statusCode = await this.orderService.initTable(url[2]);			
 				
 			if (statusCode !== 200) {
 				this.tableNotFound = true;

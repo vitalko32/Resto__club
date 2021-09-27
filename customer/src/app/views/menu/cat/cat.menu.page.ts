@@ -48,7 +48,7 @@ export class CatMenuPage implements OnInit, OnDestroy {
     }
 
     private initIface(): void {
-        this.appService.backLink = `/table/${this.table.code}`;
+        this.appService.headBackLink = `/table/${this.table.code}`;
         this.appService.setTitle(this.cat.name);
     }
 
@@ -85,4 +85,11 @@ export class CatMenuPage implements OnInit, OnDestroy {
 			this.appService.showError(err);
 		}
     } 
+
+    public async toCart(p: IProduct): Promise<void> {
+        this.appService.headCartHighlight = true;
+        this.orderService.cartAdd(p);
+        await this.appService.pause(300);
+        this.appService.headCartHighlight = false;
+    }
 }

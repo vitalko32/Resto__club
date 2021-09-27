@@ -18,5 +18,11 @@ export class ProductsController {
     @Post("one/:id")
     public one(@Param("id") id: string): Promise<IAnswer<Product>> {
         return this.productsService.one(parseInt(id));
-    }     
+    }  
+    
+    // like
+    @Post("like/:id")
+    public like(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.productsService.like(parseInt(id));
+    }  
 }

@@ -22,6 +22,35 @@ export class ProductsService extends APIService {
         super();
     }    
     
+    public async all(dto: IGetChunk): Promise<IAnswer<Product[]>> {
+        try {
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            let filter: string = "TRUE";
+
+            if (dto.filter.cat_id) {
+                filter += ` AND products.cat_id = '${dto.filter.cat_id}'`;
+            }
+
+            if (dto.filter.nameCode) {
+                filter += ` AND (LOWER(products.name) LIKE LOWER('%${dto.filter.nameCode}%') OR LOWER(products.code) LIKE LOWER('%${dto.filter.nameCode}%'))`;
+            }            
+            
+            const data: Product[] = await this.productRepository.createQueryBuilder("products").where(filter).orderBy(`products.${sortBy}`, sortDir).getMany();            
+
+            for (let x of data) {
+                const il: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
+                x.images = il;
+            }
+            
+            return {statusCode: 200, data};
+        } catch (err) {
+            let errTxt: string = `Error in ProductsService.all: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
     public async chunk(dto: IGetChunk): Promise<IAnswer<Product[]>> {
         try {
             const sortBy: string = dto.sortBy;

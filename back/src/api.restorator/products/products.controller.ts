@@ -7,10 +7,18 @@ import { IProductUpdate } from "./dto/product.update.interface";
 import { IProductCreate } from "./dto/product.create.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
 import { IProductUpdatePos } from "./dto/product.updatepos.interface";
+import { IGetAll } from "src/model/dto/getall.interface";
 
 @Controller('api/restorator/products')
 export class ProductsController {
     constructor (private productsService: ProductsService) {}                    
+
+    // get all
+    @UseGuards(EmployeesGuard)
+    @Post("all")
+    public all(@Body() dto: IGetAll): Promise<IAnswer<Product[]>> {
+        return this.productsService.all(dto);
+    }
 
     // get fragment
     @UseGuards(EmployeesGuard)

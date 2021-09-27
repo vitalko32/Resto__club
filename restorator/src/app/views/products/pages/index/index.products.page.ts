@@ -19,9 +19,9 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 })
 export class IndexProductsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
-    public authSubscription: Subscription = null;               
-    public plLoadingMore: boolean = false;    
+    public authSubscription: Subscription = null;                   
     public plSearch: string = "";
+    public plReady: boolean = false;
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
@@ -48,8 +48,7 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     get pl(): Product[] {return this.productRepository.xlAll;}
     get plFilterCatId(): number {return this.productRepository.filterCatId;}
     set plFilterCatId(v: number) {this.productRepository.filterCatId = v;}
-    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}    
-    get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}       
+    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}        
 
     public async ngOnInit(): Promise<void> {        
         this.initTitle();  
@@ -89,29 +88,15 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     }
 
     public async initProducts(): Promise<void> {
-        try {
-            this.productRepository.chunkCurrentPart = 0;      
+        try {            
+            this.plReady = false;
             this.productRepository.filterNameCode = this.plSearch;            
-            this.productRepository.loadChunk();      
+            await this.productRepository.loadAll();      
+            this.plReady = true;
         } catch (err) {
             this.appService.showError(err);
         }
     }    
-
-    @HostListener('window:scroll', ['$event'])
-    public async onScroll(event: any): Promise<void> {
-        try {            
-			if (this.plCanLoadMore) {
-				this.plLoadingMore = true;
-				this.productRepository.chunkCurrentPart++;				
-                await this.productRepository.loadChunk();                
-				this.plLoadingMore = false;		                
-			}			
-		} catch (err) {
-			this.plLoadingMore = false;
-			this.appService.showError(err);
-		}
-    } 
     
     public async updateParam (id: number, p: string, v: any): Promise<void> {        
         try {            

@@ -15,7 +15,7 @@ export interface IProduct {
     readonly pos: number;
     readonly active: boolean;
     readonly recommended: boolean;
-    readonly likes: number;
+    likes: number;
 
     readonly images?: IProductImage[];
     readonly ingredients?: IIngredient[];    
