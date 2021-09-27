@@ -11,9 +11,9 @@ export class TablesService {
 
     public async one(code: string): Promise<IAnswer<ITable>> {
         try {
-            const table = await this.tableRepository.findOne({where: {code}, relations: ["hall", "hall.restaurant"]});
+            const table = await this.tableRepository.findOne({where: {code}, relations: ["hall", "hall.restaurant", "hall.restaurant.currency"]});
 
-            if (!table || !table.hall || !table.hall.restaurant) {
+            if (!table || !table.hall || !table.hall.restaurant || !table.hall.restaurant.currency) {
                 return {statusCode: 404, error: "table or related not found"};
             }
 
@@ -24,6 +24,7 @@ export class TablesService {
                 code: table.code,
                 hall_id: table.hall.id,
                 restaurant_id: table.hall.restaurant.id,                 
+                currency_symbol: table.hall.restaurant.currency.symbol,
             };
 
             return {statusCode: 200, data};

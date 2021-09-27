@@ -5,4 +5,5 @@ export interface ITable {
     readonly code: string;    
     readonly hall_id: number;    
     readonly restaurant_id: number;
+    readonly currency_symbol: string;
 }

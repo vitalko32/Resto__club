@@ -2,11 +2,10 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { CatPage } from "./cat.page";
+import { CatPage } from "./cat/cat.page";
 
 let routes = RouterModule.forChild ([            
-	{path: ":id", component: CatPage},
-	{path: "**", redirectTo: "/table/null"},
+	{path: ":cat_id", component: CatPage},	
 ]);
 
 @NgModule({	
@@ -21,4 +20,4 @@ let routes = RouterModule.forChild ([
 		CatPage,
 	],    		    
 })
-export class CatModule {}
+export class MenuModule {}

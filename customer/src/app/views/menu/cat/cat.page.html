@@ -1,0 +1,24 @@
+<ng-container *ngIf="plReady">
+    <div class="products" *ngIf="pl.length">    
+        <div class="product" *ngFor="let p of pl">
+            <div class="p-img" [style.background-image]="p.images.length ? 'url(/images/products/'+p.images[0].img+')' : 'url(/images/no-image.jpg)'" routerLink="/table/{{table.code}}/menu/{{p.cat_id}}/{{p.id}}">
+                <div class="p-recommended" *ngIf="p.recommended"><span></span></div>                
+            </div>
+            <div class="p-name" [innerHTML]="p.name"></div>                
+            <div class="p-params">
+                <div>
+                    <div class="p-param">{{words['customer-menu']['price']}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
+                    <div class="p-param" *ngIf="p.weight">{{p.weight}} {{words['customer-menu']['g']}}</div>
+                </div>
+                <div>
+                    <div class="p-param right" *ngIf="p.cal">{{p.cal}} {{words['customer-menu']['kcal']}}</div>
+                    <div class="p-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>
+                </div>
+            </div> 
+            <div class="p-cart">
+                <div class="p-cart-btn">{{words['customer-menu']['to-cart']}}</div>
+            </div>                   
+        </div>    
+    </div>    
+    <div *ngIf="!pl.length">{{words['common']['none']}}</div>
+</ng-container>

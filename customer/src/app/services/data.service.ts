@@ -7,6 +7,7 @@ import { IAnswer } from "../model/dto/answer.interface";
 import { IGetChunk } from "../model/dto/getchunk.interface";
 import { ITable } from "../model/orm/table.interface";
 import { ICat } from "../model/orm/cat.interface";
+import { IProduct } from "../model/orm/product.interface";
 
 @Injectable()
 export class DataService {    
@@ -19,12 +20,10 @@ export class DataService {
     public wordsAll(restaurant_id: number): Observable<IAnswer<Words>> {return this.sendRequest(`words/all/${restaurant_id}`);}    
     
     public catsAll(dto: IGetAll): Observable<IAnswer<ICat[]>> {return this.sendRequest(`cats/all`, dto);}    
-    public catsOne(id: number): Observable<IAnswer<ICat>> {return this.sendRequest(`cats/one/${id}`);}
+    public catsOne(id: number): Observable<IAnswer<ICat>> {return this.sendRequest(`cats/one/${id}`);}    
     
-    /*
-    public productsChunk(dto: IGetChunk): Observable<IAnswer<Product[]>> {return this.sendRequest("products/chunk", dto);}
-    public productsOne(id: number): Observable<IAnswer<Product>> {return this.sendRequest(`products/one/${id}`);}
-    */
+    public productsChunk(dto: IGetChunk): Observable<IAnswer<IProduct[]>> {return this.sendRequest("products/chunk", dto);}
+    public productsOne(id: number): Observable<IAnswer<IProduct>> {return this.sendRequest(`products/one/${id}`);}    
     
     private sendRequest (url: string, body: Object = null): Observable<any> {        
         return this.http.post (`${this.root}/${url}`, body);                          
