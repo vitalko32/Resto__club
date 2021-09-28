@@ -8,6 +8,7 @@ import { IGetChunk } from "../model/dto/getchunk.interface";
 import { ITable } from "../model/orm/table.interface";
 import { ICat } from "../model/orm/cat.interface";
 import { IProduct } from "../model/orm/product.interface";
+import { IServing } from "../model/orm/serving.interface";
 
 @Injectable()
 export class DataService {    
@@ -17,7 +18,9 @@ export class DataService {
     
     public tablesOne(code: string): Observable<IAnswer<ITable>> {return this.sendRequest(`tables/one/${code}`);}
     
-    public wordsAll(restaurant_id: number): Observable<IAnswer<Words>> {return this.sendRequest(`words/all/${restaurant_id}`);}    
+    public wordsAll(dto: IGetAll): Observable<IAnswer<Words>> {return this.sendRequest(`words/all`, dto);}    
+
+    public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest(`servings/all`, dto);}    
     
     public catsAll(dto: IGetAll): Observable<IAnswer<ICat[]>> {return this.sendRequest(`cats/all`, dto);}    
     public catsOne(id: number): Observable<IAnswer<ICat>> {return this.sendRequest(`cats/one/${id}`);}    

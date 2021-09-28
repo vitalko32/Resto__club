@@ -20,6 +20,8 @@ import { Icon } from "src/model/orm/icon.entity";
 import { IconTranslation } from "src/model/orm/icon.translation.entity";
 import { Cat } from "src/model/orm/cat.entity";
 import { Product } from "src/model/orm/product.entity";
+import { Serving } from "src/model/orm/serving.entity";
+import { ServingTranslation } from "src/model/orm/serving.translation.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -42,6 +44,8 @@ import { Product } from "src/model/orm/product.entity";
 			IconTranslation,
 			Cat,
 			Product,
+			Serving,
+			ServingTranslation,
 		]),
 	],
 })

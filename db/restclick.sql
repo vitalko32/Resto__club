@@ -694,6 +694,76 @@ ALTER SEQUENCE "default".vne_restaurants_id_seq OWNED BY "default".vne_restauran
 
 
 --
+-- Name: vne_serving_translations; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_serving_translations (
+    id integer NOT NULL,
+    serving_id integer,
+    lang_id integer,
+    name character varying
+);
+
+
+ALTER TABLE "default".vne_serving_translations OWNER TO vio;
+
+--
+-- Name: vne_serving_translations_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_serving_translations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_serving_translations_id_seq OWNER TO vio;
+
+--
+-- Name: vne_serving_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_serving_translations_id_seq OWNED BY "default".vne_serving_translations.id;
+
+
+--
+-- Name: vne_servings; Type: TABLE; Schema: default; Owner: vio
+--
+
+CREATE TABLE "default".vne_servings (
+    id integer NOT NULL,
+    pos integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE "default".vne_servings OWNER TO vio;
+
+--
+-- Name: vne_servings_id_seq; Type: SEQUENCE; Schema: default; Owner: vio
+--
+
+CREATE SEQUENCE "default".vne_servings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "default".vne_servings_id_seq OWNER TO vio;
+
+--
+-- Name: vne_servings_id_seq; Type: SEQUENCE OWNED BY; Schema: default; Owner: vio
+--
+
+ALTER SEQUENCE "default".vne_servings_id_seq OWNED BY "default".vne_servings.id;
+
+
+--
 -- Name: vne_settings; Type: TABLE; Schema: default; Owner: vio
 --
 
@@ -1033,6 +1103,20 @@ ALTER TABLE ONLY "default".vne_products ALTER COLUMN id SET DEFAULT nextval('"de
 --
 
 ALTER TABLE ONLY "default".vne_restaurants ALTER COLUMN id SET DEFAULT nextval('"default".vne_restaurants_id_seq'::regclass);
+
+
+--
+-- Name: vne_serving_translations id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_serving_translations ALTER COLUMN id SET DEFAULT nextval('"default".vne_serving_translations_id_seq'::regclass);
+
+
+--
+-- Name: vne_servings id; Type: DEFAULT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_servings ALTER COLUMN id SET DEFAULT nextval('"default".vne_servings_id_seq'::regclass);
 
 
 --
@@ -1574,8 +1658,8 @@ COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, 
 119	1	Какое-то блюдо 35	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	36	t	0	hf00035	t	1000	21
 145	1	Какое-то блюдо 61	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	62	t	0	hf00061	t	1000	21
 161	1	Какое-то блюдо 77	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	78	t	0	hf00077	t	1000	21
-86	1	Какое-то блюдо 2	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	3	t	0	hf0002	f	1000	21
 93	1	Какое-то блюдо 9	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	10	t	0	hf0009	f	1000	21
+86	1	Какое-то блюдо с очень длинным-предлинным названием	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	3	t	0	hf0002	f	1000	21
 92	1	Какое-то блюдо 8	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	9	t	0	hf0008	t	1000	21
 194	7	Мороженое "Сказка"	100	640	10 мин	описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого описание мороженого 	0	t	0	m0001	t	500	21
 98	1	Какое-то блюдо 14	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	15	t	0	hf00014	f	1000	21
@@ -1666,6 +1750,29 @@ COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone,
 38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-10
 12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	0
 8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0
+\.
+
+
+--
+-- Data for Name: vne_serving_translations; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_serving_translations (id, serving_id, lang_id, name) FROM stdin;
+1	\N	\N	\N
+3	1	2	to the table
+2	1	1	к столу
+5	2	1	с собой
+6	2	2	to go
+\.
+
+
+--
+-- Data for Name: vne_servings; Type: TABLE DATA; Schema: default; Owner: vio
+--
+
+COPY "default".vne_servings (id, pos) FROM stdin;
+1	1
+2	2
 \.
 
 
@@ -3189,6 +3296,14 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 656	236	2	Waiter
 657	237	1	Рекомендуемые
 658	237	2	Recommended
+659	238	1	Корзина
+660	238	2	Cart
+661	239	1	Заказать
+662	239	2	Order
+663	240	1	Итого
+664	240	2	Total
+869	241	1	Подача
+870	241	2	Type of serving
 \.
 
 
@@ -3215,6 +3330,7 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 16	customer-home	17
 17	customer-menu	18
 18	customer-common	16
+19	customer-cart	19
 \.
 
 
@@ -3424,6 +3540,10 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 235	18	0	invoice	\N
 236	18	0	call	\N
 237	18	0	recommended	\N
+238	19	0	cart	\N
+239	19	0	order	\N
+240	19	0	sum	\N
+241	19	0	serving	\N
 \.
 
 
@@ -3459,7 +3579,7 @@ SELECT pg_catalog.setval('"default".vne_currencies_id_seq', 4, true);
 -- Name: vne_employee_status_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_employee_status_translations_id_seq', 10, true);
+SELECT pg_catalog.setval('"default".vne_employee_status_translations_id_seq', 13, true);
 
 
 --
@@ -3487,7 +3607,7 @@ SELECT pg_catalog.setval('"default".vne_halls_id_seq', 11, true);
 -- Name: vne_icon_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_icon_translations_id_seq', 33, true);
+SELECT pg_catalog.setval('"default".vne_icon_translations_id_seq', 46, true);
 
 
 --
@@ -3508,14 +3628,14 @@ SELECT pg_catalog.setval('"default".vne_ingredients_id_seq', 31, true);
 -- Name: vne_langs_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_langs_id_seq', 6, true);
+SELECT pg_catalog.setval('"default".vne_langs_id_seq', 7, true);
 
 
 --
 -- Name: vne_mailtemplate_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_mailtemplate_translations_id_seq', 20, true);
+SELECT pg_catalog.setval('"default".vne_mailtemplate_translations_id_seq', 24, true);
 
 
 --
@@ -3547,6 +3667,20 @@ SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 48, true);
 
 
 --
+-- Name: vne_serving_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_serving_translations_id_seq', 6, true);
+
+
+--
+-- Name: vne_servings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
+--
+
+SELECT pg_catalog.setval('"default".vne_servings_id_seq', 2, true);
+
+
+--
 -- Name: vne_settings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
@@ -3571,21 +3705,21 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1152, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 658, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 870, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 18, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 19, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 237, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 241, true);
 
 
 --
@@ -3634,6 +3768,14 @@ ALTER TABLE ONLY "default".vne_mailtemplates
 
 ALTER TABLE ONLY "default".vne_cats
     ADD CONSTRAINT "PK_0bdee08b5c108a0ac6a85774467" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_serving_translations PK_0dc8f78fd2fa6a62819b25f1a6d; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_serving_translations
+    ADD CONSTRAINT "PK_0dc8f78fd2fa6a62819b25f1a6d" PRIMARY KEY (id);
 
 
 --
@@ -3746,6 +3888,14 @@ ALTER TABLE ONLY "default".vne_tables
 
 ALTER TABLE ONLY "default".vne_employees
     ADD CONSTRAINT "PK_be6da89c037f846b6b791a35f8b" PRIMARY KEY (id);
+
+
+--
+-- Name: vne_servings PK_c3f64fa30f7cd7277b75c868314; Type: CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_servings
+    ADD CONSTRAINT "PK_c3f64fa30f7cd7277b75c868314" PRIMARY KEY (id);
 
 
 --
@@ -4019,6 +4169,14 @@ ALTER TABLE ONLY "default".vne_restaurants
 
 
 --
+-- Name: vne_serving_translations FK_ba0bb18061498374ba02a088f34; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_serving_translations
+    ADD CONSTRAINT "FK_ba0bb18061498374ba02a088f34" FOREIGN KEY (serving_id) REFERENCES "default".vne_servings(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: vne_word_translations FK_c7d449bf6c30c1b0c83af297543; Type: FK CONSTRAINT; Schema: default; Owner: vio
 --
 
@@ -4032,6 +4190,14 @@ ALTER TABLE ONLY "default".vne_word_translations
 
 ALTER TABLE ONLY "default".vne_tables
     ADD CONSTRAINT "FK_d70db2be1204137303fa4cf72b4" FOREIGN KEY (hall_id) REFERENCES "default".vne_halls(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: vne_serving_translations FK_dd6d1111b8ab2c8ac36231e7c4d; Type: FK CONSTRAINT; Schema: default; Owner: vio
+--
+
+ALTER TABLE ONLY "default".vne_serving_translations
+    ADD CONSTRAINT "FK_dd6d1111b8ab2c8ac36231e7c4d" FOREIGN KEY (lang_id) REFERENCES "default".vne_langs(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

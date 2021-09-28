@@ -4,6 +4,7 @@ import { DataService } from './data.service';
 import { OrderService } from './order.service';
 import { CatRepository } from './repositories/cat.repository';
 import { ProductRepository } from './repositories/product.repository';
+import { ServingRepository } from './repositories/serving.repository';
 import { WordRepository } from './repositories/word.repository';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { WordRepository } from './repositories/word.repository';
         WordRepository,        
         CatRepository,
         ProductRepository,
+        ServingRepository,
     ],
 })
 export class ServicesModule {}

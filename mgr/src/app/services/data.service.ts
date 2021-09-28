@@ -25,12 +25,12 @@ import { Hall } from "../model/orm/hall.model";
 import { Icon } from "../model/orm/icon.model";
 import { Cat } from "../model/orm/cat.model";
 import { Product } from "../model/orm/product.model";
+import { Serving } from "../model/orm/serving.model";
 
 @Injectable()
 export class DataService {
     public authData: IAuthData = null;
-    private root: string = "https://back.restclick.vio.net.ua/api/admin";   
-    //private root: string = "https://back.melink.to/api/admin";   
+    private root: string = "https://back.restclick.vio.net.ua/api/admin";      
     
     constructor (
         private http: HttpClient,
@@ -142,6 +142,14 @@ export class DataService {
     public productsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("products/delete-bulk", ids, true);}
     public productsCreate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/create", x, true);}
     public productsUpdate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/update", x, true);}  
+
+    public servingsAll(dto: IGetAll): Observable<IAnswer<Serving[]>> {return this.sendRequest(`servings/all`, dto, true);}    
+    public servingsChunk(dto: IGetChunk): Observable<IAnswer<Serving[]>> {return this.sendRequest("servings/chunk", dto, true);}
+    public servingsOne(id: number): Observable<IAnswer<Serving>> {return this.sendRequest(`servings/one/${id}`, null, true);}
+    public servingsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`servings/delete/${id}`, null, true);}
+    public servingsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("servings/delete-bulk", ids, true);}
+    public servingsCreate(x: Serving): Observable<IAnswer<void>> {return this.sendRequest("servings/create", x, true);}
+    public servingsUpdate(x: Serving): Observable<IAnswer<void>> {return this.sendRequest("servings/update", x, true);}     
     
     public mailtemplatesChunk(dto: IGetChunk): Observable<IAnswer<Mailtemplate[]>> {return this.sendRequest("mailtemplates/chunk", dto, true);}
     public mailtemplatesOne(id: number): Observable<IAnswer<Mailtemplate>> {return this.sendRequest(`mailtemplates/one/${id}`, null, true);}

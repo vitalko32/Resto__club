@@ -53,19 +53,7 @@ export class OrderService {
         }        
         
         this.cartSave();        
-    }
-
-    public cartDecreaseRecord(record: ICartRecord): void {
-        if (record.q > 1) {
-            record.q--;
-            this.cartSave();
-        }        
-    }
-
-    public cartIncreaseRecord(record: ICartRecord): void {
-        record.q++;
-        this.cartSave();
-    }
+    }    
 
     public cartRemoveRecord(record: ICartRecord): void {
         let index: number = this.cart.records.indexOf(record);

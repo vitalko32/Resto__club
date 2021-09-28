@@ -8,26 +8,20 @@ import { Wordbook } from "src/model/orm/wordbook.entity";
 import { Words } from "src/model/words.type";
 import { Lang } from "src/model/orm/lang.entity";
 import { Restaurant } from "src/model/orm/restaurant.entity";
+import { IGetAll } from "src/model/dto/getall.interface";
 
 @Injectable()
 export class WordsService extends APIService {
     constructor (
         @InjectRepository(Wordbook) private wordbookRepository: Repository<Wordbook>,
-        @InjectRepository(Lang) private langRepository: Repository<Lang>,
-        @InjectRepository(Restaurant) private restaurantRepository: Repository<Restaurant>,
+        @InjectRepository(Lang) private langRepository: Repository<Lang>,        
     ) {
         super();
     } 
     
-    public async all(restaurant_id: number): Promise<IAnswer<Words>> {                
+    public async all(dto: IGetAll): Promise<IAnswer<Words>> {                
         try {
-            const restaurant = await this.restaurantRepository.findOne(restaurant_id);
-
-            if (! restaurant_id) {
-                return {statusCode: 404, error: "restaurant not found"};
-            }
-
-            const lang = await this.langRepository.findOne(restaurant.lang_id);
+            const lang = await this.langRepository.findOne(dto.lang_id);
 
             if (!lang) {
                 return {statusCode: 404, error: "lang not found"};

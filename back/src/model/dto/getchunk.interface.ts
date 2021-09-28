@@ -4,4 +4,5 @@ export interface IGetChunk {
     readonly from?: number;
     readonly q?: number;
     readonly filter?: any; // JSON | string    
+    readonly lang_id?: number;
 }

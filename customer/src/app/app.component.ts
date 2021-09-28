@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppService } from './services/app.service';
 import { OrderService } from './services/order.service';
+import { ServingRepository } from './services/repositories/serving.repository';
 import { WordRepository } from './services/repositories/word.repository';
 
 @Component({
@@ -16,20 +17,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 	public wordsReady: boolean = false;
 	public tableReady: boolean = false;
 	public tableNotFound: boolean = false;
+	public servingsReady: boolean = false;
 
 	constructor(		
 		private wordRepository: WordRepository,
+		private servingRepository: ServingRepository,
 		private router: Router,
 		private appService: AppService,		
 		private orderService: OrderService,
 	) {}
 
-	get ready(): boolean {return this.wordsReady && this.tableReady;}		
+	get ready(): boolean {return this.wordsReady && this.tableReady && this.servingsReady;}		
 
 	public async ngOnInit(): Promise<void> {		
 		if (await this.initOrder()) {
 			this.initURLRoutine();		
 			this.initWords();
+			this.initServings();
 		}		
 	}
 
@@ -66,13 +70,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	private async initWords(): Promise<void> {
 		try {
-			this.wordRepository.restaurant_id = this.orderService.table.restaurant_id;
+			this.wordRepository.lang_id = this.orderService.table.lang_id;
 			await this.wordRepository.loadAll();					
 			this.wordsReady = true;
 		} catch (err) {
 			this.appService.showError(err);			
 		}		
 	}	
+
+	private async initServings(): Promise<void> {
+		try {
+			this.servingRepository.lang_id = this.orderService.table.lang_id;
+			await this.servingRepository.loadAll();
+			this.servingsReady = true;
+		} catch (err) {
+			this.appService.showError(err);
+		}
+	}
 
 	private initURLRoutine(): void {        		
 		this.router.events

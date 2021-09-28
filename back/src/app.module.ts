@@ -24,6 +24,8 @@ import { MailtemplateTranslation } from './model/orm/mailtemplate.translation.en
 import { Product } from './model/orm/product.entity';
 import { ProductImage } from './model/orm/product.image.entity';
 import { Restaurant } from './model/orm/restaurant.entity';
+import { Serving } from './model/orm/serving.entity';
+import { ServingTranslation } from './model/orm/serving.translation.entity';
 import { Setting } from './model/orm/setting.entity';
 import { Table } from './model/orm/table.entity';
 import { Transaction } from './model/orm/transaction.entity';
@@ -66,7 +68,9 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				Cat,
 				Product,
 				ProductImage,
-				Ingredient,
+				Ingredient,		
+				Serving,
+				ServingTranslation,				
 			],
 			synchronize: true,
 		}),

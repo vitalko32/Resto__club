@@ -23,7 +23,8 @@ export class TablesService {
                 seats: table.seats,
                 code: table.code,
                 hall_id: table.hall.id,
-                restaurant_id: table.hall.restaurant.id,                 
+                restaurant_id: table.hall.restaurant.id,        
+                lang_id: table.hall.restaurant.lang_id,         
                 currency_symbol: table.hall.restaurant.currency.symbol,
             };
 

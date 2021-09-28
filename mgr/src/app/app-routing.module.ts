@@ -18,6 +18,7 @@ import { HallsModule } from './views/halls/halls.module';
 import { IconsModule } from './views/icons/icons.module';
 import { CatsModule } from './views/cats/cats.module';
 import { ProductsModule } from './views/products/products.module';
+import { ServingsModule } from './views/servings/servings.module';
 
 const routes: Routes = [
 	{path: "", redirectTo: "/settings", pathMatch: "full"},
@@ -36,6 +37,7 @@ const routes: Routes = [
 	{path: "restaurants/icons", loadChildren: () => IconsModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/cats", loadChildren: () => CatsModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/products", loadChildren: () => ProductsModule, canActivate: [AuthGuard]}, 				
+	{path: "restaurants/servings", loadChildren: () => ServingsModule, canActivate: [AuthGuard]}, 				
 	{path: "utils/mailtemplates", loadChildren: () => MailtemplatesModule, canActivate: [AuthGuard]}, 		
 	{path: "**", redirectTo: "/settings"},
 ];

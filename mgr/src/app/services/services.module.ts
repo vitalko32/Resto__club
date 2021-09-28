@@ -23,6 +23,7 @@ import { IconRepository } from './repositories/icon.repository';
 import { CatRepository } from './repositories/cat.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { FilesService } from './files.service';
+import { ServingRepository } from './repositories/serving.repository';
 
 @NgModule({
     declarations: [],
@@ -51,6 +52,7 @@ import { FilesService } from './files.service';
 		IconRepository,
 		CatRepository,
 		ProductRepository,
+		ServingRepository,
 	],
 })
 export class ServicesModule { }

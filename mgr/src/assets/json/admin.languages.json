@@ -26,6 +26,7 @@
             "sidebar-submodule-transactions": "Транзакции", 
             "sidebar-submodule-cats": "Категории", 
             "sidebar-submodule-products": "Блюда", 
+            "sidebar-submodule-servings": "Способы подачи", 
             "sidebar-module-utils": "Служебные",    
             "sidebar-submodule-mailtemplates": "Шаблоны писем",                                                                                      
             
@@ -187,6 +188,10 @@
             "workspace-products-ingredients-pos": "Позиция",     
             "workspace-products-ingredients-excludable": "Исключаемый",     
 
+            "workspace-servings-h1": "Способы подачи",     
+            "workspace-servings-name": "Название",                 
+            "workspace-servings-pos": "Позиция",   
+
             "workspace-mailtemplates-h1": "Шаблоны писем",     
             "workspace-mailtemplates-name": "Название",     
             "workspace-mailtemplates-subject": "Тема",     
@@ -220,6 +225,7 @@
             "sidebar-submodule-transactions": "Transactions",      
             "sidebar-submodule-cats": "Categories",     
             "sidebar-submodule-products": "Dishes", 
+            "sidebar-submodule-servings": "Types of serving", 
             "sidebar-module-utils": "Utilities",    
             "sidebar-submodule-mailtemplates": "Mail templates",   
 
@@ -379,7 +385,11 @@
             "workspace-products-images-pos": "Position",      
             "workspace-products-ingredients-name": "Name",     
             "workspace-products-ingredients-pos": "Position",      
-            "workspace-products-ingredients-excludable": "Excludable",     
+            "workspace-products-ingredients-excludable": "Excludable",  
+            
+            "workspace-servings-h1": "Types of serving",     
+            "workspace-servings-name": "Name",                 
+            "workspace-servings-pos": "Position",   
 
             "workspace-mailtemplates-h1": "Mail templates",     
             "workspace-mailtemplates-name": "Name",     

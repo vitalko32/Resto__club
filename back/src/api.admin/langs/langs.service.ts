@@ -18,6 +18,8 @@ import { EmployeeStatus } from "src/model/orm/employee.status.entity";
 import { EmployeeStatusTranslation } from "src/model/orm/employee.status.translation.entity";
 import { Icon } from "src/model/orm/icon.entity";
 import { IconTranslation } from "src/model/orm/icon.translation.entity";
+import { Serving } from "src/model/orm/serving.entity";
+import { ServingTranslation } from "src/model/orm/serving.translation.entity";
 
 @Injectable()
 export class LangsService extends APIService {
@@ -31,6 +33,8 @@ export class LangsService extends APIService {
         @InjectRepository(EmployeeStatusTranslation) private employeeStatusTranslationRepository: Repository<EmployeeStatusTranslation>,                
         @InjectRepository(Icon) private iconRepository: Repository<Icon>,
         @InjectRepository(IconTranslation) private iconTranslationRepository: Repository<IconTranslation>,
+        @InjectRepository(Serving) private servingRepository: Repository<Serving>,
+        @InjectRepository(ServingTranslation) private servingTranslationRepository: Repository<ServingTranslation>,
     ) {
         super();
     } 
@@ -162,5 +166,10 @@ export class LangsService extends APIService {
         let itl: IconTranslation[] = [];
         il.forEach(i => itl.push(this.iconTranslationRepository.create({icon_id: i.id, lang_id})));        
         await this.iconTranslationRepository.save(itl);
+
+        let sl: Serving[] = await this.servingRepository.find();
+        let stl: ServingTranslation[] = [];
+        sl.forEach(s => stl.push(this.servingTranslationRepository.create({serving_id: s.id, lang_id})));
+        await this.servingTranslationRepository.save(stl);
     }    
 }

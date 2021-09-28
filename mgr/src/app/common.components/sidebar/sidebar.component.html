@@ -40,6 +40,7 @@
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'cats'"><a routerLink="/restaurants/cats"><span>{{currentLang.phrases['sidebar-submodule-cats']}}</span></a></div>                                        
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'products'"><a routerLink="/restaurants/products"><span>{{currentLang.phrases['sidebar-submodule-products']}}</span></a></div>                                        
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'icons'"><a routerLink="/restaurants/icons"><span>{{currentLang.phrases['sidebar-submodule-icons']}}</span></a></div>                    
+                    <div class="nav-item" [class.active]="currentUrl.parts[1] === 'servings'"><a routerLink="/restaurants/servings"><span>{{currentLang.phrases['sidebar-submodule-servings']}}</span></a></div>                    
                 </div>
                 
                 <div class="nav-item" [class.active]="currentUrl.parts[0] === 'utils'"><a (click)="toggleSub(2);"><span class="nav-utils">{{currentLang.phrases['sidebar-module-utils']}}</span></a></div>

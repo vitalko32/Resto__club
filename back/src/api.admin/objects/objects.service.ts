@@ -20,6 +20,8 @@ import { IconTranslation } from "src/model/orm/icon.translation.entity";
 import { Cat } from "src/model/orm/cat.entity";
 import { IUpdateParam } from "src/model/dto/updateparam.interface";
 import { Product } from "src/model/orm/product.entity";
+import { Serving } from "src/model/orm/serving.entity";
+import { ServingTranslation } from "src/model/orm/serving.translation.entity";
 
 @Injectable()
 export class ObjectsService extends APIService {
@@ -38,7 +40,9 @@ export class ObjectsService extends APIService {
         @InjectRepository(Icon) private iconRepository: Repository<Icon>,        
         @InjectRepository(IconTranslation) private iconTranslationRepository: Repository<IconTranslation>,        
         @InjectRepository(Cat) private catRepository: Repository<Cat>,        
-        @InjectRepository(Product) private productRepository: Repository<Product>,        
+        @InjectRepository(Product) private productRepository: Repository<Product>,     
+        @InjectRepository(Serving) private servingRepository: Repository<Serving>,        
+        @InjectRepository(ServingTranslation) private servingTranslationRepository: Repository<ServingTranslation>,          
     ) {
         super();
     }
