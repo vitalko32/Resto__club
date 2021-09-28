@@ -6,22 +6,25 @@ import { IProduct } from 'src/app/model/orm/product.interface';
 
 @Injectable()
 export class ProductRepository extends Repository<IProduct> {        
-    public filterCatId: number = null;        
+    public filterCatId: number = null;    
+    public filterRecommended: boolean = null;    
     
     constructor(protected dataService: DataService) {
-        super();        
-        this.chunkSortBy = "pos";        
+        super();                
         this.chunkLength = 12;
     }    
 
     public loadChunk(): Promise<void> {
         return new Promise((resolve, reject) => {            
+            const filter: any = {};
+            this.filterCatId !== null ? filter.cat_id = this.filterCatId : null;
+            this.filterRecommended !== null ? filter.recommended = this.filterRecommended : null;
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
-                filter: {cat_id: this.filterCatId},
+                sortBy: this.filterCatId !== null ? "pos" : "name",
+                sortDir: this.chunkSortDir,
+                filter,
             };
             this.dataService.productsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        

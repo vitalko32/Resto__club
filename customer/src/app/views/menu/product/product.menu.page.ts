@@ -18,6 +18,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 export class ProductMenuPage implements OnInit {
     public product: IProduct = null;
     public cat: ICat = null;
+    public catUrl: string = null;
     public q: number = 1;
 
     constructor(
@@ -40,14 +41,15 @@ export class ProductMenuPage implements OnInit {
         this.initIface();        
     }    
     
-    private initIface(): void {
-        this.appService.headBackLink = `/table/${this.table.code}/menu/${this.route.snapshot.params["cat_id"]}`;
-        this.appService.setTitle(this.cat.name);
+    private initIface(): void {        
+        this.appService.headBackLink = `/table/${this.table.code}/menu/${this.catUrl}`;
+        this.appService.setTitle(this.catUrl !== "recommended" ? this.cat.name : this.words["customer-common"]["recommended"]);
     }
 
     private async initCat(): Promise<void> {
         try {            
-            this.cat = await this.catRepository.loadOne(parseInt(this.route.snapshot.params["cat_id"]));            
+            this.catUrl = this.route.snapshot.params["cat"];
+            this.catUrl !== "recommended" ? this.cat = await this.catRepository.loadOne(parseInt(this.catUrl)) : null;            
         } catch (err) {
             err === 404 ? this.router.navigateByUrl(`/table/${this.table.code}/error/404`) : this.appService.showError(err);            
         }
@@ -55,7 +57,7 @@ export class ProductMenuPage implements OnInit {
 
     public async initProduct(): Promise<void> {
         try {
-            this.product = await this.productRepository.loadOne(parseInt(this.route.snapshot.params["product_id"]));            
+            this.product = await this.productRepository.loadOne(parseInt(this.route.snapshot.params["product"]));            
         } catch (err) {
             err === 404 ? this.router.navigateByUrl(`/table/${this.table.code}/error/404`) : this.appService.showError(err);            
         }
