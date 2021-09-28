@@ -5,9 +5,11 @@ import { Title } from "@angular/platform-browser";
 export class AppService {
     public url: string[] = []; 
     // iface       
+    public win: HTMLElement = null;
     public headTitle: string = "";    
     public headBackLink: string = null;
     public headCartHighlight: boolean = false;
+    public cartPanelActive: boolean = false;
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";

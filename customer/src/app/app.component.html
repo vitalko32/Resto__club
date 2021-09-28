@@ -1,7 +1,10 @@
 <error-notification></error-notification>
-<div class="wrap" *ngIf="ready">        
-    <router-outlet></router-outlet>    
-    <the-header></the-header>
-    <the-footer></the-footer>    
+<div class="win" #win>    
+    <div class="wrap" *ngIf="ready">        
+        <router-outlet></router-outlet>    
+        <the-header></the-header>
+        <the-footer></the-footer>    
+        <cart-panel></cart-panel>
+    </div>
+    <div *ngIf="tableNotFound">[table not found]</div>
 </div>
-<div *ngIf="tableNotFound">[table not found]</div>

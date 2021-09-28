@@ -32,7 +32,8 @@ export class CatMenuPage implements OnInit, OnDestroy {
 
     get table(): ITable {return this.orderService.table;}
     get words(): Words {return this.wordRepository.words;}
-    get scrolledToBottom(): boolean {return window.scrollY + window.innerHeight > document.body.scrollHeight - 100;}	    
+    get win(): HTMLElement {return this.appService.win;}
+    get scrolledToBottom(): boolean {return this.win.scrollHeight - this.win.scrollTop < this.win.clientHeight + 200;}	    
     get currencySymbol(): string {return this.orderService.table.currency_symbol;}    
     get pl(): IProduct[] {return this.productRepository.xlAll;}
     get plCanLoadMore(): boolean {return this.pl.length && !this.plLoadingMore && this.scrolledToBottom && !this.productRepository.exhausted;}     
@@ -45,11 +46,13 @@ export class CatMenuPage implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.productRepository.xlAll = [];
+        this.appService.win.removeEventListener("scroll", this.onScroll);
     }
 
     private initIface(): void {
         this.appService.headBackLink = `/table/${this.table.code}`;
         this.appService.setTitle(this.cat.name);
+        this.appService.win.addEventListener("scroll", this.onScroll.bind(this));
     }
 
     private async initCat(): Promise<void> {
@@ -70,9 +73,8 @@ export class CatMenuPage implements OnInit, OnDestroy {
             this.appService.showError(err);
         }
     }  
-
-    @HostListener('window:scroll', ['$event'])
-    public async onScroll(event: any): Promise<void> {
+    
+    public async onScroll(): Promise<void> {
         try {            
 			if (this.plCanLoadMore) {
 				this.plLoadingMore = true;

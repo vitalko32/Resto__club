@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppService } from './services/app.service';
@@ -12,6 +12,7 @@ import { WordRepository } from './services/repositories/word.repository';
 	encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, AfterViewInit {	
+	@ViewChild("win", {static: false}) winRef: ElementRef; 
 	public wordsReady: boolean = false;
 	public tableReady: boolean = false;
 	public tableNotFound: boolean = false;
@@ -33,9 +34,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	public ngAfterViewInit(): void {		
+		this.appService.win = this.winRef.nativeElement;		
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationEnd))
-			.subscribe(event => window.scrollY ? setTimeout(() => {window.scrollTo(0, 0);}, 1) : null);
+			.subscribe(event => this.appService.win.scrollTop ? setTimeout(() => {this.appService.win.scrollTo(0, 0);}, 1) : null);
 	}	
 
 	private async initOrder(): Promise<boolean> {		
