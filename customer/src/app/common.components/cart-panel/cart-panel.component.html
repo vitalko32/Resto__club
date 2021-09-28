@@ -31,6 +31,10 @@
                         <div class="cps-item" *ngFor="let s of sl"><radio-simple [checked]="cart.serving_id === s.id" [title]="s.name" (click)="cart.serving_id = s.id"></radio-simple></div>
                     </div>
                 </div>
+                <div class="cp-comment">
+                    <div class="cpc-title">{{words['customer-cart']['comment']}}:</div>
+                    <div class="cpc-tawrap"><textarea [(ngModel)]="cart.comment"></textarea></div>
+                </div>
             </ng-container>            
         </div>
         <div class="cp-foot" *ngIf="cart.records.length">

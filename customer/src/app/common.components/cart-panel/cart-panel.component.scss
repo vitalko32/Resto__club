@@ -41,6 +41,13 @@
                     }
                 }
             }
+            .cp-comment {
+                .cpc-title {font-weight: bold; margin-bottom: 5px;}
+                .cpc-tawrap {
+                    textarea {height: 60px; width: 100%; border-radius: 15px; border:1px var(--color-grey) solid; background: white; padding: 10px; resize: none; -ms-overflow-style: none; scrollbar-width: none; 
+                    &::-webkit-scrollbar {display: none;}            }
+                }
+            }
         }
         .cp-foot {
             height: 60px; padding: 15px; border-top:1px white dotted;
