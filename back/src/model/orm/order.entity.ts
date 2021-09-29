@@ -33,10 +33,10 @@ export class Order {
     @Column({nullable: true, default: null})
     employee_id: number;
 
-    @Column({nullable: true, default: null, type: "text"})
+    @Column({nullable: false, default: "", type: "text"})
     customer_comment: string;
 
-    @Column({nullable: true, default: null, type: "text"})
+    @Column({nullable: false, default: "", type: "text"})
     employee_comment: string;
 
     @Column({nullable: false, default: false})

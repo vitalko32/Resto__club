@@ -11,6 +11,7 @@ import { IProduct } from "../model/orm/product.interface";
 import { IServing } from "../model/orm/serving.interface";
 import { IOrderCreate } from "../model/dto/order.create.interface";
 import { IOrder } from "../model/orm/order.interface";
+import { IOrderAdd } from "../model/dto/order.add.interface";
 
 @Injectable()
 export class DataService {    
@@ -32,6 +33,8 @@ export class DataService {
     public productsLike(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/like/${id}`);}    
 
     public ordersCreate(dto: IOrderCreate): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/create", dto);}
+    public ordersAdd(dto: IOrderAdd): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/add", dto);}
+    public ordersCheck(id: number): Observable<IAnswer<IOrder>> {return this.sendRequest(`orders/check/${id}`);}
     
     private sendRequest (url: string, body: Object = null): Observable<any> {        
         return this.http.post (`${this.root}/${url}`, body);                          

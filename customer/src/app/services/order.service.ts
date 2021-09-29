@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Cart } from "../model/cart";
 import { ICartRecord } from "../model/cartrecord.interface";
+import { IOrderAdd } from "../model/dto/order.add.interface";
 import { IOrderCreate } from "../model/dto/order.create.interface";
 import { IOrder } from "../model/orm/order.interface";
 import { IProduct } from "../model/orm/product.interface";
@@ -81,7 +82,20 @@ export class OrderService {
     }
 
     private orderCheck(): void {
-        // TODO
+        if (this.order) {
+            this.dataService.ordersCheck(this.order.id).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.order = res.data;
+                } else if (res.statusCode === 404) {
+                    this.order = null;
+                    localStorage.removeItem("order");
+                } else {
+                    console.log(res);
+                }
+            }, err => {
+                console.log(err);
+            });
+        }
     }
 
     public orderCreate(): Promise<void> {
@@ -96,14 +110,25 @@ export class OrderService {
                     reject(res.error);
                 }
             }, err => {
-                reject(err.message)
+                reject(err.message);
             });
         });
     }
 
     public orderAdd(): Promise<void> {
         return new Promise((resolve, reject) => {
-            resolve(); // TODO
+            const dto: IOrderAdd = {order_id: this.order.id, cart: this.cart};
+            this.dataService.ordersAdd(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.order = res.data;
+                    this.orderSave();
+                    resolve();
+                } else {
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);
+            });
         });
     }
 
