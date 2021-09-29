@@ -1,14 +1,6 @@
-<div class="popup" [class.active]="active">
-    <div class="p-overlay" (click)="close()"></div>
-    <div class="p-win">
-        <div class="pw-content">
-            <div class="pw-txt">
-                <span>{{msg}}</span>
-            </div>            
-        </div>
-        <div class="pw-btnwrap">
-            <button type="button" (click)="close()">{{words['common']['close']}}</button>
-        </div>
-        <div class="pw-close" (click)="close()"><span></span></div>
+<div class="alert" [class.active]="active" (click)="close()">
+    <div class="a-content">
+        <div class="a-icon"><img src="/assets/images/alert.svg"></div>
+        <div class="a-msg" [innerHTML]="msg"></div>
     </div>
 </div>

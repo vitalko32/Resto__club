@@ -1,13 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Cart } from "../model/cart";
 import { ICartRecord } from "../model/cartrecord.interface";
+import { IOrderCreate } from "../model/dto/order.create.interface";
+import { IOrder } from "../model/orm/order.interface";
 import { IProduct } from "../model/orm/product.interface";
 import { ITable } from "../model/orm/table.interface";
 import { DataService } from "./data.service";
 
 @Injectable()
 export class OrderService {
-    public id: number = null;
+    public order: IOrder = null;
     public table: ITable = null;
     public cart: Cart = null;
 
@@ -59,5 +61,31 @@ export class OrderService {
         let index: number = this.cart.records.indexOf(record);
         this.cart.records.splice(index, 1);
         this.cartSave();
+    }
+
+    public orderCreate(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const dto: IOrderCreate = {table_id: this.table.id, cart: this.cart};
+            this.dataService.ordersCreate(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.order = res.data;
+                    resolve();
+                } else {
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message)
+            });
+        });
+    }
+
+    public orderAdd(): Promise<void> {
+        return new Promise((resolve, reject) => {
+
+        });
+    }
+
+    public orderSend(): Promise<void> {
+        return this.order ? this.orderAdd() : this.orderCreate();
     }
 }

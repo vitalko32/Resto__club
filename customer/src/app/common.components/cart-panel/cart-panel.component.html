@@ -35,10 +35,16 @@
                     <div class="cpc-title">{{words['customer-cart']['comment']}}:</div>
                     <div class="cpc-tawrap"><textarea [(ngModel)]="cart.comment"></textarea></div>
                 </div>
-            </ng-container>            
+            </ng-container>       
+            <ng-container *ngIf="!cart.records.length">
+                <span>{{words['customer-cart']['empty']}}</span>
+            </ng-container>     
         </div>
         <div class="cp-foot" *ngIf="cart.records.length">
-            <a>{{words['customer-cart']['order']}}</a>
+            <a (click)="onOrderSend()" [class.disabled]="orderLoading">{{words['customer-cart']['order']}}</a>
         </div>
     </div>
 </div>
+
+<the-confirm [msg]="words['customer-cart']['confirm-sending']" [(active)]="orderConfirmPanelActive" (confirmed)="orderSend()"></the-confirm>
+<the-alert [msg]="words['customer-cart']['order-accepted']" [(active)]="orderAlertPanelActive"></the-alert>

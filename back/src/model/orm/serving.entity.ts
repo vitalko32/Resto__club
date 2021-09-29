@@ -9,6 +9,9 @@ export class Serving {
     @Column({nullable: false, default: 0})
     pos: number;    
 
+    @Column({nullable: false, default: false})
+    defended: boolean;
+
     // relations    
     @OneToMany(type => ServingTranslation, translation => translation.serving, {cascade: true})
     translations: ServingTranslation[];

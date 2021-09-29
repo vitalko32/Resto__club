@@ -5,6 +5,7 @@ import { IServingTranslation } from "./serving.translation.interface";
 export class Serving extends Model {
     public id: number;    
     public pos: number;    
+    public defended: boolean;
     public translations?: IServingTranslation[];
 
     public init(ll: Lang[]): Serving {

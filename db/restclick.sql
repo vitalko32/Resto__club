@@ -26,6 +26,18 @@ CREATE SCHEMA "default";
 ALTER SCHEMA "default" OWNER TO vio;
 
 --
+-- Name: vne_orders_paymethod_enum; Type: TYPE; Schema: default; Owner: vio
+--
+
+CREATE TYPE "default".vne_orders_paymethod_enum AS ENUM (
+    'cash',
+    'card'
+);
+
+
+ALTER TYPE "default".vne_orders_paymethod_enum OWNER TO vio;
+
+--
 -- Name: vne_orders_status_enum; Type: TYPE; Schema: default; Owner: vio
 --
 
@@ -673,7 +685,9 @@ CREATE TABLE "default".vne_orders (
     discount_percent integer DEFAULT 0 NOT NULL,
     final_sum double precision,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
-    completed_at time without time zone
+    completed_at time without time zone,
+    need_products boolean DEFAULT false NOT NULL,
+    paymethod "default".vne_orders_paymethod_enum DEFAULT 'cash'::"default".vne_orders_paymethod_enum NOT NULL
 );
 
 
@@ -870,7 +884,8 @@ ALTER SEQUENCE "default".vne_serving_translations_id_seq OWNED BY "default".vne_
 
 CREATE TABLE "default".vne_servings (
     id integer NOT NULL,
-    pos integer DEFAULT 0 NOT NULL
+    pos integer DEFAULT 0 NOT NULL,
+    defended boolean DEFAULT false NOT NULL
 );
 
 
@@ -1490,11 +1505,9 @@ COPY "default".vne_ingredients (id, product_id, name, pos, excludable) FROM stdi
 8	3	Зелень	4	t
 9	4	Апельсины	1	t
 10	4	Грейпфруты	2	t
-1	1	Хлеб	1	f
 5	3	Хлеб	1	f
 6	3	Мясо	2	f
 7	3	Сыр	3	f
-2	1	Мясо	0	f
 18	1	Кетчуп	2	t
 3	1	Помидор	3	t
 4	1	Лист салата	4	t
@@ -1503,6 +1516,8 @@ COPY "default".vne_ingredients (id, product_id, name, pos, excludable) FROM stdi
 29	194	вафельный стаканчик	2	t
 30	195	мороженое фруктовое	0	f
 31	195	клубника	1	t
+2	1	Мясо	0	f
+1	1	Хлеб	1	f
 \.
 
 
@@ -1549,6 +1564,18 @@ COPY "default".vne_mailtemplates (id, name, defended) FROM stdin;
 --
 
 COPY "default".vne_order_product_ingredients (id, order_product_id, name, included) FROM stdin;
+1	1	Мясо	t
+2	1	Хлеб	t
+3	1	Кетчуп	t
+4	1	Помидор	t
+5	1	Лист салата	t
+6	2	Хлеб	t
+7	2	Мясо	t
+8	2	Сыр	t
+9	2	Зелень	t
+10	4	мороженое сливочное	t
+11	4	мороженое шоколадное	t
+12	4	вафельный стаканчик	t
 \.
 
 
@@ -1557,6 +1584,14 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 --
 
 COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, q, completed) FROM stdin;
+1	1	1	h0001	Гамбургер с телятиной	100	1	f
+2	1	1	h0002	Королевский чизбургер	305	2	f
+3	1	1	hf0001	Гамбургер "Бостон"	1000	3	f
+4	1	1	m0001	Мороженое "Сказка"	500	4	f
+5	2	1	hf00015	Какое-то блюдо 15	1000	1	f
+6	3	2	hf00015	Какое-то блюдо 15	1000	1	f
+7	4	1	hf00015	Какое-то блюдо 15	1000	1	f
+8	5	1	hf00015	Какое-то блюдо 15	1000	2	f
 \.
 
 
@@ -1564,7 +1599,12 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 -- Data for Name: vne_orders; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, customer_comment, employee_comment, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, completed_at) FROM stdin;
+COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, customer_comment, employee_comment, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, completed_at, need_products, paymethod) FROM stdin;
+1	33	1	21	\N		\N	f	f	active	0	\N	2021-09-29 19:37:36.424887	\N	f	cash
+2	33	1	21	\N		\N	f	f	active	0	\N	2021-09-29 19:46:07.036984	\N	f	cash
+3	33	1	21	\N	test	\N	f	f	active	0	\N	2021-09-29 19:59:36.82795	\N	f	cash
+4	33	1	21	\N		\N	f	f	active	0	\N	2021-09-29 20:00:22.929265	\N	f	cash
+5	33	1	21	\N		\N	f	f	active	0	\N	2021-09-29 20:01:07.059932	\N	f	cash
 \.
 
 
@@ -1782,11 +1822,11 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 347	183	2021-9/1632350619186_500.jpg	0
 348	184	2021-9/1632350544594_500.jpg	0
 349	184	2021-9/1632350619186_500.jpg	0
-365	1	2021-9/1632527193075_500.jpg	6
 364	1	2021-9/1632527188680_500.jpg	4
-366	1	2021-9/1632527210468_500.jpg	5
 363	1	2021-9/1632527184307_500.jpg	0
 370	195	2021-9/1632669997544_500.jpg	0
+365	1	2021-9/1632527193075_500.jpg	5
+366	1	2021-9/1632527210468_500.jpg	6
 \.
 
 
@@ -1795,13 +1835,13 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 --
 
 COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, active, likes, code, recommended, price, restaurant_id) FROM stdin;
+1	1	Гамбургер с телятиной	300	1200	10-20 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	2	h0001	f	100	21
 87	1	Какое-то блюдо 3	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	4	t	0	hf0003	f	1000	21
+3	1	Королевский чизбургер	410	755	10-12 мин	Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. 	1	t	6	h0002	t	305	21
 2	6	Тестовое блюдо	0	0			1	t	0		f	0	9
 4	4	Цитрусовая нарезка	250	100	5 мин.	Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. 	1	t	1	f0001	f	200	21
-1	1	Гамбургер с телятиной	300	1200	10-20 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	2	h0001	f	100	21
 85	1	Гамбургер "Бостон"	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	2	t	1	hf0001	f	1000	21
 97	1	Какое-то блюдо 13	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	14	t	0	hf00013	f	1000	21
-3	1	Королевский чизбургер	410	755	10-12 мин	Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. 	1	t	6	h0002	t	305	21
 101	1	Какое-то блюдо 17	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	18	t	0	hf00017	f	1000	21
 102	1	Какое-то блюдо 18	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	19	t	0	hf00018	f	1000	21
 103	1	Какое-то блюдо 19	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	20	t	0	hf00019	f	1000	21
@@ -1950,9 +1990,9 @@ COPY "default".vne_serving_translations (id, serving_id, lang_id, name) FROM std
 -- Data for Name: vne_servings; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_servings (id, pos) FROM stdin;
-1	1
-2	2
+COPY "default".vne_servings (id, pos, defended) FROM stdin;
+2	2	f
+1	1	t
 \.
 
 
@@ -3487,6 +3527,12 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 870	241	2	Type of serving
 871	242	1	Особые пожелания
 872	242	2	Special requests
+873	243	1	Корзина пуста
+874	243	2	Cart is empty
+875	244	1	Отправить заказ?
+876	244	2	Send an order?
+877	245	1	Ваш заказ принят!
+878	245	2	Your order is accepted!
 \.
 
 
@@ -3728,6 +3774,9 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 240	19	0	sum	\N
 241	19	0	serving	\N
 242	19	0	comment	\N
+243	19	0	empty	\N
+244	19	0	confirm-sending	\N
+245	19	0	order-accepted	\N
 \.
 
 
@@ -3833,21 +3882,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 1, false);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 12, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 1, false);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 8, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 1, false);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 5, true);
 
 
 --
@@ -3910,7 +3959,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1153, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 872, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 878, true);
 
 
 --
@@ -3924,7 +3973,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 19, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 242, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 245, true);
 
 
 --
@@ -4240,6 +4289,13 @@ CREATE INDEX "IDX_752fad6244eb8729bba8e6558d" ON "default".vne_employees USING b
 
 
 --
+-- Name: IDX_766c8969dd7b17ed014aac11ac; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_766c8969dd7b17ed014aac11ac" ON "default".vne_orders USING btree (paymethod);
+
+
+--
 -- Name: IDX_8dcdd7fca3bc0ba922e66e6e63; Type: INDEX; Schema: default; Owner: vio
 --
 
@@ -4251,6 +4307,13 @@ CREATE INDEX "IDX_8dcdd7fca3bc0ba922e66e6e63" ON "default".vne_mailtemplates USI
 --
 
 CREATE INDEX "IDX_961714c023daa0f447930913e0" ON "default".vne_settings USING btree (p);
+
+
+--
+-- Name: IDX_b58d3930162286260c1243cc35; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_b58d3930162286260c1243cc35" ON "default".vne_orders USING btree (final_sum);
 
 
 --

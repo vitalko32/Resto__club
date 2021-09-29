@@ -15,6 +15,10 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["cart-panel.component.scss"],
 })
 export class CartPanelComponent {
+    public orderLoading: boolean = false;
+    public orderConfirmPanelActive: boolean = false;
+    public orderAlertPanelActive: boolean = false;
+    
     constructor(
         private appService: AppService,
         private orderService: OrderService,
@@ -32,5 +36,27 @@ export class CartPanelComponent {
 
     public onQuantityChanged(r: ICartRecord): void {
         r.q > 0 ? this.orderService.cartSave() : this.orderService.cartRemoveRecord(r);
+    }
+
+    public onOrderSend(): void {
+        this.orderConfirmPanelActive = true;
+    }
+
+    public async orderSend(): Promise<void> {
+        try {
+            this.orderConfirmPanelActive = false;
+            await this.appService.pause(300);
+            this.orderLoading = true;
+            await this.orderService.orderSend();
+            this.orderLoading = false;
+            this.orderService.cartClear();
+            this.active = false;
+            this.orderAlertPanelActive = true;
+            await this.appService.pause(3000);
+            this.orderAlertPanelActive = false;
+        } catch (err) {
+            this.appService.showError(err);
+            this.orderLoading = false;
+        }
     }
 }

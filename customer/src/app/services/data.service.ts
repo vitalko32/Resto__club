@@ -9,6 +9,8 @@ import { ITable } from "../model/orm/table.interface";
 import { ICat } from "../model/orm/cat.interface";
 import { IProduct } from "../model/orm/product.interface";
 import { IServing } from "../model/orm/serving.interface";
+import { IOrderCreate } from "../model/dto/order.create.interface";
+import { IOrder } from "../model/orm/order.interface";
 
 @Injectable()
 export class DataService {    
@@ -28,6 +30,8 @@ export class DataService {
     public productsChunk(dto: IGetChunk): Observable<IAnswer<IProduct[]>> {return this.sendRequest("products/chunk", dto);}
     public productsOne(id: number): Observable<IAnswer<IProduct>> {return this.sendRequest(`products/one/${id}`);}    
     public productsLike(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/like/${id}`);}    
+
+    public ordersCreate(dto: IOrderCreate): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/create", dto);}
     
     private sendRequest (url: string, body: Object = null): Observable<any> {        
         return this.http.post (`${this.root}/${url}`, body);                          

@@ -19,7 +19,7 @@ export class FooterComponent implements AfterViewInit {
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get invoiceDisabled(): boolean {return !this.orderService.id;}      
+    get invoiceDisabled(): boolean {return !this.orderService.order;}      
     
     public async ngAfterViewInit(): Promise<void> {
         await this.appService.pause(1);

@@ -11,6 +11,11 @@ export enum OrderStatus {
     Cancelled = "cancelled",    
 }
 
+export enum Paymethod {
+    Cash = "cash",
+    Card = "card",
+}
+
 @Entity({name: "vne_orders"})
 export class Order {
     @PrimaryGeneratedColumn()
@@ -40,15 +45,23 @@ export class Order {
     @Column({nullable: false, default: false})
     need_invoice: boolean;
 
-    @Index()
-    @Column({type: "enum", enum: OrderStatus, nullable: false, default: OrderStatus.Active})
-    status: OrderStatus;
+    @Column({nullable: false, default: false})
+    need_products: boolean;    
 
     @Column({nullable: false, default: 0})
     discount_percent: number;
 
+    @Index()
     @Column({nullable: true, default: null, type: "float"}) // вычисляется при закрытии
     final_sum: number;
+
+    @Index()
+    @Column({type: "enum", enum: OrderStatus, nullable: false, default: OrderStatus.Active})
+    status: OrderStatus;
+
+    @Index()
+    @Column({type: "enum", enum: Paymethod, nullable: false, default: Paymethod.Cash})
+    paymethod: Paymethod;
     
     @Index()
     @CreateDateColumn()
