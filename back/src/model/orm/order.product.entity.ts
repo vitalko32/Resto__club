@@ -19,6 +19,9 @@ export class OrderProduct {
     @Column({nullable: true, default: null})
     name: string;
 
+    @Column({nullable: true, default: null})
+    img: string;
+
     @Column({nullable: false, default: 0, type: "float"})
     price: number;
 

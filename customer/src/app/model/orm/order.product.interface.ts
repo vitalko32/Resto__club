@@ -4,6 +4,7 @@ export interface IOrderProduct {
     readonly serving_id: number;
     readonly code: string;
     readonly name: string;
+    readonly img: string;
     readonly price: number;
     readonly q: number;
     readonly completed: boolean;

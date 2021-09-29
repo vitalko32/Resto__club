@@ -40,6 +40,7 @@ export class OrdersService extends APIService {
                 product.serving_id = dto.cart.serving_id;
                 product.code = r.product.code;
                 product.name = r.product.name;
+                product.img = r.product.images.length ? r.product.images[0].img : null;
                 product.price = r.product.price;
                 product.q = r.q;
                 product.ingredients = [];

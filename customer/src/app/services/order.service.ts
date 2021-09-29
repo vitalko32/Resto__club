@@ -10,11 +10,13 @@ import { DataService } from "./data.service";
 @Injectable()
 export class OrderService {
     public order: IOrder = null;
+    private orderCheckInteval: number = null;
     public table: ITable = null;
     public cart: Cart = null;
 
     constructor(private dataService: DataService) {
         this.initCart();
+        this.initOrder();
     }
 
     get cartQ(): number {return this.cart.records.length ? this.cart.records.map(r => r.q).reduce((acc, x) => acc + x) : 0;}
@@ -31,9 +33,15 @@ export class OrderService {
         });
     }
 
-    public initCart(): void {
+    private initCart(): void {
         let data: string = localStorage.getItem("cart");       
         this.cart = data ? JSON.parse(data) : new Cart();            
+    }
+
+    private initOrder(): void {
+        let data: string = localStorage.getItem("order");       
+        this.order = data ? JSON.parse(data) : null;  
+        this.orderStartChecking(); // периодически проверяем актуальность и состояние заказа
     }
 
     public cartSave(): void {        
@@ -63,12 +71,26 @@ export class OrderService {
         this.cartSave();
     }
 
+    public orderSave(): void {        
+        localStorage.setItem("order", JSON.stringify(this.order));        
+    }
+
+    private orderStartChecking(): void {
+        this.orderCheck();
+        this.orderCheckInteval = window.setInterval(() => this.orderCheck(), 10000);
+    }
+
+    private orderCheck(): void {
+        // TODO
+    }
+
     public orderCreate(): Promise<void> {
         return new Promise((resolve, reject) => {
             const dto: IOrderCreate = {table_id: this.table.id, cart: this.cart};
             this.dataService.ordersCreate(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
+                    this.orderSave();
                     resolve();
                 } else {
                     reject(res.error);
@@ -81,7 +103,7 @@ export class OrderService {
 
     public orderAdd(): Promise<void> {
         return new Promise((resolve, reject) => {
-
+            resolve(); // TODO
         });
     }
 
