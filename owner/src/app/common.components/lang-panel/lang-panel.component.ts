@@ -28,6 +28,9 @@ export class LangPanelComponent {
     }
 
     public setLang(l: Lang): void {
-        this.appService.setLang(l);        
+        if (this.currentLang.id !== l.id) {
+            this.appService.setLang(l);   
+            this.close();     
+        }        
     }  
 }
