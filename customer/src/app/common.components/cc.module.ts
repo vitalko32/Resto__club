@@ -12,6 +12,7 @@ import { FooterComponent } from './footer/footer.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HeaderComponent } from './header/header.component';
 import { InputNumberComponent } from './input-number/input-number.component';
+import { InvoicePanelComponent } from './invoice-panel/invoice-panel.component';
 import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
         FooterComponent,
         GalleryComponent,
         CartPanelComponent,
+        InvoicePanelComponent,
         RadioSimpleComponent,
     ],
     exports: [
@@ -44,6 +46,7 @@ import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
         FooterComponent,
         GalleryComponent,
         CartPanelComponent,
+        InvoicePanelComponent,
         RadioSimpleComponent,
     ],    
 })

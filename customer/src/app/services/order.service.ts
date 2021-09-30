@@ -2,8 +2,10 @@ import { Injectable } from "@angular/core";
 import { Cart } from "../model/cart";
 import { ICartRecord } from "../model/cartrecord.interface";
 import { IOrderAdd } from "../model/dto/order.add.interface";
+import { IOrderCallWaiter } from "../model/dto/order.callwaiter.interface";
+import { IOrderClose } from "../model/dto/order.close.interface";
 import { IOrderCreate } from "../model/dto/order.create.interface";
-import { IOrder } from "../model/orm/order.interface";
+import { IOrder, Paymethod } from "../model/orm/order.interface";
 import { IProduct } from "../model/orm/product.interface";
 import { ITable } from "../model/orm/table.interface";
 import { DataService } from "./data.service";
@@ -22,6 +24,8 @@ export class OrderService {
 
     get cartQ(): number {return this.cart.records.length ? this.cart.records.map(r => r.q).reduce((acc, x) => acc + x) : 0;}
     get cartS(): number {return this.cart.records.length ? this.cart.records.map(r => r.q * r.product.price).reduce((acc, x) => acc + x) : 0;}    
+    get orderSubtotal(): number {return this.order.products.length ? this.order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;}
+    get orderTotal(): number {return (this.orderSubtotal / 100) * (100 - this.order.discount_percent);}
 
     public async initTable(code: string): Promise<number> {
         return new Promise((resolve, reject) => {
@@ -76,16 +80,21 @@ export class OrderService {
         localStorage.setItem("order", JSON.stringify(this.order));        
     }
 
-    private orderStartChecking(): void {
+    public orderStartChecking(): void {
         this.orderCheck();
         this.orderCheckInteval = window.setInterval(() => this.orderCheck(), 10000);
     }
+
+    public orderStopChecking(): void {
+        window.clearInterval(this.orderCheckInteval);
+    } 
 
     private orderCheck(): void {
         if (this.order) {
             this.dataService.ordersCheck(this.order.id).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
+                    this.orderSave();
                 } else if (res.statusCode === 404) {
                     this.order = null;
                     localStorage.removeItem("order");
@@ -119,6 +128,43 @@ export class OrderService {
         return new Promise((resolve, reject) => {
             const dto: IOrderAdd = {order_id: this.order.id, cart: this.cart};
             this.dataService.ordersAdd(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.order = res.data;
+                    this.orderSave();
+                    resolve();
+                } else {
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);
+            });
+        });
+    }
+
+    public orderClose(paymethod: Paymethod): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const dto: IOrderClose = {order_id: this.order.id, paymethod};
+            this.dataService.ordersClose(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.order = res.data;
+                    this.orderSave();
+                    resolve();
+                } else {
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);
+            });
+        });
+    }
+
+    public callWaiter(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const dto: IOrderCallWaiter = {
+                order_id: this.order ? this.order.id : null,
+                table_id: this.order ? null : this.table.id,
+            };
+            this.dataService.ordersCallWaiter(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
                     this.orderSave();

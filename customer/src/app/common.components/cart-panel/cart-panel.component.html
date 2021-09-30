@@ -21,8 +21,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="cp-sum">
-                    <div>{{words['customer-cart']['sum']}}:</div>
+                <div class="cp-total">
+                    <div>{{words['customer-cart']['total']}}:</div>
                     <div>{{s | number:'1.2-2'}}&nbsp;{{table.currency_symbol}}</div>
                 </div>
                 <div class="cp-serving">
@@ -40,7 +40,7 @@
                 <span>{{words['customer-cart']['empty']}}</span>
             </ng-container>     
         </div>
-        <div class="cp-foot" *ngIf="cart.records.length">
+        <div class="cp-foot" *ngIf="cart.records.length && !order?.need_invoice">
             <a (click)="onOrderSend()" [class.disabled]="orderLoading">{{words['customer-cart']['order']}}</a>
         </div>
     </div>

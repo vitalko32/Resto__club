@@ -10,8 +10,10 @@ import { ICat } from "../model/orm/cat.interface";
 import { IProduct } from "../model/orm/product.interface";
 import { IServing } from "../model/orm/serving.interface";
 import { IOrderCreate } from "../model/dto/order.create.interface";
-import { IOrder } from "../model/orm/order.interface";
 import { IOrderAdd } from "../model/dto/order.add.interface";
+import { IOrder } from "../model/orm/order.interface";
+import { IOrderClose } from "../model/dto/order.close.interface";
+import { IOrderCallWaiter } from "../model/dto/order.callwaiter.interface";
 
 @Injectable()
 export class DataService {    
@@ -35,6 +37,8 @@ export class DataService {
     public ordersCreate(dto: IOrderCreate): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/create", dto);}
     public ordersAdd(dto: IOrderAdd): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/add", dto);}
     public ordersCheck(id: number): Observable<IAnswer<IOrder>> {return this.sendRequest(`orders/check/${id}`);}
+    public ordersClose(dto: IOrderClose): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/close", dto);}
+    public ordersCallWaiter(dto: IOrderCallWaiter): Observable<IAnswer<IOrder>> {return this.sendRequest("orders/call-waiter", dto);}
     
     private sendRequest (url: string, body: Object = null): Observable<any> {        
         return this.http.post (`${this.root}/${url}`, body);                          

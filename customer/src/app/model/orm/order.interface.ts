@@ -1,3 +1,6 @@
+import { Model } from "../model";
+import { IOrderProduct } from "./order.product.interface";
+
 export enum OrderStatus {
     Active = "active",
     Completed = "completed",
@@ -9,7 +12,7 @@ export enum Paymethod {
     Card = "card",
 }
 
-export interface IOrder {
+export interface IOrder extends Model {
     readonly id: number;
     readonly table_id: number;
     readonly hall_id: number;
@@ -25,5 +28,6 @@ export interface IOrder {
     readonly status: OrderStatus;
     readonly paymethod: Paymethod;    
     readonly created_at: string;    
-    readonly completed_at: Date;
+    readonly completed_at: string;
+    readonly products: IOrderProduct[];    
 }

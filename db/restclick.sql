@@ -686,9 +686,9 @@ CREATE TABLE "default".vne_orders (
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     completed_at time without time zone,
     need_products boolean DEFAULT false NOT NULL,
-    paymethod "default".vne_orders_paymethod_enum DEFAULT 'cash'::"default".vne_orders_paymethod_enum NOT NULL,
     customer_comment text DEFAULT ''::text NOT NULL,
-    employee_comment text DEFAULT ''::text NOT NULL
+    employee_comment text DEFAULT ''::text NOT NULL,
+    paymethod "default".vne_orders_paymethod_enum DEFAULT 'cash'::"default".vne_orders_paymethod_enum NOT NULL
 );
 
 
@@ -1598,6 +1598,60 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 29	16	Кетчуп	t
 30	16	Помидор	t
 31	16	Лист салата	t
+32	17	Мясо	t
+33	17	Хлеб	t
+34	17	Кетчуп	t
+35	17	Помидор	t
+36	17	Лист салата	t
+37	18	Мясо	t
+38	18	Хлеб	t
+39	18	Кетчуп	t
+40	18	Помидор	t
+41	18	Лист салата	t
+42	19	Мясо	t
+43	19	Хлеб	t
+44	19	Кетчуп	t
+45	19	Помидор	t
+46	19	Лист салата	t
+47	20	Мясо	t
+48	20	Хлеб	t
+49	20	Кетчуп	t
+50	20	Помидор	t
+51	20	Лист салата	t
+52	22	Мясо	t
+53	22	Хлеб	t
+54	22	Кетчуп	t
+55	22	Помидор	t
+56	22	Лист салата	t
+57	25	Мясо	t
+58	25	Хлеб	t
+59	25	Кетчуп	t
+60	25	Помидор	t
+61	25	Лист салата	t
+62	27	мороженое сливочное	t
+63	27	мороженое шоколадное	t
+64	27	вафельный стаканчик	t
+65	28	Мясо	t
+66	28	Хлеб	t
+67	28	Кетчуп	t
+68	28	Помидор	t
+69	28	Лист салата	t
+70	29	Хлеб	t
+71	29	Мясо	t
+72	29	Сыр	t
+73	29	Зелень	t
+74	30	мороженое сливочное	t
+75	30	мороженое шоколадное	t
+76	30	вафельный стаканчик	t
+77	31	мороженое сливочное	t
+78	31	мороженое шоколадное	t
+79	31	вафельный стаканчик	t
+80	32	мороженое сливочное	t
+81	32	мороженое шоколадное	t
+82	32	вафельный стаканчик	t
+83	33	мороженое сливочное	t
+84	33	мороженое шоколадное	t
+85	33	вафельный стаканчик	t
 \.
 
 
@@ -1622,6 +1676,23 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 14	11	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 15	11	2	h0002	Королевский чизбургер	305	1	f	2021-9/1632351029146_500.jpg
 16	12	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+17	13	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+18	14	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+19	14	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+20	15	1	h0001	Гамбургер с телятиной	100	2	f	2021-9/1632527184307_500.jpg
+21	15	1	hf00015	Какое-то блюдо 15	1000	1	f	2021-9/1632350544594_500.jpg
+22	15	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+23	15	1	hf00020	Какое-то блюдо 20	1000	1	f	2021-9/1632350544594_500.jpg
+24	15	1	hf00077	Какое-то блюдо 77	1000	1	f	2021-9/1632350544594_500.jpg
+25	16	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+26	16	1	hf0004	Какое-то блюдо 4	1000	1	f	2021-9/1632350544594_500.jpg
+27	16	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+28	17	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+29	17	1	h0002	Королевский чизбургер	305	1	f	2021-9/1632351029146_500.jpg
+30	17	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+31	18	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+32	19	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+33	20	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
 \.
 
 
@@ -1629,19 +1700,28 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 -- Data for Name: vne_orders; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, completed_at, need_products, paymethod, customer_comment, employee_comment) FROM stdin;
-1	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:37:36.424887	\N	f	cash		
-2	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:46:07.036984	\N	f	cash		
-3	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:59:36.82795	\N	f	cash		
-4	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:00:22.929265	\N	f	cash		
-5	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:01:07.059932	\N	f	cash		
-6	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:04:21.826392	\N	f	cash		
-7	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:08:31.197834	\N	f	cash		
-8	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:15:19.592197	\N	f	cash		
-9	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:46:24.864196	\N	f	cash		
-10	33	1	21	\N	f	f	active	0	\N	2021-09-30 01:15:52.684241	\N	f	cash		
-11	33	1	21	\N	f	f	completed	0	\N	2021-09-30 01:32:36.071462	\N	f	cash		
-12	33	1	21	\N	f	f	active	0	\N	2021-09-30 01:52:41.812539	\N	f	cash		
+COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, completed_at, need_products, customer_comment, employee_comment, paymethod) FROM stdin;
+1	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:37:36.424887	\N	f			cash
+2	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:46:07.036984	\N	f			cash
+3	33	1	21	\N	f	f	active	0	\N	2021-09-29 19:59:36.82795	\N	f			cash
+4	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:00:22.929265	\N	f			cash
+5	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:01:07.059932	\N	f			cash
+6	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:04:21.826392	\N	f			cash
+7	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:08:31.197834	\N	f			cash
+8	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:15:19.592197	\N	f			cash
+9	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:46:24.864196	\N	f			cash
+10	33	1	21	\N	f	f	active	0	\N	2021-09-30 01:15:52.684241	\N	f			cash
+11	33	1	21	\N	f	f	completed	0	\N	2021-09-30 01:32:36.071462	\N	f			cash
+12	33	1	21	\N	f	f	active	0	\N	2021-09-30 01:52:41.812539	\N	f			cash
+13	33	1	21	\N	f	f	active	0	\N	2021-09-30 21:50:05.352669	\N	f			cash
+14	33	1	21	\N	f	t	active	0	\N	2021-09-30 22:02:14.884161	\N	t			cash
+15	33	1	21	\N	f	f	active	10	\N	2021-09-30 22:49:06.120396	\N	f			cash
+16	33	1	21	\N	f	f	active	0	\N	2021-09-30 23:06:33.262757	\N	f			cash
+17	33	1	21	\N	f	t	active	0	\N	2021-09-30 23:30:54.056362	\N	f			cash
+18	33	1	21	\N	f	t	completed	0	\N	2021-09-30 23:51:43.753031	\N	f			card
+19	33	1	21	\N	t	t	completed	0	\N	2021-10-01 01:16:02.416953	\N	f			cash
+20	33	1	21	\N	f	f	completed	0	\N	2021-10-01 01:26:29.700644	\N	f			cash
+21	33	1	21	\N	t	f	active	0	\N	2021-10-01 01:27:00.455782	\N	f			cash
 \.
 
 
@@ -1987,8 +2067,8 @@ COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, 
 --
 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9880
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9860
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
 4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0
@@ -3154,6 +3234,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1151	21	-20	2021-09-27 01:00:00.025793	auto
 1152	21	-20	2021-09-28 01:00:00.015689	auto
 1153	21	-20	2021-09-29 01:00:00.021474	auto
+1154	21	-20	2021-10-01 01:00:00.025234	auto
 \.
 
 
@@ -3580,6 +3661,46 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 876	244	2	Send an order?
 877	245	1	Ваш заказ принят!
 878	245	2	Your order is accepted!
+879	246	1	Ваш счет
+880	246	2	Invoice
+881	247	1	Счет не открыт
+882	247	2	Invoice is not open
+883	248	1	Дата открытия
+884	248	2	Created at
+885	249	1	Состояние
+886	249	2	Status
+887	250	1	официант вызван
+888	250	2	waiter is called
+889	251	1	заказ дополнен
+890	251	2	items added to order
+891	252	1	расчет
+892	252	2	payment
+893	253	1	Закрыть счет
+894	253	2	Pay off
+895	254	1	№ счета
+896	254	2	Invoice #
+897	255	1	Ваш заказ
+898	255	2	Your order
+899	256	1	Сумма
+900	256	2	Subtotal
+901	257	1	Итого
+902	257	2	Total
+903	258	1	Скидка
+904	258	2	Discount
+905	259	1	Способ оплаты
+906	259	2	Payment method
+907	260	1	наличные
+908	260	2	cash
+909	261	1	банковская карта
+910	261	2	bank card
+911	262	1	Хотите закрыть счет и рассчитаться?
+912	262	2	Do you want to pay off?
+913	263	1	Пожалуйста, ожидайте официанта
+914	263	2	Please expect a waiter
+915	264	1	Вызвать официанта?
+916	264	2	Call the waiter?
+917	265	1	Пожалуйста, ожидайте официанта
+918	265	2	Please expect a waiter
 \.
 
 
@@ -3607,6 +3728,7 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 17	customer-menu	18
 18	customer-common	16
 19	customer-cart	19
+20	customer-invoice	20
 \.
 
 
@@ -3818,12 +3940,32 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 237	18	0	recommended	\N
 238	19	0	cart	\N
 239	19	0	order	\N
-240	19	0	sum	\N
 241	19	0	serving	\N
 242	19	0	comment	\N
 243	19	0	empty	\N
 244	19	0	confirm-sending	\N
 245	19	0	order-accepted	\N
+246	20	0	invoice	\N
+247	20	0	not-open	\N
+248	20	0	created-at	\N
+249	20	0	status	\N
+250	20	0	need-waiter	\N
+251	20	0	need-products	\N
+252	20	0	need-invoice	\N
+253	20	0	close	\N
+254	20	0	no	\N
+255	20	0	your-order	\N
+240	19	0	total	\N
+256	20	0	subtotal	\N
+257	20	0	total	\N
+258	20	0	discount	\N
+259	20	0	paymethod	\N
+260	20	0	cash	\N
+261	20	0	card	\N
+262	20	0	confirm-close	\N
+264	18	0	confirm-waiter	\N
+263	20	0	closed-msg	\N
+265	18	0	wait-waiter	\N
 \.
 
 
@@ -3929,21 +4071,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 31, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 85, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 16, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 33, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 12, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 21, true);
 
 
 --
@@ -3999,28 +4141,28 @@ SELECT pg_catalog.setval('"default".vne_tables_id_seq', 60, true);
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1153, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1154, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 878, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 918, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 19, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 20, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 245, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 265, true);
 
 
 --

@@ -10,6 +10,7 @@ export class AppService {
     public headBackLink: string = null;
     public headCartHighlight: boolean = false;
     public cartPanelActive: boolean = false;
+    public invoicePanelActive: boolean = false;
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";
@@ -51,5 +52,9 @@ export class AppService {
         }            
     
         return text;
-    }     
+    }  
+    
+    public twoDigits(n: number): string {
+        return (n < 10) ? `0${n}` : `${n}`;
+    }
 }

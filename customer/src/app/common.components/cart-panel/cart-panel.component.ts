@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Cart } from "src/app/model/cart";
 import { ICartRecord } from "src/app/model/cartrecord.interface";
+import { IOrder } from "src/app/model/orm/order.interface";
 import { IServing } from "src/app/model/orm/serving.interface";
 import { ITable } from "src/app/model/orm/table.interface";
 import { Words } from "src/app/model/orm/words.type";
@@ -33,6 +34,7 @@ export class CartPanelComponent {
     get s(): number {return this.orderService.cartS;}
     get table(): ITable {return this.orderService.table;}
     get sl(): IServing[] {return this.servingRepository.xlAll;}
+    get order(): IOrder {return this.orderService.order;}
 
     public onQuantityChanged(r: ICartRecord): void {
         r.q > 0 ? this.orderService.cartSave() : this.orderService.cartRemoveRecord(r);
