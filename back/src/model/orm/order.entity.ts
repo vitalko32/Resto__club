@@ -68,7 +68,11 @@ export class Order {
     created_at: Date;
     
     @Index()
-    @Column({nullable: true, default: null, type: "time without time zone"})
+    @Column({nullable: true, default: null})
+    accepted_at: Date;
+
+    @Index()
+    @Column({nullable: true, default: null})
     completed_at: Date;
 
     // relations

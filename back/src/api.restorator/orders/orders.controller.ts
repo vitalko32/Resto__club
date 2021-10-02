@@ -4,6 +4,7 @@ import { OrdersService } from "./orders.service";
 import { Order } from "../../model/orm/order.entity";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
+import { IOrderAccept } from "./dto/order.accept.interface";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -14,5 +15,12 @@ export class OrdersController {
     @Post("all")
     public all(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
         return this.ordersService.all(dto);
-    }     
+    } 
+    
+    // accept
+    @UseGuards(EmployeesGuard)
+    @Post("accept")
+    public accept(@Body() dto: IOrderAccept): Promise<IAnswer<void>> {
+        return this.ordersService.accept(dto);
+    }
 }

@@ -16,15 +16,20 @@
                 @media (min-width:1200px) {margin: 0 15px 0 0;}  
                 flex: 1;
                 .oc-table {
+                    @media (min-width:0) {justify-content: space-between;}
+                    @media (min-width:1200px) {justify-content: flex-start;}  
                     margin-bottom: 5px; display: flex; align-items: center;
-                    .oct-title {padding-bottom: 5px; border-bottom: 1px var(--color-grey) solid; font-size: 20px; font-weight: bold;}
-                    .oct-btn {
-                        width:30px; height: 30px; line-height: 30px; text-align: center; background-color: white; box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 0 0 10px;                    
-                        span::before {font-family: "fa-solid"; font-size: 16px;}                        
-                        &.need-waiter {span::before {content: "\f0f3";}}
-                        &.need-invoice {span::before {content: "\f543";}}
-                        &.need-products {span::before {content: "\f055";}}
-                    }
+                    .oct-title {padding-bottom: 5px; border-bottom: 1px var(--color-grey) solid; font-size: 20px; font-weight: bold; white-space: nowrap;}
+                    .oct-btns {                        
+                        display: flex;
+                        .oct-btn {
+                            width:30px; height: 30px; line-height: 30px; text-align: center; background-color: white; box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 0 0 10px;                    
+                            span::before {font-family: "fa-solid"; font-size: 16px;}                        
+                            &.need-waiter {span::before {content: "\f0f3";}}
+                            &.need-invoice {span::before {content: "\f543";}}
+                            &.need-products {span::before {content: "\f055";}}
+                        }
+                    }                    
                 }
             }             
             .o-dash {
@@ -38,7 +43,7 @@
                 .od-btn {                                       
                     width:40px; height: 40px; line-height: 40px; text-align: center; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 0 0 10px;                    
                     span::before {font-family: "fa-solid"; font-size: 20px;}
-                    &.take {span::before {content:"\f04b";}}
+                    &.accept {span::before {content:"\f04b";}}
                     &.view {span::before {content:"\f06e";}}
                     &.cancel {span::before { content:"\f00d"; color: var(--color-red);}}                    
                 }

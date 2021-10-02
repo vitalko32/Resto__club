@@ -1,46 +1,36 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { IndexOrdersPage } from "../index.orders.page";
 
 @Component({
     selector: "index-my-orders-page",
     templateUrl: "index.my.orders.page.html",
 })
-export class IndexMyOrdersPage {
-    public langSubscription: Subscription = null;
-    public authSubscription: Subscription = null;
-
+export class IndexMyOrdersPage extends IndexOrdersPage implements OnInit {
     constructor(
-        private appService: AppService,        
-        private wordRepository: WordRepository,           
-        private authService: AuthService,         
-        private router: Router,      
-    ) {}
-
-    get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}
+        protected appService: AppService,        
+        protected wordRepository: WordRepository,           
+        protected orderRepository: OrderRepository,
+        protected authService: AuthService,         
+        protected router: Router,      
+    ) {
+        super(appService, wordRepository, orderRepository, authService, router);
+    }    
 
     public ngOnInit(): void {        
-        this.initTitle();  
         this.initAuthCheck();           
-    }
-
-    public ngOnDestroy(): void {
-        this.langSubscription.unsubscribe();
-        this.authSubscription.unsubscribe();
+        this.initTitle();          
     }
 
     private initTitle(): void {
         this.appService.setTitle(this.words["restorator-orders"]["title-my-index"][this.currentLang.slug]);
         this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-my-index"][lang.slug]));           
-    }
-
-    private initAuthCheck(): void {
-        this.authSubscription = this.authService.authData.subscribe(ad => ad.employee.restaurant.money < 0 ? this.router.navigateByUrl("/") : null);
-    }
+    }    
 }

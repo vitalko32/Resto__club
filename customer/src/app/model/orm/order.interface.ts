@@ -27,6 +27,7 @@ export interface IOrder {
     readonly status: OrderStatus;
     readonly paymethod: Paymethod;    
     readonly created_at: string;    
+    readonly accepted_at: string;
     readonly completed_at: string;
     readonly products: IOrderProduct[];    
 }

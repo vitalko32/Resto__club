@@ -3,6 +3,7 @@ import { Repository } from './_repository';
 import { Order, OrderStatus } from '../../model/orm/order.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
+import { IOrderAccept } from 'src/app/model/dto/order.accept.interface';
 
 @Injectable()
 export class OrderRepository extends Repository<Order> {    
@@ -39,7 +40,14 @@ export class OrderRepository extends Repository<Order> {
                 reject(err.message);                
             });            
         });
-    }    
+    }   
+    
+    public accept(order_id: number, employee_id: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const dto: IOrderAccept = {order_id, employee_id};
+            this.dataService.ordersAccept(dto).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message));
+        });
+    }
 
     /*
     public loadOne(id: number): Promise<Order> {
