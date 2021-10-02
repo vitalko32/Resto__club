@@ -41,7 +41,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSimpleComponent,
         CheckboxSliderComponent,
         MsgDesktopComponent,
-        LangPanelComponent,
+        LangPanelComponent,        
     ],
     exports: [
         MenuComponent,
@@ -59,7 +59,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSimpleComponent,
         CheckboxSliderComponent,
         MsgDesktopComponent,
-        LangPanelComponent,
+        LangPanelComponent,        
     ],    
 })
 export class CCModule {}

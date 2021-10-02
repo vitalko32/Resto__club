@@ -1,36 +1,48 @@
 .orders {
-    border-radius: 45px; background-color: var(--color-bg); border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow-inner); padding: 15px;
+    @media (min-width:0) {border: none; box-shadow: none; padding: 0;}
+    @media (min-width:1200px) {border: 10px var(--color-bg) solid; box-shadow: var(--block-shadow-inner); padding: 15px;}  
+    border-radius: 45px; background-color: var(--color-bg); 
     .order {
         margin-bottom: 15px;
         &:last-child {margin-bottom: 0;}
-        .o-date {font-size: 12px; font-weight: bold; margin-bottom: 3px; padding: 0 10px;}
+        &.no-employee {.o-main {border:1px var(--color-green) solid;}}        
+        .o-date {font-size: 12px; font-weight: bold; margin-bottom: 2px; padding: 0 15px;}
         .o-main {
-            @media (min-width:0) {align-items: flex-start; display: block; }
-            @media (min-width:1200px) {align-items: center; display: flex; } 
-            background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; 
+            @media (min-width:0) {display: block;}
+            @media (min-width:1200px) {display: flex;}  
+            background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; align-items: center;
             .o-content {
                 @media (min-width:0) {margin: 0 0 15px 0;}
-                @media (min-width:1200px) {margin: 0;}
+                @media (min-width:1200px) {margin: 0 15px 0 0;}  
                 flex: 1;
                 .oc-table {
-                    @media (min-width:0) {font-size: 16px; margin-bottom: 0;}
-                    @media (min-width:1200px) {font-size: 24px; margin-bottom: 5px;} 
-                    font-weight: bold; 
+                    margin-bottom: 5px; display: flex; align-items: center;
+                    .oct-title {padding-bottom: 5px; border-bottom: 1px var(--color-grey) solid; font-size: 20px; font-weight: bold;}
+                    .oct-btn {
+                        width:30px; height: 30px; line-height: 30px; text-align: center; background-color: white; box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 0 0 10px;                    
+                        span::before {font-family: "fa-solid"; font-size: 16px;}                        
+                        &.need-waiter {span::before {content: "\f0f3";}}
+                        &.need-invoice {span::before {content: "\f543";}}
+                        &.need-products {span::before {content: "\f055";}}
+                    }
                 }
-            }   
-            .o-actions {                
-                @media (min-width:0) {width: auto; text-align: center;}
-                @media (min-width:1200px) {width: 150px; text-align: right;}                
-                div {
-                    @media (min-width:0) {margin: 0 5px;}
-                    @media (min-width:1200px) {margin: 0 0 0 10px;}                    
-                    width:40px; height: 40px; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 20px; display: inline-flex; justify-content: center; align-items: center; cursor: pointer;                    
+            }             
+            .o-dash {
+                @media (min-width:0) {justify-content: center;}
+                @media (min-width:1200px) {justify-content: flex-end;}   
+                display: flex; align-items: center;
+                .od-title {
+                    @media (min-width:0) {display: none;}
+                    @media (min-width:1200px) {display: block;}   
+                }
+                .od-btn {                                       
+                    width:40px; height: 40px; line-height: 40px; text-align: center; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 0 0 10px;                    
                     span::before {font-family: "fa-solid"; font-size: 20px;}
                     &.take {span::before {content:"\f04b";}}
                     &.view {span::before {content:"\f06e";}}
-                    &.cancel {span::before { content:"\f00d"; color: var(--color-red);}}
+                    &.cancel {span::before { content:"\f00d"; color: var(--color-red);}}                    
                 }
-            }         
+            }     
         }
     }    
 }

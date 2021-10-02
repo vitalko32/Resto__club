@@ -1,61 +1,28 @@
 <div class="dash-placeholder"></div>
-<div class="data">
-    <!-- desktop -->
-    <div class="datalist-desktop">        
-        <div class="datalist-overlay" [class.active]="olLoading"></div>
-        <table>
-            <tr>                
-                <th class="align-left"><label class="sortable" [class.sorted-forward]="olSortBy === 'created_at' && olSortDir === 1" [class.sorted-backward]="olSortBy === 'created_at' && olSortDir === -1" (click)="changeSorting('created_at')">{{words['restorator-orders']['created-at'][currentLang.slug]}}</label></th>                
-                <th class="align-center"><label>{{words['restorator-orders']['status'][currentLang.slug]}}</label></th>
-                <th class="align-center"><label>{{words['restorator-orders']['table'][currentLang.slug]}}</label></th>
-                <th class="align-center"><label>{{words['restorator-orders']['q'][currentLang.slug]}}</label></th>
-                <th class="align-center"><label>{{words['restorator-orders']['employee'][currentLang.slug]}}</label></th>                                        
-                <th class="align-center"><label>{{words['common']['actions'][currentLang.slug]}}</label></th>
-            </tr>
-            <ng-container *ngIf="ol.length">
-                <tr *ngFor="let o of ol">                    
-                    <td>{{o.formattedCreatedAt}}</td>                    
-                    <td class="align-center nowrap">
-                        <a *ngIf="o.need_waiter" class="datalist-btn need-waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></a>
-                        <a *ngIf="o.need_products" class="datalist-btn need-products" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></a>
-                        <a *ngIf="o.need_invoice" class="datalist-btn need-invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></a>
-                    </td>
-                    <td class="align-center">{{o.table?.no}} ({{words['restorator-orders']['for'][currentLang.slug]}} {{o.table.seats}} {{words['restorator-orders']['seats'][currentLang.slug]}})</td>
-                    <td class="align-center">{{o.q}}</td>                    
-                    <td class="align-center">{{o.employee?.name}}</td>                    
-                    <td class="align-center nowrap">
-                        <a class="datalist-btn take" *ngIf="!o.employee" [title]="words['common']['take'][currentLang.slug]"><span></span></a>
-                        <a class="datalist-btn edit" [title]="words['common']['view'][currentLang.slug]"><span></span></a>
-                        <a class="datalist-btn delete" [title]="words['common']['cancel'][currentLang.slug]"><span></span></a>
-                    </td>
-                </tr>   
-            </ng-container>            
-            <ng-container *ngIf="!ol.length">
-                <tr><td>{{words['common']['none'][currentLang.slug]}}</td></tr>
-            </ng-container>     
-        </table>
-    </div>
-</div>
-<!--
 <div class="orders">
     <ng-container *ngIf="olReady">        
-        <div class="order" *ngFor="let o of ol">
+        <div class="order" [class.no-employee]="!o.employee" *ngFor="let o of ol">
             <div class="o-date">{{o.formattedCreatedAt}}</div>
-            <div class="o-main">
-                
+            <div class="o-main">                                
                 <div class="o-content">
-                    <div class="oc-table">{{o.table?.no}} {{words['restorator-orders']['table'][currentLang.slug]}} ({{words['restorator-orders']['for'][currentLang.slug]}} {{o.table.seats}} {{words['restorator-orders']['seats'][currentLang.slug]}})</div>
-                    <div>{{words['restorator-orders']['q'][currentLang.slug]}}: {{o.q}}</div>
-                    <div *ngIf="o.employee">{{words['restorator-orders']['waiter'][currentLang.slug]}}: </div>
+                    <div class="oc-table">
+                        <div class="oct-title">{{o.table?.no}} {{words['restorator-orders']['table'][currentLang.slug]}}</div>
+                        <div class="oct-btn need-waiter" *ngIf="o.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
+                        <div class="oct-btn need-products" *ngIf="o.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
+                        <div class="oct-btn need-invoice" *ngIf="o.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
+                    </div>
+                    <div>{{words['restorator-orders']['seats'][currentLang.slug]}}: <strong>{{o.table?.seats}}</strong></div>
+                    <div>{{words['restorator-orders']['q'][currentLang.slug]}}: <strong>{{o.q}}</strong></div>
+                    <div>{{words['restorator-orders']['employee'][currentLang.slug]}}: <strong><span [innerHTML]="o.employee ? o.employee.name : words['common']['empty'][currentLang.slug]"></span></strong></div>                    
                 </div>
-                <div class="o-actions">
-                    <div class="take" *ngIf="!o.employee"><span></span></div>                    
-                    <div class="view"><span></span></div>
-                    <div class="cancel"><span></span></div>                    
+                <div class="o-dash">                    
+                    <div class="od-title">{{words['common']['actions'][currentLang.slug]}}:</div>
+                    <div class="od-btn take" *ngIf="!o.employee" [title]="words['common']['take'][currentLang.slug]"><span></span></div>                    
+                    <div class="od-btn view" [title]="words['common']['view'][currentLang.slug]"><span></span></div>
+                    <div class="od-btn cancel" [title]="words['common']['cancel'][currentLang.slug]"><span></span></div>   
                 </div>
             </div>
         </div>
     </ng-container>
     <ng-container *ngIf="!olReady">{{words['common']['loading'][currentLang.slug]}}</ng-container>
 </div>
--->
