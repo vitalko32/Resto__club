@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ErrorService } from './error.service';
 import { FilesService } from './files.service';
+import { FinanceGuard } from './finance.guard';
 import { GoogleService } from './google.service';
 import { CatRepository } from './repositories/cat.repository';
 import { EmployeeRepository } from './repositories/employee.repository';
@@ -14,6 +15,7 @@ import { EmployeeStatusRepository } from './repositories/employee.status.reposit
 import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { LangRepository } from './repositories/lang.repository';
+import { OrderRepository } from './repositories/order.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
@@ -25,6 +27,7 @@ import { WordRepository } from './repositories/word.repository';
     providers: [
         AuthGuard,
         AdminGuard,
+        FinanceGuard,
         AppService,
         DataService,        
         ErrorService,
@@ -40,6 +43,7 @@ import { WordRepository } from './repositories/word.repository';
         CatRepository,
         IconRepository,
         ProductRepository,
+        OrderRepository,
     ],
 })
 export class ServicesModule {}

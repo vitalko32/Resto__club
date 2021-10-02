@@ -7,6 +7,7 @@ import { HallsModule } from "./halls/halls.module";
 import { IconsModule } from "./icons/icons.module";
 import { LangsModule } from "./langs/langs.module";
 import { ObjectsModule } from "./objects/objects.module";
+import { OrdersModule } from "./orders/orders.module";
 import { ProductsModule } from "./products/products.module";
 import { QRModule } from "./qr/qr.module";
 import { SettingsModule } from "./settings/settings.module";
@@ -23,6 +24,7 @@ import { WordsModule } from "./words/words.module";
         CatsModule,
         IconsModule,
         ProductsModule,
+        OrdersModule,
         QRModule,       
         ObjectsModule, 
         FilesModule,

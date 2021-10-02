@@ -72,6 +72,10 @@
         &.recharge {font-family: "fa-regular"; span::before {content: "\f873";}}
         &.transactions {font-family: "fa-regular"; span::before {content: "\f688";}}
         &.history {font-family: "fa-solid"; span::before {content: "\f1da";}}
+        &.take {font-family: "fa-solid"; span::before {content: "\f04b";}}
+        &.need-waiter {font-family: "fa-solid"; span::before {content: "\f0f3";}}
+        &.need-invoice {font-family: "fa-solid"; span::before {content: "\f543";}}
+        &.need-products {font-family: "fa-solid"; span::before {content: "\f055";}}
         &.disabled {opacity: 0.2; pointer-events: none;}
     }        
     .datalist-iconable {

@@ -1,4 +1,3 @@
-import { Model } from "../model";
 import { IOrderProduct } from "./order.product.interface";
 
 export enum OrderStatus {
@@ -12,7 +11,7 @@ export enum Paymethod {
     Card = "card",
 }
 
-export interface IOrder extends Model {
+export interface IOrder {
     readonly id: number;
     readonly table_id: number;
     readonly hall_id: number;

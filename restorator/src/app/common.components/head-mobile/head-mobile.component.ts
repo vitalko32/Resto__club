@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterEvent } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
+import { Restaurant } from "src/app/model/orm/restaurant.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -36,6 +37,7 @@ export class HeadMobileComponent implements AfterViewInit {
     get title(): string {return this.appService.title;}
     get showMenuBtn(): boolean {return this.authService.authData.value !== null;}   
     get employee(): Employee {return this.authService.authData.value.employee;} 
+    get restaurant(): Restaurant {return this.employee.restaurant;}
     get msg(): string {return this.settingRepository.settings?.["restorator-msg"];}
 
     public async ngAfterViewInit(): Promise<void> {

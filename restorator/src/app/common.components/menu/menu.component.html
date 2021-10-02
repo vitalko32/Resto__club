@@ -1,13 +1,15 @@
 <div class="menu">
     <div class="menu-item"><a routerLink="/" class="menu-btn" [class.active]="!url[1]">{{words['restorator-common']['menu-home'][currentLang.slug]}}</a></div>            
+    <div class="menu-item"><a routerLink="/orders/all" class="menu-btn" [class.disabled]="restaurant.money < 0" [class.active]="url[1] === 'orders' && url[2] === 'all'">{{words['restorator-common']['menu-orders'][currentLang.slug]}}</a></div>
+    <div class="menu-item"><a routerLink="/orders/my" class="menu-btn" [class.disabled]="restaurant.money < 0" [class.active]="url[1] === 'orders' && url[2] === 'my'">{{words['restorator-common']['menu-my-orders'][currentLang.slug]}}</a></div>
     <div class="menu-item" *ngIf="employee.is_admin"><a routerLink="/employees" class="menu-btn" [class.active]="url[1] === 'employees'">{{words['restorator-common']['menu-employees'][currentLang.slug]}}</a></div>            
     <div class="menu-item expandable" *ngIf="employee.is_admin"><a class="menu-btn" [class.active]="url[1] === 'halls-tables'" (click)="toggleSub(0);"><span>{{words['restorator-common']['menu-halls-tables'][currentLang.slug]}}</span></a></div>            
-    <div class="menu-sub sub0" [class.active]="subActive[0]">
+    <div class="menu-sub sub0" [class.active]="subActive[0]" *ngIf="employee.is_admin">
         <div class="menu-sub-item"><a routerLink="/halls-tables/halls" [class.active]="url[2] === 'halls'">- {{words['restorator-common']['menu-halls'][currentLang.slug]}}</a></div>            
         <div class="menu-sub-item"><a routerLink="/halls-tables/tables" [class.active]="url[2] === 'tables'">- {{words['restorator-common']['menu-tables'][currentLang.slug]}}</a></div>             
     </div>    
     <div class="menu-item expandable" *ngIf="employee.is_admin"><a class="menu-btn" [class.active]="url[1] === 'kitchen'" (click)="toggleSub(1);"><span>{{words['restorator-common']['menu-kitchen'][currentLang.slug]}}</span></a></div>            
-    <div class="menu-sub sub1" [class.active]="subActive[1]">
+    <div class="menu-sub sub1" [class.active]="subActive[1]" *ngIf="employee.is_admin">
         <div class="menu-sub-item"><a routerLink="/kitchen/cats" [class.active]="url[2] === 'cats'">- {{words['restorator-common']['menu-cats'][currentLang.slug]}}</a></div>            
         <div class="menu-sub-item"><a routerLink="/kitchen/products" [class.active]="url[2] === 'products'">- {{words['restorator-common']['menu-products'][currentLang.slug]}}</a></div>             
     </div>    

@@ -23,6 +23,7 @@ import { Icon } from "../model/orm/icon.model";
 import { Product } from "../model/orm/product.model";
 import { IProductUpdatePos } from "../model/dto/product.updatepos.interface";
 import { IPathable } from "../model/dto/pathable.interface";
+import { Order } from "../model/orm/order.model";
 
 @Injectable()
 export class DataService {
@@ -82,6 +83,8 @@ export class DataService {
     public productsCreate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/create", x, true);}
     public productsUpdate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/update", x, true);}  
     public productsUpdatePositions(dto: IProductUpdatePos[]): Observable<IAnswer<void>> {return this.sendRequest("products/update-positions", dto, true);}
+
+    public ordersAll(dto: IGetAll): Observable<IAnswer<Order[]>> {return this.sendRequest("orders/all", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

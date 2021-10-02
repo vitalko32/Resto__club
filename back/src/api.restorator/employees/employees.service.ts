@@ -96,6 +96,7 @@ export class EmployeesService extends APIService {
     }    
     
     // проверка актуальности аккаунта и подгрузка актуальных данных
+    // здесь мы не проверяем employee и employee.restaurant на существование, это сделает EmployeeGuard
     public async check(id: number): Promise<IAnswer<IEmployee>> { 
         try {                                    
             let employee: IEmployee = await this.getEmployeeById(id);            

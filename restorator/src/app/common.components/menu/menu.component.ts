@@ -3,6 +3,7 @@ import { NavigationEnd, Router, RouterEvent } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
+import { Restaurant } from "src/app/model/orm/restaurant.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -27,6 +28,7 @@ export class MenuComponent implements AfterViewInit {
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get url(): string[] {return this.appService.url;}    
     get employee(): Employee {return this.authService.authData.value.employee;}
+    get restaurant(): Restaurant {return this.employee.restaurant;}
 
     public async ngAfterViewInit(): Promise<void> {
 		await this.appService.pause(1);
