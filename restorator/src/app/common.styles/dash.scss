@@ -13,7 +13,9 @@
         &.create {span::before {content: "\f067";}}		
         &.save {span::before {content: "\f0c7";}}		
         &.back {span::before {content: "\f053";}}	
+        &.accept {span::before {content: "\f04b";}}	
         &.disabled {pointer-events: none; background-color: var(--color-disabled);}	
+        &.invisible {opacity: 0; pointer-events: none;}
     }
 }
 

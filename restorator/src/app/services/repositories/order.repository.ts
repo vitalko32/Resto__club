@@ -49,10 +49,12 @@ export class OrderRepository extends Repository<Order> {
         });
     }
 
-    /*
     public loadOne(id: number): Promise<Order> {
         return new Promise((resolve, reject) => this.dataService.ordersOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Order().build(res.data)) : reject(res.error), err => reject(err.message)));
-    }    
+    }  
+    
+    /*
+      
 
     public delete(id: number): Promise<void> {
         return new Promise((resolve, reject) => this.dataService.ordersDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));

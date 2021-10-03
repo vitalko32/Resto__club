@@ -1,0 +1,44 @@
+<div class="dash" >
+    <a class="dash-btn accept" [class.disabled]="!order || formLoading" [class.invisible]="order?.employee_id" (click)="onAccept()"><span>{{words['common']['accept'][currentLang.slug]}}</span></a>
+    <a class="dash-btn back" routerLink="/orders/all"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
+</div>
+<div class="data">
+    <div class="dataedit"> 
+        <ng-container *ngIf="order">
+            <form (submit)="onAccept();">            
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['table2'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.no}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['hall'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.hall?.name}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['seats'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.seats}}</div>
+                </div>
+                <div class="de-row" *ngIf="order.employee_id">
+                    <div class="de-title">{{words['restorator-orders']['employee'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.employee?.name}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['customer-comment'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.customer_comment}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['employee-comment'][currentLang.slug]}}:</div>
+                    <div class="de-value">
+                        <div class="de-inputwrap">
+                            <textarea *ngIf="canComment" name="employee_comment" [(ngModel)]="employee_comment"></textarea>
+                            <span *ngIf="!canComment" [innerHTML]="order.employee_comment"></span>                        
+                        </div>                        
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+        <ng-container *ngIf="!order">
+            {{words['common']['loading'][currentLang.slug]}}
+        </ng-container>
+    </div>
+</div>

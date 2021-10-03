@@ -23,4 +23,11 @@ export class OrdersController {
     public accept(@Body() dto: IOrderAccept): Promise<IAnswer<void>> {
         return this.ordersService.accept(dto);
     }
+
+    // get one
+    @UseGuards(EmployeesGuard)
+    @Post("one/:id")
+    public one(@Param("id") id: string): Promise<IAnswer<Order>> {
+        return this.ordersService.one(parseInt(id));
+    }   
 }

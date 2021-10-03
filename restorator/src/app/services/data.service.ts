@@ -87,6 +87,7 @@ export class DataService {
 
     public ordersAll(dto: IGetAll): Observable<IAnswer<Order[]>> {return this.sendRequest("orders/all", dto, true);}
     public ordersAccept(dto: IOrderAccept): Observable<IAnswer<void>> {return this.sendRequest("orders/accept", dto, true);}
+    public ordersOne(id: number): Observable<IAnswer<Order>> {return this.sendRequest(`orders/one/${id}`, null, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

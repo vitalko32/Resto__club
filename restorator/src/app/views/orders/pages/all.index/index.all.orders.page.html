@@ -20,7 +20,7 @@
                 <div class="o-dash">                    
                     <div class="od-title">{{words['common']['actions'][currentLang.slug]}}:</div>
                     <div class="od-btn accept" *ngIf="!o.employee" [title]="words['common']['accept'][currentLang.slug]" (click)="olOnAccept(o)"><span></span></div>                    
-                    <div class="od-btn view" [title]="words['common']['view'][currentLang.slug]"><span></span></div>
+                    <div class="od-btn view" [title]="words['common']['view'][currentLang.slug]" routerLink="/orders/all/view/{{o.id}}"><span></span></div>
                     <div class="od-btn cancel" *ngIf="employee.is_admin || !o.employee_id || o.employee_id === employee.id" [title]="words['common']['cancel'][currentLang.slug]" (click)="olOnCancel(o)"><span></span></div>   
                 </div>
             </div>
