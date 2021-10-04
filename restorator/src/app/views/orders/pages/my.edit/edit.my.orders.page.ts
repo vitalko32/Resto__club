@@ -10,7 +10,7 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
-import { OrderNewRepository } from "src/app/services/repositories/order.new.repository";
+import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
 import { ServingRepository } from "src/app/services/repositories/serving.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
@@ -29,7 +29,7 @@ export class EditMyOrdersPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
-        private orderRepository: OrderNewRepository,
+        private orderRepository: OrderMyRepository,
         private hallRepository: HallRepository,  
         private servingRepository: ServingRepository,     
         private authService: AuthService,         
@@ -90,8 +90,28 @@ export class EditMyOrdersPage implements OnInit, OnDestroy {
             this.appService.showError(err);
         }
     }
+
+    public async complete(): Promise<void> {
+        try {
+            this.formLoading = true;
+            await this.orderRepository.complete(this.order.id);
+            this.formLoading = false;
+            this.router.navigateByUrl("/orders/my");
+        } catch (err) {
+            this.appService.showError(err);
+            this.formLoading = false;
+        }
+    }
     
     public async update(): Promise<void> {
-
+        try {
+            this.formLoading = true;
+            await this.orderRepository.update(this.order);
+            this.formLoading = false;
+            this.router.navigateByUrl("/orders/my");
+        } catch (err) {
+            this.appService.showError(err);
+            this.formLoading = false;
+        }
     }
 }

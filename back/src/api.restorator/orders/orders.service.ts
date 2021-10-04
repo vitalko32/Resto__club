@@ -8,11 +8,11 @@ import { Lang } from "src/model/orm/lang.entity";
 import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { Serving } from "src/model/orm/serving.entity";
 import { Sortdir } from "src/model/sortdir.type";
-import { IsNull, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { ServingsService } from "../servings/servings.service";
 import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrder } from "./dto/order.interface";
-import { IServing } from "./dto/serving.interface";
+import { IOrderUpdate } from "./dto/order.update.interface";
 
 @Injectable()
 export class OrdersService extends APIService {
@@ -78,7 +78,7 @@ export class OrdersService extends APIService {
                 .leftJoinAndSelect("table.hall", "hall")
                 .leftJoinAndSelect("order.employee", "employee")
                 .where(`order.id = '${id}'`)
-                .orderBy({"products.id": "ASC"}) // хотим получать товары в том порядке, в котором они заказывались
+                .orderBy({"products.id": "ASC", "ingredients.id": "ASC"}) // хотим получать товары в том порядке, в котором они заказывались
                 .getOne(); 
                 
             if (order) {
@@ -113,5 +113,46 @@ export class OrdersService extends APIService {
         }
     }
 
-    
+    public async complete(id: number): Promise<IAnswer<void>> {
+        try {
+            const order = await this.orderRepository.findOne(id);
+
+            if (!order) {
+                return {statusCode: 404, error: "order not found"};
+            }
+
+            order.status = OrderStatus.Completed;
+            order.completed_at = new Date();
+            await this.orderRepository.save(order);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.complete: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async update(dto: IOrderUpdate): Promise<IAnswer<void>> {
+        try {
+            // удаляем лишние присоединенные объекты, чтобы не записалось каскадом лишнего (в typeorm каскад работает странно)
+            delete dto.table;
+            delete dto.hall;
+            delete dto.employee;
+            delete dto.restaurant;
+
+            if (dto.products?.length) {
+                for (let p of dto.products) {
+                    delete p.serving;
+                }
+            }
+
+            await this.orderRepository.save(dto);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.update: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        } 
+    }
+
 }

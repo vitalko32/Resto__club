@@ -46,6 +46,7 @@
                     &.accept {span::before {content:"\f04b";}}
                     &.view {span::before {content:"\f06e";}}
                     &.cancel {span::before { content:"\f00d"; color: var(--color-red);}}                    
+                    &.complete {span::before {content:"\f00c";}}
                 }
             }     
         }

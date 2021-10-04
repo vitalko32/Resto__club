@@ -22,6 +22,7 @@
                     </div>
                     <div class="o-dash">                    
                         <div class="od-title">{{words['common']['actions'][currentLang.slug]}}:</div>                    
+                        <div class="od-btn complete" [title]="words['common']['complete'][currentLang.slug]" (click)="olOnComplete(o)"><span></span></div>
                         <div class="od-btn view" [title]="words['common']['edit'][currentLang.slug]" routerLink="/orders/my/edit/{{o.id}}"><span></span></div>
                         <div class="od-btn cancel" [title]="words['common']['cancel'][currentLang.slug]" (click)="olOnCancel(o)"><span></span></div>   
                     </div>
@@ -35,3 +36,4 @@
 
 <the-confirm [(active)]="olCancelConfirmActive" [msg]="words['restorator-orders']['confirm-cancel'][currentLang.slug]" (confirmed)="olCancel()"></the-confirm>
 <the-confirm [(active)]="olUnneedConfirmActive" [msg]="olUnneedConfirmMsg" (confirmed)="olUnneed()"></the-confirm>
+<the-confirm [(active)]="olCompleteConfirmActive" [msg]="words['restorator-orders']['confirm-complete'][currentLang.slug]" (confirmed)="olComplete()"></the-confirm>

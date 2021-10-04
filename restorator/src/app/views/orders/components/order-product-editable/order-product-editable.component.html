@@ -4,6 +4,7 @@
     </div>
     <div class="op-right">
         <div class="op-name" [innerHTML]="product.name"></div>
+        <div class="op-code">{{words['restorator-orders']['code'][currentLang.slug]}}: <strong>{{product.code}}</strong></div>
         <div class="op-serving">            
             <div class="ops-item" *ngFor="let s of sl" (click)="product.serving_id = s.id"><radio-simple [checked]="product.serving_id === s.id" [title]="s.name[currentLang.slug]"></radio-simple></div>            
         </div>

@@ -64,6 +64,13 @@
                 <div class="de-space"></div>
                 <div class="de-head margined">{{words['restorator-orders']['payment'][currentLang.slug]}}</div>
                 <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['paymethod'][currentLang.slug]}}:</div>
+                    <div class="de-value">
+                        <span *ngIf="order.paymethod === payCash">{{words['restorator-orders']['paymethod-cash'][currentLang.slug]}}</span>
+                        <span *ngIf="order.paymethod === payCard">{{words['restorator-orders']['paymethod-card'][currentLang.slug]}}</span>
+                    </div>
+                </div>   
+                <div class="de-row">
                     <div class="de-title">{{words['restorator-orders']['subtotal'][currentLang.slug]}}:</div>
                     <div class="de-value">{{order.subtotal | number:'1.2-2'}} {{currency_symbol}}</div>
                 </div>   
@@ -77,7 +84,7 @@
                 </div>              
                 <!-- btn -->             
                 <div class="de-space"></div>
-                <div class="de-btnwrap"><button type="submit" [disabled]="formLoading">{{words['common']['accept'][currentLang.slug]}}</button></div>
+                <div class="de-btnwrap"><button type="submit" [disabled]="formLoading" class="accept"><span>{{words['common']['accept'][currentLang.slug]}}</span></button></div>
             </form>
         </ng-container>
         <ng-container *ngIf="!order">

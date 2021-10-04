@@ -116,8 +116,9 @@
                 }                                
                 .de-selectwrap {        
                     height: 45px; border-radius: 23px; position: relative; border:1px var(--color-grey) solid; background-color: white;
-                    &::after {display: block; font-family: "fa-solid"; content: "\f078"; position: absolute; top:50%; transform: translateY(-50%); right:10px; pointer-events: none; color: var(--color-txt);}
-                    select {width: 100%; height: 100%; appearance: none; background: none; border:none; padding: 0 25px 0 10px; color: black;}        
+                    &::after {display: block; font-family: "fa-solid"; content: "\f078"; position: absolute; top:50%; transform: translateY(-50%); right:10px; pointer-events: none; color: var(--color-txt);}                    
+                    &.error {border-color: var(--color-red);}
+                    select {width: 100%; height: 100%; appearance: none; background: none; border:none; padding: 0 25px 0 10px; color: black;}                            
                 }
                 .de-txtwrap {
                     padding: 0 10px; font-size: 14px;
@@ -169,7 +170,13 @@
                         &.need-invoice {span::before {content: "\f543";}}
                         &.need-products {span::before {content: "\f055";}}
                     }
-                }                            
+                } 
+                .de-radios {
+                    .de-radio {
+                        margin-bottom: 5px;
+                        &:last-child {margin-bottom: 0;}
+                    }
+                }                           
             }
         }
         .de-error {color: var(--color-red); padding: 3px 0; font-size: 12px; padding: 0 10px;}
@@ -213,13 +220,39 @@
         .de-btnwrap {
             @media (min-width:0) {justify-content: center;}
             @media (min-width:1200px) {justify-content: flex-start;}
-            display: flex;                    
-            button {                        
-                @media (min-width:0) {font-size: 13px;}
-                @media (min-width:1200px) {font-size: 14px;}
-                display: block; flex: 1; height: 45px; max-width: 220px; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none;
-                &:disabled {background-color: var(--color-disabled);}                        
+            display: flex;                                
+        }
+        .de-2btnswrap {
+            @media (min-width:0) {display: block;}
+            @media (min-width:500px) {display: flex;}
+            justify-content: space-between;
+            div {
+                @media (min-width:0) {width: 100%;}
+                @media (min-width:500px) {width: 50%;}
+                display: flex;
+                &:nth-child(1) {
+                    @media (min-width:0) {justify-content: center; margin-bottom: 15px;}
+                    @media (min-width:500px) {justify-content: flex-start; margin-bottom: 0;}                    
+                }
+                &:nth-child(2) {
+                    @media (min-width:0) {justify-content: center;}
+                    @media (min-width:500px) {justify-content: flex-end;}                    
+                }  
+                button {max-width: 200px;}              
             }
+        }
+        button {                        
+            @media (min-width:0) {font-size: 13px;}
+            @media (min-width:1200px) {font-size: 14px;}
+            display: block; flex: 1; height: 45px; max-width: 220px; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none;
+            &:disabled {background-color: var(--color-disabled);}                
+            span {
+                display: flex; align-items: center; justify-content: center;
+                &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px;}
+            }            
+            &.save {span::before {content: "\f0c7";}}    
+            &.accept {span::before {content: "\f04b";}}	                
+            &.complete {span::before {content: "\f00c";}}	                
         }
     }
 

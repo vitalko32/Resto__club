@@ -6,6 +6,7 @@ import { IGetAll } from "src/model/dto/getall.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
 import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrder } from "./dto/order.interface";
+import { IOrderUpdate } from "./dto/order.update.interface";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -38,4 +39,18 @@ export class OrdersController {
     public cancel(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.ordersService.cancel(parseInt(id));
     }  
+
+    // complete
+    @UseGuards(EmployeesGuard)
+    @Post("complete/:id")
+    public complete(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.ordersService.complete(parseInt(id));
+    }  
+
+    // update
+    @UseGuards(EmployeesGuard)
+    @Post("update")
+    public update(@Body() dto: IOrderUpdate): Promise<IAnswer<void>> {
+        return this.ordersService.update(dto);
+    }
 }

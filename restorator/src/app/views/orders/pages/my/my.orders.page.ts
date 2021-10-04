@@ -25,6 +25,8 @@ export class MyOrdersPage implements OnInit, OnDestroy {
     public olPropertyToUnneed: string = null;
     public olUnneedConfirmActive: boolean = false;
     public olUnneedConfirmMsg: string = "";
+    public olOrderToComplete: Order = null;
+    public olCompleteConfirmActive: boolean = false; 
 
     constructor(
         private appService: AppService,        
@@ -100,6 +102,21 @@ export class MyOrdersPage implements OnInit, OnDestroy {
             this.olUnneedConfirmActive = false;       
             this.olOrderToUnneed[this.olPropertyToUnneed] = false;
             this.orderRepository.updateParam(this.olOrderToUnneed.id, this.olPropertyToUnneed, false);        
+        } catch (err) {
+            this.appService.showError(err);
+        }        
+    }
+
+    public olOnComplete(o: Order): void {
+        this.olOrderToComplete = o;
+        this.olCompleteConfirmActive = true;
+    }
+
+    public olComplete(): void { 
+        try {
+            this.olCompleteConfirmActive = false;       
+            this.orderRepository.complete(this.olOrderToComplete.id);
+            this.ol.splice(this.ol.indexOf(this.olOrderToComplete), 1);
         } catch (err) {
             this.appService.showError(err);
         }        

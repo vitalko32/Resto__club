@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
-import { Order } from "src/app/model/orm/order.model";
+import { Order, Paymethod } from "src/app/model/orm/order.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -23,6 +23,8 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
     public formLoading: boolean = false;
     public order: Order = null;       
     public employee_comment: string = "";
+    public payCash: Paymethod = Paymethod.Cash;
+    public payCard: Paymethod = Paymethod.Card;
     
     constructor(
         private appService: AppService,        

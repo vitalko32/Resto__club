@@ -105,18 +105,7 @@
                         &:disabled {background-color: var(--color-disabled);}
                         &.error {border-color: var(--color-red);}
                     }
-                }
-                .de-btnwrap {
-                    @media (min-width:0) {justify-content: center;}
-                    @media (min-width:1200px) {justify-content: flex-start;}
-                    display: flex;                    
-                    button {                        
-                        @media (min-width:0) {font-size: 13px;}
-                        @media (min-width:1200px) {font-size: 14px;}
-                        display: block; flex: 1; height: 45px; max-width: 220px; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none;
-                        &:disabled {background-color: var(--color-disabled);}                        
-                    }
-                }                
+                }                               
                 .de-selectwrap {        
                     height: 45px; border-radius: 23px; position: relative; border:1px var(--color-grey) solid; background-color: white;
                     &::after {display: block; font-family: "fa-solid"; content: "\f078"; position: absolute; top:50%; transform: translateY(-50%); right:10px; pointer-events: none; color: var(--color-txt);}
@@ -137,6 +126,23 @@
                 span::before {font-family: "fa-solid"; font-size: 20px; content: "\f071";}
             }
             .den-txt {}
+        }
+        .de-btnwrap {
+            @media (min-width:0) {justify-content: center;}
+            @media (min-width:1200px) {justify-content: flex-start;}
+            display: flex;                                
+        } 
+        button {                        
+            @media (min-width:0) {font-size: 13px;}
+            @media (min-width:1200px) {font-size: 14px;}
+            display: block; flex: 1; height: 45px; max-width: 220px; border-radius: 23px; background-color: var(--color-bg); box-shadow: var(--block-shadow); font-weight: bold; cursor: pointer; border:none;
+            &:disabled {background-color: var(--color-disabled);}                
+            span {
+                display: flex; align-items: center; justify-content: center;
+                &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px;}
+            }            
+            &.save {span::before {content: "\f0c7";}}    
+            &.accept {span::before {content: "\f04b";}}	                
         }
     }     
 }

@@ -40,5 +40,13 @@ export class OrderMyRepository extends Repository<Order> {
 
     public loadOne(id: number): Promise<Order> {
         return new Promise((resolve, reject) => this.dataService.ordersOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Order().build(res.data)) : reject(res.error), err => reject(err.message)));
-    }    
+    }   
+    
+    public complete(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersComplete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.data), err => reject(err.message)));
+    }
+
+    public update(x: Order): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersUpdate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    }
 }

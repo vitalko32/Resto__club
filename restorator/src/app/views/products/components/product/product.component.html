@@ -86,7 +86,7 @@
         <div class="i-add" (click)="ingreAdd()"><span></span></div>
     </div>       
     <div class="de-space"></div>    
-    <div class="de-btnwrap"><button type="submit" [disabled]="loading">{{words['common']['save'][currentLang.slug]}}</button></div>
+    <div class="de-btnwrap"><button type="submit" [disabled]="loading" class="save"><span>{{words['common']['save'][currentLang.slug]}}</span></button></div>
     <input class="hidden" type="file" #imgupload (change)="imgUpload($event); imgupload.value = null;" accept=".png,.jpg,.jpeg">     
 </form> 
 
