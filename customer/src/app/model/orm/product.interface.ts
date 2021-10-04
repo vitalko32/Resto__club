@@ -19,4 +19,7 @@ export interface IProduct {
 
     readonly images?: IProductImage[];
     readonly ingredients?: IIngredient[];    
+
+    _added: boolean;
+    _timer: number;
 }

@@ -75,6 +75,11 @@ export class ProductMenuPage implements OnInit {
     public async toCart(): Promise<void> {
         this.appService.headCartHighlight = true;
         this.orderService.cartAdd(this.product, this.q);
+
+        this.product._timer ? clearTimeout(this.product._timer) : null;
+        this.product._added = true;
+        this.product._timer = window.setTimeout(() => {this.product._added = false; this.product._timer = null;}, 1000);
+
         await this.appService.pause(300);
         this.appService.headCartHighlight = false;
     }

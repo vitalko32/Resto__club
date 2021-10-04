@@ -69,8 +69,12 @@
                 display: flex; flex-wrap: wrap;
                 .pq-number {margin: 0 15px 15px 0;}
                 .pq-tocart {
-                    display: inline-block; background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 30px; padding: 0 15px; line-height: 30px; text-align: center; font-weight: bold; border-radius: 15px; cursor: pointer; margin: 0 0 15px 0;
+                    display: inline-block; background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 30px; width:130px; line-height: 30px; text-align: center; font-weight: bold; border-radius: 15px; cursor: pointer; margin: 0 0 15px 0; transition: background-color 0.3s;
                     span::before {font-family: "fa-solid"; content:"\f07a"; margin-right: 5px;}
+                    &.added {
+                        background-color: black; color: white;
+                        span::before {content: "";}
+                    }
                 }            
             }
         }        

@@ -52,6 +52,11 @@ export class ProductListMenuPage implements OnDestroy {
     public async toCart(p: IProduct): Promise<void> {
         this.appService.headCartHighlight = true;
         this.orderService.cartAdd(p);
+
+        p._timer ? clearTimeout(p._timer) : null;
+        p._added = true;
+        p._timer = window.setTimeout(() => {p._added = false; p._timer = null;}, 1000);
+
         await this.appService.pause(300);
         this.appService.headCartHighlight = false;
     }

@@ -3928,6 +3928,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1010	311	2	Save the order?
 1011	312	1	Код
 1012	312	2	Code
+1013	313	1	Добавлено
+1014	313	2	Added
 \.
 
 
@@ -4224,6 +4226,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 309	5	137	complete	\N
 310	21	109	confirm-complete	\N
 312	21	128	code	\N
+313	17	0	added	\N
 293	21	114	created-at	\N
 294	21	115	statuses	\N
 295	21	116	content	\N
@@ -4420,7 +4423,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1157, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1012, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1014, true);
 
 
 --
@@ -4434,7 +4437,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 312, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 313, true);
 
 
 --
