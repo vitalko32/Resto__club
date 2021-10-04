@@ -1,1 +1,16 @@
-[edit order]
+<div class="dash" >
+    <a class="dash-btn save" [class.disabled]="!order || formLoading" (click)="update()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>
+    <a class="dash-btn back" routerLink="/orders/my"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
+</div>
+<div class="data">
+    <div class="dataedit"> 
+        <the-order
+            *ngIf="order"
+            [x]="order"
+            [hl]="hl"
+            [sl]="sl"
+            [loading]="formLoading"            
+            (save)="update();"
+        ></the-order>
+    </div>
+</div>

@@ -22,12 +22,18 @@ export class HallsService extends APIService {
     }  
     
     public async all(dto: IGetAll): Promise<IAnswer<Hall[]>> {
-        let sortBy: string = dto.sortBy;
-        let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-        let filter: Object = dto.filter;
-
         try {
-            let data: Hall[] = await this.hallRepository.find({where: filter, order: {[sortBy]: sortDir}, relations: ["tables"]});             
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";            
+            const data: Hall[] = await this.hallRepository
+                .createQueryBuilder("halls")
+                .leftJoinAndSelect("halls.tables", "tables")
+                .where(this.filterToQbfilter(dto.filter, "halls"), dto.filter)
+                .orderBy({
+                    [`halls.${sortBy}`]: sortDir,
+                    "tables.no": "ASC",
+                })
+                .getMany();
             return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in HallsService.all: ${String(err)}`;

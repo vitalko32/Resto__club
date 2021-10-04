@@ -10,6 +10,7 @@ import { ObjectsModule } from "./objects/objects.module";
 import { OrdersModule } from "./orders/orders.module";
 import { ProductsModule } from "./products/products.module";
 import { QRModule } from "./qr/qr.module";
+import { ServingsModule } from "./servings/servings.module";
 import { SettingsModule } from "./settings/settings.module";
 import { WordsModule } from "./words/words.module";
 
@@ -25,6 +26,7 @@ import { WordsModule } from "./words/words.module";
         IconsModule,
         ProductsModule,
         OrdersModule,
+        ServingsModule,
         QRModule,       
         ObjectsModule, 
         FilesModule,

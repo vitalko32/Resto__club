@@ -3,7 +3,9 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
+import { OrderProductEditableComponent } from "./components/order-product-editable/order-product-editable.component";
 import { OrderProductComponent } from "./components/order-product/order-product.component";
+import { OrderComponent } from "./components/order/order.component";
 import { EditMyOrdersPage } from "./pages/my.edit/edit.my.orders.page";
 import { MyOrdersPage } from "./pages/my/my.orders.page";
 import { ViewNewOrdersPage } from "./pages/new.view/view.new.orders.page";
@@ -31,7 +33,9 @@ let routes = RouterModule.forChild ([
 		MyOrdersPage,
 		ViewNewOrdersPage,
 		EditMyOrdersPage,
-		OrderProductComponent,
+		OrderComponent,
+		OrderProductComponent,	
+		OrderProductEditableComponent,	
 	],    		    
 })
 export class OrdersModule {}

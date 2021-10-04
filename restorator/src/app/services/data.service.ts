@@ -25,6 +25,7 @@ import { IProductUpdatePos } from "../model/dto/product.updatepos.interface";
 import { IPathable } from "../model/dto/pathable.interface";
 import { Order } from "../model/orm/order.model";
 import { IOrderAccept } from "../model/dto/order.accept.interface";
+import { IServing } from "../model/orm/serving.interface";
 
 @Injectable()
 export class DataService {
@@ -89,6 +90,8 @@ export class DataService {
     public ordersAccept(dto: IOrderAccept): Observable<IAnswer<void>> {return this.sendRequest("orders/accept", dto, true);}
     public ordersOne(id: number): Observable<IAnswer<Order>> {return this.sendRequest(`orders/one/${id}`, null, true);}
     public ordersCancel(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/cancel/${id}`, null, true);}
+
+    public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

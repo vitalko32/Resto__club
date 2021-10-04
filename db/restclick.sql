@@ -1509,16 +1509,16 @@ COPY "default".vne_ingredients (id, product_id, name, pos, excludable) FROM stdi
 5	3	Хлеб	1	f
 6	3	Мясо	2	f
 7	3	Сыр	3	f
-18	1	Кетчуп	2	t
-3	1	Помидор	3	t
-4	1	Лист салата	4	t
 27	194	мороженое сливочное	0	t
 28	194	мороженое шоколадное	1	t
 29	194	вафельный стаканчик	2	t
 30	195	мороженое фруктовое	0	f
 31	195	клубника	1	t
-2	1	Мясо	0	f
-1	1	Хлеб	1	f
+2	1	мясо	0	f
+1	1	хлеб	1	f
+18	1	кетчуп	2	t
+3	1	помидор	3	t
+4	1	лист салата	4	t
 \.
 
 
@@ -1681,6 +1681,16 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 126	46	Кетчуп	t
 127	46	Помидор	t
 128	46	Лист салата	t
+129	48	мороженое фруктовое	t
+130	48	клубника	t
+131	49	мороженое сливочное	t
+132	49	мороженое шоколадное	t
+133	49	вафельный стаканчик	t
+134	50	Мясо	t
+135	50	Хлеб	t
+136	50	Кетчуп	t
+137	50	Помидор	f
+138	50	Лист салата	f
 \.
 
 
@@ -1732,6 +1742,9 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 45	25	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 46	25	2	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 47	25	2	hf00015	Какое-то блюдо 15	1000	1	f	2021-9/1632350544594_500.jpg
+48	27	2	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
+49	27	2	m0001	Мороженое "Сказка"	500	2	f	2021-9/1632669890885_500.jpg
+50	27	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 \.
 
 
@@ -1765,6 +1778,7 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 24	33	1	21	9	f	f	active	0	\N	2021-10-04 02:16:40.599221	f	<div>04.10.2021 02:16 какое-то поежлание</div>	друг шефа	cash	2021-10-04 12:49:12.066	\N
 5	33	1	21	9	t	f	active	0	\N	2021-09-29 20:01:07.059932	t		хороший клиент	cash	2021-10-04 12:48:38.243	\N
 15	33	1	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
+27	33	1	21	\N	f	f	active	0	\N	2021-10-04 18:59:52.308565	t			cash	\N	\N
 \.
 
 
@@ -3799,6 +3813,16 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 986	299	2	No.
 987	300	1	Мои заказы - Редактирование
 988	300	2	My orders - Edit
+989	301	1	чел.
+990	301	2	seats
+992	302	2	completed
+991	302	1	выполнено
+993	303	1	Оплата
+994	303	2	Payment
+995	304	1	Скидка, %
+996	304	2	Discount, %
+997	305	1	К оплате
+998	305	2	Total
 \.
 
 
@@ -4071,6 +4095,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 271	21	103	employee	\N
 275	5	134	view	\N
 280	5	136	empty	\N
+305	21	117	total	\N
 277	21	200	need-waiter	\N
 278	21	201	need-products	\N
 279	21	202	need-invoice	\N
@@ -4094,9 +4119,13 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 295	21	114	content	\N
 296	21	115	serving	\N
 297	21	116	subtotal	\N
-298	21	117	accept-conflict	\N
-299	21	118	no	\N
 300	21	4	title-my-edit	\N
+301	21	101	seats2	\N
+298	21	118	accept-conflict	\N
+299	21	119	no	\N
+302	21	120	completed	\N
+303	21	121	payment	\N
+304	21	122	discount	\N
 \.
 
 
@@ -4202,21 +4231,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 128, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 138, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 47, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 50, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 26, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 27, true);
 
 
 --
@@ -4244,14 +4273,14 @@ SELECT pg_catalog.setval('"default".vne_restaurants_id_seq', 49, true);
 -- Name: vne_serving_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_serving_translations_id_seq', 6, true);
+SELECT pg_catalog.setval('"default".vne_serving_translations_id_seq', 8, true);
 
 
 --
 -- Name: vne_servings_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_servings_id_seq', 2, true);
+SELECT pg_catalog.setval('"default".vne_servings_id_seq', 3, true);
 
 
 --
@@ -4279,7 +4308,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1157, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 988, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 998, true);
 
 
 --
@@ -4293,7 +4322,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 300, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 305, true);
 
 
 --

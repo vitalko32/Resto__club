@@ -9,6 +9,7 @@ import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { Serving } from "src/model/orm/serving.entity";
 import { Sortdir } from "src/model/sortdir.type";
 import { IsNull, Repository } from "typeorm";
+import { ServingsService } from "../servings/servings.service";
 import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrder } from "./dto/order.interface";
 import { IServing } from "./dto/serving.interface";
@@ -19,6 +20,7 @@ export class OrdersService extends APIService {
         @InjectRepository(Order) private orderRepository: Repository<Order>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Lang) private langRepository: Repository<Lang>,
+        private servingsService: ServingsService,
     ) {
         super();
     }    
@@ -81,7 +83,7 @@ export class OrdersService extends APIService {
                 
             if (order) {
                 for (let p of order.products) {
-                    p.serving = this.buildMlServing(p.serving as Serving, langs);
+                    p.serving = this.servingsService.buildMlServing(p.serving as Serving, langs);
                 }
             }
 
@@ -111,13 +113,5 @@ export class OrdersService extends APIService {
         }
     }
 
-    private buildMlServing(serving: Serving, langs: Lang[]): IServing {
-        const name = {};
-        
-        for (let l of langs) {
-            name[l.slug] = serving.translations.find(t => t.lang_id === l.id)?.name;
-        }
-        
-        return {id: serving.id, name};
-    }
+    
 }

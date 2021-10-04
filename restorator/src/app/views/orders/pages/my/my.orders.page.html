@@ -22,7 +22,7 @@
                     </div>
                     <div class="o-dash">                    
                         <div class="od-title">{{words['common']['actions'][currentLang.slug]}}:</div>                    
-                        <div class="od-btn view" [title]="words['common']['view'][currentLang.slug]" routerLink="/orders/my/edit/{{o.id}}"><span></span></div>
+                        <div class="od-btn view" [title]="words['common']['edit'][currentLang.slug]" routerLink="/orders/my/edit/{{o.id}}"><span></span></div>
                         <div class="od-btn cancel" [title]="words['common']['cancel'][currentLang.slug]" (click)="olOnCancel(o)"><span></span></div>   
                     </div>
                 </div>

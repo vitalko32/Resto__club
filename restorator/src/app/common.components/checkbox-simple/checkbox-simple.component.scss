@@ -5,7 +5,7 @@
         &.active {
             background-color: var(--color-txt);
             &::after {position: absolute; left:50%; top:50%; transform: translate(-50%, -50%); content: "✓"; color: white; font-size: 12px;}
-        }
+        }        
     }
     .cs-title {}
 }

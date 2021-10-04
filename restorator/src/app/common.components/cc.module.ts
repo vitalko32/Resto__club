@@ -18,6 +18,7 @@ import { LangPanelComponent } from './lang-panel/lang-panel.component';
 import { MenuComponent } from './menu/menu.component';
 import { MsgDesktopComponent } from './msg-desktop/msg-desktop.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSimpleComponent,
         CheckboxSliderComponent,
         MsgDesktopComponent,
-        LangPanelComponent,        
+        LangPanelComponent,    
+        RadioSimpleComponent,    
     ],
     exports: [
         MenuComponent,
@@ -60,6 +62,7 @@ import { PaginationComponent } from './pagination/pagination.component';
         CheckboxSliderComponent,
         MsgDesktopComponent,
         LangPanelComponent,        
+        RadioSimpleComponent,
     ],    
 })
 export class CCModule {}

@@ -15,13 +15,13 @@
                     <div class="de-value">{{order.formattedCreatedAt}}</div>
                 </div>
                 <div class="de-row">
-                    <div class="de-title">{{words['restorator-orders']['table2'][currentLang.slug]}}:</div>
-                    <div class="de-value">{{order.table?.no}}</div>
-                </div>
-                <div class="de-row">
                     <div class="de-title">{{words['restorator-orders']['hall'][currentLang.slug]}}:</div>
                     <div class="de-value">{{order.table?.hall?.name}}</div>
                 </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['table2'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.no}}</div>
+                </div>                
                 <div class="de-row">
                     <div class="de-title">{{words['restorator-orders']['seats'][currentLang.slug]}}:</div>
                     <div class="de-value">{{order.table?.seats}}</div>
@@ -50,16 +50,33 @@
                     </div>
                 </div>
                 <!-- products -->
-                <ng-container *ngIf="order.products.length">
-                    <div class="de-space"></div>
-                    <div class="de-head margined">{{words['restorator-orders']['content'][currentLang.slug]}}</div>
-                    <div class="de-products">
+                <div class="de-space"></div>
+                <div class="de-head margined">{{words['restorator-orders']['content'][currentLang.slug]}}</div>                
+                <div class="de-products">
+                    <ng-container *ngIf="order.products.length">
                         <order-product *ngFor="let p of order.products" [product]="p"></order-product>                        
-                    </div>                    
-                    <div class="de-head2">{{words['restorator-orders']['subtotal'][currentLang.slug]}}: {{order.subtotal | number:'1.2-2'}} {{currency_symbol}}</div>                     
-                    <div class="de-space"></div>
-                </ng-container>   
+                    </ng-container>
+                    <ng-container *ngIf="!order.products.length">
+                        <div>{{words['common']['not-set'][currentLang.slug]}}</div>
+                    </ng-container>
+                </div>                
+                <!-- payment -->
+                <div class="de-space"></div>
+                <div class="de-head margined">{{words['restorator-orders']['payment'][currentLang.slug]}}</div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['subtotal'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.subtotal | number:'1.2-2'}} {{currency_symbol}}</div>
+                </div>   
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['discount'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.discount_percent}}</div>
+                </div>   
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['total'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.total | number:'1.2-2'}} {{currency_symbol}}</div>
+                </div>              
                 <!-- btn -->             
+                <div class="de-space"></div>
                 <div class="de-btnwrap"><button type="submit" [disabled]="formLoading">{{words['common']['accept'][currentLang.slug]}}</button></div>
             </form>
         </ng-container>

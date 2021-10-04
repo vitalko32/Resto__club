@@ -17,6 +17,7 @@ import { LangRepository } from './repositories/lang.repository';
 import { OrderMyRepository } from './repositories/order.my.repository';
 import { OrderNewRepository } from './repositories/order.new.repository';
 import { ProductRepository } from './repositories/product.repository';
+import { ServingRepository } from './repositories/serving.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
 
@@ -45,6 +46,7 @@ import { WordRepository } from './repositories/word.repository';
         ProductRepository,
         OrderNewRepository,
         OrderMyRepository,
+        ServingRepository,
     ],
 })
 export class ServicesModule {}
