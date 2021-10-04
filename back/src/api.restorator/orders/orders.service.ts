@@ -23,13 +23,11 @@ export class OrdersService extends APIService {
         super();
     }    
 
-    public async allNew(dto: IGetAll): Promise<IAnswer<Order[]>> {
+    public async all(dto: IGetAll): Promise<IAnswer<Order[]>> {
         try {
             const sortBy: string = dto.sortBy;
             const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
             const filter: any = dto.filter;
-            filter.status = OrderStatus.Active;
-            filter.employee_id = IsNull();
             const data: Order[] = await this.orderRepository.find({where: filter, order: {[sortBy]: sortDir}, relations: ["products", "table", "table.hall"]});             
             return {statusCode: 200, data};
         } catch (err) {
@@ -90,6 +88,24 @@ export class OrdersService extends APIService {
             return order ? {statusCode: 200, data: order} : {statusCode: 404, error: "order not found"};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.one: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async cancel(id: number): Promise<IAnswer<void>> {
+        try {
+            const order = await this.orderRepository.findOne(id);
+
+            if (!order) {
+                return {statusCode: 404, error: "order not found"};
+            }
+
+            order.status = OrderStatus.Cancelled;
+            await this.orderRepository.save(order);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.cancel: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

@@ -23,20 +23,14 @@ export class NewOrdersPage implements OnInit, OnDestroy {
     public olCancelConfirmActive: boolean = false;    
     public olOrderToAccept: Order = null;
     public olAcceptConfirmActive: boolean = false;
-    public olAcceptConflictAlertActive: boolean = false;
-    /*
-    public olOrderToUnneed: Order = null;
-    public olPropertyToUnneed: string = null;
-    public olUnneedConfirmActive: boolean = false;
-    public olUnneedConfirmMsg: string = "";
-    */
+    public olAcceptConflictAlertActive: boolean = false;    
     
     constructor(
-        protected appService: AppService,        
-        protected wordRepository: WordRepository,           
-        protected orderRepository: OrderNewRepository,
-        protected authService: AuthService,         
-        protected router: Router,      
+        private appService: AppService,        
+        private wordRepository: WordRepository,           
+        private orderRepository: OrderNewRepository,
+        private authService: AuthService,         
+        private router: Router,      
     ) {}    
 
     get words(): Words {return this.wordRepository.words;}
@@ -88,7 +82,7 @@ export class NewOrdersPage implements OnInit, OnDestroy {
                 this.router.navigateByUrl("/orders/my");
             } else if (statusCode === 410) {
                 this.olAcceptConflictAlertActive = true;
-                this.ol.splice(this.ol.indexOf(this.olOrderToAccept), 1);
+                this.ol.splice(this.ol.indexOf(this.olOrderToAccept), 1); // потом это будет лишним, заказы будут убираться по сокету
             } else {
                 this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
             }
@@ -102,29 +96,13 @@ export class NewOrdersPage implements OnInit, OnDestroy {
         this.olCancelConfirmActive = true;
     }
 
-    public olCancel(): void { 
-        this.olCancelConfirmActive = false;       
-        this.orderRepository.updateParam(this.olOrderToCancel.id, "status", OrderStatus.Cancelled);
-        this.ol.splice(this.ol.indexOf(this.olOrderToCancel), 1);
-    }
-
-    /*
-    public olOnUnneed(o: Order, p: string): void {
-        if (this.employee.is_admin || !o.employee_id || o.employee_id === this.employee.id) {
-            this.olOrderToUnneed = o;
-            this.olPropertyToUnneed = p;        
-    
-            if (p === "need_waiter") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-waiter"][this.currentLang.slug];
-            if (p === "need_products") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-products"][this.currentLang.slug];
-            if (p === "need_invoice") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-invoice"][this.currentLang.slug];
-    
-            this.olUnneedConfirmActive = true;
-        }        
-    }
-
-    public olUnneed(): void {
-        this.olUnneedConfirmActive = false;       
-        this.olOrderToUnneed[this.olPropertyToUnneed] = false;
-        this.olUpdateParam(this.olOrderToUnneed.id, this.olPropertyToUnneed, false);        
-    }*/
+    public olCancel(): void {
+        try {
+            this.olCancelConfirmActive = false;       
+            this.orderRepository.cancel(this.olOrderToCancel.id);
+            this.ol.splice(this.ol.indexOf(this.olOrderToCancel), 1);
+        } catch (err) {
+            this.appService.showError(err);
+        }       
+    }    
 }

@@ -3,34 +3,46 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
-import { Order } from "src/app/model/orm/order.model";
+import { Order, OrderStatus } from "src/app/model/orm/order.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
+import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
     selector: "my-orders-page",
     templateUrl: "my.orders.page.html",
+    styleUrls: ["../../styles/orders.scss"],
 })
 export class MyOrdersPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;    
+    public olReady: boolean = false;
+    public olOrderToCancel: Order = null;
+    public olCancelConfirmActive: boolean = false; 
+    public olOrderToUnneed: Order = null;
+    public olPropertyToUnneed: string = null;
+    public olUnneedConfirmActive: boolean = false;
+    public olUnneedConfirmMsg: string = "";
 
     constructor(
-        protected appService: AppService,        
-        protected wordRepository: WordRepository,                   
-        protected authService: AuthService,         
-        protected router: Router,      
+        private appService: AppService,        
+        private wordRepository: WordRepository,                   
+        private orderRepository: OrderMyRepository,
+        private authService: AuthService,         
+        private router: Router,      
     ) {}   
     
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get employee(): Employee {return this.authService.authData.value.employee;}
+    get ol(): Order[] {return this.orderRepository.xlAll;}
+    get employee(): Employee {return this.authService.authData.value.employee;}    
 
     public ngOnInit(): void {        
         this.initAuthCheck();           
-        this.initTitle();          
+        this.initTitle();   
+        this.initOrders();             
     }
 
     public ngOnDestroy(): void {
@@ -45,5 +57,51 @@ export class MyOrdersPage implements OnInit, OnDestroy {
     
     private initAuthCheck(): void {
         this.authSubscription = this.authService.authData.subscribe(ad => ad.employee.restaurant.money < 0 ? this.router.navigateByUrl("/") : null);
+    }
+
+    private async initOrders(): Promise<void> {
+        try {                                    
+            this.orderRepository.filterEmployeeId = this.employee.id;
+            this.orderRepository.loadAll();               
+            this.olReady = true;
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }  
+
+    public olOnCancel(o: Order): void {
+        this.olOrderToCancel = o;
+        this.olCancelConfirmActive = true;
+    }
+
+    public olCancel(): void { 
+        try {
+            this.olCancelConfirmActive = false;       
+            this.orderRepository.updateParam(this.olOrderToCancel.id, "status", OrderStatus.Cancelled);
+            this.ol.splice(this.ol.indexOf(this.olOrderToCancel), 1);
+        } catch (err) {
+            this.appService.showError(err);
+        }        
+    }
+
+    public olOnUnneed(o: Order, p: string): void {        
+        this.olOrderToUnneed = o;
+        this.olPropertyToUnneed = p;        
+    
+        if (p === "need_waiter") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-waiter"][this.currentLang.slug];
+        if (p === "need_products") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-products"][this.currentLang.slug];
+        if (p === "need_invoice") this.olUnneedConfirmMsg = this.words["restorator-orders"]["confirm-unneed-invoice"][this.currentLang.slug];
+    
+        this.olUnneedConfirmActive = true;                
+    }
+
+    public olUnneed(): void {
+        try {
+            this.olUnneedConfirmActive = false;       
+            this.olOrderToUnneed[this.olPropertyToUnneed] = false;
+            this.orderRepository.updateParam(this.olOrderToUnneed.id, this.olPropertyToUnneed, false);        
+        } catch (err) {
+            this.appService.showError(err);
+        }        
     }
 }

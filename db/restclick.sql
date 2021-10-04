@@ -1671,6 +1671,16 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 116	43	Мясо	t
 117	43	Сыр	t
 118	43	Зелень	f
+119	45	Мясо	t
+120	45	Хлеб	t
+121	45	Кетчуп	t
+122	45	Помидор	t
+123	45	Лист салата	t
+124	46	Мясо	t
+125	46	Хлеб	t
+126	46	Кетчуп	t
+127	46	Помидор	t
+128	46	Лист салата	t
 \.
 
 
@@ -1719,6 +1729,9 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 42	24	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 43	24	2	h0002	Королевский чизбургер	305	2	f	2021-9/1632351029146_500.jpg
 44	24	1	hf0001	Гамбургер "Бостон"	1000	1	f	2021-9/1632350544594_500.jpg
+45	25	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+46	25	2	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+47	25	2	hf00015	Какое-то блюдо 15	1000	1	f	2021-9/1632350544594_500.jpg
 \.
 
 
@@ -1729,27 +1742,29 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, need_products, customer_comment, employee_comment, paymethod, accepted_at, completed_at) FROM stdin;
 11	33	1	21	\N	f	f	completed	0	\N	2021-09-30 01:32:36.071462	f			cash	\N	\N
 8	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:15:19.592197	f			cash	\N	\N
-14	33	1	21	9	t	t	active	0	\N	2021-09-30 22:02:14.884161	t			cash	2021-10-04 03:56:24.379	\N
 18	33	1	21	\N	f	t	completed	0	\N	2021-09-30 23:51:43.753031	f			card	\N	\N
 19	33	1	21	\N	t	t	completed	0	\N	2021-10-01 01:16:02.416953	f			cash	\N	\N
 20	33	1	21	\N	f	f	completed	0	\N	2021-10-01 01:26:29.700644	f			cash	\N	\N
-5	33	1	21	\N	f	f	active	0	\N	2021-09-29 20:01:07.059932	f			cash	2021-10-04 03:59:57.065	\N
-2	33	1	21	9	f	f	active	0	\N	2021-09-29 19:46:07.036984	f			cash	\N	\N
-21	42	1	21	9	t	t	active	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
-17	33	1	21	9	f	t	active	0	\N	2021-09-30 23:30:54.056362	f			cash	\N	\N
-10	33	1	21	9	f	f	active	0	\N	2021-09-30 01:15:52.684241	f			cash	\N	\N
-15	33	1	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
+21	42	1	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
+22	33	1	21	9	f	f	cancelled	0	\N	2021-10-01 22:19:35.824168	f			cash	\N	\N
+17	33	1	21	9	f	t	cancelled	0	\N	2021-09-30 23:30:54.056362	f			cash	\N	\N
 9	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:46:24.864196	f			cash	\N	\N
 4	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:00:22.929265	f			cash	\N	\N
 3	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 19:59:36.82795	f			cash	\N	\N
-22	33	1	21	9	f	f	active	0	\N	2021-10-01 22:19:35.824168	f			cash	\N	\N
-13	33	1	21	9	f	f	active	0	\N	2021-09-30 21:50:05.352669	f			cash	2021-10-03 02:18:08.926	\N
-6	33	1	21	9	f	f	active	0	\N	2021-09-29 20:04:21.826392	f			cash	2021-10-03 02:18:37.203	\N
-7	33	1	21	9	f	f	active	0	\N	2021-09-29 20:08:31.197834	f			cash	2021-10-03 23:35:54.838	\N
-16	33	1	21	9	f	f	active	0	\N	2021-09-30 23:06:33.262757	f	дайте что-нибудь		cash	2021-10-04 01:13:42.507	\N
+16	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 23:06:33.262757	f	дайте что-нибудь		cash	2021-10-04 01:13:42.507	\N
+14	33	1	21	9	t	t	cancelled	0	\N	2021-09-30 22:02:14.884161	t			cash	2021-10-04 03:56:24.379	\N
+10	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 01:15:52.684241	f			cash	\N	\N
+13	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 21:50:05.352669	f			cash	2021-10-03 02:18:08.926	\N
+7	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 20:08:31.197834	f			cash	2021-10-03 23:35:54.838	\N
+6	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 20:04:21.826392	f			cash	2021-10-03 02:18:37.203	\N
+2	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 19:46:07.036984	f			cash	\N	\N
 12	33	1	21	\N	f	f	cancelled	0	\N	2021-09-30 01:52:41.812539	f			cash	\N	\N
 23	33	1	21	36	t	f	active	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
-24	33	1	21	\N	f	f	active	0	\N	2021-10-04 02:16:40.599221	t	<div>04.10.2021 02:16 какое-то поежлание</div>		cash	\N	\N
+25	33	1	21	\N	f	f	active	0	\N	2021-10-04 12:50:16.497155	t			cash	\N	\N
+26	33	1	21	\N	t	f	active	0	\N	2021-10-04 12:51:52.275692	f			cash	\N	\N
+24	33	1	21	9	f	f	active	0	\N	2021-10-04 02:16:40.599221	f	<div>04.10.2021 02:16 какое-то поежлание</div>	друг шефа	cash	2021-10-04 12:49:12.066	\N
+5	33	1	21	9	t	f	active	0	\N	2021-09-29 20:01:07.059932	t		хороший клиент	cash	2021-10-04 12:48:38.243	\N
+15	33	1	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
 \.
 
 
@@ -3780,6 +3795,10 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 982	297	2	Subtotal
 983	298	1	Заказ уже принят другим сотрудником
 984	298	2	Order is already accepted
+985	299	1	Номер
+986	299	2	No.
+987	300	1	Мои заказы - Редактирование
+988	300	2	My orders - Edit
 \.
 
 
@@ -4076,6 +4095,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 296	21	115	serving	\N
 297	21	116	subtotal	\N
 298	21	117	accept-conflict	\N
+299	21	118	no	\N
+300	21	4	title-my-edit	\N
 \.
 
 
@@ -4181,21 +4202,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 118, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 128, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 44, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 47, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 24, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 26, true);
 
 
 --
@@ -4258,7 +4279,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1157, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 984, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 988, true);
 
 
 --
@@ -4272,7 +4293,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 298, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 300, true);
 
 
 --

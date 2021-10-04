@@ -4,7 +4,11 @@
     height: 45px; justify-content: center; width:100%; position: relative; margin-bottom: 15px;
     .hd-left {position: absolute; left: 0; top: 0;}
     .hd-right {position: absolute; right: 0; top: 0; display: flex;}    
-    .hd-title {font-weight: bold; height: 40px; display: flex; align-items: center; font-size: 16px;}        
+    .hd-title {
+        @media (min-width:0) {width: 250px;}
+	    @media (min-width:1500px) {width: auto;}
+        font-weight: bold; height: 40px; display: flex; align-items: center; font-size: 16px; text-align: center;
+    }        
     .hd-langs {
         height: 45px; width: 45px; line-height: 45px; text-align: center; border-radius: 23px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; margin: 0 0 0 7px;
         span::before {font-family: "fa-solid"; content:"\f57d"; font-size: 20px;}        

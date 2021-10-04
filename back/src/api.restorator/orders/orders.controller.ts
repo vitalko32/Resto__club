@@ -11,11 +11,11 @@ import { IOrder } from "./dto/order.interface";
 export class OrdersController {
     constructor (private ordersService: OrdersService) {}            
 
-    // get all new
+    // get all
     @UseGuards(EmployeesGuard)
-    @Post("all-new")
+    @Post("all")
     public allNew(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
-        return this.ordersService.allNew(dto);
+        return this.ordersService.all(dto);
     } 
     
     // accept
@@ -30,5 +30,12 @@ export class OrdersController {
     @Post("one/:id")
     public one(@Param("id") id: string): Promise<IAnswer<IOrder>> {
         return this.ordersService.one(parseInt(id));
-    }   
+    }  
+    
+    // cancel
+    @UseGuards(EmployeesGuard)
+    @Post("cancel/:id")
+    public cancel(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.ordersService.cancel(parseInt(id));
+    }  
 }
