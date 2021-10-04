@@ -1,4 +1,5 @@
 import { IOrderProductIngredient } from "./order.product.ingredient.interface";
+import { IServing } from "./serving.interface";
 
 export interface IOrderProduct {
     readonly id: number;
@@ -11,4 +12,5 @@ export interface IOrderProduct {
     q: number;
     completed: boolean;
     readonly ingredients?: IOrderProductIngredient[];
+    readonly serving?: IServing;
 }

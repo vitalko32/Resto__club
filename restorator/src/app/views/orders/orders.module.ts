@@ -3,15 +3,16 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { IndexAllOrdersPage } from "./pages/all.index/index.all.orders.page";
-import { ViewAllOrdersPage } from "./pages/all.view/view.all.orders.page";
-import { IndexMyOrdersPage } from "./pages/my.index/index.my.orders.page";
+import { OrderProductComponent } from "./components/order-product/order-product.component";
+import { MyOrdersPage } from "./pages/my/my.orders.page";
+import { ViewNewOrdersPage } from "./pages/new.view/view.new.orders.page";
+import { NewOrdersPage } from "./pages/new/new.orders.page";
 
 let routes = RouterModule.forChild ([            
-	{path: "all", component: IndexAllOrdersPage, pathMatch: "full"},
-	{path: "all/view/:id", component: ViewAllOrdersPage},
-	{path: "my", component: IndexMyOrdersPage, pathMatch: "full"},
-	{path: "**", redirectTo: "/orders/all"},
+	{path: "new", component: NewOrdersPage, pathMatch: "full"},
+	{path: "new/view/:id", component: ViewNewOrdersPage},
+	{path: "my", component: MyOrdersPage, pathMatch: "full"},
+	{path: "**", redirectTo: "/orders/new"},
 ]);
 
 @NgModule({	
@@ -24,9 +25,10 @@ let routes = RouterModule.forChild ([
 		CCModule,
 	],
 	declarations: [
-		IndexAllOrdersPage,
-		ViewAllOrdersPage,
-		IndexMyOrdersPage,
+		NewOrdersPage,
+		MyOrdersPage,
+		ViewNewOrdersPage,
+		OrderProductComponent,
 	],    		    
 })
 export class OrdersModule {}

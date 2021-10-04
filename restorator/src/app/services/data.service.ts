@@ -85,7 +85,7 @@ export class DataService {
     public productsUpdate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/update", x, true);}  
     public productsUpdatePositions(dto: IProductUpdatePos[]): Observable<IAnswer<void>> {return this.sendRequest("products/update-positions", dto, true);}
 
-    public ordersAll(dto: IGetAll): Observable<IAnswer<Order[]>> {return this.sendRequest("orders/all", dto, true);}
+    public ordersAllNew(dto: IGetAll): Observable<IAnswer<Order[]>> {return this.sendRequest("orders/all-new", dto, true);}
     public ordersAccept(dto: IOrderAccept): Observable<IAnswer<void>> {return this.sendRequest("orders/accept", dto, true);}
     public ordersOne(id: number): Observable<IAnswer<Order>> {return this.sendRequest(`orders/one/${id}`, null, true);}
     

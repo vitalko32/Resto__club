@@ -4,21 +4,23 @@ import { Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Order } from "src/app/model/orm/order.model";
+import { IOrderProduct } from "src/app/model/orm/order.product.interface";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
-import { OrderRepository } from "src/app/services/repositories/order.repository";
+import { OrderNewRepository } from "src/app/services/repositories/order.new.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "view-all-orders-page",
-    templateUrl: "view.all.orders.page.html",
+    selector: "view-new-orders-page",
+    templateUrl: "view.new.orders.page.html",
     styleUrls: ["../../../../common.styles/data.scss"],
 })
-export class ViewAllOrdersPage implements OnInit, OnDestroy {    
+export class ViewNewOrdersPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;  
     public acceptConfirmActive: boolean = false;
+    public acceptConflictAlertActive: boolean = false;
     public formLoading: boolean = false;
     public order: Order = null;       
     public employee_comment: string = "";
@@ -26,7 +28,7 @@ export class ViewAllOrdersPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
-        private orderRepository: OrderRepository,
+        private orderRepository: OrderNewRepository,
         private authService: AuthService,         
         private router: Router,    
         private route: ActivatedRoute,  
@@ -34,8 +36,8 @@ export class ViewAllOrdersPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get employee(): Employee {return this.authService.authData.value.employee;}
-    get canComment(): boolean {return !this.order.employee_id || this.order.employee_id === this.employee.id;}
+    get employee(): Employee {return this.authService.authData.value.employee;} 
+    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}   
     
     public ngOnInit(): void {        
         this.initAuthCheck();     
@@ -53,8 +55,8 @@ export class ViewAllOrdersPage implements OnInit, OnDestroy {
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["restorator-orders"]["title-all-view"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-all-view"][lang.slug]));           
+        this.appService.setTitle(this.words["restorator-orders"]["title-new-view"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-new-view"][lang.slug]));           
     } 
 
     private async initOrder(): Promise<void> {
@@ -63,13 +65,28 @@ export class ViewAllOrdersPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
-    }
+    }    
 
     public onAccept(): void {
-
+        this.acceptConfirmActive = true;
     }
 
-    public accept(): void {
+    public async accept(): Promise<void> {
+        try {
+            this.acceptConfirmActive = false;
+            this.formLoading = true;
+            const statusCode = await this.orderRepository.accept(this.order.id, this.employee.id, this.employee_comment);
+            this.formLoading = false;
 
+            if (statusCode === 200) {
+                this.router.navigateByUrl("/orders/my");
+            } else if (statusCode === 410) {
+                this.acceptConflictAlertActive = true;
+            } else {
+                this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
+            }
+        } catch (err) {
+            this.appService.showError(err);
+        }
     }
 }

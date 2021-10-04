@@ -1,12 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { IServing } from "src/api.customer/servings/dto/serving.interface";
 import { APIService } from "src/common/api.service";
 import { IAnswer } from "src/model/dto/answer.interface";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { Employee } from "src/model/orm/employee.entity";
+import { Lang } from "src/model/orm/lang.entity";
 import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { Sortdir } from "src/model/sortdir.type";
-import { Repository } from "typeorm";
+import { IsNull, Repository } from "typeorm";
 import { IOrderAccept } from "./dto/order.accept.interface";
 
 @Injectable()
@@ -14,23 +16,26 @@ export class OrdersService extends APIService {
     constructor (
         @InjectRepository(Order) private orderRepository: Repository<Order>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+        @InjectRepository(Lang) private langRepository: Repository<Lang>,
     ) {
         super();
-    }
+    }    
 
-    public async all(dto: IGetAll): Promise<IAnswer<Order[]>> {
+    public async allNew(dto: IGetAll): Promise<IAnswer<Order[]>> {
         try {
             const sortBy: string = dto.sortBy;
             const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-            const filter: Object = dto.filter;
-            const data: Order[] = await this.orderRepository.find({where: filter, order: {[sortBy]: sortDir}, relations: ["products", "table", "employee"]});             
+            const filter: any = dto.filter;
+            filter.status = OrderStatus.Active;
+            filter.employee_id = IsNull();
+            const data: Order[] = await this.orderRepository.find({where: filter, order: {[sortBy]: sortDir}, relations: ["products", "table", "table.hall"]});             
             return {statusCode: 200, data};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.all: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    } 
+    }
 
     public async accept(dto: IOrderAccept): Promise<IAnswer<void>> {
         try {
@@ -46,6 +51,7 @@ export class OrdersService extends APIService {
             }
 
             order.employee_id = dto.employee_id;
+            order.employee_comment = dto.employee_comment;
             order.accepted_at = new Date();
             await this.orderRepository.save(order);
             
@@ -58,17 +64,20 @@ export class OrdersService extends APIService {
     }
 
     public async one(id: number): Promise<IAnswer<Order>> {
-        try {
+        try {            
             const order = await this.orderRepository
                 .createQueryBuilder("order")
                 .leftJoinAndSelect("order.products", "products")
                 .leftJoinAndSelect("products.ingredients", "ingredients")
+                .leftJoinAndSelect("products.serving", "serving")
+                .leftJoinAndSelect("serving.translations", "serving_translations")
                 .leftJoinAndSelect("order.table", "table")
                 .leftJoinAndSelect("table.hall", "hall")
                 .leftJoinAndSelect("order.employee", "employee")
                 .where(`order.id = '${id}'`)
                 .orderBy({"products.id": "ASC"}) // хотим получать товары в том порядке, в котором они заказывались
-                .getOne();
+                .getOne();                           
+
             return order ? {statusCode: 200, data: order} : {statusCode: 404, error: "order not found"};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.one: ${String(err)}`;

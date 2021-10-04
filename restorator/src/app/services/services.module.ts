@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { AdminGuard } from './admin.guard';
-
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
@@ -15,7 +14,7 @@ import { EmployeeStatusRepository } from './repositories/employee.status.reposit
 import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { LangRepository } from './repositories/lang.repository';
-import { OrderRepository } from './repositories/order.repository';
+import { OrderNewRepository } from './repositories/order.new.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
@@ -43,7 +42,7 @@ import { WordRepository } from './repositories/word.repository';
         CatRepository,
         IconRepository,
         ProductRepository,
-        OrderRepository,
+        OrderNewRepository,
     ],
 })
 export class ServicesModule {}

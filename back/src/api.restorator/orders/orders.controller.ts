@@ -10,11 +10,11 @@ import { IOrderAccept } from "./dto/order.accept.interface";
 export class OrdersController {
     constructor (private ordersService: OrdersService) {}            
 
-    // get all
+    // get all new
     @UseGuards(EmployeesGuard)
-    @Post("all")
-    public all(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
-        return this.ordersService.all(dto);
+    @Post("all-new")
+    public allNew(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
+        return this.ordersService.allNew(dto);
     } 
     
     // accept

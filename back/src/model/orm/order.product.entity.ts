@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "./order.entity";
 import { OrderProductIngredient } from "./order.product.ingredient.entity";
+import { Serving } from "./serving.entity";
 
 @Entity({name: "vne_order_products"})
 export class OrderProduct {
@@ -35,6 +36,10 @@ export class OrderProduct {
     @ManyToOne(type => Order, {onDelete: "CASCADE", onUpdate: "CASCADE"})
     @JoinColumn({name: "order_id"})
     order: Order;
+
+    @ManyToOne(type => Serving, {onDelete: "SET NULL", onUpdate: "CASCADE"})
+    @JoinColumn({name: "serving_id"})
+    serving: Serving;
 
     @OneToMany(type => OrderProductIngredient, ingredient => ingredient.product, {cascade: true})
     ingredients: OrderProductIngredient[];

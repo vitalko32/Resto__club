@@ -1,0 +1,15 @@
+<div *ngIf="product" class="order-product">
+    <div class="op-left">
+        <div class="op-img" [style.background-image]="product.img ? 'url(/images/products/'+product.img+')' : 'url(/images/no-image.jpg)'"></div>
+    </div>
+    <div class="op-right">
+        <div class="op-name" [innerHTML]="product.name"></div>
+        <div class="op-serving">{{words['restorator-orders']['serving'][currentLang.slug]}}: {{getServingName(product)}}</div>
+        <div class="op-calc"><span>{{product.q}}&nbsp;x&nbsp;{{product.price | number:'1.2-2'}}&nbsp;{{currency_symbol}}</span></div>                                
+        <div class="op-ingredients" *ngIf="product.ingredients.length">
+            <div class="op-ingredient" *ngFor="let i of product.ingredients">                                        
+                <div class="opi-name" [class.not-included]="!i.included">{{i.name}}</div>
+            </div>
+        </div>
+    </div>
+</div>

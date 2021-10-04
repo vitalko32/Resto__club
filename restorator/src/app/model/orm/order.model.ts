@@ -39,6 +39,8 @@ export class Order extends Model {
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())} ${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()}` : "";}
     get q(): number {return this.products.length ? this.products.map(p => p.q).reduce((acc, x) => acc + x) : 0;}
+    get subtotal(): number {return this.products.length ? this.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;}
+    get total(): number {return (this.subtotal / 100) * (100 - this.discount_percent);}
 
     public build (o: Object): any {
         for (let field in o) {

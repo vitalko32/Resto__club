@@ -36,7 +36,7 @@ export class OrdersService extends APIService {
             order.table_id = table.id;
             order.hall_id = table.hall.id;
             order.restaurant_id = table.hall.restaurant.id;
-            order.customer_comment = dto.cart.comment ? `${this.humanDatetime(new Date())} ${dto.cart.comment}\n` : "";
+            order.customer_comment = dto.cart.comment ? `<div>${this.humanDatetime(new Date())} ${dto.cart.comment}</div>` : "";
             order.products = this.buildOrderProducts(dto.cart);
             await this.orderRepository.save(order);
 
@@ -57,8 +57,9 @@ export class OrdersService extends APIService {
                 return {statusCode: 404, error: "active order not found"};
             }
 
-            order.customer_comment += dto.cart.comment ? `${this.humanDatetime(new Date())} ${dto.cart.comment}\n` : "";
+            order.customer_comment += dto.cart.comment ? `<div>${this.humanDatetime(new Date())} ${dto.cart.comment}</div>` : "";
             order.products = [...order.products, ...this.buildOrderProducts(dto.cart)];
+            order.need_products = true;
             await this.orderRepository.save(order);
 
             return {statusCode: 200, data: order};

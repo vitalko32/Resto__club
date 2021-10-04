@@ -1,0 +1,69 @@
+<div class="dash" >
+    <a class="dash-btn accept" [class.disabled]="!order || formLoading" (click)="onAccept()"><span>{{words['common']['accept'][currentLang.slug]}}</span></a>
+    <a class="dash-btn back" routerLink="/orders/new"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
+</div>
+<div class="data">
+    <div class="dataedit"> 
+        <ng-container *ngIf="order">
+            <form (submit)="onAccept();">            
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['created-at'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.formattedCreatedAt}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['table2'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.no}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['hall'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.hall?.name}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['seats'][currentLang.slug]}}:</div>
+                    <div class="de-value">{{order.table?.seats}}</div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['statuses'][currentLang.slug]}}:</div>
+                    <div class="de-value">
+                        <div class="de-statuses" *ngIf="order.need_waiter || order.need_products || order.need_invoice">
+                            <div class="de-status need-waiter inactive" *ngIf="order.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
+                            <div class="de-status need-products inactive" *ngIf="order.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
+                            <div class="de-status need-invoice inactive" *ngIf="order.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
+                        </div>
+                        <span *ngIf="!(order.need_waiter || order.need_products || order.need_invoice)">{{words['common']['empty'][currentLang.slug]}}</span>
+                    </div>
+                </div>                
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['customer-comment'][currentLang.slug]}}:</div>
+                    <div class="de-value">
+                        <div [innerHTML]="order.customer_comment || words['common']['empty'][currentLang.slug]"></div>
+                    </div>
+                </div>
+                <div class="de-row">
+                    <div class="de-title">{{words['restorator-orders']['employee-comment'][currentLang.slug]}}:</div>
+                    <div class="de-value">
+                        <div class="de-inputwrap"><input type="text" name="employee_comment" [(ngModel)]="employee_comment"></div>                        
+                    </div>
+                </div>
+                <!-- products -->
+                <ng-container *ngIf="order.products.length">
+                    <div class="de-space"></div>
+                    <div class="de-head margined">{{words['restorator-orders']['content'][currentLang.slug]}}</div>
+                    <div class="de-products">
+                        <order-product *ngFor="let p of order.products" [product]="p"></order-product>                        
+                    </div>                    
+                    <div class="de-head2">{{words['restorator-orders']['subtotal'][currentLang.slug]}}: {{order.subtotal | number:'1.2-2'}} {{currency_symbol}}</div>                     
+                    <div class="de-space"></div>
+                </ng-container>   
+                <!-- btn -->             
+                <div class="de-btnwrap"><button type="submit" [disabled]="formLoading">{{words['common']['accept'][currentLang.slug]}}</button></div>
+            </form>
+        </ng-container>
+        <ng-container *ngIf="!order">
+            {{words['common']['loading'][currentLang.slug]}}
+        </ng-container>
+    </div>
+</div>
+
+<the-confirm [(active)]="acceptConfirmActive" [msg]="words['restorator-orders']['confirm-accept'][currentLang.slug]" (confirmed)="accept()"></the-confirm>
+<the-alert [(active)]="acceptConflictAlertActive" [msg]="words['restorator-orders']['accept-conflict'][currentLang.slug]"></the-alert>
