@@ -5,6 +5,7 @@ import { Order } from "../../model/orm/order.entity";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
 import { IOrderAccept } from "./dto/order.accept.interface";
+import { IOrder } from "./dto/order.interface";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -27,7 +28,7 @@ export class OrdersController {
     // get one
     @UseGuards(EmployeesGuard)
     @Post("one/:id")
-    public one(@Param("id") id: string): Promise<IAnswer<Order>> {
+    public one(@Param("id") id: string): Promise<IAnswer<IOrder>> {
         return this.ordersService.one(parseInt(id));
     }   
 }

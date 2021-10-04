@@ -24,9 +24,5 @@ export class OrderProductComponent {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get employee(): Employee {return this.authService.authData.value.employee;} 
-    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}  
-
-    public getServingName(p: IOrderProduct): string {
-        return p.serving?.translations?.find(t => t.lang_id === this.currentLang.id)?.name;
-    }
+    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}      
 }
