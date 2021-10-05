@@ -37,7 +37,7 @@ export class CartPanelComponent {
     get order(): IOrder {return this.orderService.order;}
 
     public onQuantityChanged(r: ICartRecord): void {
-        r.q > 0 ? this.orderService.cartSave() : this.orderService.cartRemoveRecord(r);
+        r.q > 0 ? this.orderService.cartSaveToStorage() : this.orderService.cartRemoveRecord(r);
     }
 
     public onOrderSend(): void {

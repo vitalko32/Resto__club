@@ -23,7 +23,6 @@ export class OrderService {
     get cartS(): number {return this.cart.records.length ? this.cart.records.map(r => r.q * r.product.price).reduce((acc, x) => acc + x) : 0;}    
     get orderSubtotal(): number {return this.order.products.length ? this.order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;}
     get orderTotal(): number {return (this.orderSubtotal / 100) * (100 - this.order.discount_percent);}
-
     
     public async initTable(code: string): Promise<number> {
         return new Promise((resolve, reject) => {
@@ -48,13 +47,13 @@ export class OrderService {
         this.orderStartChecking(); // периодически проверяем актуальность и состояние заказа
     }
 
-    public cartSave(): void {        
+    public cartSaveToStorage(): void {        
         localStorage.setItem("cart", JSON.stringify(this.cart));        
     }
 
     public cartClear(): void {
         this.cart = new Cart();
-        this.cartSave();
+        this.cartSaveToStorage();
     }
 
     public cartAdd(product: IProduct, q: number = 1): void {        
@@ -66,13 +65,13 @@ export class OrderService {
             this.cart.records.push({product, q});
         }        
         
-        this.cartSave();        
+        this.cartSaveToStorage();        
     }    
 
     public cartRemoveRecord(record: ICartRecord): void {
         let index: number = this.cart.records.indexOf(record);
         this.cart.records.splice(index, 1);
-        this.cartSave();
+        this.cartSaveToStorage();
     }
 
     private orderSaveToStorage(): void {        
