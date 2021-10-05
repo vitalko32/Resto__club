@@ -82,7 +82,9 @@ export class NewOrdersPage implements OnInit, OnDestroy {
                 this.router.navigateByUrl("/orders/my");
             } else if (statusCode === 410) {
                 this.olAcceptConflictAlertActive = true;
-                this.ol.splice(this.ol.indexOf(this.olOrderToAccept), 1); // потом это будет лишним, заказы будут убираться по сокету
+                // избыточное действие, заказы должны удаляться по сокету
+                const index = this.ol.indexOf(this.olOrderToAccept);
+                index !== -1 ? this.ol.splice(index, 1) : null;                
             } else {
                 this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
             }
@@ -100,7 +102,8 @@ export class NewOrdersPage implements OnInit, OnDestroy {
         try {
             this.olCancelConfirmActive = false;       
             this.orderRepository.cancel(this.olOrderToCancel.id);
-            this.ol.splice(this.ol.indexOf(this.olOrderToCancel), 1);
+            const index = this.ol.indexOf(this.olOrderToCancel);
+            index !== -1 ? this.ol.splice(index, 1) : null;
         } catch (err) {
             this.appService.showError(err);
         }       

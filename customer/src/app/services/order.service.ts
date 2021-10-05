@@ -11,22 +11,20 @@ import { ITable } from "../model/orm/table.interface";
 import { DataService } from "./data.service";
 
 @Injectable()
-export class OrderService {
+export class OrderService {    
     public order: IOrder = null;
     private orderCheckInteval: number = null;
     public table: ITable = null;
     public cart: Cart = null;
 
-    constructor(private dataService: DataService) {
-        this.initCart();
-        this.initOrder();
-    }
-
+    constructor(private dataService: DataService) {}
+    
     get cartQ(): number {return this.cart.records.length ? this.cart.records.map(r => r.q).reduce((acc, x) => acc + x) : 0;}
     get cartS(): number {return this.cart.records.length ? this.cart.records.map(r => r.q * r.product.price).reduce((acc, x) => acc + x) : 0;}    
     get orderSubtotal(): number {return this.order.products.length ? this.order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;}
     get orderTotal(): number {return (this.orderSubtotal / 100) * (100 - this.order.discount_percent);}
 
+    
     public async initTable(code: string): Promise<number> {
         return new Promise((resolve, reject) => {
             this.dataService.tablesOne(code).subscribe(res => {
@@ -38,14 +36,15 @@ export class OrderService {
         });
     }
 
-    private initCart(): void {
+    public initCart(): void {
         let data: string = localStorage.getItem("cart");       
         this.cart = data ? JSON.parse(data) : new Cart();            
     }
 
-    private initOrder(): void {
-        let data: string = localStorage.getItem("order");       
-        this.order = data ? JSON.parse(data) : null;  
+    public initOrders(): void {
+        const data: string = localStorage.getItem("orders");       
+        const orders: IOrder[] = data ? JSON.parse(data) : [];  
+        this.order = orders.find(o => o.table_id === this.table.id) || null;        
         this.orderStartChecking(); // периодически проверяем актуальность и состояние заказа
     }
 
@@ -76,28 +75,45 @@ export class OrderService {
         this.cartSave();
     }
 
-    public orderSave(): void {        
-        localStorage.setItem("order", JSON.stringify(this.order));        
+    private orderSaveToStorage(): void {        
+        const data = localStorage.getItem("orders");
+        const orders: IOrder[] = data ? JSON.parse(data) : []; 
+        let index = orders.findIndex(o => o.id === this.order.id);
+
+        if (index !== -1) {
+            orders[index] = this.order; 
+        } else {
+            orders.push(this.order);
+        }
+
+        localStorage.setItem("orders", JSON.stringify(orders));        
     }
 
-    public orderStartChecking(): void {
+    private orderRemoveFromStorage(): void {
+        const data = localStorage.getItem("orders");
+        const orders: IOrder[] = data ? JSON.parse(data) : []; 
+        const index = orders.findIndex(o => o.id === this.order.id);
+
+        if (index !== -1) {
+            orders.splice(index, 1);
+            localStorage.setItem("orders", JSON.stringify(orders));  
+        }
+    }
+
+    private orderStartChecking(): void {
         this.orderCheck();
         this.orderCheckInteval = window.setInterval(() => this.orderCheck(), 10000);
-    }
-
-    public orderStopChecking(): void {
-        window.clearInterval(this.orderCheckInteval);
-    } 
+    }    
 
     private orderCheck(): void {
         if (this.order) {
             this.dataService.ordersCheck(this.order.id).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
-                    this.orderSave();
+                    this.orderSaveToStorage();
                 } else if (res.statusCode === 404) {
-                    this.order = null;
-                    localStorage.removeItem("order");
+                    this.orderRemoveFromStorage();
+                    this.order = null;                    
                 } else {
                     console.log(res);
                 }
@@ -112,8 +128,8 @@ export class OrderService {
             const dto: IOrderCreate = {table_id: this.table.id, cart: this.cart};
             this.dataService.ordersCreate(dto).subscribe(res => {
                 if (res.statusCode === 200) {
-                    this.order = res.data;
-                    this.orderSave();
+                    this.order = res.data;                    
+                    this.orderSaveToStorage();
                     resolve();
                 } else {
                     reject(res.error);
@@ -130,7 +146,7 @@ export class OrderService {
             this.dataService.ordersAdd(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
-                    this.orderSave();
+                    this.orderSaveToStorage();
                     resolve();
                 } else {
                     reject(res.error);
@@ -147,7 +163,7 @@ export class OrderService {
             this.dataService.ordersClose(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
-                    this.orderSave();
+                    this.orderSaveToStorage();
                     resolve();
                 } else {
                     reject(res.error);
@@ -167,7 +183,7 @@ export class OrderService {
             this.dataService.ordersCallWaiter(dto).subscribe(res => {
                 if (res.statusCode === 200) {
                     this.order = res.data;
-                    this.orderSave();
+                    this.orderSaveToStorage();
                     resolve();
                 } else {
                     reject(res.error);

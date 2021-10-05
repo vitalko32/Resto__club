@@ -80,7 +80,8 @@ export class MyOrdersPage implements OnInit, OnDestroy {
         try {
             this.olCancelConfirmActive = false;       
             this.orderRepository.updateParam(this.olOrderToCancel.id, "status", OrderStatus.Cancelled);
-            this.ol.splice(this.ol.indexOf(this.olOrderToCancel), 1);
+            const index = this.ol.indexOf(this.olOrderToCancel);
+            index !== -1 ? this.ol.splice(index, 1) : null;
         } catch (err) {
             this.appService.showError(err);
         }        
@@ -116,7 +117,8 @@ export class MyOrdersPage implements OnInit, OnDestroy {
         try {
             this.olCompleteConfirmActive = false;       
             this.orderRepository.complete(this.olOrderToComplete.id);
-            this.ol.splice(this.ol.indexOf(this.olOrderToComplete), 1);
+            const index = this.ol.indexOf(this.olOrderToComplete);
+            index !== -1 ? this.ol.splice(index, 1) : null;
         } catch (err) {
             this.appService.showError(err);
         }        

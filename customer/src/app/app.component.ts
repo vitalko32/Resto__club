@@ -15,9 +15,9 @@ import { WordRepository } from './services/repositories/word.repository';
 export class AppComponent implements OnInit, AfterViewInit {	
 	@ViewChild("win", {static: false}) winRef: ElementRef; 
 	public wordsReady: boolean = false;
-	public tableReady: boolean = false;
-	public tableNotFound: boolean = false;
+	public ordersReady: boolean = false;	
 	public servingsReady: boolean = false;
+	public tableNotFound: boolean = false;
 
 	constructor(		
 		private wordRepository: WordRepository,
@@ -27,10 +27,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private orderService: OrderService,
 	) {}
 
-	get ready(): boolean {return this.wordsReady && this.tableReady && this.servingsReady;}		
+	get ready(): boolean {return this.wordsReady && this.ordersReady && this.servingsReady;}		
 
 	public async ngOnInit(): Promise<void> {		
-		if (await this.initOrder()) {
+		if (await this.initOrders()) {
 			this.initURLRoutine();		
 			this.initWords();
 			this.initServings();
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			.subscribe(event => this.appService.win.scrollTop ? setTimeout(() => {this.appService.win.scrollTo(0, 0);}, 1) : null);
 	}	
 
-	private async initOrder(): Promise<boolean> {		
+	private async initOrders(): Promise<boolean> {		
 		try {
 			const url = document.location.pathname.split("/");
 			
@@ -60,7 +60,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 				return false;
 			} 
 
-			this.tableReady = true;
+			this.orderService.initCart();
+			this.orderService.initOrders();
+			this.ordersReady = true;
 			return true;			
 		} catch (err) {
 			this.appService.showError(err);
