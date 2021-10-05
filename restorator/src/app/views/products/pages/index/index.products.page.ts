@@ -15,7 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "index-products-page",
     templateUrl: "index.products.page.html",
-    styleUrls: ["index.products.page.scss"],
+    styleUrls: ["../../../../common.styles/catalogue.scss"],
 })
 export class IndexProductsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
@@ -41,8 +41,7 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}
-    get scrolledToBottom(): boolean {return window.scrollY + window.innerHeight > document.body.scrollHeight - 100;}	    
+    get currentLang(): Lang {return this.appService.currentLang.value;}    
     get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}    
     get cl(): Cat[] {return this.catRepository.xlAll;}
     get pl(): Product[] {return this.productRepository.xlAll;}

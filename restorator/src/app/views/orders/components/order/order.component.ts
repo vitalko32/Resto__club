@@ -27,6 +27,7 @@ export class OrderComponent {
     public productToDelete: IOrderProduct = null;
     public productDeleteConfirmActive: boolean = false;
     public productDeleteConfirmMsg: string = "";
+    public productFinderActive: boolean = false;
     public orderCompleteConfirmActive: boolean = false;
     public orderErrorHall: boolean = false;
     public orderErrorTable: boolean = false; 

@@ -36,8 +36,15 @@ export class ProductsService extends APIService {
                 filter += ` AND (LOWER(products.name) LIKE LOWER('%${dto.filter.nameCode}%') OR LOWER(products.code) LIKE LOWER('%${dto.filter.nameCode}%'))`;
             }            
             
-            const data: Product[] = await this.productRepository.createQueryBuilder("products").where(filter).orderBy(`products.${sortBy}`, sortDir).getMany();            
+            const data: Product[] = await this.productRepository
+                .createQueryBuilder("products")
+                .leftJoinAndSelect("products.ingredients", "ingredients")
+                .where(filter)
+                .orderBy(`products.${sortBy}`, sortDir)
+                .getMany();            
 
+            // из-за глюков с сортировкой присоединенной таблицы пришлось запрашивать картинки отдельно
+            // если сортировать присоединенную таблицу картинок, то исчезают товары, у которых нет картинок, а не сортировать нельзя, порядок имеет значение в данном случае
             for (let x of data) {
                 const il: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
                 x.images = il;

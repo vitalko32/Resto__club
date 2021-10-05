@@ -22,7 +22,8 @@
         @media (min-width:1200px) {grid-template-columns: 1fr 1fr 1fr;}
         display: grid; gap: 30px;
         .pi-img {
-            padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative; cursor: pointer;            
+            padding-bottom: 75%; background-size: cover; background-position: center center; border-radius: 15px; margin-bottom: 10px; position: relative; cursor: pointer;     
+            &.inactive {cursor: inherit;}       
             .pi-recommended {
                 position: absolute; right: 10px; top: 10px; width: 25px; height: 25px; background-color: white; border-radius: 13px; display: flex; justify-content: center; align-items: center;
                 span::before {font-family: "fa-regular"; content: "\f005";}
@@ -56,6 +57,13 @@
                         &.edit {span::before {content: "\f06e";}}
                     }
                 }                
+            }
+        }
+        .pi-cartdash {
+            display: flex; justify-content: space-between; align-items: center;
+            button {
+                height: 30px; width: 130px; flex:none; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; transition: background-color 0.3s;
+                &.added {background-color: black; color: white;}
             }
         }
     }

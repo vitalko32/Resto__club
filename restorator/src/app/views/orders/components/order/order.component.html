@@ -57,6 +57,7 @@
     <div class="de-head margined">{{words['restorator-orders']['content'][currentLang.slug]}}</div>
     <div class="de-products">
         <order-product-editable *ngFor="let p of x.products" [product]="p" [sl]="sl" (delete)="productOnDelete(p)"></order-product-editable>
+        <div class="dep-add" (click)="productFinderActive = true"><span></span></div>
     </div> 
     <!-- payment -->
     <div class="de-space"></div>
@@ -93,3 +94,4 @@
 <the-confirm [(active)]="productDeleteConfirmActive" [msg]="productDeleteConfirmMsg" (confirmed)="productDelete()"></the-confirm>
 <the-confirm [(active)]="orderCompleteConfirmActive" [msg]="words['restorator-orders']['confirm-complete'][currentLang.slug]" (confirmed)="orderComplete()"></the-confirm>
 <the-confirm [(active)]="orderSaveConfirmActive" [msg]="words['restorator-orders']['confirm-save'][currentLang.slug]" (confirmed)="orderSave()"></the-confirm>
+<product-finder [(active)]="productFinderActive" [order]="x"></product-finder>

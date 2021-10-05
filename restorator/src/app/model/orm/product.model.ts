@@ -19,7 +19,11 @@ export class Product extends Model {
     public likes: number;
 
     public images?: ProductImage[];
-    public ingredients?: Ingredient[];    
+    public ingredients?: Ingredient[];  
+    
+    public _q: number;
+    public _added: boolean;
+    public _timer: number;    
 
     public init(restaurant_id: number, cat_id: number): Product {
         this.restaurant_id = restaurant_id;
