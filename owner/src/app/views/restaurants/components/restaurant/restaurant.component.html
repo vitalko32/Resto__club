@@ -76,6 +76,12 @@
             <div class="de-inputwrap"><textarea name="comment" [(ngModel)]="x.comment"></textarea></div>            
         </div>
     </div>
+    <div class="de-row">
+        <div class="de-title">{{words['owner-restaurants']['active'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-inputwrap"><checkbox-slider [(value)]="x.active"></checkbox-slider></div>            
+        </div>
+    </div>
 
     <ng-container *ngIf="mode === 'create'">
         <div class="de-row">

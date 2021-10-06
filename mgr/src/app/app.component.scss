@@ -191,6 +191,18 @@ html {
                                             &.delete {span::before {content: "\f05e";}}
                                             &.magnify {span::before {content: "\f06e";}}
                                         }
+                                    }
+                                    .dt-listitem {
+                                        margin: 1px 0; display: flex; align-items: center; user-select: none;
+                                        &.center {justify-content: center;}
+                                        .create {
+                                            width: 30px; height:30px; cursor: pointer; display: flex; justify-content: center; align-items: center;
+                                            span::before {font-family: "awesome-solid"; content: "\f067";}
+                                        }  
+                                        .remove {
+                                            width: 30px; height:30px; cursor: pointer; display: flex; justify-content: center; align-items: center;
+                                            span::before {font-family: "awesome-solid"; content: "\f05e";}
+                                        }                                        
                                     }                             
                                 }
                             }

@@ -7,16 +7,18 @@ import { OrderProductEditableComponent } from "./components/order-product-editab
 import { OrderProductComponent } from "./components/order-product/order-product.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ProductFinderComponent } from "./components/product-finder/product-finder.component";
+import { CreateMyOrdersPage } from "./pages/my.create/create.my.orders.page";
 import { EditMyOrdersPage } from "./pages/my.edit/edit.my.orders.page";
-import { MyOrdersPage } from "./pages/my/my.orders.page";
+import { IndexMyOrdersPage } from "./pages/my.index/index.my.orders.page";
+import { IndexNewOrdersPage } from "./pages/new.index/index.new.orders.page";
 import { ViewNewOrdersPage } from "./pages/new.view/view.new.orders.page";
-import { NewOrdersPage } from "./pages/new/new.orders.page";
 
 let routes = RouterModule.forChild ([            
-	{path: "new", component: NewOrdersPage, pathMatch: "full"},
+	{path: "new", component: IndexNewOrdersPage, pathMatch: "full"},
 	{path: "new/view/:id", component: ViewNewOrdersPage},
-	{path: "my", component: MyOrdersPage, pathMatch: "full"},
+	{path: "my", component: IndexMyOrdersPage, pathMatch: "full"},
 	{path: "my/edit/:id", component: EditMyOrdersPage},
+	{path: "my/create", component: CreateMyOrdersPage},
 	{path: "**", redirectTo: "/orders/new"},
 ]);
 
@@ -30,10 +32,11 @@ let routes = RouterModule.forChild ([
 		CCModule,
 	],
 	declarations: [
-		NewOrdersPage,
-		MyOrdersPage,
+		IndexNewOrdersPage,
+		IndexMyOrdersPage,
 		ViewNewOrdersPage,
 		EditMyOrdersPage,
+		CreateMyOrdersPage,
 		OrderComponent,
 		OrderProductComponent,	
 		OrderProductEditableComponent,	

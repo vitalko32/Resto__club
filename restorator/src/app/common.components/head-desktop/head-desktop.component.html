@@ -3,7 +3,7 @@
     <div class="hd-right">    
         <div *ngIf="showMoney" class="hd-money">
             <a class="hdm-btn"><span>{{words['restorator-common']['recharge'][currentLang.slug]}}</span></a>
-            <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} {{words['common']['rur'][currentLang.slug]}}</strong></div>
+            <div class="hdm-status"><strong>{{restaurant.money | number:'1.2-2'}} {{words['common']['currency-name'][currentLang.slug]}}</strong></div>
         </div>    
         <a *ngIf="showLogout" class="hd-logout" routerLink="/auth/logout" [title]="words['common']['logout'][currentLang.slug]"><span></span></a>            
         <div class="hd-langs" [title]="words['common']['lang'][currentLang.slug]" (click)="langPanelActive = true;"><span></span></div>        

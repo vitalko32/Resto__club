@@ -11,11 +11,11 @@ import { OrderNewRepository } from "src/app/services/repositories/order.new.repo
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "new-orders-page",
-    templateUrl: "new.orders.page.html",
+    selector: "index-new-orders-page",
+    templateUrl: "index.new.orders.page.html",
     styleUrls: ["../../styles/orders.scss"],
 })
-export class NewOrdersPage implements OnInit, OnDestroy {
+export class IndexNewOrdersPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;    
     public olReady: boolean = false;
@@ -50,8 +50,8 @@ export class NewOrdersPage implements OnInit, OnDestroy {
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["restorator-orders"]["title-new"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-new"][lang.slug]));           
+        this.appService.setTitle(this.words["restorator-orders"]["title-new-index"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-new-index"][lang.slug]));           
     }  
     
     private initAuthCheck(): void {

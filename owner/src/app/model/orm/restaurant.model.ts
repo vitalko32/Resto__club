@@ -14,6 +14,7 @@ export class Restaurant extends Model {
     public ogrn: string;
     public comment: string;
     public money: number;
+    public active: boolean;
     public created_at: Date;
 
     public employees?: Employee[];
@@ -45,6 +46,7 @@ export class Restaurant extends Model {
         this.inn = "";
         this.ogrn = "";
         this.money = 0;
+        this.active = true;
         this.employees = [new Employee().init()];
         return this;
     }    

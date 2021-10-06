@@ -18,7 +18,7 @@ export class EmployeesGuard implements CanActivate {
             const id: number = data.id;
             const employee: Employee = await this.employeeRepository.findOne(id, {relations: ["restaurant"]});
 
-            if (!employee || !employee.restaurant) {
+            if (!employee || !employee.restaurant || !employee.restaurant.active) {
                 throw new ForbiddenException();
             }
             

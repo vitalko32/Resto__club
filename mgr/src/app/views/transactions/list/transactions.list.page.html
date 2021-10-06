@@ -9,9 +9,8 @@
         <ng-container *ngIf="ready">            
             <div class="data-tablewrap">
                 <table class="data-table">                    
-                    <tr class="no-border no-selection">
+                    <tr class="no-border no-selection">                        
                         <td>{{currentLang.phrases['workspace-filter']}}:</td>
-                        <td></td>
                         <td>
                             <div class="dt-inputwrap">
                                 <select [(ngModel)]="filterRestaurantId" (change)="rebuildList();">
@@ -23,16 +22,14 @@
                         <td></td>                        
                         <td></td>                                                
                     </tr>
-                    <tr class="no-selection">
-                        <th><input type="checkbox" [(ngModel)]="allSelected" (ngModelChange)="onSelectAll();"></th>                        
+                    <tr class="no-selection">                          
                         <th><label [class]="sortBy === 'created_at' ? (sortDir === 1 ? 'sorted-forward' : 'sorted-backward') : 'sortable'" (click)="changeSorting('created_at');">{{currentLang.phrases['workspace-transactions-created-at']}}</label></th>                                                                                               
                         <th>{{currentLang.phrases['workspace-transactions-restaurant']}}</th>
                         <th>{{currentLang.phrases['workspace-transactions-type']}}</th>                                                                                               
                         <th><label [class]="sortBy === 'amount' ? (sortDir === 1 ? 'sorted-forward' : 'sorted-backward') : 'sortable'" (click)="changeSorting('amount');">{{currentLang.phrases['workspace-transactions-amount']}}</label></th>                                                                                                                                               
                     </tr>   
                     <ng-container *ngIf="xl.length">
-                        <tr *ngFor="let x of xl">
-                            <td><input type="checkbox" *ngIf="!x.defended" [(ngModel)]="x.__selected" (ngModelChange)="onSelect();"></td>
+                        <tr *ngFor="let x of xl">                            
                             <td>{{x.formattedCreatedAt}}</td>
                             <td><span *ngIf="x.restaurant">{{x.restaurant.name}} ({{x.restaurant.id}})</span></td>
                             <td>{{x.type}}</td>

@@ -26,6 +26,7 @@ import { Icon } from "../model/orm/icon.model";
 import { Cat } from "../model/orm/cat.model";
 import { Product } from "../model/orm/product.model";
 import { Serving } from "../model/orm/serving.model";
+import { Order } from "../model/orm/order.model";
 
 @Injectable()
 export class DataService {
@@ -109,7 +110,7 @@ export class DataService {
     public restaurantsCreate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/create", x, true);}
     public restaurantsUpdate(x: Restaurant): Observable<IAnswer<void>> {return this.sendRequest("restaurants/update", x, true);}     
 
-    public hallsAll(dto: IGetAll): Observable<IAnswer<Hall[]>> {return this.sendRequest(`halls/all`, dto, true);}    
+    public hallsAll(dto: IGetAll): Observable<IAnswer<Hall[]>> {return this.sendRequest(`halls/all`, dto, true);}        
     public hallsChunk(dto: IGetChunk): Observable<IAnswer<Hall[]>> {return this.sendRequest("halls/chunk", dto, true);}
     public hallsOne(id: number): Observable<IAnswer<Hall>> {return this.sendRequest(`halls/one/${id}`, null, true);}
     public hallsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`halls/delete/${id}`, null, true);}
@@ -149,7 +150,13 @@ export class DataService {
     public servingsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`servings/delete/${id}`, null, true);}
     public servingsDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("servings/delete-bulk", ids, true);}
     public servingsCreate(x: Serving): Observable<IAnswer<void>> {return this.sendRequest("servings/create", x, true);}
-    public servingsUpdate(x: Serving): Observable<IAnswer<void>> {return this.sendRequest("servings/update", x, true);}     
+    public servingsUpdate(x: Serving): Observable<IAnswer<void>> {return this.sendRequest("servings/update", x, true);}  
+        
+    public ordersChunk(dto: IGetChunk): Observable<IAnswer<Order[]>> {return this.sendRequest("orders/chunk", dto, true);}
+    public ordersOne(id: number): Observable<IAnswer<Order>> {return this.sendRequest(`orders/one/${id}`, null, true);}
+    public ordersDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/delete/${id}`, null, true);}
+    public ordersDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("orders/delete-bulk", ids, true);}    
+    public ordersUpdate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/update", x, true);}     
     
     public mailtemplatesChunk(dto: IGetChunk): Observable<IAnswer<Mailtemplate[]>> {return this.sendRequest("mailtemplates/chunk", dto, true);}
     public mailtemplatesOne(id: number): Observable<IAnswer<Mailtemplate>> {return this.sendRequest(`mailtemplates/one/${id}`, null, true);}

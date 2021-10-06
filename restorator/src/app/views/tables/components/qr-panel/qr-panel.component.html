@@ -4,11 +4,15 @@
         <ng-container *ngIf="table">
             <div class="pw-content">            
                 <div class="pw-txt"># {{table.no}}</div>
-                <div class="pw-qr">
-                    <div class="pw-qr-content">
+                <div class="qr">
+                    <div class="qr-content">
                         <img [src]="imgUrl">
-                        <a class="print margined" [href]="imgLink" target="_blank"><span>{{words['restorator-tables']['print-version'][currentLang.slug]}}</span></a>
-                        <a class="link" [href]="qrtext" target="_blank"><span>{{words['restorator-tables']['link'][currentLang.slug]}}</span></a>
+                        <div class="qr-print">
+                            <a [href]="imgLink" target="_blank"><span>{{words['restorator-tables']['print-version'][currentLang.slug]}}</span></a>
+                        </div>                        
+                        <div class="qr-link">
+                            <a [href]="qrtext" target="_blank"><span>{{words['restorator-tables']['link'][currentLang.slug]}}</span></a>
+                        </div>                        
                     </div>                    
                 </div>
             </div>

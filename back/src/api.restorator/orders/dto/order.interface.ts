@@ -18,7 +18,7 @@ export interface IOrder {
     readonly need_invoice: boolean;    
     readonly need_products: boolean;        
     readonly discount_percent: number;
-    readonly final_sum: number;
+    readonly sum: number;
     readonly status: OrderStatus;
     readonly paymethod: Paymethod;    
     readonly created_at: Date;    

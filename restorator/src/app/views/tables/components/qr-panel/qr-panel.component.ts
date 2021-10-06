@@ -9,7 +9,10 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 @Component({
     selector: "qr-panel",
     templateUrl: "qr-panel.component.html",
-    styleUrls: ["../../../../common.styles/popup.scss"],
+    styleUrls: [
+        "../../../../common.styles/popup.scss",
+        "qr-panel.component.scss",
+    ],
 })
 export class QRPanelComponent {
     @Input() table: Table;

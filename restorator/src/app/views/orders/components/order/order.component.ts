@@ -19,6 +19,7 @@ export class OrderComponent {
     @Input() x: Order;    
     @Input() hl: Hall[] = [];
     @Input() sl: IServing[] = [];
+    @Input() adminMode: boolean = true; // режим для администратора
     @Input() loading: boolean = false;        
     @Output() save: EventEmitter<void> = new EventEmitter();  
     @Output() complete: EventEmitter<void> = new EventEmitter();  

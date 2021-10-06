@@ -26,7 +26,7 @@ export class Order extends Model {
     public need_invoice: boolean;
     public need_products: boolean;    
     public discount_percent: number;
-    public final_sum: number;
+    public sum: number;
     public status: OrderStatus;
     public paymethod: Paymethod;    
     public created_at: Date;    
@@ -52,5 +52,18 @@ export class Order extends Model {
         }
         
         return this;
-    }    
+    } 
+    
+    public init(restaurant_id: number, employee_id: number): Order {
+        this.table_id = null;
+        this.hall_id = null;
+        this.restaurant_id = restaurant_id;
+        this.employee_id = employee_id;        
+        this.employee_comment = "";
+        this.discount_percent = 0;
+        this.status = OrderStatus.Active;
+        this.paymethod = Paymethod.Cash;
+        this.products = [];
+        return this;
+    }
 }

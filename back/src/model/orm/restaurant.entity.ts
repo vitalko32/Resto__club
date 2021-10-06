@@ -44,6 +44,9 @@ export class Restaurant {
     @Column({nullable: false, default: 0, type: "float"})
     money: number;
 
+    @Column({nullable: false, default: true})
+    active: boolean;
+
     @CreateDateColumn()
     created_at: Date;    
 

@@ -17,8 +17,7 @@ import { ObjectComponent } from '../_object.component';
 export class ProductComponent extends ObjectComponent<Product> {        
     @Input() rl: Restaurant[] = [];    
     public tab: number = 1;    
-    get cl(): Cat[] {return this.rl.find(r => r.id === this.x.restaurant_id)?.cats || [];}
-    
+    get cl(): Cat[] {return this.rl.find(r => r.id === this.x.restaurant_id)?.cats || [];}    
     
     // ingredients
     public ingredientsSortBy: string = "pos";

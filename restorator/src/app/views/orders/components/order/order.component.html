@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="de-row">
+    <div class="de-row" *ngIf="x.id">
         <div class="de-title">{{words['restorator-orders']['statuses'][currentLang.slug]}}:</div>
         <div class="de-value">
             <div class="de-statuses" *ngIf="x.need_waiter || x.need_products || x.need_invoice">
@@ -87,7 +87,7 @@
     <div class="de-space"></div>        
     <div class="de-2btnswrap">
         <div><button type="submit" [disabled]="loading" class="save"><span>{{words['common']['save'][currentLang.slug]}}</span></button></div>
-        <div><button type="button" [disabled]="loading" class="complete" (click)="orderOnComplete()"><span>{{words['common']['complete'][currentLang.slug]}}</span></button></div>
+        <div *ngIf="x.id && !adminMode"><button type="button" [disabled]="loading" class="complete" (click)="orderOnComplete()"><span>{{words['common']['complete'][currentLang.slug]}}</span></button></div>
     </div>
 </form> 
 

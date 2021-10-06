@@ -43,7 +43,7 @@ export class EmployeesService extends APIService {
         try {            
             let employee: IEmployee = await this.validateEmployee(dto.email, dto.password);
 
-            if (!employee || !employee.restaurant) {
+            if (!employee || !employee.restaurant || !employee.restaurant.active) {
                 return {statusCode: 401, error: "Unauthorized"};               
             }             
 
@@ -62,7 +62,7 @@ export class EmployeesService extends APIService {
         try {
             let employee: IEmployee = await this.getEmployeeByEmail(dto.email);
             
-            if (!employee || !employee.restaurant) {
+            if (!employee || !employee.restaurant || !employee.restaurant.active) {
                 return {statusCode: 401, error: "Unauthorized"};
             }
 
@@ -96,7 +96,7 @@ export class EmployeesService extends APIService {
     }    
     
     // проверка актуальности аккаунта и подгрузка актуальных данных
-    // здесь мы не проверяем employee и employee.restaurant на существование, это сделает EmployeeGuard
+    // здесь мы не проверяем employee и employee.restaurant на существование и активность, это сделает EmployeeGuard
     public async check(id: number): Promise<IAnswer<IEmployee>> { 
         try {                                    
             let employee: IEmployee = await this.getEmployeeById(id);            

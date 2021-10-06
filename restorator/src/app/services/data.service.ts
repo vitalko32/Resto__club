@@ -92,6 +92,7 @@ export class DataService {
     public ordersCancel(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/cancel/${id}`, null, true);}
     public ordersComplete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/complete/${id}`, null, true);}
     public ordersUpdate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/update", x, true);}  
+    public ordersCreate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/create", x, true);}  
 
     public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}
     

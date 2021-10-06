@@ -11,6 +11,7 @@ export interface IRestaurant {
     readonly ogrn: string;
     readonly comment: string;
     readonly money: number;
+    readonly active: boolean;
     readonly created_at: Date;
 
     readonly employees_q?: number;

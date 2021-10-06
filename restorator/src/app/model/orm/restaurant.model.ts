@@ -14,6 +14,7 @@ export class Restaurant extends Model {
     public ogrn: string;
     public comment: string;
     public money: number;
+    public active: boolean;
     public created_at: Date;    
     
     public currency?: Currency;

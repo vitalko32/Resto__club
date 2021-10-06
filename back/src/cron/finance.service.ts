@@ -32,7 +32,7 @@ export class FinanceService {
 
             if (hour === payHour && minute === payMinute) {
                 const price: number = parseFloat(strPrice);
-                const rl: Restaurant[] = await this.restaurantRepository.find({where: {money: MoreThanOrEqual(0)}, relations: ["employees"]});
+                const rl: Restaurant[] = await this.restaurantRepository.find({where: {money: MoreThanOrEqual(0), active: true}, relations: ["employees"]});
     
                 for (let r of rl) {                
                     if (r.employees.length) {

@@ -17,12 +17,12 @@ export interface IOrderUpdate {
     readonly need_invoice: boolean;    
     readonly need_products: boolean;        
     readonly discount_percent: number;
-    readonly final_sum: number;
+    readonly sum: number;
     readonly status: OrderStatus;
     readonly paymethod: Paymethod;    
-    readonly created_at: Date;    
-    readonly accepted_at: Date;
-    readonly completed_at: Date;
+    readonly created_at: string;    
+    readonly accepted_at: string;
+    readonly completed_at: string;
 
     table?: Table;
     hall?: Hall;        

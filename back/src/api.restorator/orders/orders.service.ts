@@ -11,6 +11,7 @@ import { Sortdir } from "src/model/sortdir.type";
 import { Repository } from "typeorm";
 import { ServingsService } from "../servings/servings.service";
 import { IOrderAccept } from "./dto/order.accept.interface";
+import { IOrderCreate } from "./dto/order.create.interface";
 import { IOrder } from "./dto/order.interface";
 import { IOrderUpdate } from "./dto/order.update.interface";
 
@@ -146,7 +147,10 @@ export class OrdersService extends APIService {
                 }
             }
 
-            await this.orderRepository.save(dto);
+            const order = this.orderRepository.create(dto);
+            const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
+            order.sum = (subtotal / 100) * (100 - order.discount_percent);
+            await this.orderRepository.save(order);
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.update: ${String(err)}`;
@@ -155,4 +159,19 @@ export class OrdersService extends APIService {
         } 
     }
 
+    public async create(dto: IOrderCreate): Promise<IAnswer<void>> {
+        try {
+            const order = this.orderRepository.create(dto);            
+            const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
+            order.sum = (subtotal / 100) * (100 - order.discount_percent);
+            order.employee_id ? order.accepted_at = new Date() : null;
+            order.status === OrderStatus.Completed ? order.completed_at = new Date() : null;
+            await this.orderRepository.save(order);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.create: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        } 
+    }
 }

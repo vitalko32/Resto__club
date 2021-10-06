@@ -10,4 +10,5 @@ export interface IRestaurantCreate {
     readonly ogrn: string;
     readonly comment: string;
     readonly money: number;
+    readonly active: boolean;
 }

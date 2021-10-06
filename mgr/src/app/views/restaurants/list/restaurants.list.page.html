@@ -14,6 +14,7 @@
                         <th><input type="checkbox" [(ngModel)]="allSelected" (ngModelChange)="onSelectAll();"></th>                        
                         <th><label [class]="sortBy === 'created_at' ? (sortDir === 1 ? 'sorted-forward' : 'sorted-backward') : 'sortable'" (click)="changeSorting('created_at');">{{currentLang.phrases['workspace-restaurants-created-at']}}</label></th>                                                                                               
                         <th><label [class]="sortBy === 'name' ? (sortDir === 1 ? 'sorted-forward' : 'sorted-backward') : 'sortable'" (click)="changeSorting('name');">{{currentLang.phrases['workspace-restaurants-name']}}</label></th>                                                                                               
+                        <th>{{currentLang.phrases['workspace-restaurants-active']}}</th>
                         <th>{{currentLang.phrases['workspace-actions']}}</th>
                     </tr>   
                     <ng-container *ngIf="xl.length">
@@ -21,6 +22,7 @@
                             <td><input type="checkbox" *ngIf="!x.defended" [(ngModel)]="x.__selected" (ngModelChange)="onSelect();"></td>
                             <td>{{x.formattedCreatedAt}}</td>
                             <td><div class="dt-inputwrap"><input type="text" [(ngModel)]="x.name" (change)="updateParam (x.id, 'name', x.name);"></div></td> 
+                            <td><div class="dt-inputwrap"><checkbox-slider [(value)]="x.active" (valueChange)="updateParam (x.id, 'active', x.active);"></checkbox-slider></div></td>
                             <td>
                                 <div class="dt-actions">
                                     <div class="dt-btn edit" [title]="currentLang.phrases['workspace-edit']" [routerLink]="homeUrl + '/edit/'+x.id"><span></span></div>

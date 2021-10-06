@@ -2,7 +2,7 @@
     <ng-container *ngIf="mode === 'create'">
         <div class="de-note">
             <div class="den-mark"><span></span></div>
-            <div class="den-txt">{{words['restorator-employees']['note'][currentLang.slug]}}: <strong>{{price | number:'1.2-2'}} {{words['common']['rur'][currentLang.slug]}}</strong></div>
+            <div class="den-txt">{{words['restorator-employees']['note'][currentLang.slug]}}: <strong>{{price | number:'1.2-2'}} {{words['common']['currency-name'][currentLang.slug]}}</strong></div>
         </div>
     </ng-container>
     <ng-container *ngIf="mode === 'edit'">

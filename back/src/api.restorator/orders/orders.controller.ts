@@ -7,6 +7,7 @@ import { EmployeesGuard } from "src/common/guards/employees.guard";
 import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrder } from "./dto/order.interface";
 import { IOrderUpdate } from "./dto/order.update.interface";
+import { IOrderCreate } from "./dto/order.create.interface";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -52,5 +53,12 @@ export class OrdersController {
     @Post("update")
     public update(@Body() dto: IOrderUpdate): Promise<IAnswer<void>> {
         return this.ordersService.update(dto);
+    }
+
+    // update
+    @UseGuards(EmployeesGuard)
+    @Post("create")
+    public create(@Body() dto: IOrderCreate): Promise<IAnswer<void>> {
+        return this.ordersService.create(dto);
     }
 }

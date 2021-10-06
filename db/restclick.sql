@@ -682,7 +682,7 @@ CREATE TABLE "default".vne_orders (
     need_invoice boolean DEFAULT false NOT NULL,
     status "default".vne_orders_status_enum DEFAULT 'active'::"default".vne_orders_status_enum NOT NULL,
     discount_percent integer DEFAULT 0 NOT NULL,
-    final_sum double precision,
+    sum double precision,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     need_products boolean DEFAULT false NOT NULL,
     customer_comment text DEFAULT ''::text NOT NULL,
@@ -816,7 +816,8 @@ CREATE TABLE "default".vne_restaurants (
     comment text,
     created_at timestamp without time zone DEFAULT now() NOT NULL,
     lang_id integer,
-    money double precision DEFAULT '0'::double precision NOT NULL
+    money double precision DEFAULT '0'::double precision NOT NULL,
+    active boolean DEFAULT true NOT NULL
 );
 
 
@@ -1418,6 +1419,7 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 1	1	\N	7573497222@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 3	\N	1	viovalya@gmail.com	$2b$10$Kif/QFeeEAC4K00XRKmfueMbCo.OvqG0gu28VR6KqYtwsA5bxfOKi	Лисичкин Виктор	+38123444444443	f	2021-08-26 22:03:00.332342	f
 2	10	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	t	2021-08-26 21:32:06.303446	f
+9	21	2	7573497@gmail.com	$2b$10$5joksSpTiM4UGl8WTxVDQeOfDCPpPcyCSUZxRfBY8NOfZxS83bbVm	Булкин Александр Анатольевич	\N	t	2021-08-28 11:12:59.882811	t
 28	45	\N	75734974444@gmail.com	$2b$10$o2Y63TUS9aBVLLpNAkS9IOMVb2TvEKCjUtg3tADQTnsJI/zrTqBJe	\N	\N	t	2021-09-02 21:07:52.119825	t
 29	9	\N	7573497777@gmail.com	$2b$10$lrWJKgjzIhv6qDzSD6AcZOjh2KO9k5x3K5tVjQJ3q58ZgF/uSQKj6	Петров Андрей	+380664000050	t	2021-09-03 01:41:45.691878	f
 31	46	\N	7573497rr@gmail.com	$2b$10$4KyYx5FqOrFutyLB7Ls2oe82rMzNIGvQ/24YWJ1QivWSTFs4gSEpm	\N	\N	t	2021-09-07 01:16:30.429325	t
@@ -1427,7 +1429,6 @@ COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, pass
 10	22	\N	757349788@gmail.com	123	Петров Алексей	\N	t	2021-08-28 11:27:23.119406	t
 24	38	\N	viovalya3@gmail.com	$2b$10$55Yr5WOoTrh2TD3DnyXEh.thX6oFeE459/qpt1hxOI93hWHW6lY8u	Иванов Алексей	+380664021350	t	2021-08-30 12:54:22.738402	t
 36	21	1	bednenko@gmail.com	$2b$10$YxvpyUA1UJXhZnBUrsbXCOzUtFRbhx7ibOGkTHBeeECV0ZiLqDpPi	Бедненко Федор Иванович	\N	f	2021-09-08 17:44:35.220428	f
-9	21	\N	7573497@gmail.com	$2b$10$5joksSpTiM4UGl8WTxVDQeOfDCPpPcyCSUZxRfBY8NOfZxS83bbVm	Булкин Александр Анатольевич	\N	t	2021-08-28 11:12:59.882811	t
 \.
 
 
@@ -1439,7 +1440,7 @@ COPY "default".vne_halls (id, restaurant_id, name, nx, ny, pos) FROM stdin;
 3	9	Зал 1	5	5	1
 4	21	Зеленый	5	5	3
 2	21	Синий	4	4	2
-1	21	Красный	10	3	1
+1	21	Красный	4	3	1
 \.
 
 
@@ -1874,6 +1875,66 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 319	115	мороженое фруктовое	t
 320	116	Апельсины	t
 321	116	Грейпфруты	t
+322	117	мясо	t
+323	117	хлеб	t
+324	117	кетчуп	t
+325	117	помидор	t
+326	117	лист салата	t
+327	118	Хлеб	t
+328	118	Мясо	t
+329	118	Сыр среднеазиатский "Дары пустыни"	t
+330	118	Зелень	t
+331	120	клубника	t
+332	120	мороженое фруктовое	t
+333	121	хлеб	t
+334	121	кетчуп	t
+335	121	помидор	t
+336	121	лист салата	t
+337	121	мясо	t
+338	122	Сыр среднеазиатский "Дары пустыни"	t
+339	122	Зелень	t
+340	122	Хлеб	t
+341	122	Мясо	t
+342	123	хлеб	t
+343	123	кетчуп	t
+344	123	помидор	t
+345	123	лист салата	t
+346	123	мясо	t
+347	124	Сыр среднеазиатский "Дары пустыни"	t
+348	124	Зелень	t
+349	124	Хлеб	t
+350	124	Мясо	t
+351	125	хлеб	t
+352	125	кетчуп	t
+353	125	помидор	t
+354	125	лист салата	t
+355	125	мясо	t
+356	126	Апельсины	t
+357	126	Грейпфруты	t
+358	127	хлеб	t
+359	127	кетчуп	t
+360	127	помидор	t
+361	127	лист салата	t
+362	127	мясо	t
+363	128	Апельсины	t
+364	128	Грейпфруты	t
+367	129	кетчуп	t
+368	129	помидор	t
+369	129	лист салата	t
+370	130	мороженое сливочное	t
+371	130	мороженое шоколадное	t
+372	130	вафельный стаканчик	t
+373	131	мороженое фруктовое	t
+374	131	клубника	t
+375	132	мороженое сливочное	t
+376	132	мороженое шоколадное	t
+377	132	вафельный стаканчик	t
+378	133	мороженое фруктовое	t
+379	133	клубника	t
+366	129	хлеб	f
+365	129	мясо	t
+385	137	zxc	t
+386	137	cxz	t
 \.
 
 
@@ -1994,6 +2055,24 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 113	46	2	m0002	Мороженое "Фруктовый сад"	300	2	f	2021-9/1632669997544_500.jpg
 115	38	1	m0002	Мороженое "Фруктовый сад"	300	2	f	2021-9/1632669997544_500.jpg
 116	38	1	f0001	Цитрусовая нарезка	200	2	f	2021-9/1632351091004_500.jpg
+117	47	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+118	47	1	h0002	Королевский чизбургер	305	1	f	2021-9/1632351029146_500.jpg
+119	47	1	hf0001	Гамбургер "Бостон"	1000	1	f	2021-9/1632350544594_500.jpg
+120	47	1	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
+121	48	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+122	48	1	h0002	Королевский чизбургер	305	2	f	2021-9/1632351029146_500.jpg
+123	49	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+124	49	1	h0002	Королевский чизбургер	305	2	f	2021-9/1632351029146_500.jpg
+125	50	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+126	50	1	f0001	Цитрусовая нарезка	200	3	f	2021-9/1632351091004_500.jpg
+127	51	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+128	51	1	f0001	Цитрусовая нарезка	200	1	f	2021-9/1632351091004_500.jpg
+132	53	1	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+133	53	1	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
+130	52	2	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
+129	52	1	h0001	Гамбургер с телятиной	100	3	t	2021-9/1632527184307_500.jpg
+131	52	2	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
+137	\N	1	qqq	www	33	4	t	2021-10/1633562315568_500.jpg
 \.
 
 
@@ -2001,24 +2080,19 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 -- Data for Name: vne_orders; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, need_waiter, need_invoice, status, discount_percent, final_sum, created_at, need_products, customer_comment, employee_comment, paymethod, accepted_at, completed_at) FROM stdin;
+COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, need_waiter, need_invoice, status, discount_percent, sum, created_at, need_products, customer_comment, employee_comment, paymethod, accepted_at, completed_at) FROM stdin;
 32	61	2	21	9	f	f	completed	10	\N	2021-10-04 22:34:46.437364	f		пробный заказ 2	cash	2021-10-04 22:34:57.587	2021-10-04 23:08:32.699
 33	33	1	21	9	f	f	cancelled	0	\N	2021-10-04 23:08:44.168034	f		пробный заказ 2	cash	2021-10-04 23:08:56.154	\N
 11	33	1	21	\N	f	f	completed	0	\N	2021-09-30 01:32:36.071462	f			cash	\N	\N
 44	33	1	21	\N	f	f	cancelled	0	\N	2021-10-05 15:09:02.374082	f			cash	\N	\N
-26	33	1	21	9	t	f	active	0	\N	2021-10-04 12:51:52.275692	f			cash	2021-10-05 13:30:56.093	\N
-35	33	1	21	9	f	f	active	0	\N	2021-10-05 13:17:56.734197	t	<div>05.10.2021 13:17 mctest1</div>		cash	2021-10-05 13:24:18.968	\N
-36	42	1	21	9	f	t	completed	0	\N	2021-10-05 13:18:53.653899	f			cash	2021-10-05 13:23:57.678	2021-10-05 13:32:46.877
+36	\N	1	21	9	f	t	completed	0	\N	2021-10-05 13:18:53.653899	f			cash	2021-10-05 13:23:57.678	2021-10-05 13:32:46.877
+41	\N	1	21	9	f	f	completed	0	\N	2021-10-05 15:02:00.171683	t			cash	2021-10-05 15:03:34.031	2021-10-05 15:03:46.086
 8	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:15:19.592197	f			cash	\N	\N
-38	33	1	21	9	f	f	active	0	\N	2021-10-05 14:49:58.008609	t			cash	2021-10-05 15:10:11.218	\N
 18	33	1	21	\N	f	t	completed	0	\N	2021-09-30 23:51:43.753031	f			card	\N	\N
 37	33	1	21	9	f	f	completed	0	\N	2021-10-05 13:50:14.186157	f			cash	2021-10-05 15:07:03.445	2021-10-05 15:10:21.418
-41	42	1	21	9	f	f	completed	0	\N	2021-10-05 15:02:00.171683	t			cash	2021-10-05 15:03:34.031	2021-10-05 15:03:46.086
 19	33	1	21	\N	t	t	completed	0	\N	2021-10-01 01:16:02.416953	f			cash	\N	\N
 20	33	1	21	\N	f	f	completed	0	\N	2021-10-01 01:26:29.700644	f			cash	\N	\N
-39	42	1	21	\N	f	f	cancelled	0	\N	2021-10-05 14:51:09.478667	f			cash	\N	\N
 40	33	1	21	9	f	f	cancelled	0	\N	2021-10-05 15:01:07.716266	t			cash	2021-10-05 15:04:06.322	\N
-21	42	1	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
 22	33	1	21	9	f	f	cancelled	0	\N	2021-10-01 22:19:35.824168	f			cash	\N	\N
 34	33	1	21	9	f	f	completed	0	\N	2021-10-04 23:09:41.853611	f		пробный заказ	cash	2021-10-04 23:09:46.9	2021-10-05 15:10:25.115
 42	33	1	21	9	f	t	completed	0	\N	2021-10-05 15:05:50.955622	f			cash	2021-10-05 15:06:22.435	2021-10-05 15:07:31.862
@@ -2029,24 +2103,36 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 16	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 23:06:33.262757	f	дайте что-нибудь		cash	2021-10-04 01:13:42.507	\N
 14	33	1	21	9	t	t	cancelled	0	\N	2021-09-30 22:02:14.884161	t			cash	2021-10-04 03:56:24.379	\N
 27	33	1	21	9	f	f	cancelled	0	\N	2021-10-04 18:59:52.308565	t			cash	2021-10-05 13:30:43.25	\N
-43	42	1	21	9	f	f	completed	0	\N	2021-10-05 15:07:42.737255	t			cash	2021-10-05 15:08:01.712	2021-10-05 15:08:42.702
 10	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 01:15:52.684241	f			cash	\N	\N
 13	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 21:50:05.352669	f			cash	2021-10-03 02:18:08.926	\N
 7	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 20:08:31.197834	f			cash	2021-10-03 23:35:54.838	\N
 6	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 20:04:21.826392	f			cash	2021-10-03 02:18:37.203	\N
 2	33	1	21	9	f	f	cancelled	0	\N	2021-09-29 19:46:07.036984	f			cash	\N	\N
 24	33	1	21	9	f	f	completed	0	\N	2021-10-04 02:16:40.599221	f	<div>04.10.2021 02:16 какое-то поежлание</div>	друг шефа	cash	2021-10-04 12:49:12.066	2021-10-05 15:10:32.676
+39	\N	1	21	\N	f	f	cancelled	0	\N	2021-10-05 14:51:09.478667	f			cash	\N	\N
 12	33	1	21	\N	f	f	cancelled	0	\N	2021-09-30 01:52:41.812539	f			cash	\N	\N
-45	42	1	21	\N	f	t	active	0	\N	2021-10-05 15:09:14.730267	t			card	\N	\N
 23	33	1	21	36	t	f	active	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
-46	33	1	21	\N	t	f	active	0	\N	2021-10-05 16:54:29.295756	f	<div>05.10.2021 16:54 test</div>		cash	\N	\N
+21	\N	1	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
+46	33	1	21	\N	t	f	cancelled	0	\N	2021-10-05 16:54:29.295756	f	<div>05.10.2021 16:54 test</div>		cash	\N	\N
+43	\N	1	21	9	f	f	completed	0	\N	2021-10-05 15:07:42.737255	t			cash	2021-10-05 15:08:01.712	2021-10-05 15:08:42.702
 15	33	1	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
 5	33	1	21	9	t	f	cancelled	0	\N	2021-09-29 20:01:07.059932	t		хороший клиент	cash	2021-10-04 12:48:38.243	\N
 25	33	1	21	9	f	f	completed	0	\N	2021-10-04 12:50:16.497155	t			cash	2021-10-04 22:13:00.08	2021-10-04 22:17:43.006
+26	33	1	21	9	t	f	cancelled	0	\N	2021-10-04 12:51:52.275692	f			cash	2021-10-05 13:30:56.093	\N
 28	33	1	21	9	f	f	completed	0	\N	2021-10-04 22:18:35.232592	f		пробный заказ	cash	2021-10-04 22:18:53.226	2021-10-04 22:19:56.519
+35	33	1	21	9	f	f	completed	0	\N	2021-10-05 13:17:56.734197	t	<div>05.10.2021 13:17 mctest1</div>		cash	2021-10-05 13:24:18.968	2021-10-06 18:14:41.672
+38	33	1	21	9	f	f	completed	0	\N	2021-10-05 14:49:58.008609	t			cash	2021-10-05 15:10:11.218	2021-10-06 18:14:43.928
+47	33	1	21	9	f	f	cancelled	5	1619.75	2021-10-06 11:59:54.848708	t			cash	2021-10-06 12:01:24.885	\N
 29	33	1	21	9	f	t	completed	0	\N	2021-10-04 22:21:17.346845	f			card	2021-10-04 22:21:39.268	2021-10-04 22:27:53.396
 30	33	1	21	9	f	t	completed	0	\N	2021-10-04 22:28:23.508184	f		пробный заказ	cash	2021-10-04 22:28:55.354	2021-10-04 22:33:52.525
+51	45	1	21	9	f	f	completed	5	285	2021-10-06 20:40:43.988248	f		хороший клиент	card	2021-10-06 20:40:43.986	2021-10-06 22:28:17.657
 31	33	1	21	9	f	f	completed	0	\N	2021-10-04 22:34:07.284906	f		пробный заказ	cash	2021-10-04 22:34:19.295	2021-10-04 22:34:32.488
+45	\N	1	21	9	f	t	cancelled	0	\N	2021-10-05 15:09:14.730267	t			card	2021-10-06 22:04:03.247	\N
+50	45	1	21	9	f	f	completed	5	665	2021-10-06 18:15:12.103568	f		пробный заказ	card	2021-10-06 18:15:12.102	2021-10-07 00:49:16.377
+49	\N	1	21	9	f	f	cancelled	5	\N	2021-10-06 18:12:54.334244	f			cash	\N	\N
+48	\N	1	21	9	f	f	cancelled	5	\N	2021-10-06 18:08:05.546655	f		пробный заказ	card	\N	\N
+53	76	1	21	9	t	t	completed	1	792	2021-10-07 00:26:27.118492	t	test comment	пробный заказ 2	card	2021-10-07 00:26:37.404	2021-10-07 00:54:33.721
+52	45	1	21	9	t	f	active	5	1045	2021-10-07 00:20:26.761395	t	test1	test2	cash	2021-10-07 00:55:34.553	\N
 \.
 
 
@@ -2278,12 +2364,12 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 --
 
 COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, active, likes, code, recommended, price, restaurant_id) FROM stdin;
+1	1	Гамбургер с телятиной	300	1200	10-20 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	2	h0001	t	100	21
 87	1	Какое-то блюдо 3	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	4	t	0	hf0003	f	1000	21
 85	1	Гамбургер "Бостон"	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	2	t	1	hf0001	f	1000	21
 2	6	Тестовое блюдо	0	0			1	t	0		f	0	9
 4	4	Цитрусовая нарезка	250	100	5 мин.	Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. Большая тарелка апельсинов и грейпфрутов. 	1	t	1	f0001	f	200	21
 3	1	Королевский чизбургер	410	755	10-12 мин	Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. Большой сытный бутерброд с сыром и зеленью. 	1	t	6	h0002	t	305	21
-1	1	Гамбургер с телятиной	300	1200	10-20 мин	Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. Большой вкусный гамбургер с телятиной и овощами. 	0	t	2	h0001	t	100	21
 97	1	Какое-то блюдо 13	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	14	t	0	hf00013	f	1000	21
 101	1	Какое-то блюдо 17	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	18	t	0	hf00017	f	1000	21
 102	1	Какое-то блюдо 18	500	600	15 мин	Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда Краткое описание какого-то блюда	19	t	0	hf00018	f	1000	21
@@ -2391,28 +2477,28 @@ COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, 
 -- Data for Name: vne_restaurants; Type: TABLE DATA; Schema: default; Owner: vio
 --
 
-COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money) FROM stdin;
-2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0
-6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0
-4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0
-3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0
-7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0
-18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	2021-08-27 22:30:50.941314	1	-10
-19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	-10
-1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	-10
-10	1	Сто пудов	test8	Алексей Сидоров	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:25:50.223075	1	-10
-45	1	Кошки-мышки	http://ukr.net	Максим Савенков	+380667889999	Танкопия, 13/9	999666333	555444	\N	2021-09-02 21:07:52.119825	1	-10
-5	1	У Ашота	test3	Алексей Козлов	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:24:34.213564	2	0
-9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:34.269246	1	-10
-13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	0
-46	1	RRR		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10
-15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	-10
-43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	-10
-22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-10
-38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-10
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9940
-12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	0
-8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0
+COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money, active) FROM stdin;
+13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	0	f
+2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0	t
+6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0	t
+4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0	t
+3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0	t
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9920	t
+7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0	t
+18	1	Пирожковая	pirog	\N	+380664021350	Танкопия, 13/99	\N	\N	\N	2021-08-27 22:30:50.941314	1	-10	t
+19	1	Рыбный день	test222	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 00:39:48.284041	1	-10	t
+1	1	Плакучая ива	iva	Иван Петров	+38 066 4020000	Харьков, ул. Кошкина, 1	123456	654987	тестовый ресторан	2021-08-26 20:52:31.021727	1	-10	t
+10	1	Сто пудов	test8	Алексей Сидоров	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:25:50.223075	1	-10	t
+45	1	Кошки-мышки	http://ukr.net	Максим Савенков	+380667889999	Танкопия, 13/9	999666333	555444	\N	2021-09-02 21:07:52.119825	1	-10	t
+5	1	У Ашота	test3	Алексей Козлов	+380664021350	Танкопия, 1	\N	\N	\N	2021-08-27 00:24:34.213564	2	0	t
+46	1	RRR		Овечкин Игорь Иванович	+380664021350	Танкопия, 103	999666333	555444	\N	2021-09-07 01:16:30.429325	1	-10	t
+15	1	Длинное название ресторана	test12	\N	\N	\N	\N	\N	\N	2021-08-27 01:55:15.844543	1	-10	t
+43	1	Надежда	nadezhda.ru	Овечкин Игорь Иванович	+38066666666	Танкопия, 5	123654	654987	\N	2021-09-02 12:36:33.846619	1	-10	t
+22	1	Курский	kursk	\N	+380664021350	Танкопия, 13/9	\N	\N	\N	2021-08-28 11:27:23.119406	1	-10	t
+38	1	Владимирский	http://vlad.net	Овечкин Игорь Иванович	+380664021350	Танкопия, 13/9	999666333	11222333	тест	2021-08-30 12:54:22.738402	1	-10	t
+12	1	Вкусно-быстро	tets10.ry	Птичкин Федор Моисеевич	+38 095 12345687	Харьков, ул. Маршала Жукова, 5	666555444	11222333	\N	2021-08-27 00:26:24.033626	1	0	t
+9	1	McDonalds	test7	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:34.269246	1	-10	t
+8	1	Слепая свинья	test6	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:12.606101	1	0	t
 \.
 
 
@@ -2464,15 +2550,13 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 
 COPY "default".vne_tables (id, hall_id, no, seats, x, y, code) FROM stdin;
 46	1	6	12	5	1	5qskgfyuhg
-42	1	2	3	1	1	295rfgqpzd
-44	1	4	6	3	1	p7s5o02uhk
 51	3	1	1	1	1	vvgshsy57v
+76	1	2	3	1	1	t2vs4imqjp
 33	1	1	1	0	0	z2nb4kfbva
 61	2	10	1	0	0	qbrzsv75pf
 62	2	11	2	1	1	wb2njnbbkj
 63	4	20	4	0	0	g3isd9p6td
 64	4	21	6	1	1	ph0mob8pug
-43	1	3	4	2	2	crjg85mjns
 45	1	5	8	4	0	ztk4xx23iu
 \.
 
@@ -3551,6 +3635,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1155	21	-20	2021-10-02 01:00:00.01045	auto
 1156	21	-20	2021-10-03 01:00:00.016467	auto
 1157	21	-20	2021-10-04 01:00:00.017331	auto
+1158	21	-20	2021-10-07 01:00:00.00871	auto
 \.
 
 
@@ -4115,6 +4200,14 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1020	316	2	Add
 1021	317	1	Добавлено
 1022	317	2	Added
+1023	318	1	Мои заказы - Добавление
+1024	318	2	My orders - Add
+1025	319	1	Активность
+1026	319	2	Active
+1027	320	1	активен
+1028	320	2	active
+1030	321	2	not active
+1029	321	1	не активен
 \.
 
 
@@ -4253,7 +4346,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 136	9	0	signed-as	\N
 137	9	0	restaurant	\N
 138	9	0	acc-state	\N
-140	5	123	rur	\N
 141	9	0	acc-nextcharge	\N
 134	7	100	recharge	\N
 142	9	0	status	\N
@@ -4398,9 +4490,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 276	5	135	accept	\N
 286	21	108	confirm-accept	\N
 289	21	100	table2	\N
-266	21	1	title-new	\N
-267	21	2	title-my	\N
-287	21	3	title-new-view	\N
 300	21	4	title-my-edit	\N
 301	21	101	seats2	\N
 311	21	110	confirm-save	\N
@@ -4416,6 +4505,14 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 315	15	4	title-finder	\N
 316	5	138	add	\N
 317	5	139	added	\N
+140	5	123	currency-name	это просто обозначение валюты самой системы
+318	21	5	title-my-create	\N
+266	21	1	title-new-index	\N
+267	21	3	title-my-index	\N
+287	21	2	title-new-view	\N
+319	1	131	active	\N
+320	5	140	is-active	\N
+321	5	141	is-not-active	\N
 293	21	114	created-at	\N
 294	21	115	statuses	\N
 295	21	116	content	\N
@@ -4486,7 +4583,7 @@ SELECT pg_catalog.setval('"default".vne_employees_id_seq', 47, true);
 -- Name: vne_halls_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_halls_id_seq', 12, true);
+SELECT pg_catalog.setval('"default".vne_halls_id_seq', 14, true);
 
 
 --
@@ -4535,21 +4632,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 321, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 386, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 116, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 137, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 46, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 53, true);
 
 
 --
@@ -4598,21 +4695,21 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 13, true);
 -- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_tables_id_seq', 65, true);
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 76, true);
 
 
 --
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1157, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1158, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1022, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1030, true);
 
 
 --
@@ -4626,7 +4723,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 317, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 321, true);
 
 
 --
@@ -4956,6 +5053,13 @@ CREATE INDEX "IDX_766c8969dd7b17ed014aac11ac" ON "default".vne_orders USING btre
 
 
 --
+-- Name: IDX_7cd3f8bca6a97d655d996b03a8; Type: INDEX; Schema: default; Owner: vio
+--
+
+CREATE INDEX "IDX_7cd3f8bca6a97d655d996b03a8" ON "default".vne_orders USING btree (sum);
+
+
+--
 -- Name: IDX_8dcdd7fca3bc0ba922e66e6e63; Type: INDEX; Schema: default; Owner: vio
 --
 
@@ -4967,13 +5071,6 @@ CREATE INDEX "IDX_8dcdd7fca3bc0ba922e66e6e63" ON "default".vne_mailtemplates USI
 --
 
 CREATE INDEX "IDX_961714c023daa0f447930913e0" ON "default".vne_settings USING btree (p);
-
-
---
--- Name: IDX_b58d3930162286260c1243cc35; Type: INDEX; Schema: default; Owner: vio
---
-
-CREATE INDEX "IDX_b58d3930162286260c1243cc35" ON "default".vne_orders USING btree (final_sum);
 
 
 --

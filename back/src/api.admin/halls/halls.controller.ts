@@ -18,7 +18,7 @@ export class HallsController {
     @Post("all")
     public all(@Body() dto: IGetAll): Promise<IAnswer<Hall[]>> {
         return this.hallsService.all(dto);
-    }  
+    }    
 
     // get fragment
     @UseGuards(AdminsGuard)

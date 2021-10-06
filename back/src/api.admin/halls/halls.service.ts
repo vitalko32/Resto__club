@@ -19,16 +19,20 @@ export class HallsService extends APIService {
         @InjectRepository(Table) private tableRepository: Repository<Table>,
     ) {
         super();
-    }    
+    }
 
-    public async all(dto: IGetAll): Promise<IAnswer<Hall[]>> {
-        let sortBy: string = dto.sortBy;
-        let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-        let filter: Object = dto.filter;
-
+    public async all(dto: IGetAll): Promise<IAnswer<Hall[]>> {       
         try {
-            let data: Hall[] = await this.hallRepository.find({where: filter, order: {[sortBy]: sortDir}});             
-            return {statusCode: 200, data};
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const filter: Object = dto.filter;
+            const halls: Hall[] = await this.hallRepository.find({where: filter, order: {[sortBy]: sortDir}});             
+
+            for (let h of halls) {
+                h.tables = await this.tableRepository.find({where: {hall_id: h.id}, order: {no: "ASC"}});
+            }
+
+            return {statusCode: 200, data: halls};
         } catch (err) {
             let errTxt: string = `Error in HallsService.all: ${String(err)}`;
             console.log(errTxt);

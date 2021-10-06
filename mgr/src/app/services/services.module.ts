@@ -19,11 +19,14 @@ import { RestaurantRepository } from './repositories/restaurant.repository';
 import { EmployeeRepository } from './repositories/employee.repository';
 import { TransactionRepository } from './repositories/transaction.repository';
 import { HallRepository } from './repositories/hall.repository';
+import { HallRepository2 } from './repositories/hall.repository2';
 import { IconRepository } from './repositories/icon.repository';
 import { CatRepository } from './repositories/cat.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { FilesService } from './files.service';
 import { ServingRepository } from './repositories/serving.repository';
+import { OrderRepository } from './repositories/order.repository';
+import { EmployeeRepository2 } from './repositories/employee.repository2';
 
 @NgModule({
     declarations: [],
@@ -45,14 +48,17 @@ import { ServingRepository } from './repositories/serving.repository';
 		MailtemplateRepository,		
 		CurrencyRepository,		
 		EmployeeRepository,
+		EmployeeRepository2,
 		EmployeeStatusRepository,
 		RestaurantRepository,
 		TransactionRepository,
-		HallRepository,
+		HallRepository,		
+		HallRepository2,
 		IconRepository,
 		CatRepository,
 		ProductRepository,
 		ServingRepository,
+		OrderRepository,
 	],
 })
 export class ServicesModule { }

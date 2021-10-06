@@ -51,9 +51,10 @@ export class Order {
     @Column({nullable: false, default: 0})
     discount_percent: number;
 
+    // специально формируем сумму как отдельное поле, чтобы когда она понадобится в статистике - не формировать это значение как сумму товаров
     @Index()
-    @Column({nullable: true, default: null, type: "float"}) // вычисляется при закрытии
-    final_sum: number;
+    @Column({nullable: true, default: null, type: "float"}) 
+    sum: number;
 
     @Index()
     @Column({type: "enum", enum: OrderStatus, nullable: false, default: OrderStatus.Active})
