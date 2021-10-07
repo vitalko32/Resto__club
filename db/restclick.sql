@@ -4052,8 +4052,6 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 664	240	2	Total
 869	241	1	Подача
 870	241	2	Type of serving
-871	242	1	Особые пожелания
-872	242	2	Special requests
 873	243	1	Корзина пуста
 874	243	2	Cart is empty
 875	244	1	Отправить заказ?
@@ -4169,6 +4167,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 989	301	1	чел.
 990	301	2	seats
 992	302	2	completed
+871	242	1	Комментарий
+872	242	2	Comment
 991	302	1	выполнено
 993	303	1	Оплата
 994	303	2	Payment
@@ -4208,6 +4208,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1028	320	2	active
 1030	321	2	not active
 1029	321	1	не активен
+1031	322	1	Вы можете указать свое имя и пожелания по заказу
+1032	322	2	You can specify your name and wishes for the order
 \.
 
 
@@ -4444,13 +4446,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 235	18	0	invoice	\N
 236	18	0	call	\N
 237	18	0	recommended	\N
-238	19	0	cart	\N
-239	19	0	order	\N
-241	19	0	serving	\N
-242	19	0	comment	\N
-243	19	0	empty	\N
-244	19	0	confirm-sending	\N
-245	19	0	order-accepted	\N
 246	20	0	invoice	\N
 247	20	0	not-open	\N
 248	20	0	created-at	\N
@@ -4461,7 +4456,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 253	20	0	close	\N
 254	20	0	no	\N
 255	20	0	your-order	\N
-240	19	0	total	\N
 256	20	0	subtotal	\N
 257	20	0	total	\N
 258	20	0	discount	\N
@@ -4513,6 +4507,10 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 319	1	131	active	\N
 320	5	140	is-active	\N
 321	5	141	is-not-active	\N
+322	19	6	comment-placeholder	
+238	19	1	cart	\N
+239	19	2	order	\N
+240	19	3	total	\N
 293	21	114	created-at	\N
 294	21	115	statuses	\N
 295	21	116	content	\N
@@ -4527,6 +4525,11 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 306	21	125	paymethod	\N
 307	21	126	paymethod-cash	\N
 308	21	127	paymethod-card	\N
+241	19	4	serving	\N
+242	19	5	comment	\N
+243	19	7	empty	\N
+244	19	8	confirm-sending	\N
+245	19	9	order-accepted	\N
 \.
 
 
@@ -4709,7 +4712,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1158, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1030, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1032, true);
 
 
 --
@@ -4723,7 +4726,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 321, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 322, true);
 
 
 --

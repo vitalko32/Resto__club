@@ -33,7 +33,7 @@
                 </div>
                 <div class="cp-comment">
                     <div class="cpc-title">{{words['customer-cart']['comment']}}:</div>
-                    <div class="cpc-tawrap"><textarea [(ngModel)]="cart.comment"></textarea></div>
+                    <div class="cpc-tawrap"><textarea [(ngModel)]="cart.comment" [placeholder]="words['customer-cart']['comment-placeholder']"></textarea></div>
                 </div>
             </ng-container>       
             <ng-container *ngIf="!cart.records.length">
