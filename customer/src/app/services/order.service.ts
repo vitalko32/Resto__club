@@ -40,7 +40,7 @@ export class OrderService {
         this.cart = data ? JSON.parse(data) : new Cart();            
     }
 
-    public initOrders(): void {
+    public initOrder(): void {
         const data: string = localStorage.getItem("orders");       
         const orders: IOrder[] = data ? JSON.parse(data) : [];  
         this.order = orders.find(o => o.table_id === this.table.id) || null;        

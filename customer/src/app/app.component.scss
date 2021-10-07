@@ -3,7 +3,7 @@
 html {	
 	height: 100%; overflow: hidden; background-color: var(--color-bg); color: var(--color-txt);	font-family: "mont", Arial, Helvetica, sans-serif;
 	body {
-		margin: 0; padding: 0; overscroll-behavior: none; height: 100%; width: 100%; overflow: hidden; position: fixed; left: 0; top:0;
+		margin: 0; padding: 0; overscroll-behavior: none; height: 100%; width: 100%; overflow: hidden; position: fixed !important; left: 0; top:0 !important;
 		&.noselect {user-select: none;}
 		* {box-sizing: border-box; outline: none; overflow-anchor: none; overscroll-behavior: none;}
 		img {vertical-align: top;}	
@@ -13,7 +13,12 @@ html {
 		.align-center {text-align: center;}
 		.align-right {text-align: right;}		
 		.red {color: var(--color-red);}		
-		input, select, textarea {font-size: 16px; font-family: "mont", Arial, Helvetica, sans-serif;}
+		input, select, textarea {
+			@media (min-width:0) {font-size: 16px;}
+			@media (min-width:1200px) {font-size: 14px;}
+			font-family: "mont", Arial, Helvetica, sans-serif;
+		}
+		::placeholder {font-size: 14px;}
 		button {font-size: 14px; font-family: "mont", Arial, Helvetica, sans-serif;}			
 	
 		.win {
@@ -24,3 +29,6 @@ html {
 		}	
 	}
 }
+
+// google translate
+.skiptranslate {display: none !important;}

@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppService } from './services/app.service';
+import { GTService } from './services/gt.service';
 import { OrderService } from './services/order.service';
 import { ServingRepository } from './services/repositories/serving.repository';
 import { WordRepository } from './services/repositories/word.repository';
@@ -25,15 +26,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private router: Router,
 		private appService: AppService,		
 		private orderService: OrderService,
+		private gtService: GTService,
+		private ngZone: NgZone,  
 	) {}
 
 	get ready(): boolean {return this.wordsReady && this.ordersReady && this.servingsReady;}		
 
-	public async ngOnInit(): Promise<void> {		
-		if (await this.initOrders()) {
+	public async ngOnInit(): Promise<void> {
+		if (await this.initOrder()) {
 			this.initURLRoutine();		
 			this.initWords();
 			this.initServings();
+			this.initGoogleTranslate();
 		}		
 	}
 
@@ -44,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			.subscribe(event => this.appService.win.scrollTop ? setTimeout(() => {this.appService.win.scrollTo(0, 0);}, 1) : null);
 	}	
 
-	private async initOrders(): Promise<boolean> {		
+	private async initOrder(): Promise<boolean> {		
 		try {
 			const url = document.location.pathname.split("/");
 			
@@ -61,7 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			} 
 
 			this.orderService.initCart();
-			this.orderService.initOrders();
+			this.orderService.initOrder();
 			this.ordersReady = true;
 			return true;			
 		} catch (err) {
@@ -95,4 +99,15 @@ export class AppComponent implements OnInit, AfterViewInit {
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => this.appService.url = event.urlAfterRedirects.split("/"));
     }	
+
+	private initGoogleTranslate(): void {
+		// ссылка на angular-функцию для доступа из внешнего скрипта
+		window['angularComponentReference'] = {
+			component: this, 
+			zone: this.ngZone, 
+			gtInit: () => this.gtService.init(), 
+		};
+		this.gtService.lang = this.orderService.table.lang_slug;
+		this.gtService.prepare();
+	}
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppService } from './app.service';
 import { DataService } from './data.service';
+import { GTService } from './gt.service';
 import { OrderService } from './order.service';
 import { CatRepository } from './repositories/cat.repository';
 import { ProductRepository } from './repositories/product.repository';
@@ -14,7 +15,8 @@ import { WordRepository } from './repositories/word.repository';
     providers: [
         AppService,
         DataService,      
-        OrderService,          
+        OrderService,      
+        GTService,    
         WordRepository,        
         CatRepository,
         ProductRepository,
