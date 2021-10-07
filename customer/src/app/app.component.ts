@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.initURLRoutine();		
 			this.initWords();
 			this.initServings();
-			this.initGoogleTranslate();
+			//this.initGoogleTranslate();
 		}		
 	}
 
@@ -107,7 +107,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			zone: this.ngZone, 
 			gtInit: () => this.gtService.init(), 
 		};
-		this.gtService.lang = this.orderService.table.lang_slug;
+		this.gtService.originalLang = this.orderService.table.lang_slug;
 		this.gtService.prepare();
 	}
 }

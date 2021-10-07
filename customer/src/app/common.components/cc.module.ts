@@ -13,6 +13,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { HeaderComponent } from './header/header.component';
 import { InputNumberComponent } from './input-number/input-number.component';
 import { InvoicePanelComponent } from './invoice-panel/invoice-panel.component';
+import { LangPanelComponent } from './lang-panel/lang-panel.component';
 import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
         CartPanelComponent,
         InvoicePanelComponent,
         RadioSimpleComponent,
+        LangPanelComponent,
     ],
     exports: [
         ErrorNotificationComponent,        
@@ -48,6 +50,7 @@ import { RadioSimpleComponent } from './radio-simple/radio-simple.component';
         CartPanelComponent,
         InvoicePanelComponent,
         RadioSimpleComponent,
+        LangPanelComponent,
     ],    
 })
 export class CCModule {}

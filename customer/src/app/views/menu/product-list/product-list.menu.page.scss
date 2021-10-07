@@ -20,7 +20,7 @@
     .p-dash {
         display: flex; justify-content: space-between; flex-wrap: wrap; user-select: none;
         a {
-            display: block; text-decoration: none; background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 30px; width: 130px; line-height: 30px; text-align: center; font-weight: bold; border-radius: 23px; cursor: pointer; margin-bottom: 15px; transition: background-color 0.3s;
+            display: block; text-decoration: none; background-color: var(--color-bg); box-shadow: var(--block-shadow); height: 30px; width: 130px; overflow: hidden; line-height: 30px; text-align: center; font-weight: bold; border-radius: 23px; cursor: pointer; margin-bottom: 15px; transition: background-color 0.3s; white-space: nowrap;
             &.added {background-color: black; color: white;}
         }
     }

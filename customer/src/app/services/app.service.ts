@@ -11,6 +11,7 @@ export class AppService {
     public headCartHighlight: boolean = false;
     public cartPanelActive: boolean = false;
     public invoicePanelActive: boolean = false;
+    public langPanelActive: boolean = false;
     // error notifications
     public errorActive: boolean = false;
     public errorMessage: string = "";

@@ -1935,6 +1935,16 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 365	129	мясо	t
 385	137	zxc	t
 386	137	cxz	t
+387	138	мясо	t
+388	138	хлеб	t
+389	138	кетчуп	t
+390	138	помидор	t
+391	138	лист салата	t
+392	139	мясо	t
+393	139	хлеб	t
+394	139	кетчуп	t
+395	139	помидор	t
+396	139	лист салата	t
 \.
 
 
@@ -2073,6 +2083,8 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 129	52	1	h0001	Гамбургер с телятиной	100	3	t	2021-9/1632527184307_500.jpg
 131	52	2	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
 137	\N	1	qqq	www	33	4	t	2021-10/1633562315568_500.jpg
+138	54	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
+139	55	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 \.
 
 
@@ -2133,6 +2145,8 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 48	\N	1	21	9	f	f	cancelled	5	\N	2021-10-06 18:08:05.546655	f		пробный заказ	card	\N	\N
 53	76	1	21	9	t	t	completed	1	792	2021-10-07 00:26:27.118492	t	test comment	пробный заказ 2	card	2021-10-07 00:26:37.404	2021-10-07 00:54:33.721
 52	45	1	21	9	t	f	active	5	1045	2021-10-07 00:20:26.761395	t	test1	test2	cash	2021-10-07 00:55:34.553	\N
+54	33	1	21	\N	f	f	active	0	100	2021-10-07 17:33:24.301754	f			cash	\N	\N
+55	33	1	21	\N	f	f	active	0	100	2021-10-07 23:28:06.971823	f			cash	\N	\N
 \.
 
 
@@ -4635,21 +4649,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 386, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 396, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 137, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 139, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 53, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 55, true);
 
 
 --
