@@ -26,7 +26,7 @@ import { WordsModule } from "./words/words.module";
         IconsModule,
         ProductsModule,
         OrdersModule,
-        ServingsModule,
+        ServingsModule,        
         QRModule,       
         ObjectsModule, 
         FilesModule,

@@ -1,13 +1,18 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Order } from "src/app/model/orm/order.model";
+import { Order, OrderStatus } from "src/app/model/orm/order.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { HallRepository } from "src/app/services/repositories/hall.repository";
+import { Hall } from "src/app/model/orm/hall.model";
+import { Table } from "src/app/model/orm/table.model";
+import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
+import { Employee } from "src/app/model/orm/employee.model";
 
 @Component({
     selector: "index-all-orders-page",
@@ -22,12 +27,17 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         [["created_at", 1], ["created_at", -1], ["sum", 1], ["sum", -1]];   
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
-    private deleteId: number = null;
+    public deleteId: number = null;
+    public statusActive: OrderStatus = OrderStatus.Active;
+    public statusCompleted: OrderStatus = OrderStatus.Completed;
+    public statusCancelled: OrderStatus = OrderStatus.Cancelled;
 
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,   
-        private orderRepository: OrderRepository,         
+        private orderRepository: OrderRepository,               
+        private hallRepository: HallRepository,
+        private employeeRepository: EmployeeRepository,
         private authService: AuthService,         
         private router: Router,      
     ) {}
@@ -44,11 +54,24 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     get olSortDir(): number {return this.orderRepository.chunkSortDir;}
     set olSortBy(v: string) {this.orderRepository.chunkSortBy = v;}
     set olSortDir(v: number) {this.orderRepository.chunkSortDir = v;}
+    get olFilterCreatedAt(): Date[] {return this.orderRepository.filterCreatedAt;}
+    set olFilterCreatedAt(v: Date[]) {this.orderRepository.filterCreatedAt = v;}
+    get olFilterHallId(): number {return this.orderRepository.filterHallId;}
+    set olFilterHallId(v: number) {this.orderRepository.filterHallId = v;}
+    get olFilterTableId(): number {return this.orderRepository.filterTableId;}
+    set olFilterTableId(v: number) {this.orderRepository.filterTableId = v;}
+    get olFilterEmployeeId(): number {return this.orderRepository.filterEmployeeId;}
+    set olFilterEmployeeId(v: number) {this.orderRepository.filterEmployeeId = v;}
+    get hl(): Hall[] {return this.hallRepository.xlAll;}
+    get tl(): Table[] {return this.hl.find(h => h.id === this.olFilterHallId)?.tables || [];}
+    get el(): Employee[] {return this.employeeRepository.xlAll;}
 
     public ngOnInit(): void {        
         this.initTitle();  
         this.initAuthCheck();   
         this.initOrders();   
+        this.initHalls();
+        this.initEmployees();
     }
 
     public ngOnDestroy(): void {
@@ -77,6 +100,24 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         }
     }
 
+    public initHalls(): void {
+        try {
+            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
+            this.hallRepository.loadAll();     
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+
+    public initEmployees(): void {
+        try {
+            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
+            this.employeeRepository.loadAll();     
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+
     public changeSorting(sortBy: string): void {
         if (this.olSortBy === sortBy) {
             this.olSortDir *= -1;
@@ -95,10 +136,14 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         this.initOrders();
     }
 
-    /*
+    public getStatusName(status: OrderStatus): string {
+        return this.words["restorator-orders"][`status-${status}`][this.currentLang.slug];
+    }
+
+    
     public onDelete(o: Order): void {
         this.deleteId = o.id;
-        this.deleteConfirmMsg = `${this.words['common']['delete'][this.currentLang.slug]} "${h.name}"?`;
+        this.deleteConfirmMsg = `${this.words['restorator-orders']['confirm-delete'][this.currentLang.slug]} ${o.id}?`;
         this.deleteConfirmActive = true;
     }
 
@@ -112,5 +157,5 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
             this.appService.showError(err);
             this.olLoading = false;
         }
-    } */ 
+    } 
 }

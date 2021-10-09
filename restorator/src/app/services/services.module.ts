@@ -48,7 +48,7 @@ import { WordRepository } from './repositories/word.repository';
         OrderNewRepository,
         OrderMyRepository,
         OrderRepository,
-        ServingRepository,
+        ServingRepository,        
     ],
 })
 export class ServicesModule {}

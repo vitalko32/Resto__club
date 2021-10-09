@@ -12,6 +12,8 @@ import { IEmployeeCreate } from "src/api.admin/employees/dto/employee.create.int
 import { IEmployeeUpdate } from "src/api.admin/employees/dto/employee.update.interface";
 import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
 import { EmployeesGuard } from "src/common/guards/employees.guard";
+import { IGetAll } from "src/model/dto/getall.interface";
+import { Employee } from "src/model/orm/employee.entity";
 
 @Controller('api/restorator/employees')
 export class EmployeesController {
@@ -49,6 +51,13 @@ export class EmployeesController {
     public confirm(@Body() dto: IEmployeeConfirm): Promise<IAnswer<void>> {
         return this.employeesService.confirm(dto);
     }
+
+    // get all
+    @UseGuards(EmployeesGuard)
+    @Post("all")
+    public all(@Body() dto: IGetAll): Promise<IAnswer<Employee[]>> {
+        return this.employeesService.all(dto);
+    }  
 
     // get fragment
     @UseGuards(EmployeesGuard)

@@ -69,4 +69,11 @@ export class OrdersController {
     public create(@Body() dto: IOrderCreate): Promise<IAnswer<void>> {
         return this.ordersService.create(dto);
     }
+
+    // delete one
+    @UseGuards(EmployeesGuard)
+    @Post("delete/:id")
+    public delete(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.ordersService.delete(parseInt(id));
+    }
 }

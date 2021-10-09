@@ -27,14 +27,18 @@ export class ProductsService extends APIService {
             const q: number = dto.q;
             let filter: any = dto.filter;
             filter.active = true;            
+                        
             const data: Product[] = await this.productRepository.find({where: filter, order: {[sortBy]: sortDir}, take: q, skip: from});
 
+            // пришлось сделать отдельные запросы на присоединенные сущности
+            // если использовать репозиторий, то нет возможности упорядочить присоединенные сущности
+            // а если использовать queryBuilder, то у него не работает take-skip при присоединении МАССИВА (если джойнится один элемент - то все ок, если массив - то все плохо)
             for (let x of data) {
                 const pil: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
                 const il: Ingredient[] = await this.ingredientRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
                 x.images = pil;
                 x.ingredients = il;
-            }            
+            }           
             
             const allLength: number = await this.productRepository.count(filter);
             return {statusCode: 200, data, allLength};

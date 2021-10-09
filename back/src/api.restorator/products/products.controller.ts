@@ -18,14 +18,7 @@ export class ProductsController {
     @Post("all")
     public all(@Body() dto: IGetAll): Promise<IAnswer<Product[]>> {
         return this.productsService.all(dto);
-    }
-
-    // get fragment
-    @UseGuards(EmployeesGuard)
-    @Post("chunk")
-    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Product[]>> {
-        return this.productsService.chunk(dto);
-    }
+    }    
     
     // get one
     @UseGuards(EmployeesGuard)

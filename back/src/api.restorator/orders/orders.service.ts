@@ -194,6 +194,10 @@ export class OrdersService extends APIService {
                 filter += ` AND orders.restaurant_id = '${dto.filter.restaurant_id}'`;
             }
 
+            if (dto.filter.hall_id) {
+                filter += ` AND orders.hall_id = '${dto.filter.hall_id}'`;
+            }
+
             if (dto.filter.table_id) {
                 filter += ` AND orders.table_id = '${dto.filter.table_id}'`;
             }
@@ -206,6 +210,7 @@ export class OrdersService extends APIService {
             const data: Order[] = await query
                 .leftJoinAndSelect("orders.table", "table")
                 .leftJoinAndSelect("orders.employee", "employee")
+                .leftJoinAndSelect("orders.hall", "hall")
                 .orderBy({[`orders.${sortBy}`]: sortDir})
                 .take(q)
                 .skip(from)
@@ -221,4 +226,15 @@ export class OrdersService extends APIService {
             return {statusCode: 500, error: errTxt};
         }
     } 
+
+    public async delete(id: number): Promise<IAnswer<void>> {
+        try {
+            await this.orderRepository.delete(id);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.delete: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }        
+    }
 }

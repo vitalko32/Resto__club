@@ -21,9 +21,8 @@ import { Restaurant } from "src/model/orm/restaurant.entity";
 import { IEmployeeUpdate } from "./dto/employee.update.interface";
 import { IEmployeeUpdatePassword } from "./dto/employee.updatepassword.interface";
 import { Lang } from "src/model/orm/lang.entity";
-import { EmployeeStatus } from "src/model/orm/employee.status.entity";
-import { IEmployeeStatus } from "../employee.statuses/dto/employee.status.interface";
 import { EmployeeStatusesService } from "../employee.statuses/employee.statuses.service";
+import { IGetAll } from "src/model/dto/getall.interface";
 
 @Injectable()
 export class EmployeesService extends APIService {
@@ -282,6 +281,22 @@ export class EmployeesService extends APIService {
             return {statusCode: 500, error: errTxt};
         }
     }
+
+    // загрузка всех
+    public async all(dto: IGetAll): Promise<IAnswer<Employee[]>> {
+        let sortBy: string = dto.sortBy;
+        let sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+        let filter: Object = dto.filter;
+
+        try {
+            let data: Employee[] = await this.employeeRepository.find({where: filter, order: {[sortBy]: sortDir}});             
+            return {statusCode: 200, data};
+        } catch (err) {
+            let errTxt: string = `Error in EmployeesService.all: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    } 
 
     ///////////////////////////////
     private getEmployeeByEmail(email: string): Promise<IEmployee> {

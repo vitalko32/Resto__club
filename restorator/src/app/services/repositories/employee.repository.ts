@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { IGetAll } from "src/app/model/dto/getall.interface";
 import { IGetChunk } from "src/app/model/dto/getchunk.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { DataService } from "../data.service";
@@ -14,17 +15,42 @@ export class EmployeeRepository extends Repository<Employee> {
         super(dataService);
         this.chunkSortBy = "created_at";
         this.chunkSortDir = 1;
-    }    
+    } 
+    
+    public loadAll(): Promise<void> {
+        return new Promise((resolve, reject) => {            
+            const dto: IGetAll = {
+                sortBy: this.allSortBy,
+                sortDir: this.allSortDir,      
+                filter: {
+                    restaurant_id: this.filterRestaurantId,
+                }              
+            };
+            this.dataService.employeesAll(dto).subscribe(res => {
+                if (res.statusCode === 200) {
+                    this.xlAll = res.data.length ? res.data.map(d => new Employee().build(d)) : [];                                    
+                    resolve();
+                } else {                        
+                    reject(res.error);
+                }
+            }, err => {
+                reject(err.message);                
+            });                        
+        });
+    }
 
     public loadChunk(): Promise<void> {
-        return new Promise((resolve, reject) => {            
-            let filter: any = {name: this.filterName, created_at: this.filterCreatedAt, restaurant_id: this.filterRestaurantId};
+        return new Promise((resolve, reject) => {                        
             const dto: IGetChunk = {
                 from: this.chunkCurrentPart * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,
                 sortDir: this.chunkSortDir, 
-                filter,                               
+                filter: {
+                    name: this.filterName, 
+                    created_at: this.filterCreatedAt, 
+                    restaurant_id: this.filterRestaurantId,
+                },                               
             };
             this.dataService.employeesChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        

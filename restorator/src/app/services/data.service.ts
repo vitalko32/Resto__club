@@ -26,6 +26,7 @@ import { IPathable } from "../model/dto/pathable.interface";
 import { Order } from "../model/orm/order.model";
 import { IOrderAccept } from "../model/dto/order.accept.interface";
 import { IServing } from "../model/orm/serving.interface";
+import { Table } from "../model/orm/table.model";
 
 @Injectable()
 export class DataService {
@@ -53,6 +54,7 @@ export class DataService {
     public employeesCheck(id: number): Observable<IAnswer<Employee>> {return this.sendRequest(`employees/check/${id}`, null, true);}
     public employeesConfirm(dto: IEmployeeConfirm): Observable<IAnswer<void>> {return this.sendRequest(`employees/confirm`, dto, true);}
     public employeeSetStatus(dto: IEmployeeSetStatus): Observable<IAnswer<void>> {return this.sendRequest("employees/set-status", dto, true);}
+    public employeesAll(dto: IGetAll): Observable<IAnswer<Employee[]>> {return this.sendRequest(`employees/all`, dto, true);}    
     public employeesChunk(dto: IGetChunk): Observable<IAnswer<Employee[]>> {return this.sendRequest("employees/chunk", dto, true);}
     public employeesDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`employees/delete/${id}`, null, true);}
     public employeesCreate(x: Employee): Observable<IAnswer<void>> {return this.sendRequest("employees/create", x, true);}
@@ -78,8 +80,7 @@ export class DataService {
 
     public iconsAll(dto: IGetAll): Observable<IAnswer<Icon[]>> {return this.sendRequest(`icons/all`, dto, true);}   
     
-    public productsAll(dto: IGetAll): Observable<IAnswer<Product[]>> {return this.sendRequest("products/all", dto, true);}
-    public productsChunk(dto: IGetChunk): Observable<IAnswer<Product[]>> {return this.sendRequest("products/chunk", dto, true);}
+    public productsAll(dto: IGetAll): Observable<IAnswer<Product[]>> {return this.sendRequest("products/all", dto, true);}    
     public productsOne(id: number): Observable<IAnswer<Product>> {return this.sendRequest(`products/one/${id}`, null, true);}
     public productsDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`products/delete/${id}`, null, true);}    
     public productsCreate(x: Product): Observable<IAnswer<void>> {return this.sendRequest("products/create", x, true);}
@@ -94,8 +95,9 @@ export class DataService {
     public ordersComplete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/complete/${id}`, null, true);}
     public ordersUpdate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/update", x, true);}  
     public ordersCreate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/create", x, true);}  
+    public ordersDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/delete/${id}`, null, true);} 
 
-    public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}
+    public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}    
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

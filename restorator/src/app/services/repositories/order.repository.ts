@@ -7,6 +7,7 @@ import { DataService } from '../data.service';
 @Injectable()
 export class OrderRepository extends Repository<Order> {    
     public filterRestaurantId: number = null;    
+    public filterHallId: number = null;    
     public filterTableId: number = null;    
     public filterEmployeeId: number = null;    
     public filterCreatedAt: Date[] = [null, null];      
@@ -26,6 +27,7 @@ export class OrderRepository extends Repository<Order> {
                 sortDir: this.chunkSortDir,        
                 filter: {
                     restaurant_id: this.filterRestaurantId, 
+                    hall_id: this.filterHallId,
                     table_id: this.filterTableId,
                     employee_id: this.filterEmployeeId,
                     created_at: this.filterCreatedAt,
@@ -44,5 +46,9 @@ export class OrderRepository extends Repository<Order> {
                 reject(err.message);                
             });            
         });
-    }    
+    }  
+    
+    public delete(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    } 
 }

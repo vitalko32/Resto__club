@@ -39,16 +39,14 @@ export class ProductsService extends APIService {
             const data: Product[] = await this.productRepository
                 .createQueryBuilder("products")
                 .leftJoinAndSelect("products.ingredients", "ingredients")
+                .leftJoinAndSelect("products.images", "images")
                 .where(filter)
-                .orderBy(`products.${sortBy}`, sortDir)
-                .getMany();            
-
-            // из-за глюков с сортировкой присоединенной таблицы пришлось запрашивать картинки отдельно
-            // если сортировать присоединенную таблицу картинок, то исчезают товары, у которых нет картинок, а не сортировать нельзя, порядок имеет значение в данном случае
-            for (let x of data) {
-                const il: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
-                x.images = il;
-            }
+                .orderBy({
+                    [`products.${sortBy}`]: sortDir,
+                    "images.pos": "ASC",
+                    "ingredients.pos": "ASC",
+                })
+                .getMany();                        
             
             return {statusCode: 200, data};
         } catch (err) {
@@ -56,40 +54,7 @@ export class ProductsService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    }
-
-    public async chunk(dto: IGetChunk): Promise<IAnswer<Product[]>> {
-        try {
-            const sortBy: string = dto.sortBy;
-            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-            const from: number = dto.from;
-            const q: number = dto.q;
-            let filter: string = "TRUE";
-
-            if (dto.filter.cat_id) {
-                filter += ` AND products.cat_id = '${dto.filter.cat_id}'`;
-            }
-
-            if (dto.filter.nameCode) {
-                filter += ` AND (LOWER(products.name) LIKE LOWER('%${dto.filter.nameCode}%') OR LOWER(products.code) LIKE LOWER('%${dto.filter.nameCode}%'))`;
-            }
-            
-            const qb: SelectQueryBuilder<Product> = this.productRepository.createQueryBuilder("products").where(filter);
-            const data: Product[] = await qb.orderBy(`products.${sortBy}`, sortDir).take(q).skip(from).getMany();            
-
-            for (let x of data) {
-                const il: ProductImage[] = await this.productImageRepository.find({where: {product_id: x.id}, order: {pos: "ASC"}});
-                x.images = il;
-            }
-
-            const allLength: number = await qb.getCount();            
-            return {statusCode: 200, data, allLength};
-        } catch (err) {
-            let errTxt: string = `Error in ProductsService.chunk: ${String(err)}`;
-            console.log(errTxt);
-            return {statusCode: 500, error: errTxt};
-        }
-    }
+    }    
 
     public async one(id: number): Promise<IAnswer<Product>> {
         try {            

@@ -1441,6 +1441,7 @@ COPY "default".vne_halls (id, restaurant_id, name, nx, ny, pos) FROM stdin;
 4	21	Зеленый	5	5	3
 2	21	Синий	4	4	2
 1	21	Красный	4	3	1
+15	21	Новый	5	5	4
 \.
 
 
@@ -1863,11 +1864,6 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 307	111	Мясо	t
 308	111	Сыр среднеазиатский "Дары пустыни"	t
 309	111	Зелень	t
-310	112	мороженое сливочное	t
-311	112	мороженое шоколадное	t
-312	112	вафельный стаканчик	t
-313	113	мороженое фруктовое	t
-314	113	клубника	t
 315	114	вафельный стаканчик	t
 316	114	мороженое шоколадное	t
 317	114	мороженое сливочное	t
@@ -1959,8 +1955,6 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 8	5	1	hf00015	Какое-то блюдо 15	1000	2	f	\N
 9	6	1	hf00015	Какое-то блюдо 15	1000	1	f	\N
 10	7	1	hf00015	Какое-то блюдо 15	1000	2	f	\N
-11	8	1	hf00015	Какое-то блюдо 15	1000	1	f	\N
-12	9	1	hf00015	Какое-то блюдо 15	1000	1	f	2021-9/1632350544594_500.jpg
 13	10	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 14	11	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 15	11	2	h0002	Королевский чизбургер	305	1	f	2021-9/1632351029146_500.jpg
@@ -2061,8 +2055,6 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 109	45	1	m0002	Мороженое "Фруктовый сад"	300	1	f	2021-9/1632669997544_500.jpg
 110	45	2	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
 111	45	2	h0002	Королевский чизбургер	305	2	f	2021-9/1632351029146_500.jpg
-112	46	2	m0001	Мороженое "Сказка"	500	1	f	2021-9/1632669890885_500.jpg
-113	46	2	m0002	Мороженое "Фруктовый сад"	300	2	f	2021-9/1632669997544_500.jpg
 115	38	1	m0002	Мороженое "Фруктовый сад"	300	2	f	2021-9/1632669997544_500.jpg
 116	38	1	f0001	Цитрусовая нарезка	200	2	f	2021-9/1632351091004_500.jpg
 117	47	1	h0001	Гамбургер с телятиной	100	1	f	2021-9/1632527184307_500.jpg
@@ -2099,7 +2091,6 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 44	33	1	21	\N	f	f	cancelled	0	\N	2021-10-05 15:09:02.374082	f			cash	\N	\N
 36	\N	1	21	9	f	t	completed	0	\N	2021-10-05 13:18:53.653899	f			cash	2021-10-05 13:23:57.678	2021-10-05 13:32:46.877
 41	\N	1	21	9	f	f	completed	0	\N	2021-10-05 15:02:00.171683	t			cash	2021-10-05 15:03:34.031	2021-10-05 15:03:46.086
-8	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:15:19.592197	f			cash	\N	\N
 18	33	1	21	\N	f	t	completed	0	\N	2021-09-30 23:51:43.753031	f			card	\N	\N
 37	33	1	21	9	f	f	completed	0	\N	2021-10-05 13:50:14.186157	f			cash	2021-10-05 15:07:03.445	2021-10-05 15:10:21.418
 19	33	1	21	\N	t	t	completed	0	\N	2021-10-01 01:16:02.416953	f			cash	\N	\N
@@ -2109,7 +2100,6 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 34	33	1	21	9	f	f	completed	0	\N	2021-10-04 23:09:41.853611	f		пробный заказ	cash	2021-10-04 23:09:46.9	2021-10-05 15:10:25.115
 42	33	1	21	9	f	t	completed	0	\N	2021-10-05 15:05:50.955622	f			cash	2021-10-05 15:06:22.435	2021-10-05 15:07:31.862
 17	33	1	21	9	f	t	cancelled	0	\N	2021-09-30 23:30:54.056362	f			cash	\N	\N
-9	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:46:24.864196	f			cash	\N	\N
 4	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 20:00:22.929265	f			cash	\N	\N
 3	33	1	21	\N	f	f	cancelled	0	\N	2021-09-29 19:59:36.82795	f			cash	\N	\N
 16	33	1	21	9	f	f	cancelled	0	\N	2021-09-30 23:06:33.262757	f	дайте что-нибудь		cash	2021-10-04 01:13:42.507	\N
@@ -2125,7 +2115,6 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 12	33	1	21	\N	f	f	cancelled	0	\N	2021-09-30 01:52:41.812539	f			cash	\N	\N
 23	33	1	21	36	t	f	active	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
 21	\N	1	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
-46	33	1	21	\N	t	f	cancelled	0	\N	2021-10-05 16:54:29.295756	f	<div>05.10.2021 16:54 test</div>		cash	\N	\N
 43	\N	1	21	9	f	f	completed	0	\N	2021-10-05 15:07:42.737255	t			cash	2021-10-05 15:08:01.712	2021-10-05 15:08:42.702
 15	33	1	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
 5	33	1	21	9	t	f	cancelled	0	\N	2021-09-29 20:01:07.059932	t		хороший клиент	cash	2021-10-04 12:48:38.243	\N
@@ -2160,18 +2149,18 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 7	3	2021-9/1632351041578_500.jpg	2
 8	4	2021-9/1632351091004_500.jpg	0
 9	4	2021-9/1632351105494_500.jpg	1
-1	1	2021-9/1632350544594_500.jpg	1
-2	1	2021-9/1632350619186_500.jpg	2
-3	1	2021-9/1632350590230_500.jpg	3
 371	86	2021-9/1632762621921_500.jpg	1
-372	1	2021-9/1632942969923_500.jpg	6
+372	1	2021-9/1632942969923_500.jpg	0
+1	1	2021-9/1632350544594_500.jpg	2
+2	1	2021-9/1632350619186_500.jpg	3
+3	1	2021-9/1632350590230_500.jpg	4
 150	85	2021-9/1632350544594_500.jpg	5
 151	85	2021-9/1632350619186_500.jpg	7
 368	194	2021-9/1632669890885_500.jpg	0
 369	194	2021-9/1632669894240_500.jpg	1
+154	87	2021-9/1632350544594_500.jpg	1
 152	86	2021-9/1632350544594_500.jpg	0
 153	86	2021-9/1632350619186_500.jpg	0
-154	87	2021-9/1632350544594_500.jpg	0
 155	87	2021-9/1632350619186_500.jpg	0
 156	88	2021-9/1632350544594_500.jpg	0
 157	88	2021-9/1632350619186_500.jpg	0
@@ -2187,8 +2176,6 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 167	93	2021-9/1632350619186_500.jpg	0
 170	95	2021-9/1632350544594_500.jpg	0
 171	95	2021-9/1632350619186_500.jpg	0
-172	96	2021-9/1632350544594_500.jpg	0
-173	96	2021-9/1632350619186_500.jpg	0
 174	97	2021-9/1632350544594_500.jpg	0
 175	97	2021-9/1632350619186_500.jpg	0
 176	98	2021-9/1632350544594_500.jpg	0
@@ -2287,8 +2274,6 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 269	144	2021-9/1632350619186_500.jpg	0
 270	145	2021-9/1632350544594_500.jpg	0
 271	145	2021-9/1632350619186_500.jpg	0
-272	146	2021-9/1632350544594_500.jpg	0
-273	146	2021-9/1632350619186_500.jpg	0
 274	147	2021-9/1632350544594_500.jpg	0
 275	147	2021-9/1632350619186_500.jpg	0
 276	148	2021-9/1632350544594_500.jpg	0
@@ -2365,11 +2350,11 @@ COPY "default".vne_product_images (id, product_id, img, pos) FROM stdin;
 347	183	2021-9/1632350619186_500.jpg	0
 348	184	2021-9/1632350544594_500.jpg	0
 349	184	2021-9/1632350619186_500.jpg	0
-364	1	2021-9/1632527188680_500.jpg	4
-363	1	2021-9/1632527184307_500.jpg	0
 370	195	2021-9/1632669997544_500.jpg	0
-365	1	2021-9/1632527193075_500.jpg	5
 366	1	2021-9/1632527210468_500.jpg	7
+363	1	2021-9/1632527184307_500.jpg	1
+364	1	2021-9/1632527188680_500.jpg	5
+365	1	2021-9/1632527193075_500.jpg	6
 \.
 
 
@@ -4224,6 +4209,26 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1029	321	1	не активен
 1031	322	1	Вы можете указать свое имя и пожелания по заказу
 1032	322	2	You can specify your name and wishes for the order
+1033	323	1	Все заказы
+1034	323	2	All orders
+1035	324	1	Все заказы
+1036	324	2	All orders
+1037	325	1	Сумма
+1038	325	2	Amount
+1039	326	1	Кол-во заказов
+1040	326	2	Orders qty
+1041	327	1	Статус
+1042	327	2	Status
+1043	328	1	активен
+1044	328	2	active
+1045	329	1	завершен
+1046	329	2	completed
+1047	330	1	отменен
+1048	330	2	cancelled
+1049	331	1	Удалить заказ №
+1050	331	2	Delete order #
+1051	332	1	Сводка
+1052	332	2	Summary
 \.
 
 
@@ -4354,10 +4359,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 112	8	3	type	\N
 126	7	1	menu-home	\N
 129	7	3	menu-new-orders	\N
-130	7	4	menu-tables	\N
-131	7	5	menu-products	\N
-132	7	6	menu-stat	\N
-127	7	7	menu-employees	\N
+130	7	5	menu-tables	\N
 170	12	1	title	\N
 136	9	0	signed-as	\N
 137	9	0	restaurant	\N
@@ -4372,7 +4374,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 146	5	124	lang	\N
 147	5	125	actions	\N
 148	5	126	edit	\N
-171	7	9	menu-halls	\N
 172	13	1	title-index	\N
 149	10	100	created-at	\N
 150	10	101	name	\N
@@ -4389,7 +4390,6 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 160	10	108	note	\N
 161	10	3	title-edit	\N
 162	5	129	password-change	\N
-163	7	8	menu-pw	\N
 164	11	0	title	\N
 165	11	0	password1	\N
 166	11	0	password2	\N
@@ -4408,9 +4408,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 183	12	4	seats	\N
 184	12	5	table	\N
 185	12	6	print-version	\N
-186	7	10	menu-halls-tables	\N
-187	7	11	menu-kitchen	\N
-188	7	12	menu-cats	\N
+131	7	6	menu-products	\N
 189	14	1	title-index	\N
 190	14	2	title-create	\N
 191	14	3	title-edit	\N
@@ -4501,13 +4499,8 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 300	21	4	title-my-edit	\N
 301	21	101	seats2	\N
 311	21	110	confirm-save	\N
-292	21	111	hall2	\N
-288	21	111	hall	\N
-290	21	112	customer-comment	\N
-291	21	113	employee-comment	\N
 309	5	137	complete	\N
 310	21	109	confirm-complete	\N
-312	21	128	code	\N
 313	17	0	added	\N
 314	12	7	link	\N
 315	15	4	title-finder	\N
@@ -4525,25 +4518,47 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 238	19	1	cart	\N
 239	19	2	order	\N
 240	19	3	total	\N
-293	21	114	created-at	\N
-294	21	115	statuses	\N
-295	21	116	content	\N
-296	21	117	serving	\N
-297	21	118	subtotal	\N
-305	21	119	total	\N
-298	21	120	accept-conflict	\N
-299	21	121	no	\N
-302	21	122	completed	\N
-303	21	123	payment	\N
-304	21	124	discount	\N
-306	21	125	paymethod	\N
-307	21	126	paymethod-cash	\N
-308	21	127	paymethod-card	\N
 241	19	4	serving	\N
 242	19	5	comment	\N
 243	19	7	empty	\N
 244	19	8	confirm-sending	\N
 245	19	9	order-accepted	\N
+323	7	4	menu-all-orders	\N
+132	7	7	menu-stat	\N
+127	7	8	menu-employees	\N
+163	7	9	menu-pw	\N
+171	7	10	menu-halls	\N
+186	7	11	menu-halls-tables	\N
+187	7	12	menu-kitchen	\N
+188	7	13	menu-cats	\N
+324	21	6	title-all-index	\N
+299	21	123	no	\N
+331	21	111	confirm-delete	\N
+292	21	112	hall2	\N
+288	21	113	hall	\N
+290	21	114	customer-comment	\N
+291	21	115	employee-comment	\N
+293	21	116	created-at	\N
+294	21	117	statuses	\N
+295	21	118	content	\N
+296	21	119	serving	\N
+297	21	120	subtotal	\N
+305	21	121	total	\N
+298	21	122	accept-conflict	\N
+302	21	124	completed	\N
+303	21	125	payment	\N
+304	21	126	discount	\N
+306	21	127	paymethod	\N
+307	21	128	paymethod-cash	\N
+308	21	129	paymethod-card	\N
+312	21	130	code	\N
+325	21	131	sum	\N
+326	21	132	orders-q	\N
+327	21	133	status	\N
+328	21	134	status-active	\N
+329	21	135	status-completed	\N
+330	21	136	status-cancelled	\N
+332	5	142	summary	\N
 \.
 
 
@@ -4600,7 +4615,7 @@ SELECT pg_catalog.setval('"default".vne_employees_id_seq', 47, true);
 -- Name: vne_halls_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_halls_id_seq', 14, true);
+SELECT pg_catalog.setval('"default".vne_halls_id_seq', 15, true);
 
 
 --
@@ -4677,7 +4692,7 @@ SELECT pg_catalog.setval('"default".vne_product_images_id_seq', 372, true);
 -- Name: vne_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_products_id_seq', 195, true);
+SELECT pg_catalog.setval('"default".vne_products_id_seq', 196, true);
 
 
 --
@@ -4726,7 +4741,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1158, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1032, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1052, true);
 
 
 --
@@ -4740,7 +4755,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 21, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 322, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 332, true);
 
 
 --
