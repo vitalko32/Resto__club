@@ -58,8 +58,12 @@ export class Order extends Model {
         this.table_id = null;
         this.hall_id = null;
         this.restaurant_id = restaurant_id;
-        this.employee_id = employee_id;        
+        this.employee_id = employee_id;   
+        this.customer_comment = "";
         this.employee_comment = "";
+        this.need_waiter = false;
+        this.need_invoice = false;
+        this.need_products = false;
         this.discount_percent = 0;
         this.status = OrderStatus.Active;
         this.paymethod = Paymethod.Cash;

@@ -3,12 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { APIService } from "src/common/api.service";
 import { IAnswer } from "src/model/dto/answer.interface";
 import { IGetAll } from "src/model/dto/getall.interface";
+import { IGetChunk } from "src/model/dto/getchunk.interface";
 import { Employee } from "src/model/orm/employee.entity";
 import { Lang } from "src/model/orm/lang.entity";
 import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { Serving } from "src/model/orm/serving.entity";
 import { Sortdir } from "src/model/sortdir.type";
-import { Repository } from "typeorm";
+import { db_name, db_schema } from "src/options";
+import { getManager, Repository } from "typeorm";
 import { ServingsService } from "../servings/servings.service";
 import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrderCreate } from "./dto/order.create.interface";
@@ -164,8 +166,7 @@ export class OrdersService extends APIService {
             const order = this.orderRepository.create(dto);            
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             order.sum = (subtotal / 100) * (100 - order.discount_percent);
-            order.employee_id ? order.accepted_at = new Date() : null;
-            order.status === OrderStatus.Completed ? order.completed_at = new Date() : null;
+            order.employee_id ? order.accepted_at = new Date() : null;            
             await this.orderRepository.save(order);
             return {statusCode: 200};
         } catch (err) {
@@ -174,4 +175,50 @@ export class OrdersService extends APIService {
             return {statusCode: 500, error: errTxt};
         } 
     }
+
+    public async chunk(dto: IGetChunk): Promise<IAnswer<Order[]>> {
+        try {
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const from: number = dto.from;
+            const q: number = dto.q;
+            let filter: string = "TRUE"; 
+
+            if (dto.filter.created_at[0]) {
+                const from: string = this.mysqlDate(new Date(dto.filter.created_at[0]));
+                const to: string = dto.filter.created_at[1] ? this.mysqlDate(new Date(dto.filter.created_at[1])) : from;
+                filter += ` AND orders.created_at BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
+            }
+
+            if (dto.filter.restaurant_id) {
+                filter += ` AND orders.restaurant_id = '${dto.filter.restaurant_id}'`;
+            }
+
+            if (dto.filter.table_id) {
+                filter += ` AND orders.table_id = '${dto.filter.table_id}'`;
+            }
+
+            if (dto.filter.employee_id) {
+                filter += ` AND orders.employee_id = '${dto.filter.employee_id}'`;
+            }            
+
+            const query = this.orderRepository.createQueryBuilder("orders").where(filter);
+            const data: Order[] = await query
+                .leftJoinAndSelect("orders.table", "table")
+                .leftJoinAndSelect("orders.employee", "employee")
+                .orderBy({[`orders.${sortBy}`]: sortDir})
+                .take(q)
+                .skip(from)
+                .getMany();
+            const allLength: number = await query.getCount();
+            const sumRes = await getManager().query(`SELECT SUM(sum) AS sum FROM ${db_name}.${db_schema}.vne_orders AS orders WHERE ${filter}`);            
+            const sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;            
+
+            return {statusCode: 200, data, allLength, sum};
+        } catch (err) {
+            const errTxt: string = `Error in OrdersService.chunk: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    } 
 }

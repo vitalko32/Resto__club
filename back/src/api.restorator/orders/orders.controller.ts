@@ -8,6 +8,7 @@ import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrder } from "./dto/order.interface";
 import { IOrderUpdate } from "./dto/order.update.interface";
 import { IOrderCreate } from "./dto/order.create.interface";
+import { IGetChunk } from "src/model/dto/getchunk.interface";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -16,8 +17,15 @@ export class OrdersController {
     // get all
     @UseGuards(EmployeesGuard)
     @Post("all")
-    public allNew(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
+    public all(@Body() dto: IGetAll): Promise<IAnswer<Order[]>> {
         return this.ordersService.all(dto);
+    } 
+
+    // get fragment
+    @UseGuards(EmployeesGuard)
+    @Post("chunk")
+    public chunk(@Body() dto: IGetChunk): Promise<IAnswer<Order[]>> {
+        return this.ordersService.chunk(dto);
     } 
     
     // accept

@@ -7,6 +7,7 @@ import { OrderProductEditableComponent } from "./components/order-product-editab
 import { OrderProductComponent } from "./components/order-product/order-product.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ProductFinderComponent } from "./components/product-finder/product-finder.component";
+import { IndexAllOrdersPage } from "./pages/all.index/index.all.orders.page";
 import { CreateMyOrdersPage } from "./pages/my.create/create.my.orders.page";
 import { EditMyOrdersPage } from "./pages/my.edit/edit.my.orders.page";
 import { IndexMyOrdersPage } from "./pages/my.index/index.my.orders.page";
@@ -19,6 +20,7 @@ let routes = RouterModule.forChild ([
 	{path: "my", component: IndexMyOrdersPage, pathMatch: "full"},
 	{path: "my/edit/:id", component: EditMyOrdersPage},
 	{path: "my/create", component: CreateMyOrdersPage},
+	{path: "all", component: IndexAllOrdersPage, pathMatch: "full"},
 	{path: "**", redirectTo: "/orders/new"},
 ]);
 
@@ -37,6 +39,7 @@ let routes = RouterModule.forChild ([
 		ViewNewOrdersPage,
 		EditMyOrdersPage,
 		CreateMyOrdersPage,
+		IndexAllOrdersPage,
 		OrderComponent,
 		OrderProductComponent,	
 		OrderProductEditableComponent,	

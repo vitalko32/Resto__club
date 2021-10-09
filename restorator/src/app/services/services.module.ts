@@ -16,6 +16,7 @@ import { IconRepository } from './repositories/icon.repository';
 import { LangRepository } from './repositories/lang.repository';
 import { OrderMyRepository } from './repositories/order.my.repository';
 import { OrderNewRepository } from './repositories/order.new.repository';
+import { OrderRepository } from './repositories/order.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { ServingRepository } from './repositories/serving.repository';
 import { SettingRepository } from './repositories/setting.repository';
@@ -46,6 +47,7 @@ import { WordRepository } from './repositories/word.repository';
         ProductRepository,
         OrderNewRepository,
         OrderMyRepository,
+        OrderRepository,
         ServingRepository,
     ],
 })
