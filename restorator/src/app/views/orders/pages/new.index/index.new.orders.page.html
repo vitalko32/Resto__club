@@ -15,7 +15,7 @@
                             </div>                        
                         </div>
                         <div>{{words['restorator-orders']['seats'][currentLang.slug]}}: <strong>{{o.table?.seats}}</strong>, {{words['restorator-orders']['hall2'][currentLang.slug]}}: <strong>{{o.table?.hall?.name}}</strong></div>
-                        <div>{{words['restorator-orders']['q'][currentLang.slug]}}: <strong>{{o.q}}</strong></div>                    
+                        <div>{{words['restorator-orders']['q'][currentLang.slug]}}: <strong><a routerLink="/orders/new/view/{{o.id}}">{{o.q}}</a></strong></div>                    
                     </div>
                     <div class="o-dash">                    
                         <div class="od-title">{{words['common']['actions'][currentLang.slug]}}:</div>

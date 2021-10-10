@@ -17,7 +17,7 @@
                             </div>                        
                         </div>
                         <div>{{words['restorator-orders']['seats'][currentLang.slug]}}: <strong>{{o.table?.seats}}</strong>, {{words['restorator-orders']['hall2'][currentLang.slug]}}: <strong>{{o.table?.hall?.name}}</strong></div>
-                        <div>{{words['restorator-orders']['q'][currentLang.slug]}}: <strong>{{o.q}}</strong></div>                    
+                        <div>{{words['restorator-orders']['q'][currentLang.slug]}}: <strong><a routerLink="/orders/my/edit/{{o.id}}">{{o.q}}</a></strong></div>                    
                         <div *ngIf="o.employee_comment">{{words['restorator-orders']['employee-comment'][currentLang.slug]}}: <strong>{{o.employee_comment}}</strong></div>                    
                     </div>
                     <div class="o-dash">                    

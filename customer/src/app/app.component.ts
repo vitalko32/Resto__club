@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.initURLRoutine();		
 			this.initWords();
 			this.initServings();
-			//this.initGoogleTranslate();
+			this.initGoogleTranslate();
 		}		
 	}
 
