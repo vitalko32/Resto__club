@@ -9,7 +9,7 @@
     <div class="t-places beauty-scroll-h" [style.grid-template-columns]="'repeat('+currentHall.nx+', 125px)'">
         <ng-container *ngFor="let p of places">
             <div class="t-place" cdkDropList [cdkDropListEnterPredicate]="tableCanDrop(p)" (cdkDropListDropped)="tableOnDrop($event, p)">
-                <the-table *ngIf="tableGet(p) as t" [table]="t" [canDelete]="t.id" cdkDrag [cdkDragData]="t.id" [cdkDragDisabled]="!t.id" (delete)="tableOnDelete(t)" (qr)="tableOnQr(t)"></the-table>                
+                <the-table *ngIf="tableGet(p) as t" [table]="t" [canDelete]="t.id" cdkDrag [cdkDragData]="t.id" [cdkDragDisabled]="!t.id" (delete)="tableOnDelete(t)" (qr)="tableOnQr(t)" (history)="tableOnHistory(t)"></the-table>                
             </div>            
         </ng-container>        
     </div>

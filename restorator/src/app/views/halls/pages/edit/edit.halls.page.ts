@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -20,7 +20,7 @@ export class EditHallsPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;
     public hall: Hall = null;
     public formLoading: boolean = false; 
-    public formErrorName: boolean = false;           
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);    
 
     constructor(
         private appService: AppService,        
@@ -63,30 +63,14 @@ export class EditHallsPage implements OnInit, OnDestroy {
     }    
 
     public async update(): Promise<void> {
-        try {            
-            if (this.validate()) {
-                this.formLoading = true;            
-                await this.hallRepository.update(this.hall);
-                this.formLoading = false;            
-                this.router.navigateByUrl("/halls-tables/halls");
-            }            
+        try {                 
+            this.formLoading = true;            
+            await this.hallRepository.update(this.hall);
+            this.formLoading = false;            
+            this.router.navigateByUrl("/halls-tables/halls");     
         } catch (err) {
             this.formLoading = false;
             this.appService.showError(err);
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.hall.name = this.appService.trim(this.hall.name);            
-        
-        if (!this.hall.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }
-
-        return !error;
-    }
+    }    
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Currency } from "src/app/model/orm/currency.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Restaurant } from "src/app/model/orm/restaurant.model";
@@ -21,15 +21,8 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;          
     public restaurant: Restaurant = new Restaurant().init(); 
     public formLoading: boolean = false; 
-    public formErrorName: boolean = false;    
-    public formErrorOwnerName: boolean = false;
-    public formErrorPhone: boolean = false;
-    public formErrorAddress: boolean = false;
-    public formErrorInn: boolean = false;
-    public formErrorOgrn: boolean = false;
-    public formErrorEmail: boolean = false;
-    public formErrorPassword: boolean = false;    
-    public formErrorEmailDuplication: boolean = false;    
+    public formErrorEmailDuplication: boolean = false;   
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);     
 
     constructor(
         private appService: AppService,
@@ -70,94 +63,22 @@ export class CreateRestaurantsPage implements OnInit, OnDestroy {
     }
     
     public async create(): Promise<void> {
-        try {
-            if (this.validate()) {
-                this.formLoading = true;                
-                this.formErrorEmailDuplication = false;
-                let statusCode = await this.restaurantRepository.create(this.restaurant);
-                this.formLoading = false;
+        try {            
+            this.formLoading = true;                
+            this.formErrorEmailDuplication = false;
+            let statusCode = await this.restaurantRepository.create(this.restaurant);
+            this.formLoading = false;
     
-                if (statusCode === 200) {
-                    this.router.navigateByUrl("/restaurants/active"); // после создания переходим в активные
-                } else if (statusCode === 409) {
-                    this.formErrorEmailDuplication = true;
-                } else {
-                    this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
-                }
-            }            
+            if (statusCode === 200) {
+                this.router.navigateByUrl("/restaurants/active"); // после создания переходим в активные
+            } else if (statusCode === 409) {
+                this.formErrorEmailDuplication = true;
+            } else {
+                this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
+            }                        
         } catch (err) {
             this.appService.showError(err);
             this.formLoading = false;
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.restaurant.name = this.appService.trim(this.restaurant.name);        
-        this.restaurant.ownername = this.appService.trim(this.restaurant.ownername);
-        this.restaurant.phone = this.appService.trim(this.restaurant.phone);
-        this.restaurant.address = this.appService.trim(this.restaurant.address);
-        this.restaurant.inn = this.appService.trim(this.restaurant.inn);
-        this.restaurant.ogrn = this.appService.trim(this.restaurant.ogrn);
-        this.restaurant.employees[0].email = this.appService.trim(this.restaurant.employees[0].email);
-        this.restaurant.employees[0].password = this.appService.trim(this.restaurant.employees[0].password);
-
-        if (!this.restaurant.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }                
-
-        if (!this.restaurant.ownername.length) {
-            this.formErrorOwnerName = true;
-            error = true;
-        } else {
-            this.formErrorOwnerName = false;
-        }
-
-        if (!this.restaurant.phone.length) {
-            this.formErrorPhone = true;
-            error = true;
-        } else {
-            this.formErrorPhone = false;
-        }
-
-        if (!this.restaurant.address.length) {
-            this.formErrorAddress = true;
-            error = true;
-        } else {
-            this.formErrorAddress = false;
-        }
-
-        if (!this.restaurant.inn.length) {
-            this.formErrorInn = true;
-            error = true;
-        } else {
-            this.formErrorInn = false;
-        }
-
-        if (!this.restaurant.ogrn.length) {
-            this.formErrorOgrn = true;
-            error = true;
-        } else {
-            this.formErrorOgrn = false;
-        }
-
-        if (!this.restaurant.employees[0].email.length || !this.appService.validateEmail(this.restaurant.employees[0].email)) {
-            this.formErrorEmail = true;
-            error = true;
-        } else {
-            this.formErrorEmail = false;
-        }
-
-        if (!this.restaurant.employees[0].password.length) {
-            this.formErrorPassword = true;
-            error = true;
-        } else {
-            this.formErrorPassword = false;
-        }
-
-        return !error;
-    }
+    }    
 }

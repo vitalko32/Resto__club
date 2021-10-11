@@ -10,6 +10,7 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
@@ -33,7 +34,8 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,
-        private hallRepository: HallRepository,            
+        private hallRepository: HallRepository,      
+        private orderRepository: OrderRepository,      
         private authService: AuthService,         
         private router: Router,      
     ) {}
@@ -160,5 +162,11 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     public tableOnQr(t: Table): void {
         this.tableQr = t;
         this.tableQrPanelActive = true;
+    }
+
+    public tableOnHistory(t: Table): void {
+        this.orderRepository.filterHallId = this.currentHallId;
+        this.orderRepository.filterTableId = t.id;
+        this.router.navigateByUrl("/orders/all");
     }
 }

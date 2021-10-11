@@ -5,7 +5,7 @@ import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 
 @Injectable()
-export class OrderRepository extends Repository<Order> {    
+export class OrderRepository extends Repository<Order> {              
     public filterRestaurantId: number = null;    
     public filterHallId: number = null;    
     public filterTableId: number = null;    
@@ -14,6 +14,7 @@ export class OrderRepository extends Repository<Order> {
     
     constructor(protected dataService: DataService) {
         super(dataService);        
+        this.schema = "order";  
         this.chunkSortBy = "created_at";
         this.chunkSortDir = -1;
     }    
@@ -51,4 +52,20 @@ export class OrderRepository extends Repository<Order> {
     public delete(id: number): Promise<void> {
         return new Promise((resolve, reject) => this.dataService.ordersDelete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     } 
+
+    public complete(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersComplete(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.data), err => reject(err.message)));
+    }
+
+    public activate(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersActivate(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.data), err => reject(err.message)));
+    }
+
+    public loadOne(id: number): Promise<Order> {
+        return new Promise((resolve, reject) => this.dataService.ordersOne(id).subscribe(res => res.statusCode === 200 ? resolve(new Order().build(res.data)) : reject(res.error), err => reject(err.message)));
+    }    
+    
+    public update(x: Order): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersUpdate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
+    }
 }

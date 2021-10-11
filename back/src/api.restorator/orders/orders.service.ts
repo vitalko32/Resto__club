@@ -165,8 +165,7 @@ export class OrdersService extends APIService {
         try {
             const order = this.orderRepository.create(dto);            
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
-            order.sum = (subtotal / 100) * (100 - order.discount_percent);
-            order.employee_id ? order.accepted_at = new Date() : null;            
+            order.sum = (subtotal / 100) * (100 - order.discount_percent);            
             await this.orderRepository.save(order);
             return {statusCode: 200};
         } catch (err) {
@@ -236,5 +235,24 @@ export class OrdersService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }        
+    }
+
+    public async activate(id: number): Promise<IAnswer<void>> {
+        try {
+            const order = await this.orderRepository.findOne(id);
+
+            if (!order) {
+                return {statusCode: 404, error: "order not found"};
+            }
+
+            order.status = OrderStatus.Active;
+            order.completed_at = null;
+            await this.orderRepository.save(order);
+            return {statusCode: 200};
+        } catch (err) {
+            let errTxt: string = `Error in OrdersService.activate: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
     }
 }

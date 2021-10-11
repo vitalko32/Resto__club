@@ -42,18 +42,25 @@ export class OrdersController {
         return this.ordersService.one(parseInt(id));
     }  
     
-    // cancel
+    // set "cancelled" status
     @UseGuards(EmployeesGuard)
     @Post("cancel/:id")
     public cancel(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.ordersService.cancel(parseInt(id));
     }  
 
-    // complete
+    // set "completed" status
     @UseGuards(EmployeesGuard)
     @Post("complete/:id")
     public complete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.ordersService.complete(parseInt(id));
+    }  
+
+    // set "active" status
+    @UseGuards(EmployeesGuard)
+    @Post("activate/:id")
+    public activate(@Param("id") id: string): Promise<IAnswer<void>> {
+        return this.ordersService.activate(parseInt(id));
     }  
 
     // update

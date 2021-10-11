@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private router: Router,
 		private appService: AppService,		
 		private orderService: OrderService,
-		private gtService: GTService,
+		private gtService: GTService,		
 		private ngZone: NgZone,  
 	) {}
 
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 			this.initURLRoutine();		
 			this.initWords();
 			this.initServings();
-			this.initGoogleTranslate();
+			this.initGoogleTranslate();			
 		}		
 	}
 
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => this.appService.url = event.urlAfterRedirects.split("/"));
     }	
-
+	
 	private initGoogleTranslate(): void {
 		// ссылка на angular-функцию для доступа из внешнего скрипта
 		window['angularComponentReference'] = {
@@ -110,4 +110,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.gtService.originalLang = this.orderService.table.lang_slug;
 		this.gtService.prepare();
 	}
+
+	/*
+	private initYandexTranslate(): void {
+		this.ytService.originalLang = this.orderService.table.lang_slug;
+		this.ytService.init();
+	}
+	*/
 }

@@ -9,6 +9,7 @@
         <img src="/assets/images/table8.svg" *ngIf="table.seats === 7 || table.seats === 8">
         <img src="/assets/images/table10.svg" *ngIf="table.seats > 8">
     </div>
-    <div class="tt-btn delete" *ngIf="canDelete" (click)="onDelete()"><span></span></div> 
-    <div class="tt-btn qr" *ngIf="table.id" (click)="onQr()"><span></span></div>           
+    <div class="tt-btn delete" *ngIf="canDelete" (click)="onDelete()" [title]="words['common']['delete'][currentLang.slug]"><span></span></div> 
+    <div class="tt-btn qr" *ngIf="table.id" (click)="onQr()" [title]="words['common']['qr'][currentLang.slug]"><span></span></div>           
+    <div class="tt-btn history" *ngIf="table.id" (click)="onHistory()" [title]="words['common']['order-history'][currentLang.slug]"><span></span></div>           
 </div>

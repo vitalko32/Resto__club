@@ -17,6 +17,10 @@
             left: 5px; top: 5px;
             span::before {content: "\f029";}
         }
+        &.history {
+            left: 5px; bottom: 5px;
+            span::before {content: "\f1da";}
+        }
     }     
 }
 

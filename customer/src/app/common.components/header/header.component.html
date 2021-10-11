@@ -1,7 +1,7 @@
 <header [style.width]="'calc(100% - '+scrollWidth+'px)'">
     <div class="h-title">{{title}}</div>
     <div class="h-back" *ngIf="backLink" [routerLink]="backLink"><span></span></div>    
-    <div class="h-cart" [class.highlight]="cartHighlight" (click)="cartPanelActive = true">
+    <div class="h-cart notranslate" [class.highlight]="cartHighlight" (click)="cartPanelActive = true">
         <span class="hc-number">{{cartQ}}</span>
         <span class="hc-icon"></span>
     </div>

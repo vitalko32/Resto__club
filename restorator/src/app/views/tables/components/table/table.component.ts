@@ -16,6 +16,7 @@ export class TableComponent {
     @Input() canDelete: boolean = true;
     @Output() delete: EventEmitter<void> = new EventEmitter();
     @Output() qr: EventEmitter<void> = new EventEmitter();
+    @Output() history: EventEmitter<void> = new EventEmitter();
 
     constructor(
         private appService: AppService,        
@@ -31,5 +32,9 @@ export class TableComponent {
 
     public onQr(): void {
         this.qr.emit();
+    }
+
+    public onHistory(): void {
+        this.history.emit();
     }
 }

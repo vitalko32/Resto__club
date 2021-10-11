@@ -1,5 +1,5 @@
 <div class="dash" >
-    <a class="dash-btn save" [class.disabled]="!order || formLoading" (click)="update()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>
+    <a class="dash-btn save" [class.disabled]="!order || formLoading" (click)="cmdSave.next(true)"><span>{{words['common']['save'][currentLang.slug]}}</span></a>
     <a class="dash-btn back" routerLink="/orders/my"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
 </div>
 <div class="data">
@@ -10,9 +10,10 @@
             [hl]="hl"
             [sl]="sl"
             [adminMode]="false"
-            [loading]="formLoading"            
+            [loading]="formLoading"
+            [cmdSave]="cmdSave"
             (save)="update()"
-            (complete)="complete()"
+            (complete)="complete()"            
         ></the-order>
     </div>
 </div>

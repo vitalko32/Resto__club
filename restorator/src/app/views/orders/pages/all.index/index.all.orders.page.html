@@ -63,8 +63,11 @@
                     <td class="align-center">{{o.sum | number:'1.2-2'}}</td>   
                     <td class="align-center"><span [class.red]="o.status === statusCancelled" [class.green]="o.status === statusCompleted">{{getStatusName(o.status)}}</span></td>   
                     <td class="align-center nowrap">
-                        <a class="datalist-btn edit" [routerLink]="'/orders/all/edit/'+o.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
-                        <a class="datalist-btn delete" (click)="onDelete(o)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                        <a *ngIf="o.status !== statusActive" class="datalist-btn activate" (click)="olOnActivate(o)" [title]="words['common']['activate'][currentLang.slug]"><span></span></a>                    
+                        <a *ngIf="o.status === statusActive" class="datalist-btn complete" (click)="olOnComplete(o)" [title]="words['common']['complete'][currentLang.slug]"><span></span></a>                        
+                        <a *ngIf="o.status === statusActive" class="datalist-btn cancel" (click)="olOnCancel(o)" [title]="words['common']['cancel'][currentLang.slug]"><span></span></a>
+                        <a class="datalist-btn edit" [routerLink]="'/orders/all/edit/'+o.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                        
+                        <a class="datalist-btn delete" (click)="olOnDelete(o)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                     </td>
                 </tr>                  
             </ng-container>            
@@ -166,8 +169,11 @@
                     <div class="dlmi-value"><span [class.red]="o.status === statusCancelled" [class.green]="o.status === statusCompleted">{{getStatusName(o.status)}}</span></div>
                 </div>                
                 <div class="dlmi-actions">
-                    <a class="datalist-btn edit" [routerLink]="'/orders/all/edit/'+o.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
-                    <a class="datalist-btn delete" (click)="onDelete(o)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
+                    <a *ngIf="o.status !== statusActive" class="datalist-btn activate" (click)="olOnActivate(o)" [title]="words['common']['activate'][currentLang.slug]"><span></span></a>                    
+                    <a *ngIf="o.status === statusActive" class="datalist-btn complete" (click)="olOnComplete(o)" [title]="words['common']['complete'][currentLang.slug]"><span></span></a>                    
+                    <a *ngIf="o.status === statusActive" class="datalist-btn cancel" (click)="olOnCancel(o)" [title]="words['common']['cancel'][currentLang.slug]"><span></span></a>
+                    <a class="datalist-btn edit" [routerLink]="'/orders/all/edit/'+o.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                                        
+                    <a class="datalist-btn delete" (click)="olOnDelete(o)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                 </div>   
             </div>
         </ng-container>
@@ -179,4 +185,7 @@
     <pagination [allLength]="olAllLength" [length]="olLength" [current]="olCurrentPart" (currentChanged)="olCurrentPart = $event; initOrders();"></pagination>
 </div>
 
-<the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>
+<the-confirm [(active)]="olDeleteConfirmActive" [msg]="olDeleteConfirmMsg" (confirmed)="olDelete()"></the-confirm>
+<the-confirm [(active)]="olCancelConfirmActive" [msg]="olCancelConfirmMsg" (confirmed)="olCancel()"></the-confirm>
+<the-confirm [(active)]="olCompleteConfirmActive" [msg]="olCompleteConfirmMsg" (confirmed)="olComplete()"></the-confirm>
+<the-confirm [(active)]="olActivateConfirmActive" [msg]="olActivateConfirmMsg" (confirmed)="olActivate()"></the-confirm>

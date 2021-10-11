@@ -43,7 +43,7 @@
         <div class="p-quantity">
             <div class="pq-title">{{words['customer-menu']['q']}}:</div>
             <div class="pq-dash">
-                <div class="pq-number"><input-number classname="big" [min]="1" [(value)]="q"></input-number></div>    
+                <div class="pq-number notranslate"><input-number classname="big" [min]="1" [(value)]="q"></input-number></div>    
                 <div class="pq-tocart" (click)="toCart()" [class.added]="product._added"><span [innerHTML]="product._added ? words['customer-menu']['added'] : words['customer-menu']['to-cart']"></span></div>
             </div>            
         </div>        

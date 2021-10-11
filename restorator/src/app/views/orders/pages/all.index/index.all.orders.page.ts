@@ -25,9 +25,18 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     public olLoading: boolean = false;
     public olSortingVariants: any[][] = // для мобильной верстки
         [["created_at", 1], ["created_at", -1], ["sum", 1], ["sum", -1]];   
-    public deleteConfirmActive: boolean = false;
-    public deleteConfirmMsg: string = "";
-    public deleteId: number = null;
+    public olDeleteConfirmActive: boolean = false;
+    public olDeleteConfirmMsg: string = "";
+    public olDeleteId: number = null;
+    public olCancelId: number = null;
+    public olCancelConfirmActive: boolean = false; 
+    public olCancelConfirmMsg: string = "";
+    public olCompleteId: number = null;
+    public olCompleteConfirmActive: boolean = false; 
+    public olCompleteConfirmMsg: string = "";
+    public olActivateId: number = null;
+    public olActivateConfirmActive: boolean = false; 
+    public olActivateConfirmMsg: string = "";
     public statusActive: OrderStatus = OrderStatus.Active;
     public statusCompleted: OrderStatus = OrderStatus.Completed;
     public statusCancelled: OrderStatus = OrderStatus.Cancelled;
@@ -141,21 +150,75 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     }
 
     
-    public onDelete(o: Order): void {
-        this.deleteId = o.id;
-        this.deleteConfirmMsg = `${this.words['restorator-orders']['confirm-delete'][this.currentLang.slug]} ${o.id}?`;
-        this.deleteConfirmActive = true;
+    public olOnDelete(o: Order): void {
+        this.olDeleteId = o.id;
+        this.olDeleteConfirmMsg = `${this.words['restorator-orders']['confirm-delete'][this.currentLang.slug]} ${o.id}?`;
+        this.olDeleteConfirmActive = true;
     }
 
-    public async delete(): Promise<void> {
+    public async olDelete(): Promise<void> {
         try {
-            this.deleteConfirmActive = false;
+            this.olDeleteConfirmActive = false;
             this.olLoading = true;            
-            await this.orderRepository.delete(this.deleteId);
+            await this.orderRepository.delete(this.olDeleteId);
             this.initOrders();
         } catch (err) {
             this.appService.showError(err);
             this.olLoading = false;
         }
-    } 
+    }
+    
+    public olOnCancel(o: Order): void {
+        this.olCancelId = o.id;
+        this.olCancelConfirmMsg = `${this.words['restorator-orders']['confirm-cancel2'][this.currentLang.slug]} ${o.id}?`;
+        this.olCancelConfirmActive = true;
+    }
+
+    public async olCancel(): Promise<void> { 
+        try {
+            this.olCancelConfirmActive = false;   
+            this.olLoading = true;         
+            await this.orderRepository.updateParam(this.olCancelId, "status", OrderStatus.Cancelled);
+            this.initOrders();
+        } catch (err) {
+            this.appService.showError(err);
+            this.olLoading = false;
+        }        
+    }
+
+    public olOnComplete(o: Order): void {
+        this.olCompleteId = o.id;
+        this.olCompleteConfirmMsg = `${this.words['restorator-orders']['confirm-complete2'][this.currentLang.slug]} ${o.id}?`;
+        this.olCompleteConfirmActive = true;
+    }
+
+    public async olComplete(): Promise<void> { 
+        try {
+            this.olCompleteConfirmActive = false;   
+            this.olLoading = true;         
+            await this.orderRepository.complete(this.olCompleteId);
+            this.initOrders();
+        } catch (err) {
+            this.appService.showError(err);
+            this.olLoading = false;
+        }        
+    }
+
+    public olOnActivate(o: Order): void {
+        this.olActivateId = o.id;
+        this.olActivateConfirmMsg = `${this.words['restorator-orders']['confirm-activate'][this.currentLang.slug]} ${o.id}?`;
+        this.olActivateConfirmActive = true;
+    }
+
+    public async olActivate(): Promise<void> { 
+        try {
+            this.olActivateConfirmActive = false;   
+            this.olLoading = true;         
+            await this.orderRepository.activate(this.olActivateId);
+            this.initOrders();
+        } catch (err) {
+            this.appService.showError(err);
+            this.olLoading = false;
+        }        
+    }
 }

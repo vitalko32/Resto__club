@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Cat } from "src/app/model/orm/cat.model";
 import { Icon } from "src/app/model/orm/icon.model";
 import { Lang } from "src/app/model/orm/lang.model";
@@ -22,7 +22,7 @@ export class CreateCatsPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;
     public cat: Cat = null;
     public formLoading: boolean = false; 
-    public formErrorName: boolean = false;           
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false); 
 
     constructor(
         private appService: AppService,        
@@ -71,30 +71,14 @@ export class CreateCatsPage implements OnInit, OnDestroy {
     }
 
     public async create(): Promise<void> {
-        try {            
-            if (this.validate()) {
-                this.formLoading = true;                
-                await this.catRepository.create(this.cat);
-                this.formLoading = false;                
-                this.router.navigateByUrl("/kitchen/cats");                
-            }            
+        try {                        
+            this.formLoading = true;                
+            await this.catRepository.create(this.cat);
+            this.formLoading = false;                
+            this.router.navigateByUrl("/kitchen/cats");                                        
         } catch (err) {
             this.formLoading = false;
             this.appService.showError(err);
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.cat.name = this.appService.trim(this.cat.name);        
-
-        if (!this.cat.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }
-
-        return !error;
-    }
+    }    
 }

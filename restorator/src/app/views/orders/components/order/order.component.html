@@ -7,6 +7,14 @@
         <div class="de-title">{{words['restorator-orders']['created-at'][currentLang.slug]}}:</div>
         <div class="de-value">{{x.formattedCreatedAt}}</div>
     </div>
+    <div class="de-row" *ngIf="x.id && adminMode">
+        <div class="de-title">{{words['restorator-orders']['accepted-at'][currentLang.slug]}}:</div>
+        <div class="de-value">{{x.formattedAcceptedAt}}</div>
+    </div>
+    <div class="de-row" *ngIf="x.id && adminMode">
+        <div class="de-title">{{words['restorator-orders']['completed-at'][currentLang.slug]}}:</div>
+        <div class="de-value">{{x.formattedCompletedAt}}</div>
+    </div>
     <div class="de-row">
         <div class="de-title">{{words['restorator-orders']['hall'][currentLang.slug]}}: <span class="red">*</span></div>
         <div class="de-value">
@@ -29,7 +37,18 @@
             </div>
         </div>
     </div>
-    <div class="de-row" *ngIf="x.id">
+    <div class="de-row" *ngIf="adminMode">
+        <div class="de-title">{{words['restorator-orders']['employee'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-selectwrap">
+                <select name="employee_id" [(ngModel)]="x.employee_id">
+                    <option [ngValue]="null">{{words['common']['not-set'][currentLang.slug]}}</option>
+                    <option *ngFor="let e of el" [ngValue]="e.id">{{e.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="de-row" *ngIf="x.id && !adminMode">
         <div class="de-title">{{words['restorator-orders']['statuses'][currentLang.slug]}}:</div>
         <div class="de-value">
             <div class="de-statuses" *ngIf="x.need_waiter || x.need_products || x.need_invoice">
@@ -40,6 +59,18 @@
             <span *ngIf="!(x.need_waiter || x.need_products || x.need_invoice)">{{words['common']['empty'][currentLang.slug]}}</span>
         </div>
     </div>  
+    <div class="de-row" *ngIf="adminMode">
+        <div class="de-title">{{words['restorator-orders']['need-waiter'][currentLang.slug]}}:</div>
+        <div class="de-value"><checkbox-slider [(value)]="x.need_waiter"></checkbox-slider></div>
+    </div>
+    <div class="de-row" *ngIf="adminMode">
+        <div class="de-title">{{words['restorator-orders']['need-products'][currentLang.slug]}}:</div>
+        <div class="de-value"><checkbox-slider [(value)]="x.need_products"></checkbox-slider></div>
+    </div>
+    <div class="de-row" *ngIf="adminMode">
+        <div class="de-title">{{words['restorator-orders']['need-invoice'][currentLang.slug]}}:</div>
+        <div class="de-value"><checkbox-slider [(value)]="x.need_invoice"></checkbox-slider></div>
+    </div>
     <div class="de-row" *ngIf="x.id">
         <div class="de-title">{{words['restorator-orders']['customer-comment'][currentLang.slug]}}:</div>
         <div class="de-value">
@@ -87,7 +118,7 @@
     <div class="de-space"></div>        
     <div class="de-2btnswrap">
         <div><button type="submit" [disabled]="loading" class="save"><span>{{words['common']['save'][currentLang.slug]}}</span></button></div>
-        <div *ngIf="x.id && !adminMode"><button type="button" [disabled]="loading" class="complete" (click)="orderOnComplete()"><span>{{words['common']['complete'][currentLang.slug]}}</span></button></div>
+        <div *ngIf="x.id && x.status === statusActive"><button type="button" [disabled]="loading" class="complete" (click)="orderOnComplete()"><span>{{words['common']['complete'][currentLang.slug]}}</span></button></div>
     </div>
 </form> 
 

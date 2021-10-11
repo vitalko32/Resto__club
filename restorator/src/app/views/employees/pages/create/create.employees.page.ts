@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -19,12 +19,9 @@ export class CreateEmployeesPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public employee: Employee = null;
-    public formLoading: boolean = false; 
-    public formErrorEmail: boolean = false;
-    public formErrorEmailDuplication: boolean = false;    
-    public formErrorPassword: boolean = false;    
-    public formErrorName: boolean = false;       
-    public createConfirmActive: boolean = false; 
+    public formLoading: boolean = false;     
+    public formErrorEmailDuplication: boolean = false; 
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);           
 
     constructor(
         private appService: AppService,        
@@ -59,13 +56,7 @@ export class CreateEmployeesPage implements OnInit, OnDestroy {
 
     private initEmployee(): void {
         this.employee = new Employee().init(this.authService.authData.value.employee.restaurant_id);
-    }
-
-    public onCreate(): void {
-        if (this.validate()) {
-            this.createConfirmActive = true;
-        }
-    }
+    }    
 
     public async create(): Promise<void> {
         try {            
@@ -86,35 +77,5 @@ export class CreateEmployeesPage implements OnInit, OnDestroy {
             this.formLoading = false;
             this.appService.showError(err);
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.employee.email = this.appService.trim(this.employee.email);        
-        this.employee.password = this.appService.trim(this.employee.password);        
-        this.employee.name = this.appService.trim(this.employee.name);    
-        
-        if (!this.employee.email.length || !this.appService.validateEmail(this.employee.email)) {
-            this.formErrorEmail = true;
-            error = true;
-        } else {
-            this.formErrorEmail = false;
-        }
-
-        if (!this.employee.password.length) {
-            this.formErrorPassword = true;
-            error = true;
-        } else {
-            this.formErrorPassword = false;
-        }
-
-        if (!this.employee.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }
-
-        return !error;
-    }
+    }    
 }

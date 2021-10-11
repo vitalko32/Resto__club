@@ -9,29 +9,31 @@ import { IServing } from "src/app/model/orm/serving.interface";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
+import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
-import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { ServingRepository } from "src/app/services/repositories/serving.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "create-my-orders-page",
-    templateUrl: "create.my.orders.page.html",
+    selector: "edit-all-orders-page",
+    templateUrl: "edit.all.orders.page.html",
     styleUrls: ["../../../../common.styles/data.scss"],
     encapsulation: ViewEncapsulation.None,
 })
-export class CreateMyOrdersPage implements OnInit, OnDestroy {    
+export class EditAllOrdersPage implements OnInit, OnDestroy {        
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;  
     public formLoading: boolean = false;
-    public order: Order = null;    
+    public order: Order = null;     
     public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);       
     
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
-        private orderRepository: OrderMyRepository,
+        private orderRepository: OrderRepository,
         private hallRepository: HallRepository,  
+        private employeeRepository: EmployeeRepository,
         private servingRepository: ServingRepository,     
         private authService: AuthService,         
         private router: Router,    
@@ -40,10 +42,9 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get employee(): Employee {return this.authService.authData.value.employee;} 
-    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}  
     get hl(): Hall[] {return this.hallRepository.xlAll;} 
     get sl(): IServing[] {return this.servingRepository.xlAll;} 
+    get el(): Employee[] {return this.employeeRepository.xlAll;} 
     
     public ngOnInit(): void {        
         this.initAuthCheck();     
@@ -51,6 +52,7 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         this.initOrder();     
         this.initHalls(); 
         this.initServings();
+        this.initEmployees();
     }  
     
     public ngOnDestroy(): void {
@@ -59,16 +61,20 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
     }
 
     private initAuthCheck(): void {
-        this.authSubscription = this.authService.authData.subscribe(ad => ad.employee.restaurant.money < 0 ? this.router.navigateByUrl("/") : null);
+        this.authSubscription = this.authService.authData.subscribe(ad => !ad.employee.is_admin ? this.router.navigateByUrl("/") : null);
     }
 
     private initTitle(): void {
-        this.appService.setTitle(this.words["restorator-orders"]["title-my-create"][this.currentLang.slug]);
-        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-my-create"][lang.slug]));           
+        this.appService.setTitle(this.words["restorator-orders"]["title-all-edit"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-all-edit"][lang.slug]));           
     } 
 
-    private initOrder(): void {
-        this.order = new Order().init(this.employee.restaurant_id, this.employee.id);
+    private async initOrder(): Promise<void> {
+        try {
+            this.order = await this.orderRepository.loadOne(parseInt(this.route.snapshot.params["id"]));
+        } catch (err) {
+            this.appService.showError(err);
+        }
     }   
 
     private initHalls(): void {
@@ -86,17 +92,38 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
-    }    
+    }
+
+    public initEmployees(): void {
+        try {
+            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
+            this.employeeRepository.loadAll();     
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
     
-    public async create(): Promise<void> {
+    public async complete(): Promise<void> {        
         try {
             this.formLoading = true;
-            await this.orderRepository.create(this.order);
+            await this.orderRepository.complete(this.order.id);
             this.formLoading = false;
-            this.router.navigateByUrl("/orders/my");
+            this.router.navigateByUrl("/orders/all");
         } catch (err) {
             this.appService.showError(err);
             this.formLoading = false;
-        }
+        }        
     }
+    
+    public async update(): Promise<void> {        
+        try {
+            this.formLoading = true;
+            await this.orderRepository.update(this.order);
+            this.formLoading = false;
+            this.router.navigateByUrl("/orders/all");
+        } catch (err) {
+            this.appService.showError(err);
+            this.formLoading = false;
+        }        
+    }    
 }

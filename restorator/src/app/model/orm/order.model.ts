@@ -38,6 +38,8 @@ export class Order extends Model {
     public employee?: Employee;
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())} ${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()}` : "";}
+    get formattedAcceptedAt(): string {return this.accepted_at ? `${this.twoDigits(this.accepted_at.getHours())}:${this.twoDigits(this.accepted_at.getMinutes())} ${this.twoDigits(this.accepted_at.getDate())}.${this.twoDigits(this.accepted_at.getMonth()+1)}.${this.accepted_at.getFullYear()}` : "";}
+    get formattedCompletedAt(): string {return this.completed_at ? `${this.twoDigits(this.completed_at.getHours())}:${this.twoDigits(this.completed_at.getMinutes())} ${this.twoDigits(this.completed_at.getDate())}.${this.twoDigits(this.completed_at.getMonth()+1)}.${this.completed_at.getFullYear()}` : "";}
     get q(): number {return this.products.length ? this.products.map(p => p.q).reduce((acc, x) => acc + x) : 0;}
     get subtotal(): number {return this.products.length ? this.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;}
     get total(): number {return (this.subtotal / 100) * (100 - this.discount_percent);}

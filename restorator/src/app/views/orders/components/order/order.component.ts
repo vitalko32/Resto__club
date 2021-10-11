@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
-import { Order, Paymethod } from "src/app/model/orm/order.model";
+import { Order, OrderStatus, Paymethod } from "src/app/model/orm/order.model";
 import { IOrderProduct } from "src/app/model/orm/order.product.interface";
 import { IServing } from "src/app/model/orm/serving.interface";
 import { Table } from "src/app/model/orm/table.model";
@@ -15,14 +16,18 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     selector: "the-order",
     templateUrl: "order.component.html",    
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit, OnDestroy {
     @Input() x: Order;    
     @Input() hl: Hall[] = [];
     @Input() sl: IServing[] = [];
+    @Input() el: Employee[] = [];
     @Input() adminMode: boolean = true; // режим для администратора
-    @Input() loading: boolean = false;        
+    @Input() loading: boolean = false;     
+    @Input() cmdSave: BehaviorSubject<boolean> = null;
     @Output() save: EventEmitter<void> = new EventEmitter();  
     @Output() complete: EventEmitter<void> = new EventEmitter();  
+    
+    private cmdSaveSubscription: Subscription = null;
     public payCash: Paymethod = Paymethod.Cash;
     public payCard: Paymethod = Paymethod.Card;
     public productToDelete: IOrderProduct = null;
@@ -33,6 +38,7 @@ export class OrderComponent {
     public orderErrorHall: boolean = false;
     public orderErrorTable: boolean = false; 
     public orderSaveConfirmActive: boolean = false;   
+    public statusActive: OrderStatus = OrderStatus.Active;
 
     constructor(
         private appService: AppService,
@@ -45,6 +51,14 @@ export class OrderComponent {
     get tl(): Table[] {return this.hl.find(h => h.id === this.x.hall_id)?.tables || [];}    
     get employee(): Employee {return this.authService.authData.value.employee;}
     get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}     
+
+    public ngOnInit(): void {
+        this.cmdSaveSubscription = this.cmdSave?.subscribe(cmd => cmd ? this.orderOnSave() : null);
+    }
+
+    public ngOnDestroy(): void {
+        this.cmdSaveSubscription?.unsubscribe();
+    }
     
     public productOnDelete(p: IOrderProduct): void {
         this.productToDelete = p;

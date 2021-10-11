@@ -1,5 +1,5 @@
 <div class="dash">
-    <a class="dash-btn save" [class.disabled]="!cat || formLoading" (click)="update()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>    
+    <a class="dash-btn save" [class.disabled]="!cat || formLoading" (click)="cmdSave.next(true)"><span>{{words['common']['save'][currentLang.slug]}}</span></a>    
     <a class="dash-btn back" routerLink="/kitchen/cats"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
 </div>
 <div class="data">
@@ -9,7 +9,7 @@
             [x]="cat"
             [il]="il"
             [loading]="formLoading"
-            [errorName]="formErrorName"                        
+            [cmdSave]="cmdSave"     
             (save)="update();"
         ></the-cat>
     </div>

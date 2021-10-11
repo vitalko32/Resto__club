@@ -51,3 +51,5 @@
         </div>                
     </div>
 </form> 
+
+<confirm-passworded [(active)]="saveConfirmActive" [msg]="words['common']['save'][currentLang.slug] + '?'" (confirmed)="doSave()"></confirm-passworded>

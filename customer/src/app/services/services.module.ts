@@ -16,7 +16,7 @@ import { WordRepository } from './repositories/word.repository';
         AppService,
         DataService,      
         OrderService,      
-        GTService,    
+        GTService,            
         WordRepository,        
         CatRepository,
         ProductRepository,

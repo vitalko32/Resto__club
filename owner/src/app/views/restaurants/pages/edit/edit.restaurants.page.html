@@ -1,5 +1,5 @@
 <div class="dash">
-    <a class="dash-btn save" [class.disabled]="!restaurant || formLoading" (click)="update()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>      
+    <a class="dash-btn save" [class.disabled]="!restaurant || formLoading" (click)="cmdSave.next(true)"><span>{{words['common']['save'][currentLang.slug]}}</span></a>      
     <a class="dash-btn back" [routerLink]="'/restaurants/'+type"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
 </div>
 <div class="data">
@@ -10,12 +10,7 @@
             [cl]="cl"
             [ll]="ll"
             [loading]="formLoading"
-            [errorName]="formErrorName"
-            [errorOwnerName]="formErrorOwnerName"
-            [errorPhone]="formErrorPhone"
-            [errorAddress]="formErrorAddress"
-            [errorInn]="formErrorInn"
-            [errorOgrn]="formErrorOgrn" 
+            [cmdSave]="cmdSave"
             mode="edit"
             (save)="update();"
         ></the-restaurant>

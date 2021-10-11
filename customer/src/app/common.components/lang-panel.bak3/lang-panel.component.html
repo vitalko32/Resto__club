@@ -1,0 +1,6 @@
+<div class="lang-panel" [class.active]="active" *ngIf="ytCurrentLang">    
+    <div class="lp-lang"><img [class.active]="ytCurrentLang === 'ru'" src="/assets/images/langs/ru.gif" (click)="ytTranslate('ru')"></div>
+    <div class="lp-lang"><img [class.active]="ytCurrentLang === 'en'" src="/assets/images/langs/en.gif" (click)="ytTranslate('en')"></div>
+    <div class="lp-lang"><img [class.active]="ytCurrentLang === 'de'" src="/assets/images/langs/de.gif" (click)="ytTranslate('de')"></div>    
+    <div class="lp-handle" (click)="active = !active"><span></span></div>    
+</div>

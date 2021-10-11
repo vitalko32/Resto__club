@@ -70,10 +70,13 @@
         height: 40px; width: 40px; line-height: 40px; text-align: center; border-radius: 20px; background: var(--color-bg); box-shadow: var(--block-shadow); cursor: pointer; display: inline-block; margin: 0 5px; color: var(--color-txt); text-decoration: none;
         span::before {font-size: 20px;}
         &.delete {font-family: "fa-solid"; span::before {content: "\f00d"; color: var(--color-red);}}
+        &.cancel {font-family: "fa-solid"; span::before {content: "\f05e"; color: var(--color-red);}}
         &.edit {font-family: "fa-solid"; span::before {content: "\f06e";}}
+        &.complete {font-family: "fa-solid"; span::before {content: "\f00c";}}
         &.recharge {font-family: "fa-regular"; span::before {content: "\f873";}}
         &.transactions {font-family: "fa-regular"; span::before {content: "\f688";}}
         &.history {font-family: "fa-solid"; span::before {content: "\f1da";}}        
+        &.activate {font-family: "fa-solid"; span::before {content: "\f0e2";}}        
         &.disabled {opacity: 0.2; pointer-events: none;}
     }        
     .datalist-iconable {

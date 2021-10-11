@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Product } from "src/app/model/orm/product.model";
-import { Icon } from "src/app/model/orm/icon.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { ProductRepository } from "src/app/services/repositories/product.repository";
-import { IconRepository } from "src/app/services/repositories/icon.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
@@ -22,7 +20,7 @@ export class CreateProductsPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;
     public product: Product = null;
     public formLoading: boolean = false; 
-    public formErrorName: boolean = false;           
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);  
 
     constructor(
         private appService: AppService,        
@@ -67,30 +65,14 @@ export class CreateProductsPage implements OnInit, OnDestroy {
     }    
 
     public async create(): Promise<void> {
-        try {            
-            if (this.validate()) {
-                this.formLoading = true;            
-                await this.productRepository.create(this.product);
-                this.formLoading = false;            
-                this.router.navigateByUrl("/kitchen/products");
-            }            
+        try {                     
+            this.formLoading = true;            
+            await this.productRepository.create(this.product);
+            this.formLoading = false;            
+            this.router.navigateByUrl("/kitchen/products");            
         } catch (err) {
             this.formLoading = false;
             this.appService.showError(err);
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.product.name = this.appService.trim(this.product.name);            
-        
-        if (!this.product.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }
-
-        return !error;
-    }
+    }    
 }

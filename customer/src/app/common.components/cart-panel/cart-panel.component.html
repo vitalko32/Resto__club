@@ -14,7 +14,7 @@
                         </div>
                         <div class="cpr-right">
                             <div class="cpr-name" [innerHTML]="r.product.name"></div>
-                            <div class="cpr-calc">
+                            <div class="cpr-calc notranslate">
                                 <input-number [min]="0" [(value)]="r.q" (valueChange)="onQuantityChanged(r)"></input-number>
                                 <span>&nbsp;x&nbsp;{{r.product.price | number:'1.2-2'}}&nbsp;{{table.currency_symbol}}</span>
                             </div>

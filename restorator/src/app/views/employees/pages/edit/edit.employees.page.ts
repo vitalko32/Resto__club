@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -19,11 +19,9 @@ export class EditEmployeesPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public employee: Employee = null;
-    public formLoading: boolean = false; 
-    public formErrorEmail: boolean = false;
-    public formErrorEmailDuplication: boolean = false;        
-    public formErrorName: boolean = false;       
-    public updateConfirmActive: boolean = false; 
+    public formLoading: boolean = false;     
+    public formErrorEmailDuplication: boolean = false;   
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);                  
 
     constructor(
         private appService: AppService,        
@@ -63,13 +61,7 @@ export class EditEmployeesPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }        
-    }
-
-    public onUpdate(): void {
-        if (this.validate()) {
-            this.updateConfirmActive = true;
-        }
-    }
+    }    
 
     public async update(): Promise<void> {
         try {            
@@ -90,28 +82,5 @@ export class EditEmployeesPage implements OnInit, OnDestroy {
             this.formLoading = false;
             this.appService.showError(err);
         }
-    }
-
-    private validate(): boolean {
-        let error = false;
-        this.employee.email = this.appService.trim(this.employee.email);        
-        this.employee.password = this.appService.trim(this.employee.password);        
-        this.employee.name = this.appService.trim(this.employee.name);    
-        
-        if (!this.employee.email.length || !this.appService.validateEmail(this.employee.email)) {
-            this.formErrorEmail = true;
-            error = true;
-        } else {
-            this.formErrorEmail = false;
-        }        
-
-        if (!this.employee.name.length) {
-            this.formErrorName = true;
-            error = true;
-        } else {
-            this.formErrorName = false;
-        }
-
-        return !error;
-    }
+    }    
 }

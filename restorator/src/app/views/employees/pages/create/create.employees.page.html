@@ -1,20 +1,17 @@
 <div class="dash">
-    <a class="dash-btn save" [class.disabled]="formLoading" (click)="onCreate()"><span>{{words['common']['save'][currentLang.slug]}}</span></a>    
+    <a class="dash-btn save" [class.disabled]="formLoading" (click)="cmdSave.next(true)"><span>{{words['common']['save'][currentLang.slug]}}</span></a>    
     <a class="dash-btn back" routerLink="/employees"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
 </div>
 <div class="data">
     <div class="dataedit"> 
         <the-employee
             [x]="employee"
-            [loading]="formLoading"
-            [errorEmail]="formErrorEmail"
+            [loading]="formLoading"            
             [errorEmailDuplication]="formErrorEmailDuplication"
-            [errorPassword]="formErrorPassword"            
-            [errorName]="formErrorName"            
+            [cmdSave]="cmdSave"
             mode="create"
-            (save)="onCreate();"
+            (save)="create();"
         ></the-employee>
     </div>
 </div>
 
-<confirm-passworded [(active)]="createConfirmActive" [msg]="words['common']['save'][currentLang.slug] + '?'" (confirmed)="create()"></confirm-passworded>

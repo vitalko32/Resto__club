@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
+import { BehaviorSubject, Subscription } from "rxjs";
 import * as Sortable from "sortablejs";
 import { SortableOptions } from "sortablejs";
 import { IAnswer } from "src/app/model/dto/answer.interface";
@@ -20,11 +21,14 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "product.component.html",
     styleUrls: ["product.component.scss"],
 })
-export class ProductComponent {
+export class ProductComponent implements OnInit, OnDestroy {
     @Input() x: Product;        
     @Input() loading: boolean = false;    
-    @Input() errorName: boolean = false;    
+    @Input() cmdSave: BehaviorSubject<boolean> = null;
     @Output() save: EventEmitter<void> = new EventEmitter();        
+
+    private cmdSaveSubscription: Subscription = null;
+    public errorName: boolean = false;    
     
     constructor(
         protected appService: AppService,
@@ -33,10 +37,34 @@ export class ProductComponent {
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}            
+    get currentLang(): Lang {return this.appService.currentLang.value;}        
+    
+    public ngOnInit(): void {
+        this.cmdSaveSubscription = this.cmdSave?.subscribe(cmd => cmd ? this.onSave() : null);
+    }
+
+    public ngOnDestroy(): void {
+        this.cmdSaveSubscription?.unsubscribe();
+    }
 
     public onSave(): void {
-        this.save.emit();
+        if (this.validate()) {
+            this.save.emit();
+        }        
+    }
+
+    private validate(): boolean {
+        let error = false;
+        this.x.name = this.appService.trim(this.x.name);            
+        
+        if (!this.x.name.length) {
+            this.errorName = true;
+            error = true;
+        } else {
+            this.errorName = false;
+        }
+
+        return !error;
     }
 
     // images

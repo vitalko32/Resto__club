@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
@@ -24,7 +24,8 @@ export class EditMyOrdersPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;  
     public formLoading: boolean = false;
-    public order: Order = null;           
+    public order: Order = null;  
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);
     
     constructor(
         private appService: AppService,        
@@ -39,8 +40,6 @@ export class EditMyOrdersPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get employee(): Employee {return this.authService.authData.value.employee;} 
-    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}  
     get hl(): Hall[] {return this.hallRepository.xlAll;} 
     get sl(): IServing[] {return this.servingRepository.xlAll;} 
     
