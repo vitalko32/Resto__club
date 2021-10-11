@@ -1,1 +1,1 @@
-export const maxConnections = 2;
+export const maxConnections = 1000;

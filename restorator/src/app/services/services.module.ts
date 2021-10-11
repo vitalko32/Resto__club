@@ -21,6 +21,8 @@ import { ProductRepository } from './repositories/product.repository';
 import { ServingRepository } from './repositories/serving.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
+import { WSServerRepository } from './repositories/wsserver.repository';
+import { SocketService } from './socket.service';
 
 @NgModule({
     imports: [],
@@ -36,6 +38,7 @@ import { WordRepository } from './repositories/word.repository';
         GoogleService,
         AuthService,       
         FilesService, 
+        SocketService,
         LangRepository,
         WordRepository,
         SettingRepository,     
@@ -48,7 +51,8 @@ import { WordRepository } from './repositories/word.repository';
         OrderNewRepository,
         OrderMyRepository,
         OrderRepository,
-        ServingRepository,        
+        ServingRepository,    
+        WSServerRepository,    
     ],
 })
 export class ServicesModule {}

@@ -6,6 +6,8 @@ import { AuthService } from './services/auth.service';
 import { LangRepository } from './services/repositories/lang.repository';
 import { SettingRepository } from './services/repositories/setting.repository';
 import { WordRepository } from './services/repositories/word.repository';
+import { WSServerRepository } from './services/repositories/wsserver.repository';
+import { SocketService } from './services/socket.service';
 
 @Component({
 	selector: 'app-root',
@@ -22,9 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private langRepository: LangRepository,	
 		private wordRepository: WordRepository,
 		private settingRepository: SettingRepository,
+		private wsserverRepository: WSServerRepository,
 		private router: Router,
 		private appService: AppService,		
 		private authService: AuthService,
+		private socketService: SocketService,
 	) {}
 
 	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	
@@ -34,7 +38,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.initLangs();
 		this.initWords();
 		this.initSettings();
-		this.initURLRoutine();				
+		this.initURLRoutine();
+		this.initSocket();				
 	}
 
 	public ngAfterViewInit(): void {
@@ -82,5 +87,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 	private async initTheme(): Promise<void> {
 		await this.appService.pause(1);
 		document.documentElement.classList.add("modern");
+	}
+
+	private async initSocket(): Promise<void> {
+		try {
+			await this.wsserverRepository.loadAll();
+			this.socketService.servers = this.wsserverRepository.xlAll;
+			this.socketService.connect();			
+		} catch (err) {
+			this.appService.showError(err);		
+		}
 	}
 }
