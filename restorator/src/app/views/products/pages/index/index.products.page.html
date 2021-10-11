@@ -24,7 +24,7 @@
                     <div class="pi-handle" *ngIf="!plFilterNameCode"><span></span></div>
                 </div>
                 <div class="pi-name" [innerHTML]="p.name"></div>
-                <div class="pi-code">{{words['restorator-products']['code'][currentLang.slug]}}: {{p.code}}</div>
+                <div class="pi-code"><span *ngIf="p.code">{{words['restorator-products']['code'][currentLang.slug]}}: {{p.code}}</span></div>
                 <div class="pi-params">
                     <div>
                         <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>

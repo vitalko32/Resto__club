@@ -1,0 +1,114 @@
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { BehaviorSubject, Subscription } from "rxjs";
+import { Employee } from "src/app/model/orm/employee.model";
+import { Hall } from "src/app/model/orm/hall.model";
+import { Lang } from "src/app/model/orm/lang.model";
+import { Order } from "src/app/model/orm/order.model";
+import { IServing } from "src/app/model/orm/serving.interface";
+import { Words } from "src/app/model/orm/words.type";
+import { AppService } from "src/app/services/app.service";
+import { AuthService } from "src/app/services/auth.service";
+import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
+import { HallRepository } from "src/app/services/repositories/hall.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
+import { ServingRepository } from "src/app/services/repositories/serving.repository";
+import { WordRepository } from "src/app/services/repositories/word.repository";
+
+@Component({
+    selector: "create-all-orders-page",
+    templateUrl: "create.all.orders.page.html",
+    styleUrls: ["../../../../common.styles/data.scss"],
+    encapsulation: ViewEncapsulation.None,
+})
+export class CreateAllOrdersPage implements OnInit, OnDestroy {        
+    public langSubscription: Subscription = null;
+    public authSubscription: Subscription = null;  
+    public formLoading: boolean = false;
+    public order: Order = null;     
+    public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);       
+    
+    constructor(
+        private appService: AppService,        
+        private wordRepository: WordRepository,           
+        private orderRepository: OrderRepository,
+        private hallRepository: HallRepository,  
+        private employeeRepository: EmployeeRepository,
+        private servingRepository: ServingRepository,     
+        private authService: AuthService,         
+        private router: Router,    
+        private route: ActivatedRoute,  
+    ) {}    
+
+    get words(): Words {return this.wordRepository.words;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}
+    get employee(): Employee {return this.authService.authData.value.employee;} 
+    get hl(): Hall[] {return this.hallRepository.xlAll;} 
+    get sl(): IServing[] {return this.servingRepository.xlAll;} 
+    get el(): Employee[] {return this.employeeRepository.xlAll;} 
+    
+    public ngOnInit(): void {        
+        this.initAuthCheck();     
+        this.initTitle();          
+        this.initOrder();     
+        this.initHalls(); 
+        this.initServings();
+        this.initEmployees();
+    }  
+    
+    public ngOnDestroy(): void {
+        this.langSubscription.unsubscribe();
+        this.authSubscription.unsubscribe();
+    }
+
+    private initAuthCheck(): void {
+        this.authSubscription = this.authService.authData.subscribe(ad => !ad.employee.is_admin ? this.router.navigateByUrl("/") : null);
+    }
+
+    private initTitle(): void {
+        this.appService.setTitle(this.words["restorator-orders"]["title-all-create"][this.currentLang.slug]);
+        this.langSubscription = this.appService.currentLang.subscribe(lang => this.appService.setTitle(this.words["restorator-orders"]["title-all-create"][lang.slug]));           
+    } 
+
+    private initOrder(): void {
+        this.order = new Order().init(this.employee.restaurant_id, null);
+    }   
+
+    private initHalls(): void {
+        try {
+            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
+            this.hallRepository.loadAll();             
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+
+    private initServings(): void {
+        try {            
+            this.servingRepository.loadAll();
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+
+    public initEmployees(): void {
+        try {
+            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
+            this.employeeRepository.loadAll();     
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+    
+    public async create(): Promise<void> {
+        try {
+            this.formLoading = true;
+            await this.orderRepository.create(this.order);
+            this.formLoading = false;
+            this.router.navigateByUrl("/orders/all");
+        } catch (err) {
+            this.appService.showError(err);
+            this.formLoading = false;
+        }
+    }        
+}
