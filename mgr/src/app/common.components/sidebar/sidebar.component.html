@@ -47,6 +47,7 @@
                 <div class="nav-item" [class.active]="currentUrl.parts[0] === 'utils'"><a (click)="toggleSub(2);"><span class="nav-utils">{{currentLang.phrases['sidebar-module-utils']}}</span></a></div>
                 <div class="nav-sub" [class.active]="subActive[2]">
                     <div class="nav-item" [class.active]="currentUrl.parts[1] === 'mailtemplates'"><a routerLink="/utils/mailtemplates"><span>{{currentLang.phrases['sidebar-submodule-mailtemplates']}}</span></a></div>                    
+                    <div class="nav-item" [class.active]="currentUrl.parts[1] === 'wsservers'"><a routerLink="/utils/wsservers"><span>{{currentLang.phrases['sidebar-submodule-wsservers']}}</span></a></div>                    
                 </div>
             </nav>
         </div>	

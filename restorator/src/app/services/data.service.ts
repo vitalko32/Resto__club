@@ -27,6 +27,7 @@ import { Order } from "../model/orm/order.model";
 import { IOrderAccept } from "../model/dto/order.accept.interface";
 import { IServing } from "../model/orm/serving.interface";
 import { Table } from "../model/orm/table.model";
+import { IWSServer } from "../model/orm/wsserver.interface";
 
 @Injectable()
 export class DataService {
@@ -99,6 +100,8 @@ export class DataService {
     public ordersDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/delete/${id}`, null, true);} 
 
     public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}    
+
+    public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

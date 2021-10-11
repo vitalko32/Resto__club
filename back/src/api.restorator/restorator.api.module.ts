@@ -13,6 +13,7 @@ import { QRModule } from "./qr/qr.module";
 import { ServingsModule } from "./servings/servings.module";
 import { SettingsModule } from "./settings/settings.module";
 import { WordsModule } from "./words/words.module";
+import { WSServersModule } from "./wsservers/wsservers.module";
 
 @Module({
     imports: [               
@@ -27,6 +28,7 @@ import { WordsModule } from "./words/words.module";
         ProductsModule,
         OrdersModule,
         ServingsModule,        
+        WSServersModule,
         QRModule,       
         ObjectsModule, 
         FilesModule,

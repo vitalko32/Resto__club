@@ -27,6 +27,7 @@ import { FilesService } from './files.service';
 import { ServingRepository } from './repositories/serving.repository';
 import { OrderRepository } from './repositories/order.repository';
 import { EmployeeRepository2 } from './repositories/employee.repository2';
+import { WSServerRepository } from './repositories/wsserver.repository';
 
 @NgModule({
     declarations: [],
@@ -59,6 +60,7 @@ import { EmployeeRepository2 } from './repositories/employee.repository2';
 		ProductRepository,
 		ServingRepository,
 		OrderRepository,
+		WSServerRepository,
 	],
 })
 export class ServicesModule { }

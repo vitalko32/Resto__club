@@ -30,6 +30,7 @@
             "sidebar-submodule-orders": "Заказы", 
             "sidebar-module-utils": "Служебные",    
             "sidebar-submodule-mailtemplates": "Шаблоны писем",                                                                                      
+            "sidebar-submodule-wsservers": "Сокет-серверы",                                                                                      
             
             "workspace-create": "Создать",
             "workspace-deleteselected": "Удалить выбранное",
@@ -230,7 +231,11 @@
             "workspace-mailtemplates-h1": "Шаблоны писем",     
             "workspace-mailtemplates-name": "Название",     
             "workspace-mailtemplates-subject": "Тема",     
-            "workspace-mailtemplates-content": "Содержание"            
+            "workspace-mailtemplates-content": "Содержание",
+            
+            "workspace-wsservers-h1": "Сокет-серверы", 
+            "workspace-wsservers-url": "URL", 
+            "workspace-wsservers-pos": "Позиция"
         }
     },
     {
@@ -264,6 +269,7 @@
             "sidebar-submodule-orders": "Orders", 
             "sidebar-module-utils": "Utilities",    
             "sidebar-submodule-mailtemplates": "Mail templates",   
+            "sidebar-submodule-wsservers": "Socket servers",   
 
             "workspace-create": "Create",
             "workspace-deleteselected": "Delete selected",
@@ -464,7 +470,11 @@
             "workspace-mailtemplates-h1": "Mail templates",     
             "workspace-mailtemplates-name": "Name",     
             "workspace-mailtemplates-subject": "Subject",     
-            "workspace-mailtemplates-content": "Content"            
+            "workspace-mailtemplates-content": "Content",
+            
+            "workspace-wsservers-h1": "Socket servers", 
+            "workspace-wsservers-url": "URL", 
+            "workspace-wsservers-pos": "Position"
         }
     }       
 ]

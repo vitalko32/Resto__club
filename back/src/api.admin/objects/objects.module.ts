@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
-
 import { ObjectsController } from "./objects.controller";
 import { ObjectsService } from "./objects.service";
 import { jwtConstants } from "../../common/auth.constants";
@@ -22,6 +21,7 @@ import { Cat } from "src/model/orm/cat.entity";
 import { Product } from "src/model/orm/product.entity";
 import { Serving } from "src/model/orm/serving.entity";
 import { ServingTranslation } from "src/model/orm/serving.translation.entity";
+import { WSServer } from "src/model/orm/wsserver.entity";
 
 @Module({
 	controllers: [ObjectsController],
@@ -46,6 +46,7 @@ import { ServingTranslation } from "src/model/orm/serving.translation.entity";
 			Product,
 			Serving,
 			ServingTranslation,
+			WSServer,
 		]),
 	],
 })

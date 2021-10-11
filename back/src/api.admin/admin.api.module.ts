@@ -19,6 +19,7 @@ import { CatsModule } from "./cats/cats.module";
 import { ProductsModule } from "./products/products.module";
 import { ServingsModule } from "./servings/servings.module";
 import { OrdersModule } from "./orders/orders.module";
+import { WSServersModule } from "./wsservers/wsservers.module";
 
 @Module({
     imports: [        
@@ -41,6 +42,7 @@ import { OrdersModule } from "./orders/orders.module";
         ProductsModule,
         ServingsModule,
         OrdersModule,
+        WSServersModule,
     ],
     providers: [],
 })

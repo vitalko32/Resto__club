@@ -27,6 +27,7 @@ import { Cat } from "../model/orm/cat.model";
 import { Product } from "../model/orm/product.model";
 import { Serving } from "../model/orm/serving.model";
 import { Order } from "../model/orm/order.model";
+import { WSServer } from "../model/orm/wsserver.model";
 
 @Injectable()
 export class DataService {
@@ -164,6 +165,14 @@ export class DataService {
     public mailtemplatesDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("mailtemplates/delete-bulk", ids, true);}
     public mailtemplatesCreate(x: Mailtemplate): Observable<IAnswer<void>> {return this.sendRequest("mailtemplates/create", x, true);}
     public mailtemplatesUpdate(x: Mailtemplate): Observable<IAnswer<void>> {return this.sendRequest("mailtemplates/update", x, true);}     
+
+    public wsserversAll(dto: IGetAll): Observable<IAnswer<WSServer[]>> {return this.sendRequest(`wsservers/all`, dto, true);}    
+    public wsserversChunk(dto: IGetChunk): Observable<IAnswer<WSServer[]>> {return this.sendRequest("wsservers/chunk", dto, true);}
+    public wsserversOne(id: number): Observable<IAnswer<WSServer>> {return this.sendRequest(`wsservers/one/${id}`, null, true);}
+    public wsserversDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`wsservers/delete/${id}`, null, true);}
+    public wsserversDeleteBulk(ids: number[]): Observable<IAnswer<void>> {return this.sendRequest("wsservers/delete-bulk", ids, true);}
+    public wsserversCreate(x: WSServer): Observable<IAnswer<void>> {return this.sendRequest("wsservers/create", x, true);}
+    public wsserversUpdate(x: WSServer): Observable<IAnswer<void>> {return this.sendRequest("wsservers/update", x, true);}  
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = true, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

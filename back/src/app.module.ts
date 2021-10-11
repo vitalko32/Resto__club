@@ -35,6 +35,7 @@ import { Transaction } from './model/orm/transaction.entity';
 import { Word } from './model/orm/word.entity';
 import { WordTranslation } from './model/orm/word.translation.entity';
 import { Wordbook } from './model/orm/wordbook.entity';
+import { WSServer } from './model/orm/wsserver.entity';
 import { db_login, db_name, db_password, db_port, db_schema } from './options';
 
 @Module({
@@ -76,7 +77,8 @@ import { db_login, db_name, db_password, db_port, db_schema } from './options';
 				ServingTranslation,	
 				Order,			
 				OrderProduct,
-				OrderProductIngredient,
+				OrderProductIngredient,	
+				WSServer,			
 			],
 			synchronize: true,
 		}),

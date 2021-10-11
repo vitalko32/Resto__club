@@ -22,6 +22,7 @@ import { IUpdateParam } from "src/model/dto/updateparam.interface";
 import { Product } from "src/model/orm/product.entity";
 import { Serving } from "src/model/orm/serving.entity";
 import { ServingTranslation } from "src/model/orm/serving.translation.entity";
+import { WSServer } from "src/model/orm/wsserver.entity";
 
 @Injectable()
 export class ObjectsService extends APIService {
@@ -43,6 +44,7 @@ export class ObjectsService extends APIService {
         @InjectRepository(Product) private productRepository: Repository<Product>,     
         @InjectRepository(Serving) private servingRepository: Repository<Serving>,        
         @InjectRepository(ServingTranslation) private servingTranslationRepository: Repository<ServingTranslation>,          
+        @InjectRepository(WSServer) private wsserverRepository: Repository<WSServer>,          
     ) {
         super();
     }

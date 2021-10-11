@@ -20,6 +20,7 @@ import { CatsModule } from './views/cats/cats.module';
 import { ProductsModule } from './views/products/products.module';
 import { ServingsModule } from './views/servings/servings.module';
 import { OrdersModule } from './views/orders/orders.module';
+import { WSServersModule } from './views/wsservers/wsservers.module';
 
 const routes: Routes = [
 	{path: "", redirectTo: "/settings", pathMatch: "full"},
@@ -41,6 +42,7 @@ const routes: Routes = [
 	{path: "restaurants/servings", loadChildren: () => ServingsModule, canActivate: [AuthGuard]}, 				
 	{path: "restaurants/orders", loadChildren: () => OrdersModule, canActivate: [AuthGuard]}, 				
 	{path: "utils/mailtemplates", loadChildren: () => MailtemplatesModule, canActivate: [AuthGuard]}, 		
+	{path: "utils/wsservers", loadChildren: () => WSServersModule, canActivate: [AuthGuard]}, 		
 	{path: "**", redirectTo: "/settings"},
 ];
 
