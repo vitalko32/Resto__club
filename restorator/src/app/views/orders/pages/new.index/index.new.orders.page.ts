@@ -9,6 +9,7 @@ import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { OrderNewRepository } from "src/app/services/repositories/order.new.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "index-new-orders-page",
@@ -16,20 +17,22 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../styles/orders.scss"],
 })
 export class IndexNewOrdersPage implements OnInit, OnDestroy {
-    public langSubscription: Subscription = null;
-    public authSubscription: Subscription = null;    
+    private langSubscription: Subscription = null;
+    private authSubscription: Subscription = null;    
+    private socketSubscription: Subscription = null;    
     public olReady: boolean = false;
     public olOrderToCancel: Order = null;
     public olCancelConfirmActive: boolean = false;    
     public olOrderToAccept: Order = null;
     public olAcceptConfirmActive: boolean = false;
-    public olAcceptConflictAlertActive: boolean = false;    
+    public olAcceptConflictAlertActive: boolean = false;        
     
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
         private orderRepository: OrderNewRepository,
-        private authService: AuthService,         
+        private authService: AuthService,    
+        private socketService: SocketService,     
         private router: Router,      
     ) {}    
 
@@ -42,11 +45,13 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         this.initAuthCheck();     
         this.initTitle();          
         this.initOrders();      
+        this.initSocket();
     }  
     
     public ngOnDestroy(): void {
         this.langSubscription.unsubscribe();
         this.authSubscription.unsubscribe();
+        this.socketSubscription.unsubscribe();
     }
 
     private initTitle(): void {
@@ -66,7 +71,20 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
-    }    
+    }   
+    
+    private initSocket(): void {
+        this.socketSubscription = this.socketService.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
+            if (connected) {
+                this.socketService.on<Order>(`created-${this.employee.restaurant_id}`).subscribe(data => {            
+                    const order = new Order().build(data);
+                    order._highlight = true;
+                    this.ol.unshift(order);
+                    setTimeout(() => order._highlight = false, 3000);                        
+                });
+            }
+        });        
+    }
     
     public olOnAccept(o: Order): void {
         this.olOrderToAccept = o;

@@ -23,6 +23,7 @@ import { SettingRepository } from './repositories/setting.repository';
 import { WordRepository } from './repositories/word.repository';
 import { WSServerRepository } from './repositories/wsserver.repository';
 import { SocketService } from './socket.service';
+import { SoundService } from './sound.service';
 
 @NgModule({
     imports: [],
@@ -39,6 +40,7 @@ import { SocketService } from './socket.service';
         AuthService,       
         FilesService, 
         SocketService,
+        SoundService,
         LangRepository,
         WordRepository,
         SettingRepository,     

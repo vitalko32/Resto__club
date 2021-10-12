@@ -8,6 +8,7 @@ import { SettingRepository } from './services/repositories/setting.repository';
 import { WordRepository } from './services/repositories/word.repository';
 import { WSServerRepository } from './services/repositories/wsserver.repository';
 import { SocketService } from './services/socket.service';
+import { SoundService } from './services/sound.service';
 
 @Component({
 	selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private appService: AppService,		
 		private authService: AuthService,
 		private socketService: SocketService,
+		private soundService: SoundService,
 	) {}
 
 	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	

@@ -2,9 +2,9 @@
 <div class="orders">
     <ng-container *ngIf="olReady">        
         <ng-container *ngIf="ol.length">
-            <div class="order" *ngFor="let o of ol">
+            <div *ngFor="let o of ol" class="order">
                 <div class="o-date">{{o.formattedCreatedAt}}</div>
-                <div class="o-main">                                
+                <div class="o-main" [class.highlight]="o._highlight">                                
                     <div class="o-content">
                         <div class="oc-table">
                             <div class="oct-title">{{o.table?.no}} {{words['restorator-orders']['table'][currentLang.slug]}}</div>

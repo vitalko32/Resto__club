@@ -4,12 +4,13 @@
     border-radius: 45px; background-color: var(--color-bg); 
     .order {
         margin-bottom: 15px;
-        &:last-child {margin-bottom: 0;}        
+        &:last-child {margin-bottom: 0;}          
         .o-date {font-size: 12px; font-weight: bold; margin-bottom: 2px; padding: 0 15px;}
         .o-main {
             @media (min-width:0) {display: block;}
             @media (min-width:1200px) {display: flex;}  
             background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; align-items: center;
+            &.highlight {animation-name: highlight-order; animation-duration: 1s; animation-iteration-count: infinite;}
             .o-content {
                 @media (min-width:0) {margin: 0 0 15px 0;}
                 @media (min-width:1200px) {margin: 0 15px 0 0;}  
@@ -51,4 +52,10 @@
             }     
         }
     }    
+}
+
+@keyframes highlight-order {
+    0% {background-color: var(--color-bg);}
+    50% {background-color: var(--color-green);}
+    100% {background-color: var(--color-bg);}
 }

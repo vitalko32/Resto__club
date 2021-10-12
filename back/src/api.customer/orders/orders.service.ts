@@ -7,6 +7,7 @@ import { OrderProduct } from "src/model/orm/order.product.entity";
 import { OrderProductIngredient } from "src/model/orm/order.product.ingredient.entity";
 import { Table } from "src/model/orm/table.entity";
 import { Repository } from "typeorm";
+import { SocketService } from "../socket/socket.service";
 import { ICart } from "./dto/cart.interface";
 import { IIngredient } from "./dto/ingredient.interface";
 import { IOrderAdd } from "./dto/order.add.interface";
@@ -19,6 +20,7 @@ export class OrdersService extends APIService {
     constructor (
         @InjectRepository(Order) private orderRepository: Repository<Order>,
         @InjectRepository(Table) private tableRepository: Repository<Table>,
+        private socketService: SocketService,
     ) {
         super();
     }   
@@ -40,6 +42,7 @@ export class OrdersService extends APIService {
             order.products = this.buildOrderProducts(dto.cart);
             order.sum = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             await this.orderRepository.save(order);
+            this.socketService.translateOrderCreated(order.id);
 
             return {statusCode: 200, data: order};
         } catch (err) {

@@ -1,15 +1,11 @@
-import { SubscribeMessage, WebSocketGateway, OnGatewayInit, WebSocketServer, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { maxConnections } from 'src/options';
 
-@WebSocketGateway(3046, {path: "/socket/orders", cors: true})
-export class OrdersGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+@WebSocketGateway(3046, {path: "/socket", cors: true})
+export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() public server: Server;      
-
-    public afterInit(server: Server) {
-        
-    }    
-
+    
     public handleDisconnect(client: Socket) {
         console.log(`socket client disconnected: ${client.id}`);
     }
