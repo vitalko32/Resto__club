@@ -19,14 +19,14 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;    
     public olReady: boolean = false;
-    public olOrderToCancel: Order = null;
+    public olOrderCancelId: number = null;
     public olCancelConfirmActive: boolean = false; 
+    public olOrderCompleteId: number = null;
+    public olCompleteConfirmActive: boolean = false; 
     public olOrderToUnneed: Order = null;
     public olPropertyToUnneed: string = null;
     public olUnneedConfirmActive: boolean = false;
-    public olUnneedConfirmMsg: string = "";
-    public olOrderToComplete: Order = null;
-    public olCompleteConfirmActive: boolean = false; 
+    public olUnneedConfirmMsg: string = "";    
 
     constructor(
         private appService: AppService,        
@@ -72,15 +72,15 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     }  
 
     public olOnCancel(o: Order): void {
-        this.olOrderToCancel = o;
+        this.olOrderCancelId = o.id;
         this.olCancelConfirmActive = true;
     }
 
     public olCancel(): void { 
         try {
             this.olCancelConfirmActive = false;       
-            this.orderRepository.updateParam(this.olOrderToCancel.id, "status", OrderStatus.Cancelled);
-            const index = this.ol.indexOf(this.olOrderToCancel);
+            this.orderRepository.updateParam(this.olOrderCancelId, "status", OrderStatus.Cancelled);
+            const index = this.ol.findIndex(o => o.id === this.olOrderCancelId);
             index !== -1 ? this.ol.splice(index, 1) : null;
         } catch (err) {
             this.appService.showError(err);
@@ -109,15 +109,15 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     }
 
     public olOnComplete(o: Order): void {
-        this.olOrderToComplete = o;
+        this.olOrderCompleteId = o.id;
         this.olCompleteConfirmActive = true;
     }
 
     public olComplete(): void { 
         try {
             this.olCompleteConfirmActive = false;       
-            this.orderRepository.complete(this.olOrderToComplete.id);
-            const index = this.ol.indexOf(this.olOrderToComplete);
+            this.orderRepository.complete(this.olOrderCompleteId);
+            const index = this.ol.findIndex(o => o.id === this.olOrderCompleteId);
             index !== -1 ? this.ol.splice(index, 1) : null;
         } catch (err) {
             this.appService.showError(err);

@@ -12,7 +12,7 @@ export class SoundService {
     private init(): void {
         this.audio = document.createElement("audio");
         document.body.appendChild(this.audio);
-        window.addEventListener("click", this.unlock);
+        window.addEventListener("click", this.unlock); // for safari
     }
 
     private unlock(): void {        
@@ -22,16 +22,16 @@ export class SoundService {
     }
 
     private play(filename: string): void {
-        this.audio.src = `/assets/sounds/${filename}`;
-        this.audio.load();
-        this.audio.play().catch(err => console.log(err));
+        this.audio.src = `/assets/sounds/${filename}`;        
+        this.audio.load();        
+        this.audio.play().catch(err => console.log(err));        
     }
 
     public alertOrderCreated(): void {
         this.play("alert1.mp3");
     }
 
-    public alertOrderChanged(): void {
+    public alertOrderUpdated(): void {
         this.play("alert2.mp3");
     }
 }

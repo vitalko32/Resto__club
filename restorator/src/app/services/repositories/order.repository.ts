@@ -72,4 +72,8 @@ export class OrderRepository extends Repository<Order> {
     public create(x: Order): Promise<void> {
         return new Promise((resolve, reject) => this.dataService.ordersCreate(x).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.error), err => reject(err.message)));
     }
+
+    public cancel(id: number): Promise<void> {
+        return new Promise((resolve, reject) => this.dataService.ordersCancel(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.data), err => reject(err.message)));
+    }
 }

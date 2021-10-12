@@ -6,7 +6,7 @@ import { AppGateway } from "./app.gateway";
 export class AppService {
     constructor(private appGateway: AppGateway) {}
 
-    public translate(msg: ISocketMsg): void {
+    public translate(msg: ISocketMsg): void {        
         this.appGateway.server.emit(msg.name, msg.data);
     }
 }

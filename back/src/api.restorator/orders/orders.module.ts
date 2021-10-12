@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { CommonModule } from "src/common/common.module";
 import { Employee } from "src/model/orm/employee.entity";
 import { Lang } from "src/model/orm/lang.entity";
 import { Order } from "src/model/orm/order.entity";
@@ -18,6 +19,7 @@ import { OrdersService } from "./orders.service";
         ]),
         JwtModule.register(jwtConstants),
         ServingsModule,
+        CommonModule,
     ],    
     providers: [OrdersService],
     controllers: [OrdersController],

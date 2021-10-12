@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { APIService } from "src/common/api.service";
+import { SocketService } from "src/common/socket/socket.service";
 import { IAnswer } from "src/model/dto/answer.interface";
 import { IGetAll } from "src/model/dto/getall.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
@@ -24,6 +25,7 @@ export class OrdersService extends APIService {
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Lang) private langRepository: Repository<Lang>,
         private servingsService: ServingsService,
+        private socketService: SocketService,
     ) {
         super();
     }    
@@ -59,7 +61,8 @@ export class OrdersService extends APIService {
             order.employee_comment = dto.employee_comment;
             order.accepted_at = new Date();
             await this.orderRepository.save(order);
-            
+            this.socketService.translateOrderAccepted(order.id);
+
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.accept: ${String(err)}`;
@@ -108,6 +111,7 @@ export class OrdersService extends APIService {
 
             order.status = OrderStatus.Cancelled;
             await this.orderRepository.save(order);
+            this.socketService.translateOrderCancelled(id);
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.cancel: ${String(err)}`;
@@ -127,6 +131,7 @@ export class OrdersService extends APIService {
             order.status = OrderStatus.Completed;
             order.completed_at = new Date();
             await this.orderRepository.save(order);
+            this.socketService.translateOrderCompleted(id);
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.complete: ${String(err)}`;
@@ -228,7 +233,15 @@ export class OrdersService extends APIService {
 
     public async delete(id: number): Promise<IAnswer<void>> {
         try {
+            const order = await this.orderRepository.findOne(id);
+
+            if (!order) {
+                return {statusCode: 404, error: "order not found"};
+            }
+            
             await this.orderRepository.delete(id);
+            this.socketService.translateOrderDeleted(order);
+            
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.delete: ${String(err)}`;

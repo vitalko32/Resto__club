@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { io, Socket } from "socket.io-client";
 import { IWSServer } from "../model/orm/wsserver.interface";
 import { AppService } from "./app.service";
@@ -12,7 +12,7 @@ import { SoundService } from "./sound.service";
 export class SocketService {    
     public servers: IWSServer[] = [];
     private serverIndex: number = 0;
-    private socket: Socket = null; 
+    public socket: Socket = null; 
     public socketConnected: BehaviorSubject<boolean> = new BehaviorSubject(false);   
 
     constructor(
@@ -21,6 +21,7 @@ export class SocketService {
         private soundService: SoundService,
     ) {}
 
+    get employeeId(): number {return this.authService.authData.value.employee.id;}
     get restaurantId(): number {return this.authService.authData.value.employee.restaurant_id;}
 
     public connect(): void {
@@ -35,6 +36,12 @@ export class SocketService {
             this.socketConnected.next(true); 
             // после коннекта можно вешать обработчики сообщений, до коннекта это работать не будет            
             this.socket.on(`created-${this.restaurantId}`, () => this.soundService.alertOrderCreated());          
+            this.socket.on(`need-waiter-${this.restaurantId}`, () => this.soundService.alertOrderUpdated());          
+            this.socket.on(`need-waiter-${this.restaurantId}-${this.employeeId}`, () => this.soundService.alertOrderUpdated());          
+            this.socket.on(`need-invoice-${this.restaurantId}`, () => this.soundService.alertOrderUpdated());          
+            this.socket.on(`need-invoice-${this.restaurantId}-${this.employeeId}`, () => this.soundService.alertOrderUpdated());          
+            this.socket.on(`need-products-${this.restaurantId}`, () => this.soundService.alertOrderUpdated());          
+            this.socket.on(`need-products-${this.restaurantId}-${this.employeeId}`, () => this.soundService.alertOrderUpdated());          
         });
         this.socket.on("disconnect", () => this.reconnect());
         this.socket.on("connect_error", () => this.reconnect());
@@ -51,10 +58,13 @@ export class SocketService {
         this.connect();
     }
 
+    /*
+    // события сокетов можно превратить в observable
     public on<T>(eventName: string): Observable<T> {        
         return new Observable<T>(observer => {
-            this.socket.off(eventName); // prevent multiple subscription (optional)
+            this.socket.off(eventName); // unsubscribe previous subscriptions to prevent multiple subscription
             this.socket.on(eventName, (res: T) => observer.next(res));
         });
-    }    
+    } 
+    */   
 }

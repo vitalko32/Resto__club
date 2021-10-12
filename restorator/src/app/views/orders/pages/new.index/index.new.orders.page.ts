@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
+import { Socket } from "socket.io-client";
+import { IOrderAccepted } from "src/app/model/dto/order.accepted.interface";
+import { IOrderNeedInvoice } from "src/app/model/dto/order.need.invoice.interface";
+import { IOrderNeedProducts } from "src/app/model/dto/order.need.products.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
-import { Order, OrderStatus } from "src/app/model/orm/order.model";
+import { Order } from "src/app/model/orm/order.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -21,9 +25,9 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     private authSubscription: Subscription = null;    
     private socketSubscription: Subscription = null;    
     public olReady: boolean = false;
-    public olOrderToCancel: Order = null;
+    public olOrderCancelId: number = null;
     public olCancelConfirmActive: boolean = false;    
-    public olOrderToAccept: Order = null;
+    public olOrderAcceptId: number = null;
     public olAcceptConfirmActive: boolean = false;
     public olAcceptConflictAlertActive: boolean = false;        
     
@@ -40,8 +44,19 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get ol(): Order[] {return this.orderRepository.xlAll;}
     get employee(): Employee {return this.authService.authData.value.employee;}
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get socket(): Socket {return this.socketService.socket;}
+    get socketConnected(): BehaviorSubject<boolean> {return this.socketService.socketConnected;}
     
-    public ngOnInit(): void {        
+    public ngOnInit(): void {    
+        this.socketOnCreated = this.socketOnCreated.bind(this);
+        this.socketOnNeedWaiter = this.socketOnNeedWaiter.bind(this);
+        this.socketOnNeedInvoice = this.socketOnNeedInvoice.bind(this);
+        this.socketOnNeedProducts = this.socketOnNeedProducts.bind(this);
+        this.socketOnCancelled = this.socketOnCancelled.bind(this);
+        this.socketOnCompleted = this.socketOnCompleted.bind(this);
+        this.socketOnAccepted = this.socketOnAccepted.bind(this);
+        this.socketOnDeleted = this.socketOnDeleted.bind(this);
         this.initAuthCheck();     
         this.initTitle();          
         this.initOrders();      
@@ -52,6 +67,14 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         this.langSubscription.unsubscribe();
         this.authSubscription.unsubscribe();
         this.socketSubscription.unsubscribe();
+        this.socket.off(`created-${this.restaurantId}`, this.socketOnCreated);
+        this.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
+        this.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
+        this.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
+        this.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+        this.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
+        this.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);
+        this.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
     }
 
     private initTitle(): void {
@@ -74,35 +97,36 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     }   
     
     private initSocket(): void {
-        this.socketSubscription = this.socketService.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
+        this.socketSubscription = this.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
             if (connected) {
-                this.socketService.on<Order>(`created-${this.employee.restaurant_id}`).subscribe(data => {            
-                    const order = new Order().build(data);
-                    order._highlight = true;
-                    this.ol.unshift(order);
-                    setTimeout(() => order._highlight = false, 3000);                        
-                });
+                this.socket.on(`created-${this.restaurantId}`, this.socketOnCreated);
+                this.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
+                this.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
+                this.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);                
+                this.socket.on(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+                this.socket.on(`completed-${this.restaurantId}`, this.socketOnCompleted);
+                this.socket.on(`accepted-${this.restaurantId}`, this.socketOnAccepted);
+                this.socket.on(`deleted-${this.restaurantId}`, this.socketOnDeleted);
             }
         });        
-    }
+    }    
     
     public olOnAccept(o: Order): void {
-        this.olOrderToAccept = o;
+        this.olOrderAcceptId = o.id;
         this.olAcceptConfirmActive = true;
     }
 
     public async olAccept(): Promise<void> {
         try {
             this.olAcceptConfirmActive = false;
-            const statusCode = await this.orderRepository.accept(this.olOrderToAccept.id, this.employee.id);            
+            const statusCode = await this.orderRepository.accept(this.olOrderAcceptId, this.employee.id);            
 
             if (statusCode === 200) {                
                 this.router.navigateByUrl("/orders/my");
             } else if (statusCode === 410) {
-                this.olAcceptConflictAlertActive = true;
-                // избыточное действие, заказы должны удаляться по сокету
-                const index = this.ol.indexOf(this.olOrderToAccept);
-                index !== -1 ? this.ol.splice(index, 1) : null;                
+                this.olAcceptConflictAlertActive = true;                
+                const index = this.ol.findIndex(o => o.id === this.olOrderAcceptId);
+                index !== -1 ? this.ol.splice(index, 1) : null; // на всяк. случай проверяем, потому что заказ может исчезнуть по команде сокета
             } else {
                 this.appService.showError(this.words['common']['error'][this.currentLang.slug]);
             }
@@ -112,18 +136,77 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     }
 
     public olOnCancel(o: Order): void {
-        this.olOrderToCancel = o;
+        this.olOrderCancelId = o.id;
         this.olCancelConfirmActive = true;
     }
 
     public olCancel(): void {
         try {
             this.olCancelConfirmActive = false;       
-            this.orderRepository.cancel(this.olOrderToCancel.id);
-            const index = this.ol.indexOf(this.olOrderToCancel);
-            index !== -1 ? this.ol.splice(index, 1) : null;
+            this.orderRepository.cancel(this.olOrderCancelId);            
+            const index = this.ol.findIndex(o => o.id === this.olOrderCancelId);
+            index !== -1 ? this.ol.splice(index, 1) : null; // на всяк. случай проверяем, потому что заказ может исчезнуть по команде сокета
         } catch (err) {
             this.appService.showError(err);
         }       
-    }    
+    }  
+    
+    // сообщения сокетов
+    private socketOnCreated(data: Order): void {        
+        const order = new Order().build(data);
+        order._highlight = true;
+        this.ol.unshift(order);
+        setTimeout(() => order._highlight = false, 3000);  
+    }
+
+    private socketOnNeedWaiter(data: number): void {        
+        const order = this.ol.find(o => o.id === data);
+        
+        if (order) {
+            order.need_waiter = true;
+            order._highlightNeedWaiter = true;
+            setTimeout(() => order._highlightNeedWaiter = false, 3000);  
+        }        
+    }
+
+    private socketOnNeedInvoice(data: IOrderNeedInvoice): void {
+        const order = this.ol.find(o => o.id === data.order_id);
+
+        if (order) {
+            order.need_invoice = true;
+            order._highlightNeedInvoice = true;
+            setTimeout(() => order._highlightNeedInvoice = false, 3000);  
+        } 
+    }
+
+    private socketOnNeedProducts(data: IOrderNeedProducts): void {
+        const order = this.ol.find(o => o.id === data.order_id);
+
+        if (order) {
+            order.need_products = true;
+            order.products = [...order.products, ...data.products];
+            order._highlightNeedProducts = true;
+            setTimeout(() => order._highlightNeedProducts = false, 3000);  
+        }
+    }
+
+    private socketOnCancelled(data: number): void {        
+        const index = this.ol.findIndex(o => o.id === data);
+        index !== -1 ? this.ol.splice(index, 1) : null;
+    }
+
+    private socketOnCompleted(data: number): void {        
+        const index = this.ol.findIndex(o => o.id === data);
+        index !== -1 ? this.ol.splice(index, 1) : null;
+    }
+
+    private socketOnAccepted(data: IOrderAccepted): void {                
+        const index = this.ol.findIndex(o => o.id === data.order_id);
+        index !== -1 ? this.ol.splice(index, 1) : null;                
+    }
+
+    private socketOnDeleted(data: number): void {                
+        const index = this.ol.findIndex(o => o.id === data);
+        index !== -1 ? this.ol.splice(index, 1) : null;             
+    }
 }

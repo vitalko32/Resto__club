@@ -178,7 +178,7 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         try {
             this.olCancelConfirmActive = false;   
             this.olLoading = true;         
-            await this.orderRepository.updateParam(this.olCancelId, "status", OrderStatus.Cancelled);
+            await this.orderRepository.cancel(this.olCancelId);
             this.initOrders();
         } catch (err) {
             this.appService.showError(err);

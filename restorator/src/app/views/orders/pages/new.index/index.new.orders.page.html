@@ -9,9 +9,9 @@
                         <div class="oc-table">
                             <div class="oct-title">{{o.table?.no}} {{words['restorator-orders']['table'][currentLang.slug]}}</div>
                             <div class="oct-btns">
-                                <div class="oct-btn need-waiter inactive" *ngIf="o.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
-                                <div class="oct-btn need-products inactive" *ngIf="o.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
-                                <div class="oct-btn need-invoice inactive" *ngIf="o.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
+                                <div *ngIf="o.need_waiter" class="oct-btn need-waiter inactive" [class.highlight]="o._highlightNeedWaiter"  [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
+                                <div *ngIf="o.need_products" class="oct-btn need-products inactive" [class.highlight]="o._highlightNeedProducts"  [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
+                                <div *ngIf="o.need_invoice" class="oct-btn need-invoice inactive" [class.highlight]="o._highlightNeedInvoice"  [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
                             </div>                        
                         </div>
                         <div>{{words['restorator-orders']['seats'][currentLang.slug]}}: <strong>{{o.table?.seats}}</strong>, {{words['restorator-orders']['hall2'][currentLang.slug]}}: <strong>{{o.table?.hall?.name}}</strong></div>

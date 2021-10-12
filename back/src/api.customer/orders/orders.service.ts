@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { APIService } from "src/common/api.service";
+import { SocketService } from "src/common/socket/socket.service";
 import { IAnswer } from "src/model/dto/answer.interface";
 import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { OrderProduct } from "src/model/orm/order.product.entity";
 import { OrderProductIngredient } from "src/model/orm/order.product.ingredient.entity";
 import { Table } from "src/model/orm/table.entity";
 import { Repository } from "typeorm";
-import { SocketService } from "../socket/socket.service";
 import { ICart } from "./dto/cart.interface";
 import { IIngredient } from "./dto/ingredient.interface";
 import { IOrderAdd } from "./dto/order.add.interface";
@@ -62,11 +62,13 @@ export class OrdersService extends APIService {
             }
 
             order.customer_comment += dto.cart.comment ? `<div>${this.humanDatetime(new Date())} ${dto.cart.comment}</div>` : "";
-            order.products = [...order.products, ...this.buildOrderProducts(dto.cart)];
+            const products = this.buildOrderProducts(dto.cart);
+            order.products = [...order.products, ...products];
             order.need_products = true;
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             order.sum = (subtotal / 100) * (100 - order.discount_percent);
             await this.orderRepository.save(order);
+            this.socketService.translateNeedProducts(order.id, products);
 
             return {statusCode: 200, data: order};
         } catch (err) {
@@ -88,6 +90,7 @@ export class OrdersService extends APIService {
         }
     }
 
+    // запрос закрытия заказа
     public async close(dto: IOrderClose): Promise<IAnswer<Order>> {
         try {
             const order = await this.getActiveOrderById(dto.order_id);
@@ -99,6 +102,8 @@ export class OrdersService extends APIService {
             order.need_invoice = true;
             order.paymethod = dto.paymethod;
             await this.orderRepository.save(order);
+            this.socketService.translateNeedInvoice(order.id);
+
             return {statusCode: 200, data: order};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.close: ${String(err)}`;
@@ -119,6 +124,7 @@ export class OrdersService extends APIService {
 
                 order.need_waiter = true;
                 await this.orderRepository.save(order);
+                this.socketService.translateNeedWaiter(order.id);
                 return {statusCode: 200, data: order};
             } 
 
@@ -135,7 +141,8 @@ export class OrdersService extends APIService {
                 order.restaurant_id = table.hall.restaurant.id;                
                 order.products = [];
                 order.need_waiter = true;
-                await this.orderRepository.save(order);    
+                await this.orderRepository.save(order);
+                this.socketService.translateOrderCreated(order.id);    
                 return {statusCode: 200, data: order};
             }
 
