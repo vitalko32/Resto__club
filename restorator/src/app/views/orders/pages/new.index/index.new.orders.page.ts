@@ -155,11 +155,12 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     }  
     
     // сообщения сокетов
-    private socketOnCreated(data: Order): void {        
+    private async socketOnCreated(data: Order): Promise<void> {        
         const order = new Order().build(data);
         order._highlight = true;
         this.ol.unshift(order);
-        setTimeout(() => order._highlight = false, 3000);  
+        await this.appService.pause(3000);
+        order._highlight = false;        
     }
 
     private socketOnUpdated(data: Order): void {
@@ -171,34 +172,37 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         }        
     }
 
-    private socketOnNeedWaiter(data: number): void {                
+    private async socketOnNeedWaiter(data: number): Promise<void> {                
         const order = this.ol.find(o => o.id === data);
         
         if (order) {
             order.need_waiter = true;
             order._highlightNeedWaiter = true;
-            setTimeout(() => order._highlightNeedWaiter = false, 3000);  
+            await this.appService.pause(3000);
+            order._highlightNeedWaiter = false;            
         }        
     }
 
-    private socketOnNeedInvoice(data: IOrderNeedInvoice): void {
+    private async socketOnNeedInvoice(data: IOrderNeedInvoice): Promise<void> {
         const order = this.ol.find(o => o.id === data.order_id);
 
         if (order) {
             order.need_invoice = true;
             order._highlightNeedInvoice = true;
-            setTimeout(() => order._highlightNeedInvoice = false, 3000);  
+            await this.appService.pause(3000);
+            order._highlightNeedInvoice = false;            
         } 
     }
 
-    private socketOnNeedProducts(data: IOrderNeedProducts): void {
+    private async socketOnNeedProducts(data: IOrderNeedProducts): Promise<void> {
         const order = this.ol.find(o => o.id === data.order_id);
 
         if (order) {
             order.need_products = true;
             order.products = [...order.products, ...data.products];
             order._highlightNeedProducts = true;
-            setTimeout(() => order._highlightNeedProducts = false, 3000);  
+            await this.appService.pause(3000);
+            order._highlightNeedProducts = false;            
         }
     }
 

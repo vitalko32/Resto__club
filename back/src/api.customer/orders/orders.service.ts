@@ -40,7 +40,7 @@ export class OrdersService extends APIService {
             order.restaurant_id = table.hall.restaurant.id;
             order.customer_comment = dto.cart.comment ? `<div>${this.humanDatetime(new Date())} ${dto.cart.comment}</div>` : "";
             order.products = this.buildOrderProducts(dto.cart);
-            order.sum = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
+            order.sum = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;            
             await this.orderRepository.save(order);
             this.socketService.translateOrderCreated(order.id);
 
@@ -68,7 +68,7 @@ export class OrdersService extends APIService {
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             order.sum = (subtotal / 100) * (100 - order.discount_percent);
             await this.orderRepository.save(order);
-            this.socketService.translateNeedProducts(order.id, products);
+            this.socketService.translateNeedProducts(order.id, products.map(p => p.id));
 
             return {statusCode: 200, data: order};
         } catch (err) {

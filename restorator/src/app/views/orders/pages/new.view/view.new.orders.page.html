@@ -30,9 +30,9 @@
                     <div class="de-title">{{words['restorator-orders']['statuses'][currentLang.slug]}}:</div>
                     <div class="de-value">
                         <div class="de-statuses" *ngIf="order.need_waiter || order.need_products || order.need_invoice">
-                            <div class="de-status need-waiter inactive" *ngIf="order.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
-                            <div class="de-status need-products inactive" *ngIf="order.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
-                            <div class="de-status need-invoice inactive" *ngIf="order.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
+                            <div *ngIf="order.need_waiter" class="de-status need-waiter inactive" [class.highlight]="order._highlightNeedWaiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]"><span></span></div>   
+                            <div *ngIf="order.need_products" class="de-status need-products inactive" [class.highlight]="order._highlightNeedProducts" [title]="words['restorator-orders']['need-products'][currentLang.slug]"><span></span></div>
+                            <div *ngIf="order.need_invoice" class="de-status need-invoice inactive" [class.highlight]="order._highlightNeedInvoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]"><span></span></div>                  
                         </div>
                         <span *ngIf="!(order.need_waiter || order.need_products || order.need_invoice)">{{words['common']['empty'][currentLang.slug]}}</span>
                     </div>

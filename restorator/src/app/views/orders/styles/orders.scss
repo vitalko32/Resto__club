@@ -54,15 +54,3 @@
         }
     }    
 }
-
-@keyframes highlight-order {
-    0% {background-color: var(--color-bg);}
-    50% {background-color: var(--color-green);}
-    100% {background-color: var(--color-bg);}
-}
-
-@keyframes highlight-status {
-    0% {background-color: white;}
-    50% {background-color: var(--color-green);}
-    100% {background-color: white;}
-}

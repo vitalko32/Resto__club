@@ -1,4 +1,5 @@
 import { IOrderProduct } from "./order.product.interface";
+import { ITable } from "./table.interface";
 
 export enum OrderStatus {
     Active = "active",
@@ -29,5 +30,6 @@ export interface IOrder {
     readonly created_at: string;    
     readonly accepted_at: string;
     readonly completed_at: string;
-    readonly products: IOrderProduct[];    
+    readonly products: IOrderProduct[];   
+    readonly table: ITable; 
 }

@@ -13,4 +13,6 @@ export interface IOrderProduct {
     completed: boolean;
     readonly ingredients?: IOrderProductIngredient[];
     readonly serving?: IServing;
+
+    _highlight?: boolean;
 }

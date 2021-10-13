@@ -1,4 +1,4 @@
-<div *ngIf="product" class="order-product">
+<div *ngIf="product" class="order-product" [class.highlight]="product._highlight">
     <div class="op-left">
         <div class="op-img" [style.background-image]="product.img ? 'url(/images/products/'+product.img+')' : 'url(/images/no-image.jpg)'"></div>
     </div>

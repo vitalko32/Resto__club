@@ -1,6 +1,6 @@
-import { OrderProduct } from "src/model/orm/order.product.entity";
+import { IOrderProduct } from "src/api.restorator/orders/dto/order.product.interface";
 
 export interface IOrderNeedProducts {
     order_id: number;
-    products: OrderProduct[];
+    products: IOrderProduct[];
 }

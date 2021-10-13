@@ -39,3 +39,15 @@ html.classic {
 	--block-shadow-inner: inset 0px 3px 38px #00000026, 14px 12px 36px #00000029;
 	--activebtn-shadow: inset 0px 3px 38px #00000026, 14px 12px 36px #00000029;
 }
+
+@keyframes highlight-order {
+    0% {background-color: var(--color-bg);}
+    50% {background-color: var(--color-green);}
+    100% {background-color: var(--color-bg);}
+}
+
+@keyframes highlight-status {
+    0% {background-color: white;}
+    50% {background-color: var(--color-green);}
+    100% {background-color: white;}
+}

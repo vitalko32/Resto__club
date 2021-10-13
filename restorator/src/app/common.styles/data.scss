@@ -169,6 +169,7 @@
                     .de-status {
                         width:30px; height: 30px; line-height: 30px; text-align: center; background-color: white; box-shadow: var(--block-shadow); border-radius: 20px; cursor: pointer; margin: 0 10px 0 0;                    
                         &.inactive {cursor: inherit;}
+                        &.highlight {animation-name: highlight-status; animation-duration: 1s; animation-iteration-count: infinite;}
                         span::before {font-family: "fa-solid"; font-size: 16px;}                        
                         &.need-waiter {span::before {content: "\f0f3";}}
                         &.need-invoice {span::before {content: "\f543";}}

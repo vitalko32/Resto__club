@@ -8,6 +8,7 @@ import { IOrderCreate } from "../model/dto/order.create.interface";
 import { IOrder, Paymethod } from "../model/orm/order.interface";
 import { IProduct } from "../model/orm/product.interface";
 import { ITable } from "../model/orm/table.interface";
+import { AppService } from "./app.service";
 import { DataService } from "./data.service";
 
 @Injectable()
@@ -17,7 +18,10 @@ export class OrderService {
     public table: ITable = null;
     public cart: Cart = null;
 
-    constructor(private dataService: DataService) {}
+    constructor(
+        private dataService: DataService,
+        private appService: AppService,        
+    ) {}
     
     get cartQ(): number {return this.cart.records.length ? this.cart.records.map(r => r.q).reduce((acc, x) => acc + x) : 0;}
     get cartS(): number {return this.cart.records.length ? this.cart.records.map(r => r.q * r.product.price).reduce((acc, x) => acc + x) : 0;}    
@@ -26,7 +30,7 @@ export class OrderService {
     
     public async initTable(code: string): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.dataService.tablesOne(code).subscribe(res => {
+            this.dataService.tablesOneByCode(code).subscribe(res => {
                 res.statusCode === 200 ? this.table = res.data : null;
                 resolve(res.statusCode);
             }, err => {
@@ -110,16 +114,30 @@ export class OrderService {
                 if (res.statusCode === 200) {
                     this.order = res.data;
                     this.orderSaveToStorage();
-                    // если клиента пересадили, то на этом столе заказ обнуляем, при этом сам заказ сохранился, только уже относится к другому столу                    
-                    this.order.table_id !== this.table.id ? this.initOrder() : null; // сброс и проверка на случай если в хранилице есть другие незакрытые заказы по этому столу                
+                    this.orderCheckTable(); // проверка на пересадку                 
                 } else if (res.statusCode === 404) {
                     this.orderRemoveFromStorage();
-                    this.initOrder(); // сброс и проверка на случай если в хранилице есть другие незакрытые заказы по этому столу
+                    this.order = null;
                 } else {
                     console.log(res);
                 }
             }, err => {
                 console.log(err);
+            });
+        }
+    }
+
+    private orderCheckTable(): void {
+        if (this.order.table_id !== this.table.id) {
+            this.dataService.tablesOneById(this.order.table_id).subscribe(res => {
+                if (res.statusCode === 200) {
+                    window.location.href = `${window.location.origin}/table/${res.data.code}`;
+                } else { // пересадили на несуществующий стол :-)
+                    this.orderRemoveFromStorage();
+                    this.order = null;
+                }
+            }, err => {
+                this.appService.showError(err.message);
             });
         }
     }

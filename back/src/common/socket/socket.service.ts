@@ -1,14 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import axios from "axios";
+import { IOrder } from "src/api.restorator/orders/dto/order.interface";
+import { IOrderProduct } from "src/api.restorator/orders/dto/order.product.interface";
+import { Lang } from "src/model/orm/lang.entity";
 import { Order } from "src/model/orm/order.entity";
 import { OrderProduct } from "src/model/orm/order.product.entity";
+import { Serving } from "src/model/orm/serving.entity";
 import { WSServer } from "src/model/orm/wsserver.entity";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { IMsg } from "./dto/msg.interface";
 import { IOrderAccepted } from "./dto/order.accepted.interface";
 import { IOrderNeedInvoice } from "./dto/order.need.invoice.interface";
 import { IOrderNeedProducts } from "./dto/order.need.products.interface";
+import { IServing } from "./dto/serving.interface";
 
 @Injectable()
 export class SocketService {
@@ -17,6 +22,8 @@ export class SocketService {
     constructor(
         @InjectRepository(WSServer) private wsserverRepository: Repository<WSServer>,
         @InjectRepository(Order) private orderRepository: Repository<Order>,
+        @InjectRepository(OrderProduct) private orderProductRepository: Repository<OrderProduct>,
+        @InjectRepository(Lang) private langRepository: Repository<Lang>,
     ) {}
 
     public async translateOrderCreated(order_id: number): Promise<void> {
@@ -36,9 +43,15 @@ export class SocketService {
 
     public async translateOrderUpdated(order_id: number): Promise<void> {
         try {
-            const order = await this.orderRepository.findOne(order_id, {relations: ["products", "table", "table.hall"]});
+            const order: IOrder = await this.orderRepository.findOne(order_id, {relations: ["products", "products.serving", "products.serving.translations", "products.ingredients", "table", "table.hall"]});
 
             if (order) {
+                const langs: Lang[] = await this.langRepository.find({where: {active: true}});
+
+                for (let p of order.products) {
+                    p.serving = this.buildMlServing(p.serving as Serving, langs);
+                }
+                
                 const name = `updated-${order.restaurant_id}`;
                 const data = order;
                 this.translateMsg({name, data});                
@@ -79,11 +92,18 @@ export class SocketService {
         }  
     }
 
-    public async translateNeedProducts(order_id: number, products: OrderProduct[]): Promise<void> {
+    public async translateNeedProducts(order_id: number, product_ids: number[]): Promise<void> {
         try {
             const order = await this.orderRepository.findOne(order_id);
 
             if (order) {
+                const langs: Lang[] = await this.langRepository.find({where: {active: true}});
+                const products: IOrderProduct[] = await this.orderProductRepository.find({where: {id: In(product_ids)}, relations: ["ingredients", "serving", "serving.translations"]});
+
+                for (let p of products) {
+                    p.serving = this.buildMlServing(p.serving as Serving, langs);
+                }
+                
                 const name = order.employee_id ? `need-products-${order.restaurant_id}-${order.employee_id}` : `need-products-${order.restaurant_id}`;
                 const data: IOrderNeedProducts = {order_id, products};
                 this.translateMsg({name, data});
@@ -161,5 +181,15 @@ export class SocketService {
             const errTxt: string = `Error in SocketService.sendMsg: ${String(err)}`;
             console.log(errTxt);            
         }        
+    }
+
+    public buildMlServing(serving: Serving, langs: Lang[]): IServing {
+        const name = {};
+        
+        for (let l of langs) {
+            name[l.slug] = serving.translations.find(t => t.lang_id === l.id)?.name;
+        }
+        
+        return {id: serving.id, name};
     }
 }

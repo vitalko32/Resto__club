@@ -21,7 +21,8 @@ export class DataService {
     
     constructor (private http: HttpClient) {}
     
-    public tablesOne(code: string): Observable<IAnswer<ITable>> {return this.sendRequest(`tables/one/${code}`);}
+    public tablesOneByCode(code: string): Observable<IAnswer<ITable>> {return this.sendRequest(`tables/oneByCode/${code}`);}
+    public tablesOneById(id: number): Observable<IAnswer<ITable>> {return this.sendRequest(`tables/oneById/${id}`);}
     
     public wordsAll(dto: IGetAll): Observable<IAnswer<Words>> {return this.sendRequest(`words/all`, dto);}    
 

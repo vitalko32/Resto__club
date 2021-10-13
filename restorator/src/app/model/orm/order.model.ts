@@ -37,10 +37,10 @@ export class Order extends Model {
     public table?: Table;
     public employee?: Employee;
     
-    public _highlight: boolean = false;
-    public _highlightNeedWaiter: boolean = false;
-    public _highlightNeedInvoice: boolean = false;
-    public _highlightNeedProducts: boolean = false;
+    public _highlight?: boolean = false;
+    public _highlightNeedWaiter?: boolean = false;
+    public _highlightNeedInvoice?: boolean = false;
+    public _highlightNeedProducts?: boolean = false;
 
     get formattedCreatedAt(): string {return this.created_at ? `${this.twoDigits(this.created_at.getHours())}:${this.twoDigits(this.created_at.getMinutes())} ${this.twoDigits(this.created_at.getDate())}.${this.twoDigits(this.created_at.getMonth()+1)}.${this.created_at.getFullYear()}` : "";}
     get formattedAcceptedAt(): string {return this.accepted_at ? `${this.twoDigits(this.accepted_at.getHours())}:${this.twoDigits(this.accepted_at.getMinutes())} ${this.twoDigits(this.accepted_at.getDate())}.${this.twoDigits(this.accepted_at.getMonth()+1)}.${this.accepted_at.getFullYear()}` : "";}

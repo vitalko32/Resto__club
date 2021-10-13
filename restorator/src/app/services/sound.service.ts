@@ -4,14 +4,14 @@ import { Injectable } from "@angular/core";
 export class SoundService {
     private audio: HTMLAudioElement = null;    
     
-    constructor() {
-        this.unlock = this.unlock.bind(this);
+    constructor() {        
         this.init();        
     }
 
     private init(): void {
         this.audio = document.createElement("audio");
         document.body.appendChild(this.audio);
+        this.unlock = this.unlock.bind(this);
         window.addEventListener("click", this.unlock); // for safari
     }
 
