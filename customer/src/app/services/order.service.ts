@@ -43,7 +43,7 @@ export class OrderService {
     public initOrder(): void {
         const data: string = localStorage.getItem("orders");       
         const orders: IOrder[] = data ? JSON.parse(data) : [];  
-        this.order = orders.find(o => o.table_id === this.table.id) || null;        
+        this.order = orders.find(o => o.table_id === this.table.id) || null;         
         this.orderStartChecking(); // периодически проверяем актуальность и состояние заказа
     }
 
@@ -101,7 +101,7 @@ export class OrderService {
 
     private orderStartChecking(): void {
         this.orderCheck();
-        this.orderCheckInteval = window.setInterval(() => this.orderCheck(), 10000);
+        !this.orderCheckInteval ? this.orderCheckInteval = window.setInterval(() => this.orderCheck(), 10000) : null;
     }    
 
     private orderCheck(): void {
@@ -110,9 +110,11 @@ export class OrderService {
                 if (res.statusCode === 200) {
                     this.order = res.data;
                     this.orderSaveToStorage();
+                    // если клиента пересадили, то на этом столе заказ обнуляем, при этом сам заказ сохранился, только уже относится к другому столу                    
+                    this.order.table_id !== this.table.id ? this.initOrder() : null; // сброс и проверка на случай если в хранилице есть другие незакрытые заказы по этому столу                
                 } else if (res.statusCode === 404) {
                     this.orderRemoveFromStorage();
-                    this.order = null;                    
+                    this.initOrder(); // сброс и проверка на случай если в хранилице есть другие незакрытые заказы по этому столу
                 } else {
                     console.log(res);
                 }

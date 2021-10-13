@@ -34,6 +34,21 @@ export class SocketService {
         }   
     }
 
+    public async translateOrderUpdated(order_id: number): Promise<void> {
+        try {
+            const order = await this.orderRepository.findOne(order_id, {relations: ["products", "table", "table.hall"]});
+
+            if (order) {
+                const name = `updated-${order.restaurant_id}`;
+                const data = order;
+                this.translateMsg({name, data});                
+            }            
+        } catch (err) {
+            const errTxt: string = `Error in SocketService.translateOrderUpdated: ${String(err)}`;
+            console.log(errTxt);            
+        }   
+    }
+
     public async translateNeedWaiter(order_id: number): Promise<void> {
         try {
             const order = await this.orderRepository.findOne(order_id);

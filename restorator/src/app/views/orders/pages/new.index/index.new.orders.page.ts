@@ -50,6 +50,7 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     
     public ngOnInit(): void {    
         this.socketOnCreated = this.socketOnCreated.bind(this);
+        this.socketOnUpdated = this.socketOnUpdated.bind(this);
         this.socketOnNeedWaiter = this.socketOnNeedWaiter.bind(this);
         this.socketOnNeedInvoice = this.socketOnNeedInvoice.bind(this);
         this.socketOnNeedProducts = this.socketOnNeedProducts.bind(this);
@@ -68,6 +69,7 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         this.authSubscription.unsubscribe();
         this.socketSubscription.unsubscribe();
         this.socket.off(`created-${this.restaurantId}`, this.socketOnCreated);
+        this.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
         this.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
         this.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
         this.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
@@ -100,6 +102,7 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         this.socketSubscription = this.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
             if (connected) {
                 this.socket.on(`created-${this.restaurantId}`, this.socketOnCreated);
+                this.socket.on(`updated-${this.restaurantId}`, this.socketOnUpdated);
                 this.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
                 this.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
                 this.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);                
@@ -159,7 +162,16 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         setTimeout(() => order._highlight = false, 3000);  
     }
 
-    private socketOnNeedWaiter(data: number): void {        
+    private socketOnUpdated(data: Order): void {
+        const index = this.ol.findIndex(o => o.id === data.id);
+
+        if (index !== -1) {
+            // при апдейте мы не знаем, привязан этот заказ к сотруднику или нет, поэтому проверяем и либо удаляем, либо заменяем
+            data.employee_id ? this.ol.splice(index, 1) : this.ol[index] = new Order().build(data);
+        }        
+    }
+
+    private socketOnNeedWaiter(data: number): void {                
         const order = this.ol.find(o => o.id === data);
         
         if (order) {

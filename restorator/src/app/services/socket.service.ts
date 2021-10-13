@@ -31,11 +31,13 @@ export class SocketService {
         }        
     }
 
-    private initEvents(): void {
+    private initEvents(): void {        
         this.socket.on("connect", () => {            
+            console.log("socket connected");
             this.socketConnected.next(true); 
             // после коннекта можно вешать обработчики сообщений, до коннекта это работать не будет            
             this.socket.on(`created-${this.restaurantId}`, () => this.soundService.alertOrderCreated());          
+            this.socket.on(`created-${this.restaurantId}-${this.employeeId}`, () => this.soundService.alertOrderCreated());          
             this.socket.on(`need-waiter-${this.restaurantId}`, () => this.soundService.alertOrderUpdated());          
             this.socket.on(`need-waiter-${this.restaurantId}-${this.employeeId}`, () => this.soundService.alertOrderUpdated());          
             this.socket.on(`need-invoice-${this.restaurantId}`, () => this.soundService.alertOrderUpdated());          

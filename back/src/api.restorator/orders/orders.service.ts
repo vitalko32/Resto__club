@@ -158,6 +158,8 @@ export class OrdersService extends APIService {
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             order.sum = (subtotal / 100) * (100 - order.discount_percent);
             await this.orderRepository.save(order);
+            this.socketService.translateOrderUpdated(order.id);
+            
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.update: ${String(err)}`;
@@ -172,6 +174,8 @@ export class OrdersService extends APIService {
             const subtotal = order.products.length ? order.products.map(p => p.q * p.price).reduce((acc, x) => acc + x) : 0;
             order.sum = (subtotal / 100) * (100 - order.discount_percent);            
             await this.orderRepository.save(order);
+            this.socketService.translateOrderCreated(order.id);
+
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.create: ${String(err)}`;
@@ -261,6 +265,8 @@ export class OrdersService extends APIService {
             order.status = OrderStatus.Active;
             order.completed_at = null;
             await this.orderRepository.save(order);
+            this.socketService.translateOrderCreated(order.id); // с точки зрения официанта он как бы создался заново
+
             return {statusCode: 200};
         } catch (err) {
             let errTxt: string = `Error in OrdersService.activate: ${String(err)}`;
