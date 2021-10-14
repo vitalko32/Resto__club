@@ -154,8 +154,8 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
     private async socketOnNeedInvoice(data: IOrderNeedInvoice): Promise<void> {
         if (this.order.id === data.order_id) {
             this.order.need_invoice = true;
-            this.order._highlightNeedInvoice = true;
             this.order.paymethod = data.paymethod;
+            this.order._highlightNeedInvoice = true;            
             await this.appService.pause(3000);
             this.order._highlightNeedInvoice = false;            
         } 

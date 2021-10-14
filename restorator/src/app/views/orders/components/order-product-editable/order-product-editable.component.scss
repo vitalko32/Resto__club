@@ -2,6 +2,7 @@
     @media (min-width:0) {width:auto;}
     @media (min-width:500px) {width:400px;}
     display: flex; background-color: var(--color-bg); box-shadow: var(--block-shadow); border-radius: 15px; padding: 15px; margin-bottom: 15px; position: relative;   
+    &.highlight {animation-name: highlight-order; animation-duration: 1s; animation-iteration-count: infinite;}  
     .op-left {
         width:20%; margin-right: 15px;
         .op-img {padding-bottom: 75%; border-radius: 5px; background-size: cover; background-position: center center;}

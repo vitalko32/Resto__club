@@ -52,9 +52,9 @@
         <div class="de-title">{{words['restorator-orders']['statuses'][currentLang.slug]}}:</div>
         <div class="de-value">
             <div class="de-statuses" *ngIf="x.need_waiter || x.need_products || x.need_invoice">
-                <div class="de-status need-waiter" *ngIf="x.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]" (click)="x.need_waiter = false"><span></span></div>   
-                <div class="de-status need-products" *ngIf="x.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]" (click)="x.need_products = false"><span></span></div>
-                <div class="de-status need-invoice" *ngIf="x.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]" (click)="x.need_invoice = false"><span></span></div>                  
+                <div *ngIf="x.need_waiter" class="de-status need-waiter" [class.highlight]="x._highlightNeedWaiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]" (click)="x.need_waiter = false"><span></span></div>   
+                <div *ngIf="x.need_products" class="de-status need-products" [class.highlight]="x._highlightNeedProducts" [title]="words['restorator-orders']['need-products'][currentLang.slug]" (click)="x.need_products = false"><span></span></div>
+                <div *ngIf="x.need_invoice" class="de-status need-invoice" [class.highlight]="x._highlightNeedInvoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]" (click)="x.need_invoice = false"><span></span></div>                  
             </div>
             <span *ngIf="!(x.need_waiter || x.need_products || x.need_invoice)">{{words['common']['empty'][currentLang.slug]}}</span>
         </div>

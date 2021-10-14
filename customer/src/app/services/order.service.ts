@@ -117,7 +117,7 @@ export class OrderService {
                     this.orderCheckTable(); // проверка на пересадку                 
                 } else if (res.statusCode === 404) {
                     this.orderRemoveFromStorage();
-                    this.order = null;
+                    this.initOrder(); // сброс (можно было бы просто занулить, но теоретически возможны случаи, когда в хранилище есть старые заказы)
                 } else {
                     console.log(res);
                 }
@@ -134,7 +134,7 @@ export class OrderService {
                     window.location.href = `${window.location.origin}/table/${res.data.code}`;
                 } else { // пересадили на несуществующий стол :-)
                     this.orderRemoveFromStorage();
-                    this.order = null;
+                    this.initOrder(); // сброс (можно было бы просто занулить, но теоретически возможны случаи, когда в хранилище есть старые заказы)
                 }
             }, err => {
                 this.appService.showError(err.message);
