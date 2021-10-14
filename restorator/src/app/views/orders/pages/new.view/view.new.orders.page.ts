@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { Socket } from "socket.io-client";
 import { IOrderAccepted } from "src/app/model/dto/order.accepted.interface";
-import { IOrderNeedInvoice } from "src/app/model/dto/order.need.invoice.interface";
 import { IOrderNeedProducts } from "src/app/model/dto/order.need.products.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
@@ -47,8 +46,6 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
     get employee(): Employee {return this.authService.authData.value.employee;} 
     get restaurantId(): number {return this.employee.restaurant_id;}
     get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}   
-    get socket(): Socket {return this.socketService.socket;}
-    get socketConnected(): BehaviorSubject<boolean> {return this.socketService.socketConnected;}
     
     public ngOnInit(): void {       
         this.socketOnUpdated = this.socketOnUpdated.bind(this);
@@ -69,14 +66,14 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
         this.langSubscription.unsubscribe();
         this.authSubscription.unsubscribe();
         this.socketSubscription.unsubscribe();
-        this.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
-        this.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
-        this.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
-        this.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
-        this.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
-        this.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
-        this.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);                
-        this.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
+        this.socketService.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
+        this.socketService.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
+        this.socketService.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
+        this.socketService.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
+        this.socketService.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+        this.socketService.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
+        this.socketService.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);                
+        this.socketService.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
     }
 
     private initAuthCheck(): void {
@@ -96,17 +93,19 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
         }
     } 
     
-    private initSocket(): void {
-        this.socketSubscription = this.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
+    private async initSocket(): Promise<void> {
+        await this.appService.pause(1);  
+        this.socketService.qNew = 0;        
+        this.socketSubscription = this.socketService.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
             if (connected) {                
-                this.socket.on(`updated-${this.restaurantId}`, this.socketOnUpdated);
-                this.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
-                this.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
-                this.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
-                this.socket.on(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
-                this.socket.on(`completed-${this.restaurantId}`, this.socketOnCompleted);
-                this.socket.on(`accepted-${this.restaurantId}`, this.socketOnAccepted);                                               
-                this.socket.on(`deleted-${this.restaurantId}`, this.socketOnDeleted);
+                this.socketService.socket.on(`updated-${this.restaurantId}`, this.socketOnUpdated);
+                this.socketService.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
+                this.socketService.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
+                this.socketService.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
+                this.socketService.socket.on(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+                this.socketService.socket.on(`completed-${this.restaurantId}`, this.socketOnCompleted);
+                this.socketService.socket.on(`accepted-${this.restaurantId}`, this.socketOnAccepted);                                               
+                this.socketService.socket.on(`deleted-${this.restaurantId}`, this.socketOnDeleted);
             }
         });        
     }  
@@ -142,8 +141,8 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
         }        
     }
 
-    private async socketOnNeedWaiter(data: number): Promise<void> {        
-        if (this.order.id === data) {
+    private async socketOnNeedWaiter(data: Order): Promise<void> {        
+        if (this.order.id === data.id) {
             this.order.need_waiter = true;
             this.order._highlightNeedWaiter = true;
             await this.appService.pause(3000);
@@ -151,8 +150,8 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
         }        
     }
 
-    private async socketOnNeedInvoice(data: IOrderNeedInvoice): Promise<void> {
-        if (this.order.id === data.order_id) {
+    private async socketOnNeedInvoice(data: Order): Promise<void> {
+        if (this.order.id === data.id) {
             this.order.need_invoice = true;
             this.order.paymethod = data.paymethod;
             this.order._highlightNeedInvoice = true;            
@@ -162,7 +161,7 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
     }
 
     private async socketOnNeedProducts(data: IOrderNeedProducts): Promise<void> {
-        if (this.order.id === data.order_id) {            
+        if (this.order.id === data.order.id) {            
             this.order.need_products = true;
             this.order._highlightNeedProducts = true;
             data.products.forEach(p => {

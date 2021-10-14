@@ -10,6 +10,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { SettingRepository } from "src/app/services/repositories/setting.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "head-mobile",
@@ -27,6 +28,7 @@ export class HeadMobileComponent implements AfterViewInit {
         private langRepository: LangRepository,
         private settingRepository: SettingRepository,
         private authService: AuthService,
+        private socketService: SocketService,
         private router: Router,
     ) {}
 
@@ -39,6 +41,8 @@ export class HeadMobileComponent implements AfterViewInit {
     get employee(): Employee {return this.authService.authData.value.employee;} 
     get restaurant(): Restaurant {return this.employee.restaurant;}
     get msg(): string {return this.settingRepository.settings?.["restorator-msg"];}
+    get qNew(): number {return this.socketService.qNew;}
+    get qMy(): number {return this.socketService.qMy;}
 
     public async ngAfterViewInit(): Promise<void> {
 		await this.appService.pause(1);

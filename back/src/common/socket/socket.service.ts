@@ -11,7 +11,6 @@ import { WSServer } from "src/model/orm/wsserver.entity";
 import { In, Repository } from "typeorm";
 import { IMsg } from "./dto/msg.interface";
 import { IOrderAccepted } from "./dto/order.accepted.interface";
-import { IOrderNeedInvoice } from "./dto/order.need.invoice.interface";
 import { IOrderNeedProducts } from "./dto/order.need.products.interface";
 import { IServing } from "./dto/serving.interface";
 
@@ -31,7 +30,7 @@ export class SocketService {
             const order = await this.orderRepository.findOne(order_id, {relations: ["products", "table", "table.hall"]});
 
             if (order) {
-                const name = order.employee_id ? `created-${order.restaurant_id}-${order.employee_id}` : `created-${order.restaurant_id}`;
+                const name = `created-${order.restaurant_id}`;
                 const data = order;
                 this.translateMsg({name, data});                
             }            
@@ -67,8 +66,8 @@ export class SocketService {
             const order = await this.orderRepository.findOne(order_id);
 
             if (order) {
-                const name = order.employee_id ? `need-waiter-${order.restaurant_id}-${order.employee_id}` : `need-waiter-${order.restaurant_id}`;
-                const data = order.id;
+                const name = `need-waiter-${order.restaurant_id}`;
+                const data = order;
                 this.translateMsg({name, data});                     
             } 
         } catch (err) {
@@ -82,8 +81,8 @@ export class SocketService {
             const order = await this.orderRepository.findOne(order_id);
 
             if (order) {
-                const name = order.employee_id ? `need-invoice-${order.restaurant_id}-${order.employee_id}` : `need-invoice-${order.restaurant_id}`;
-                const data: IOrderNeedInvoice = {order_id, paymethod: order.paymethod};
+                const name = `need-invoice-${order.restaurant_id}`;
+                const data = order;
                 this.translateMsg({name, data});
             } 
         } catch (err) {
@@ -104,8 +103,8 @@ export class SocketService {
                     p.serving = this.buildMlServing(p.serving as Serving, langs);
                 }
                 
-                const name = order.employee_id ? `need-products-${order.restaurant_id}-${order.employee_id}` : `need-products-${order.restaurant_id}`;
-                const data: IOrderNeedProducts = {order_id, products};
+                const name = `need-products-${order.restaurant_id}`;
+                const data: IOrderNeedProducts = {order, products};
                 this.translateMsg({name, data});
             } 
         } catch (err) {

@@ -8,6 +8,7 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "the-menu",
@@ -21,6 +22,7 @@ export class MenuComponent implements AfterViewInit {
         private appService: AppService,
         private wordRepository: WordRepository,
         private authService: AuthService,
+        private socketService: SocketService,
         private router: Router,
     ) {}
 
@@ -29,6 +31,8 @@ export class MenuComponent implements AfterViewInit {
     get url(): string[] {return this.appService.url;}    
     get employee(): Employee {return this.authService.authData.value.employee;}
     get restaurant(): Restaurant {return this.employee.restaurant;}
+    get qNew(): number {return this.socketService.qNew;}
+    get qMy(): number {return this.socketService.qMy;}
 
     public async ngAfterViewInit(): Promise<void> {
 		await this.appService.pause(1);

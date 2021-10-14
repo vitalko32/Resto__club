@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { Socket } from "socket.io-client";
 import { IOrderAccepted } from "src/app/model/dto/order.accepted.interface";
-import { IOrderNeedInvoice } from "src/app/model/dto/order.need.invoice.interface";
 import { IOrderNeedProducts } from "src/app/model/dto/order.need.products.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
@@ -45,8 +44,6 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     get ol(): Order[] {return this.orderRepository.xlAll;}
     get employee(): Employee {return this.authService.authData.value.employee;}
     get restaurantId(): number {return this.employee.restaurant_id;}
-    get socket(): Socket {return this.socketService.socket;}
-    get socketConnected(): BehaviorSubject<boolean> {return this.socketService.socketConnected;}
     
     public ngOnInit(): void {    
         this.socketOnCreated = this.socketOnCreated.bind(this);
@@ -68,15 +65,15 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         this.langSubscription.unsubscribe();
         this.authSubscription.unsubscribe();
         this.socketSubscription.unsubscribe();
-        this.socket.off(`created-${this.restaurantId}`, this.socketOnCreated);
-        this.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
-        this.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
-        this.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
-        this.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
-        this.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
-        this.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
-        this.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);
-        this.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
+        this.socketService.socket.off(`created-${this.restaurantId}`, this.socketOnCreated);
+        this.socketService.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
+        this.socketService.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
+        this.socketService.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
+        this.socketService.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
+        this.socketService.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+        this.socketService.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
+        this.socketService.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);
+        this.socketService.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
     }
 
     private initTitle(): void {
@@ -98,20 +95,22 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         }
     }   
     
-    private initSocket(): void {
-        this.socketSubscription = this.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
+    private async initSocket(): Promise<void> {        
+        await this.appService.pause(1);  
+        this.socketService.qNew = 0;
+        this.socketSubscription = this.socketService.socketConnected.subscribe(connected => { // обработчики сообщений вешаются после коннекта!
             if (connected) {
-                this.socket.on(`created-${this.restaurantId}`, this.socketOnCreated);
-                this.socket.on(`updated-${this.restaurantId}`, this.socketOnUpdated);
-                this.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
-                this.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
-                this.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);                
-                this.socket.on(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
-                this.socket.on(`completed-${this.restaurantId}`, this.socketOnCompleted);
-                this.socket.on(`accepted-${this.restaurantId}`, this.socketOnAccepted);
-                this.socket.on(`deleted-${this.restaurantId}`, this.socketOnDeleted);
+                this.socketService.socket.on(`created-${this.restaurantId}`, this.socketOnCreated);
+                this.socketService.socket.on(`updated-${this.restaurantId}`, this.socketOnUpdated);
+                this.socketService.socket.on(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);                
+                this.socketService.socket.on(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);                
+                this.socketService.socket.on(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);                
+                this.socketService.socket.on(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+                this.socketService.socket.on(`completed-${this.restaurantId}`, this.socketOnCompleted);
+                this.socketService.socket.on(`accepted-${this.restaurantId}`, this.socketOnAccepted);
+                this.socketService.socket.on(`deleted-${this.restaurantId}`, this.socketOnDeleted);
             }
-        });        
+        });                
     }    
     
     public olOnAccept(o: Order): void {
@@ -156,24 +155,27 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     
     // сообщения сокетов
     private async socketOnCreated(data: Order): Promise<void> {        
-        const order = new Order().build(data);
-        order._highlight = true;
-        this.ol.unshift(order);
-        await this.appService.pause(3000);
-        order._highlight = false;        
+        if (!data.employee_id) {
+            const order = new Order().build(data);
+            order._highlight = true;
+            this.ol.unshift(order);
+            await this.appService.pause(3000);
+            order._highlight = false;        
+        }        
     }
 
     private socketOnUpdated(data: Order): void {
         const index = this.ol.findIndex(o => o.id === data.id);
 
-        if (index !== -1) {
-            // при апдейте мы не знаем, привязан этот заказ к сотруднику или нет, поэтому проверяем и либо удаляем, либо заменяем
+        if (index !== -1) {            
             data.employee_id ? this.ol.splice(index, 1) : this.ol[index] = new Order().build(data);
-        }        
+        } else {
+            this.socketOnCreated(data);
+        }       
     }
 
-    private async socketOnNeedWaiter(data: number): Promise<void> {                
-        const order = this.ol.find(o => o.id === data);
+    private async socketOnNeedWaiter(data: Order): Promise<void> {                
+        const order = this.ol.find(o => o.id === data.id);
         
         if (order) {
             order.need_waiter = true;
@@ -183,8 +185,8 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
         }        
     }
 
-    private async socketOnNeedInvoice(data: IOrderNeedInvoice): Promise<void> {
-        const order = this.ol.find(o => o.id === data.order_id);
+    private async socketOnNeedInvoice(data: Order): Promise<void> {
+        const order = this.ol.find(o => o.id === data.id);
 
         if (order) {
             order.need_invoice = true;
@@ -195,7 +197,7 @@ export class IndexNewOrdersPage implements OnInit, OnDestroy {
     }
 
     private async socketOnNeedProducts(data: IOrderNeedProducts): Promise<void> {
-        const order = this.ol.find(o => o.id === data.order_id);
+        const order = this.ol.find(o => o.id === data.order.id);
 
         if (order) {
             order.need_products = true;

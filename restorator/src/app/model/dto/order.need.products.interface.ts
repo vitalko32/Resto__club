@@ -1,6 +1,7 @@
+import { Order } from "../orm/order.model";
 import { IOrderProduct } from "../orm/order.product.interface";
 
 export interface IOrderNeedProducts {
-    order_id: number;
+    order: Order;
     products: IOrderProduct[];
 }

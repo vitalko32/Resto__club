@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { Employee } from "src/app/model/orm/employee.model";
@@ -13,6 +13,7 @@ import { HallRepository } from "src/app/services/repositories/hall.repository";
 import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
 import { ServingRepository } from "src/app/services/repositories/serving.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "create-my-orders-page",
@@ -33,7 +34,8 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         private orderRepository: OrderMyRepository,
         private hallRepository: HallRepository,  
         private servingRepository: ServingRepository,     
-        private authService: AuthService,         
+        private authService: AuthService,     
+        private socketService: SocketService,    
         private router: Router,    
         private route: ActivatedRoute,  
     ) {}    
@@ -51,6 +53,7 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         this.initOrder();     
         this.initHalls(); 
         this.initServings();
+        this.initSocket();
     }  
     
     public ngOnDestroy(): void {
@@ -86,7 +89,12 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
-    }    
+    }  
+    
+    private async initSocket(): Promise<void> {
+        await this.appService.pause(1);
+        this.socketService.qMy = 0;
+    }
     
     public async create(): Promise<void> {
         try {
