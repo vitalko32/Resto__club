@@ -55,7 +55,7 @@ export class SocketService {
         this.socketConnected.next(false);
         this.socket.disconnect();        
         this.appService.showError("reconnecting socket...");        
-        await this.appService.pause(10000);        
+        await this.appService.pause(5000);
         this.serverIndex = this.serverIndex < this.servers.length - 1 ? this.serverIndex + 1 : 0;
         this.connect();
     }

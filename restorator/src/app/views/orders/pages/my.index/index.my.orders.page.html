@@ -6,14 +6,14 @@
         <ng-container *ngIf="ol.length">
             <div class="order" *ngFor="let o of ol">
                 <div class="o-date">{{o.formattedCreatedAt}}</div>
-                <div class="o-main">                                
+                <div class="o-main" [class.highlight]="o._highlight">                                
                     <div class="o-content">
                         <div class="oc-table">
                             <div class="oct-title">{{o.table?.no}} {{words['restorator-orders']['table'][currentLang.slug]}}</div>
                             <div class="oct-btns">
-                                <div class="oct-btn need-waiter" *ngIf="o.need_waiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]" (click)="olOnUnneed(o, 'need_waiter')"><span></span></div>   
-                                <div class="oct-btn need-products" *ngIf="o.need_products" [title]="words['restorator-orders']['need-products'][currentLang.slug]" (click)="olOnUnneed(o, 'need_products')"><span></span></div>
-                                <div class="oct-btn need-invoice" *ngIf="o.need_invoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]" (click)="olOnUnneed(o, 'need_invoice')"><span></span></div>                  
+                                <div *ngIf="o.need_waiter" class="oct-btn need-waiter" [class.highlight]="o._highlightNeedWaiter" [title]="words['restorator-orders']['need-waiter'][currentLang.slug]" (click)="olOnUnneed(o, 'need_waiter')"><span></span></div>   
+                                <div *ngIf="o.need_products" class="oct-btn need-products" [class.highlight]="o._highlightNeedProducts" [title]="words['restorator-orders']['need-products'][currentLang.slug]" (click)="olOnUnneed(o, 'need_products')"><span></span></div>
+                                <div *ngIf="o.need_invoice" class="oct-btn need-invoice" [class.highlight]="o._highlightNeedInvoice" [title]="words['restorator-orders']['need-invoice'][currentLang.slug]" (click)="olOnUnneed(o, 'need_invoice')"><span></span></div>                  
                             </div>                        
                         </div>
                         <div>{{words['restorator-orders']['seats'][currentLang.slug]}}: <strong>{{o.table?.seats}}</strong>, {{words['restorator-orders']['hall2'][currentLang.slug]}}: <strong>{{o.table?.hall?.name}}</strong></div>
