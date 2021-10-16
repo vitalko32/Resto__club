@@ -2562,6 +2562,28 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 1046	322	лист салата	t
 1047	323	мороженое фруктовое	t
 1048	323	клубника	t
+1049	324	Апельсины	t
+1050	324	Грейпфруты	t
+1051	325	мороженое сливочное	t
+1052	325	мороженое шоколадное	t
+1053	325	вафельный стаканчик	t
+1054	326	мороженое фруктовое	t
+1055	326	клубника	t
+1056	327	мороженое сливочное	t
+1057	327	мороженое шоколадное	t
+1058	327	вафельный стаканчик	t
+1059	328	мороженое фруктовое	t
+1060	328	клубника	t
+1061	329	мороженое сливочное	t
+1062	329	мороженое шоколадное	t
+1063	329	вафельный стаканчик	t
+1064	330	мороженое фруктовое	t
+1065	330	клубника	t
+1066	331	мороженое фруктовое	t
+1067	331	клубника	t
+1068	332	мороженое сливочное	t
+1069	332	мороженое шоколадное	t
+1070	332	вафельный стаканчик	t
 \.
 
 
@@ -2862,6 +2884,15 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 321	168	1	hf00015	Какое-то блюдо 15	1000	1	f	2021-9/1632350544594_500.jpg
 322	169	1	h0001	Гамбургер с телятиной	100	21	f	2021-9/1632942969923_500.jpg
 323	170	1	m0002	Мороженое "Фруктовый сад"	300	40	f	2021-9/1632669997544_500.jpg
+324	171	1	f0001	Цитрусовая нарезка	200	26	f	2021-9/1632351091004_500.jpg
+325	172	1	m0001	Мороженое "Сказка"	500	31	f	2021-9/1632669890885_500.jpg
+326	172	1	m0002	Мороженое "Фруктовый сад"	300	27	f	2021-9/1632669997544_500.jpg
+327	173	1	m0001	Мороженое "Сказка"	500	7	f	2021-9/1632669890885_500.jpg
+328	173	1	m0002	Мороженое "Фруктовый сад"	300	11	f	2021-9/1632669997544_500.jpg
+329	174	1	m0001	Мороженое "Сказка"	500	3	f	2021-9/1632669890885_500.jpg
+330	174	1	m0002	Мороженое "Фруктовый сад"	300	3	f	2021-9/1632669997544_500.jpg
+331	175	1	m0002	Мороженое "Фруктовый сад"	300	9	f	2021-9/1632669997544_500.jpg
+332	175	1	m0001	Мороженое "Сказка"	500	13	f	2021-9/1632669890885_500.jpg
 \.
 
 
@@ -2940,6 +2971,11 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 130	82	18	21	9	f	f	completed	0	100	2021-10-13 12:04:14.747888	f			cash	2021-10-13 12:04:24.432	2021-09-13 12:16:50.798
 169	61	2	21	9	f	f	completed	0	2100	2021-10-17 01:49:14.512239	f			cash	2021-10-17 01:49:22.122	2021-10-17 01:49:29.599
 170	64	4	21	9	f	f	completed	0	12000	2021-10-17 01:50:06.91881	f			cash	2021-10-17 01:50:12.349	2021-10-17 01:50:14.892
+171	86	2	21	9	f	f	completed	0	5200	2021-10-17 02:15:25.061267	f			cash	2021-10-17 02:15:35.026	2021-10-17 02:15:39.644
+172	87	2	21	9	f	f	completed	0	23600	2021-10-17 02:17:08.061226	f			cash	2021-10-17 02:17:14.126	2021-10-17 02:17:16.382
+173	83	18	21	9	f	f	completed	0	6800	2021-10-17 02:19:42.514253	f			cash	2021-10-17 02:19:47.54	2021-10-17 02:19:51.653
+174	83	18	21	9	f	f	completed	0	2400	2021-10-17 02:20:05.111451	f			cash	2021-10-17 02:20:09.478	2021-10-17 02:20:11.964
+175	88	4	21	9	f	f	completed	0	9200	2021-10-17 02:22:07.840258	f			cash	2021-10-17 02:22:14.18	2021-10-17 02:22:16.39
 39	\N	\N	21	\N	f	f	cancelled	0	\N	2021-10-05 14:51:09.478667	f			cash	\N	\N
 21	\N	\N	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
 43	\N	\N	21	9	f	f	completed	0	\N	2021-10-05 15:07:42.737255	t			cash	2021-10-05 15:08:01.712	2021-10-05 15:08:42.702
@@ -3437,11 +3473,14 @@ COPY "default".vne_settings (id, p, v, c, pos, in_app, defended) FROM stdin;
 
 COPY "default".vne_tables (id, hall_id, no, seats, x, y, code) FROM stdin;
 51	3	1	1	1	1	vvgshsy57v
-61	2	10	1	1	1	qbrzsv75pf
-62	2	11	2	1	0	wb2njnbbkj
 82	18	2	4	1	1	bxak9bstmf
 83	18	3	6	2	0	g3jm2pjh79
 81	18	1	2	0	0	z2nb4kfbva
+86	2	12	4	2	2	cbwank6cez
+61	2	10	1	0	0	qbrzsv75pf
+62	2	11	2	1	1	wb2njnbbkj
+87	2	13	1	3	3	sl4934ncdf
+88	4	22	1	2	2	ksro142jar
 63	4	20	4	0	0	g3isd9p6td
 64	4	21	6	1	1	ph0mob8pug
 \.
@@ -5604,21 +5643,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 1048, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 1070, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 323, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 332, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 170, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 175, true);
 
 
 --
@@ -5667,7 +5706,7 @@ SELECT pg_catalog.setval('"default".vne_settings_id_seq', 13, true);
 -- Name: vne_tables_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_tables_id_seq', 85, true);
+SELECT pg_catalog.setval('"default".vne_tables_id_seq', 88, true);
 
 
 --
