@@ -20,6 +20,7 @@ import { OrderRepository } from './repositories/order.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { ServingRepository } from './repositories/serving.repository';
 import { SettingRepository } from './repositories/setting.repository';
+import { StatsRepository } from './repositories/stats.repository';
 import { WordRepository } from './repositories/word.repository';
 import { WSServerRepository } from './repositories/wsserver.repository';
 import { SocketService } from './socket.service';
@@ -55,6 +56,7 @@ import { SoundService } from './sound.service';
         OrderRepository,
         ServingRepository,    
         WSServerRepository,    
+        StatsRepository,
     ],
 })
 export class ServicesModule {}

@@ -3,6 +3,8 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
+import { AdminGuard } from "src/app/services/admin.guard";
+import { FinanceGuard } from "src/app/services/finance.guard";
 import { OrderProductEditableComponent } from "./components/order-product-editable/order-product-editable.component";
 import { OrderProductComponent } from "./components/order-product/order-product.component";
 import { OrderComponent } from "./components/order/order.component";
@@ -17,14 +19,14 @@ import { IndexNewOrdersPage } from "./pages/new.index/index.new.orders.page";
 import { ViewNewOrdersPage } from "./pages/new.view/view.new.orders.page";
 
 let routes = RouterModule.forChild ([            
-	{path: "new", component: IndexNewOrdersPage, pathMatch: "full"},
-	{path: "new/view/:id", component: ViewNewOrdersPage},
-	{path: "my", component: IndexMyOrdersPage, pathMatch: "full"},
-	{path: "my/edit/:id", component: EditMyOrdersPage},
-	{path: "my/create", component: CreateMyOrdersPage},
-	{path: "all", component: IndexAllOrdersPage, pathMatch: "full"},
-	{path: "all/edit/:id", component: EditAllOrdersPage},
-	{path: "all/create", component: CreateAllOrdersPage},
+	{path: "new", component: IndexNewOrdersPage, pathMatch: "full", canActivate: [FinanceGuard]},
+	{path: "new/view/:id", component: ViewNewOrdersPage, canActivate: [FinanceGuard]},
+	{path: "my", component: IndexMyOrdersPage, pathMatch: "full", canActivate: [FinanceGuard]},
+	{path: "my/edit/:id", component: EditMyOrdersPage, canActivate: [FinanceGuard]},
+	{path: "my/create", component: CreateMyOrdersPage, canActivate: [FinanceGuard]},
+	{path: "all", component: IndexAllOrdersPage, pathMatch: "full", canActivate: [AdminGuard]},
+	{path: "all/edit/:id", component: EditAllOrdersPage, canActivate: [AdminGuard]},
+	{path: "all/create", component: CreateAllOrdersPage, canActivate: [AdminGuard]},
 	{path: "**", redirectTo: "/orders/new"},
 ]);
 

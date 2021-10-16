@@ -20,5 +20,6 @@
         <div class="menu-sub-item"><a routerLink="/kitchen/cats" [class.active]="url[2] === 'cats'">- {{words['restorator-common']['menu-cats'][currentLang.slug]}}</a></div>            
         <div class="menu-sub-item"><a routerLink="/kitchen/products" [class.active]="url[2] === 'products'">- {{words['restorator-common']['menu-products'][currentLang.slug]}}</a></div>             
     </div>    
+    <div class="menu-item" *ngIf="employee.is_admin"><a routerLink="/stats" class="menu-btn" [class.active]="url[1] === 'stats'">{{words['restorator-common']['menu-stats'][currentLang.slug]}}</a></div>            
     <div class="menu-item"><a routerLink="/auth/password" class="menu-btn" [class.active]="url[1] === 'auth' && url[2] === 'password'">{{words['restorator-common']['menu-pw'][currentLang.slug]}}</a></div>                
 </div>  

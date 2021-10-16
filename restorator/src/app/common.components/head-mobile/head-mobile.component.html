@@ -25,7 +25,8 @@
             <div class="hml-sub sub1" [class.active]="subActive[1]" *ngIf="employee.is_admin">
                 <div class="hml-sub-item"><a routerLink="/kitchen/cats" [class.active]="url[2] === 'cats'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-cats'][currentLang.slug]}}</a></div>            
                 <div class="hml-sub-item"><a routerLink="/kitchen/products" [class.active]="url[2] === 'products'" (click)="menuPanelActive = false;">- {{words['restorator-common']['menu-products'][currentLang.slug]}}</a></div>             
-            </div>            
+            </div>      
+            <div class="hml-item" *ngIf="employee.is_admin"><a class="hml-item-btn" routerLink="/stats" [class.active]="url[1] === 'stats'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-stats'][currentLang.slug]}}</a></div>                  
             <div class="hml-item"><a class="hml-item-btn" routerLink="/auth/password" [class.active]="url[1] === 'auth' && url[2] === 'password'" (click)="menuPanelActive = false;">{{words['restorator-common']['menu-pw'][currentLang.slug]}}</a></div>                
             <div class="hml-item"><a class="hml-item-btn" routerLink="/auth/logout" (click)="menuPanelActive = false;">{{words['common']['logout'][currentLang.slug]}}</a></div>            
         </div>

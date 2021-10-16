@@ -8,7 +8,7 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class TablesService extends APIService {
-    constructor(@InjectRepository(Hall) private hallRepository: Repository<Hall>,) {
+    constructor(@InjectRepository(Hall) private hallRepository: Repository<Hall>) {
         super();
     }
 

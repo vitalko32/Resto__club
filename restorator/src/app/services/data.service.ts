@@ -28,6 +28,8 @@ import { IOrderAccept } from "../model/dto/order.accept.interface";
 import { IServing } from "../model/orm/serving.interface";
 import { Table } from "../model/orm/table.model";
 import { IWSServer } from "../model/orm/wsserver.interface";
+import { IGetMonthStats } from "../model/dto/stats/get.month.stats.interface";
+import { ITableSum } from "../model/dto/stats/table.sum.interface";
 
 @Injectable()
 export class DataService {
@@ -102,6 +104,8 @@ export class DataService {
     public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}    
 
     public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
+
+    public statsTables(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/tables", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;
