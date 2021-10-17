@@ -30,6 +30,7 @@ import { Table } from "../model/orm/table.model";
 import { IWSServer } from "../model/orm/wsserver.interface";
 import { IGetMonthStats } from "../model/dto/stats/get.month.stats.interface";
 import { ITableSum } from "../model/dto/stats/table.sum.interface";
+import { IEmployeeSum } from "../model/dto/stats/employee.sum.interface";
 
 @Injectable()
 export class DataService {
@@ -106,6 +107,7 @@ export class DataService {
     public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
 
     public statsTables(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/tables", dto, true);}
+    public statsEmployees(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employees", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

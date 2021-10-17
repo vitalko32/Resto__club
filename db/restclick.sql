@@ -1458,15 +1458,15 @@ COPY "default".vne_employee_statuses (id, color, pos) FROM stdin;
 COPY "default".vne_employees (id, restaurant_id, employee_status_id, email, password, name, phone, is_admin, created_at, defended) FROM stdin;
 6	18	\N	7573498@gmail.com	123	\N	\N	t	2021-08-27 22:30:50.941314	t
 7	19	\N	7573499@gmail.com	123	\N	\N	t	2021-08-28 00:39:48.284041	t
-1	1	\N	7573497222@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
 3	\N	1	viovalya@gmail.com	$2b$10$Kif/QFeeEAC4K00XRKmfueMbCo.OvqG0gu28VR6KqYtwsA5bxfOKi	Лисичкин Виктор	+38123444444443	f	2021-08-26 22:03:00.332342	f
 2	10	1	admin@vio.net.ua		Мышкин Иван	+38 095 2010000	t	2021-08-26 21:32:06.303446	f
 9	21	2	7573497@gmail.com	$2b$10$5joksSpTiM4UGl8WTxVDQeOfDCPpPcyCSUZxRfBY8NOfZxS83bbVm	Булкин Александр Анатольевич	\N	t	2021-08-28 11:12:59.882811	t
 28	45	\N	75734974444@gmail.com	$2b$10$o2Y63TUS9aBVLLpNAkS9IOMVb2TvEKCjUtg3tADQTnsJI/zrTqBJe	\N	\N	t	2021-09-02 21:07:52.119825	t
 29	9	\N	7573497777@gmail.com	$2b$10$lrWJKgjzIhv6qDzSD6AcZOjh2KO9k5x3K5tVjQJ3q58ZgF/uSQKj6	Петров Андрей	+380664000050	t	2021-09-03 01:41:45.691878	f
-48	21	\N	757349781@gmail.com	$2b$10$jc/bXWV4WjUL7Hfe9sqLMevQq9lO1R/iu4O8CO36TwfkGtHtY2Zje	Олег Кошкин	+380664021350	f	2021-10-11 15:36:57.822037	f
 31	46	\N	7573497rr@gmail.com	$2b$10$4KyYx5FqOrFutyLB7Ls2oe82rMzNIGvQ/24YWJ1QivWSTFs4gSEpm	\N	\N	t	2021-09-07 01:16:30.429325	t
 32	15	\N	7573497999@gmail.com	$2b$10$IjNiwNYzTFdFc.r.fMYWo.sa5Mbm9ebMnABxBYaYfXDKdeJJnL9om	Пушкин А.	+380664028899	t	2021-09-07 02:03:30.360362	f
+1	1	\N	somemeail@gmail.com		Кошкин Алексей	+38 066 4020000	t	2021-08-26 21:31:03.512723	t
+48	21	\N	koshkin@gmail.com	$2b$10$jNy/pKG5TkIxmr6Tt8ksH.PL8vAuOEpK75ZMC5tIj.95ysgT8E8QS	Олег Кошкин	+380664021350	f	2021-10-11 15:36:57.822037	f
 30	43	\N	7573497111@gmail.com	$2b$10$ZugM9ReCVctvQ9CdfPF7wucHDF8Tu7cTJyC9zXfbCgkZEMn12xgsm	Безымянный Андрей	+380664000000	f	2021-09-04 12:48:30.239362	f
 27	\N	\N	75734975555@gmail.com	$2b$10$RXTYMD2BBvxYo/J2o2VXCuPSe2OY6cOTCSGx5i8Dl2/VzTlXLMfwu	Чепига Алексей	+380660000000	f	2021-09-02 12:59:04.543675	f
 10	22	\N	757349788@gmail.com	123	Петров Алексей	\N	t	2021-08-28 11:27:23.119406	t
@@ -2584,6 +2584,20 @@ COPY "default".vne_order_product_ingredients (id, order_product_id, name, includ
 1068	332	мороженое сливочное	t
 1069	332	мороженое шоколадное	t
 1070	332	вафельный стаканчик	t
+1071	333	мясо	t
+1072	333	хлеб	t
+1073	333	кетчуп	t
+1074	333	помидор	t
+1075	333	лист салата	t
+1076	334	Хлеб	t
+1077	334	Мясо	t
+1078	334	Сыр среднеазиатский "Дары пустыни"	t
+1079	334	Зелень	t
+1080	335	мороженое сливочное	t
+1081	335	мороженое шоколадное	t
+1082	335	вафельный стаканчик	t
+1083	336	мороженое фруктовое	t
+1084	336	клубника	t
 \.
 
 
@@ -2893,6 +2907,10 @@ COPY "default".vne_order_products (id, order_id, serving_id, code, name, price, 
 330	174	1	m0002	Мороженое "Фруктовый сад"	300	3	f	2021-9/1632669997544_500.jpg
 331	175	1	m0002	Мороженое "Фруктовый сад"	300	9	f	2021-9/1632669997544_500.jpg
 332	175	1	m0001	Мороженое "Сказка"	500	13	f	2021-9/1632669890885_500.jpg
+333	176	1	h0001	Гамбургер с телятиной	100	28	f	2021-9/1632942969923_500.jpg
+334	176	1	h0002	Королевский чизбургер	305	41	f	2021-9/1632351029146_500.jpg
+335	177	1	m0001	Мороженое "Сказка"	500	11	f	2021-9/1632669890885_500.jpg
+336	177	1	m0002	Мороженое "Фруктовый сад"	300	24	f	2021-9/1632669997544_500.jpg
 \.
 
 
@@ -2976,6 +2994,7 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 173	83	18	21	9	f	f	completed	0	6800	2021-10-17 02:19:42.514253	f			cash	2021-10-17 02:19:47.54	2021-10-17 02:19:51.653
 174	83	18	21	9	f	f	completed	0	2400	2021-10-17 02:20:05.111451	f			cash	2021-10-17 02:20:09.478	2021-10-17 02:20:11.964
 175	88	4	21	9	f	f	completed	0	9200	2021-10-17 02:22:07.840258	f			cash	2021-10-17 02:22:14.18	2021-10-17 02:22:16.39
+176	81	18	21	36	f	f	completed	0	15305	2021-10-17 20:59:26.447956	f			cash	2021-10-17 20:59:31.385	2021-10-17 20:59:39.458
 39	\N	\N	21	\N	f	f	cancelled	0	\N	2021-10-05 14:51:09.478667	f			cash	\N	\N
 21	\N	\N	21	9	t	t	cancelled	0	\N	2021-10-01 01:27:00.455782	f			cash	\N	\N
 43	\N	\N	21	9	f	f	completed	0	\N	2021-10-05 15:07:42.737255	t			cash	2021-10-05 15:08:01.712	2021-10-05 15:08:42.702
@@ -3009,7 +3028,6 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 2	\N	\N	21	9	f	f	cancelled	0	\N	2021-09-29 19:46:07.036984	f			cash	\N	\N
 24	\N	\N	21	9	f	f	completed	0	\N	2021-10-04 02:16:40.599221	f	<div>04.10.2021 02:16 какое-то поежлание</div>	друг шефа	cash	2021-10-04 12:49:12.066	2021-10-05 15:10:32.676
 12	\N	\N	21	\N	f	f	cancelled	0	\N	2021-09-30 01:52:41.812539	f			cash	\N	\N
-23	\N	\N	21	36	t	f	active	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
 15	\N	\N	21	\N	f	f	cancelled	10	\N	2021-09-30 22:49:06.120396	f			cash	\N	\N
 5	\N	\N	21	9	t	f	cancelled	0	\N	2021-09-29 20:01:07.059932	t		хороший клиент	cash	2021-10-04 12:48:38.243	\N
 25	\N	\N	21	9	f	f	completed	0	\N	2021-10-04 12:50:16.497155	t			cash	2021-10-04 22:13:00.08	2021-10-04 22:17:43.006
@@ -3057,6 +3075,8 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 112	81	18	21	\N	t	f	cancelled	0	2000	2021-10-12 23:04:24.519403	f			cash	\N	\N
 113	81	18	21	\N	t	f	cancelled	0	\N	2021-10-12 23:04:42.799402	f			cash	\N	\N
 114	81	18	21	\N	t	f	cancelled	0	1000	2021-10-12 23:04:53.750018	f			cash	\N	\N
+23	\N	\N	21	36	t	f	cancelled	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
+177	81	18	21	48	f	f	completed	0	12700	2021-10-17 21:01:23.292541	f			cash	2021-10-17 21:01:27.458	2021-10-17 21:01:29.717
 \.
 
 
@@ -5185,6 +5205,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1076	344	2	Statistics
 1077	345	1	Продажи по столам за месяц
 1078	345	2	Sales by tables per month
+1079	346	1	Продажи по сотрудникам за месяц
+1080	346	2	Sales by employee per month
 \.
 
 
@@ -5529,6 +5551,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 343	7	14	menu-stats	\N
 344	22	0	title	\N
 345	22	1	stat-tables	\N
+346	22	2	stat-employees	\N
 \.
 
 
@@ -5643,21 +5666,21 @@ SELECT pg_catalog.setval('"default".vne_mailtemplates_id_seq', 8, true);
 -- Name: vne_order_product_ingredients_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 1070, true);
+SELECT pg_catalog.setval('"default".vne_order_product_ingredients_id_seq', 1084, true);
 
 
 --
 -- Name: vne_order_products_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 332, true);
+SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 336, true);
 
 
 --
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 175, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 177, true);
 
 
 --
@@ -5720,7 +5743,7 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1162, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1078, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1080, true);
 
 
 --
@@ -5734,7 +5757,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 22, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 345, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 346, true);
 
 
 --

@@ -2,17 +2,22 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { APIService } from "src/common/api.service";
 import { IAnswer } from "src/model/dto/answer.interface";
+import { Employee } from "src/model/orm/employee.entity";
 import { Hall } from "src/model/orm/hall.entity";
 import { OrderStatus } from "src/model/orm/order.entity";
 import { Table } from "src/model/orm/table.entity";
 import { db_name, db_schema } from "src/options";
 import { getManager, Repository } from "typeorm";
+import { IEmployeeSum } from "./dto/employee.sum.interface";
 import { IGetMonthStats } from "./dto/get.month.stats.interface";
 import { ITableSum } from "./dto/table.sum.interface";
 
 @Injectable()
 export class StatsService extends APIService {
-    constructor(@InjectRepository(Hall) private hallRepository: Repository<Hall>) {
+    constructor(
+        @InjectRepository(Hall) private hallRepository: Repository<Hall>,
+        @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+    ) {
         super();
     }
 
@@ -38,6 +43,26 @@ export class StatsService extends APIService {
             return {statusCode: 200, data};
         } catch (err) {
             const errTxt: string = `Error in StatsService.tables: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async employees(dto: IGetMonthStats): Promise<IAnswer<IEmployeeSum[]>> {
+        try {
+            const employees = await this.employeeRepository.find({where: {restaurant_id: dto.restaurant_id}});
+            const data: IEmployeeSum[] = [];
+
+            for (let e of employees) {
+                const filter = `orders.employee_id='${e.id}' AND EXTRACT(MONTH FROM orders.completed_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
+                const sumRes = await getManager().query(`SELECT SUM(sum) AS sum FROM ${db_name}.${db_schema}.vne_orders AS orders WHERE ${filter}`);
+                const sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;   
+                data.push({name: e.name, sum});
+            }
+
+            return {statusCode: 200, data};            
+        } catch (err) {
+            const errTxt: string = `Error in StatsService.employees: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

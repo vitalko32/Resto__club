@@ -1,5 +1,5 @@
 export interface ITableSum {
-    no: number;
-    sum: number;
+    readonly no: number;
+    readonly sum: number;
     active?: boolean;
 }

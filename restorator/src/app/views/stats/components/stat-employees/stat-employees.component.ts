@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ITableSum } from "src/app/model/dto/stats/table.sum.interface";
+import { IEmployeeSum } from "src/app/model/dto/stats/employee.sum.interface";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -8,12 +8,12 @@ import { StatsRepository } from "src/app/services/repositories/stats.repository"
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "stat-tables",
-    templateUrl: "stat-tables.component.html",
-    styleUrls: ["stat-tables.component.scss"],
+    selector: "stat-employees",
+    templateUrl: "stat-employees.component.html",
+    styleUrls: ["stat-employees.component.scss"],
 })
-export class StatTablesComponent implements OnInit {
-    public xl: ITableSum[] = [];
+export class StatEmployeesComponent implements OnInit {
+    public xl: IEmployeeSum[] = [];
     public xlMax: number = 0;
     public months: number[] = [];
     public years: number[] = [];
@@ -49,8 +49,8 @@ export class StatTablesComponent implements OnInit {
 
     public async initStats(): Promise<void> {
         try {
-            const data = await this.statsRepository.loadTables(this.restaurantId, this.currentMonth, this.currentYear);            
-            this.xl = data.map(d => ({no: d.no, sum: d.sum, active: false}));
+            const data = await this.statsRepository.loadEmployees(this.restaurantId, this.currentMonth, this.currentYear);            
+            this.xl = data.map(d => ({name: d.name, sum: d.sum, active: false}));
             this.xlMax = Math.max(...this.xl.map(x => x.sum));            
             
             for (let x of this.xl) {
@@ -62,7 +62,7 @@ export class StatTablesComponent implements OnInit {
         }
     }
 
-    public getColumnHeight(sum: number): number {
+    public getItemWidth(sum: number): number {
         return this.xlMax ? 100 * sum / this.xlMax : 0;
     }
 }
