@@ -22,8 +22,8 @@ let routes = RouterModule.forChild ([
 	],
 	declarations: [
 		IndexStatsPage,		
-		StatTablesComponent,	
-		StatEmployeesComponent,	
+		StatTablesComponent,			
+		StatEmployeesComponent,
 	],    		    
 })
 export class StatsModule {}

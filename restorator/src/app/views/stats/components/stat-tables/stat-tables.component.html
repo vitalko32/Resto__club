@@ -4,7 +4,7 @@
         <div class="stg-max">{{xlMax}} {{words['common']['currency-name'][currentLang.slug]}}</div>
         <div class="stg-content beauty-scroll-h-compact">
             <div class="stg-columns">
-                <div class="stg-column" *ngFor="let x of xl" [style.height]="x.active ? getColumnHeight(x.sum)+'%' : 0" [title]="x.sum + ' ' + words['common']['currency-name'][currentLang.slug]">
+                <div class="stg-column" *ngFor="let x of xl" [style.height]="x.active ? sum2percent(x.sum)+'%' : 0" [title]="x.sum + ' ' + words['common']['currency-name'][currentLang.slug]">
                     <div class="stg-no">{{x.no}}</div>                    
                 </div>                                                
             </div>            

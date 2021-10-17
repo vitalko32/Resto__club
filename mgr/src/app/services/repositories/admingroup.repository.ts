@@ -22,8 +22,7 @@ export class AdmingroupRepository extends Repository<Admingroup> {
             };
             this.dataService.admingroupsAll(dto).subscribe(res => {
                 if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Admingroup().build(d)) : [];                        
-                    
+                    this.xlAll = res.data.length ? res.data.map(d => new Admingroup().build(d)) : [];                    
                     resolve();
                 } else {                        
                     reject(res.error);

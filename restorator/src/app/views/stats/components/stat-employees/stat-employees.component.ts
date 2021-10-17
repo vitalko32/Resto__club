@@ -14,11 +14,12 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 })
 export class StatEmployeesComponent implements OnInit {
     public xl: IEmployeeSum[] = [];
-    public xlMax: number = 0;
+    public xlSum: number = 0;
     public months: number[] = [];
     public years: number[] = [];
     public currentMonth: number = null;
     public currentYear: number = null;
+    public radius: number = 15.91549430918954; // длину окружности считаем равной 100, тогда радиус будет такой    
 
     constructor(
         private appService: AppService,
@@ -50,8 +51,8 @@ export class StatEmployeesComponent implements OnInit {
     public async initStats(): Promise<void> {
         try {
             const data = await this.statsRepository.loadEmployees(this.restaurantId, this.currentMonth, this.currentYear);            
-            this.xl = data.map(d => ({name: d.name, sum: d.sum, active: false}));
-            this.xlMax = Math.max(...this.xl.map(x => x.sum));            
+            this.xl = data.map((d, i) => ({name: d.name, sum: d.sum, active: false, color: this.buildColor(i)}));
+            this.xlSum = this.xl.map(x => x.sum).reduce((a, b) => a + b);
             
             for (let x of this.xl) {
                 await this.appService.pause(100);
@@ -62,7 +63,27 @@ export class StatEmployeesComponent implements OnInit {
         }
     }
 
-    public getItemWidth(sum: number): number {
-        return this.xlMax ? 100 * sum / this.xlMax : 0;
+    public sum2percent(sum: number): number {
+        return this.xlSum ? 100 * sum / this.xlSum : 0;
+    }
+
+    public strokeDashArray(sum: number): string {
+        const percent = this.sum2percent(sum);                        
+        return `${percent} ${100 - percent}`;
+    }
+
+    public strokeDashOffset(index: number): number {
+        let sum = 0;
+
+        for (let i = 0; i < index; i++) {
+            sum += this.sum2percent(this.xl[i].sum);
+        }
+
+        return 100 - sum + 25; // 25 - поворот на четверть от длины
+    }    
+    
+    private buildColor(index: number): string { // contrasting color!
+        const hue = index * 137.508; // use golden angle approximation
+        return `hsl(${hue},50%,60%)`;
     }
 }

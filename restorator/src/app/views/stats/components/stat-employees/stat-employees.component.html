@@ -1,11 +1,29 @@
 <div class="stat-employees">
     <div class="se-title">{{words['restorator-stats']['stat-employees'][currentLang.slug]}}</div>
-    <div class="se-graph">
-        <div class="seg-max">{{xlMax}} {{words['common']['currency-name'][currentLang.slug]}}</div>
-        <div class="seg-content beauty-scroll-v-compact">
-            <div class="seg-item" *ngFor="let x of xl">
-                <div class="seg-name">{{x.name}}</div>
-                <div class="seg-body" [style.width]="x.active ? getItemWidth(x.sum)+'%' : 0" [title]="x.sum + ' ' + words['common']['currency-name'][currentLang.slug]"></div>
+    <div class="se-data">
+        <div class="se-graph">
+            <svg viewBox="0 0 40 40">            
+                <circle 
+                    *ngFor="let x of xl; let i = index;" 
+                    cx="50%" 
+                    cy="50%"                 
+                    [attr.r]="radius" 
+                    [attr.stroke]="x.color" 
+                    [attr.stroke-dasharray]="x.active ? strokeDashArray(x.sum) : '0 100'" 
+                    [attr.stroke-dashoffset]="strokeDashOffset(i)"                    
+                >                    
+                </circle>            
+            </svg>
+        </div>
+        <div class="se-legend beauty-scroll-v-compact">
+            <div class="sel-content">
+                <div class="sel-employee" *ngFor="let x of xl">
+                    <div class="sele-mark" [style.background-color]="x.color"></div>
+                    <div class="sele-data">
+                        <div [innerHTML]="x.name"></div>
+                        <div>{{x.sum}} {{words['common']['currency-name'][currentLang.slug]}}</div>
+                    </div>
+                </div>                
             </div>            
         </div>        
     </div>

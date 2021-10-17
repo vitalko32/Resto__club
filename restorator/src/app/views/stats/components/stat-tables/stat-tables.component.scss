@@ -7,7 +7,7 @@
     }
     .st-graph {
         height: 300px; border-bottom: 1px var(--color-grey) solid; margin-bottom: 10px;
-        .stg-max {height: 20px;}
+        .stg-max {height: 20px; font-size: 12px;}
         .stg-content {
             height: 280px; width:100%; overflow-x: auto; border-top: 1px var(--color-grey) dashed;             
             .stg-columns {
