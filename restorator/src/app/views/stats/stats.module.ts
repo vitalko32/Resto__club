@@ -3,8 +3,9 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { CCModule } from "src/app/common.components/cc.module";
-import { StatEmployeesComponent } from "./components/stat-employees/stat-employees.component";
-import { StatTablesComponent } from "./components/stat-tables/stat-tables.component";
+import { StatESMComponent } from "./components/stat-esm/stat-esm.component";
+import { StatSYComponent } from "./components/stat-sy/stat-sy.component";
+import { StatTSMComponent } from "./components/stat-tsm/stat-tsm.component";
 import { IndexStatsPage } from "./pages/index.stats.page";
 
 let routes = RouterModule.forChild ([            
@@ -22,8 +23,9 @@ let routes = RouterModule.forChild ([
 	],
 	declarations: [
 		IndexStatsPage,		
-		StatTablesComponent,			
-		StatEmployeesComponent,
+		StatTSMComponent,
+		StatESMComponent,
+		StatSYComponent,
 	],    		    
 })
 export class StatsModule {}

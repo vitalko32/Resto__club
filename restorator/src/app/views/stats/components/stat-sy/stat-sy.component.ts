@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { ITableSum } from "src/app/model/dto/stats/table.sum.interface";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -8,17 +7,15 @@ import { StatsRepository } from "src/app/services/repositories/stats.repository"
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "stat-tables",
-    templateUrl: "stat-tables.component.html",
-    styleUrls: ["stat-tables.component.scss"],
+    selector: "stat-sy",
+    templateUrl: "stat-sy.component.html",
+    styleUrls: ["stat-sy.component.scss"],
 })
-export class StatTablesComponent implements OnInit {
-    public xl: ITableSum[] = [];
+export class StatSYComponent implements OnInit {
+    public xl: number[] = [];
     public xlMax: number = 0;
-    public months: number[] = [];
     public years: number[] = [];
-    public currentMonth: number = null;
-    public currentYear: number = null;
+    public currentYear: number = null;    
 
     constructor(
         private appService: AppService,
@@ -38,8 +35,6 @@ export class StatTablesComponent implements OnInit {
 
     private initDates(): void {        
         const date = new Date();        
-        this.months = [1,2,3,4,5,6,7,8,9,10,11,12];
-        this.currentMonth = date.getMonth() + 1;
         this.currentYear = date.getFullYear();
 
         for (let i = 2021; i <= this.currentYear; i++) {
@@ -48,21 +43,30 @@ export class StatTablesComponent implements OnInit {
     }
 
     public async initStats(): Promise<void> {
-        try {
-            const data = await this.statsRepository.loadTables(this.restaurantId, this.currentMonth, this.currentYear);            
-            this.xl = data.map(d => ({no: d.no, sum: d.sum, active: false}));
-            this.xlMax = Math.max(...this.xl.map(x => x.sum));            
-            
-            for (let x of this.xl) {
-                await this.appService.pause(100);
-                x.active = true;                
-            }
+        try {            
+            this.xl = await this.statsRepository.loadSumsYearly(this.restaurantId, this.currentYear);     
+            this.xlMax = Math.max(...this.xl);                   
         } catch (err) {
             this.appService.showError(err);
         }
-    }
+    }    
 
-    public sum2percent(sum: number): number {
+    private sum2percent(sum: number): number {
         return this.xlMax ? 100 * sum / this.xlMax : 0;
+    } 
+
+    public points(): string {
+        let points = "";
+        
+        if (this.xl.length === 12) {
+            const date = new Date();  
+            const maxMonth = this.currentYear === date.getFullYear() ? date.getMonth()+1 : 12;
+    
+            for (let month = 0; month < maxMonth; month++) {
+                points += `${month*10},${100 - this.sum2percent(this.xl[month])} `;
+            }
+        }        
+
+        return points;
     }
 }

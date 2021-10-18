@@ -4,12 +4,12 @@ import { APIService } from "src/common/api.service";
 import { IAnswer } from "src/model/dto/answer.interface";
 import { Employee } from "src/model/orm/employee.entity";
 import { Hall } from "src/model/orm/hall.entity";
-import { OrderStatus } from "src/model/orm/order.entity";
+import { Order, OrderStatus } from "src/model/orm/order.entity";
 import { Table } from "src/model/orm/table.entity";
-import { db_name, db_schema } from "src/options";
-import { getManager, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { IEmployeeSum } from "./dto/employee.sum.interface";
 import { IGetMonthStats } from "./dto/get.month.stats.interface";
+import { IGetYearStats } from "./dto/get.year.stats.interface";
 import { ITableSum } from "./dto/table.sum.interface";
 
 @Injectable()
@@ -17,11 +17,12 @@ export class StatsService extends APIService {
     constructor(
         @InjectRepository(Hall) private hallRepository: Repository<Hall>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
+        @InjectRepository(Order) private orderRepository: Repository<Order>,
     ) {
         super();
     }
 
-    public async tables(dto: IGetMonthStats): Promise<IAnswer<ITableSum[]>> {
+    public async tableSumsMonthly(dto: IGetMonthStats): Promise<IAnswer<ITableSum[]>> {
         try {
             const halls = await this.hallRepository.find({where: {restaurant_id: dto.restaurant_id}, relations: ["tables"]});
             let tables: Table[] = [];
@@ -35,34 +36,68 @@ export class StatsService extends APIService {
 
             for (let t of tables) {
                 const filter = `orders.table_id='${t.id}' AND EXTRACT(MONTH FROM orders.completed_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
-                const sumRes = await getManager().query(`SELECT SUM(sum) AS sum FROM ${db_name}.${db_schema}.vne_orders AS orders WHERE ${filter}`);
-                const sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;   
+                const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);       
                 data.push({no: t.no, sum});
             }
 
             return {statusCode: 200, data};
         } catch (err) {
-            const errTxt: string = `Error in StatsService.tables: ${String(err)}`;
+            const errTxt: string = `Error in StatsService.tableSumsMonthly: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
     }
 
-    public async employees(dto: IGetMonthStats): Promise<IAnswer<IEmployeeSum[]>> {
+    public async employeeSumsMonthly(dto: IGetMonthStats): Promise<IAnswer<IEmployeeSum[]>> {
         try {
             const employees = await this.employeeRepository.find({where: {restaurant_id: dto.restaurant_id}});
             const data: IEmployeeSum[] = [];
 
             for (let e of employees) {
                 const filter = `orders.employee_id='${e.id}' AND EXTRACT(MONTH FROM orders.completed_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
-                const sumRes = await getManager().query(`SELECT SUM(sum) AS sum FROM ${db_name}.${db_schema}.vne_orders AS orders WHERE ${filter}`);
-                const sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;   
+                const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);                
                 data.push({name: e.name, sum});
             }
 
             return {statusCode: 200, data};            
         } catch (err) {
-            const errTxt: string = `Error in StatsService.employees: ${String(err)}`;
+            const errTxt: string = `Error in StatsService.employeeSumsMonthly: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async sumsYearly(dto: IGetYearStats): Promise<IAnswer<number[]>> {
+        try {            
+            const data: number[] = [];
+
+            for (let month = 1; month <= 12; month++) {
+                const filter = `orders.restaurant_id='${dto.restaurant_id}' AND EXTRACT(MONTH FROM orders.completed_at)='${month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
+                const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);                       
+                data.push(sum);                
+            }
+
+            return {statusCode: 200, data};
+        } catch (err) {
+            const errTxt: string = `Error in StatsService.sumsYearly: ${String(err)}`;
+            console.log(errTxt);
+            return {statusCode: 500, error: errTxt};
+        }
+    }
+
+    public async ordersYearly(dto: IGetYearStats): Promise<IAnswer<number[]>> {
+        try {
+            const data: number[] = [];            
+
+            for (let month = 1; month <= 12; month++) {
+                const filter = `orders.restaurant_id='${dto.restaurant_id}' AND EXTRACT(MONTH FROM orders.completed_at)='${month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;                
+                const q = await this.orderRepository.createQueryBuilder("orders").where(filter).getCount();                
+                data.push(q);
+            }
+
+            return {statusCode: 200, data};
+        } catch (err) {
+            const errTxt: string = `Error in StatsService.ordersYearly: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }

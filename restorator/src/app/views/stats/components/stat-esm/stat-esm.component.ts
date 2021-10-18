@@ -8,11 +8,11 @@ import { StatsRepository } from "src/app/services/repositories/stats.repository"
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
 @Component({
-    selector: "stat-employees",
-    templateUrl: "stat-employees.component.html",
-    styleUrls: ["stat-employees.component.scss"],
+    selector: "stat-esm",
+    templateUrl: "stat-esm.component.html",
+    styleUrls: ["stat-esm.component.scss"],
 })
-export class StatEmployeesComponent implements OnInit {
+export class StatESMComponent implements OnInit {
     public xl: IEmployeeSum[] = [];
     public xlSum: number = 0;
     public months: number[] = [];
@@ -50,7 +50,7 @@ export class StatEmployeesComponent implements OnInit {
 
     public async initStats(): Promise<void> {
         try {
-            const data = await this.statsRepository.loadEmployees(this.restaurantId, this.currentMonth, this.currentYear);            
+            const data = await this.statsRepository.loadEmployeeSumsMonthly(this.restaurantId, this.currentMonth, this.currentYear);            
             this.xl = data.map((d, i) => ({name: d.name, sum: d.sum, active: false, color: this.buildColor(i)}));
             this.xlSum = this.xl.map(x => x.sum).reduce((a, b) => a + b);
             

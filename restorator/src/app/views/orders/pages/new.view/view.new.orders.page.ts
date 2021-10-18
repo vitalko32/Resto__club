@@ -66,14 +66,14 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
         this.langSubscription.unsubscribe();
         this.authSubscription.unsubscribe();
         this.socketSubscription.unsubscribe();
-        this.socketService.socket.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
-        this.socketService.socket.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
-        this.socketService.socket.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
-        this.socketService.socket.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
-        this.socketService.socket.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
-        this.socketService.socket.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
-        this.socketService.socket.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);                
-        this.socketService.socket.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
+        this.socketService.socket?.off(`updated-${this.restaurantId}`, this.socketOnUpdated);
+        this.socketService.socket?.off(`need-waiter-${this.restaurantId}`, this.socketOnNeedWaiter);
+        this.socketService.socket?.off(`need-invoice-${this.restaurantId}`, this.socketOnNeedInvoice);
+        this.socketService.socket?.off(`need-products-${this.restaurantId}`, this.socketOnNeedProducts);
+        this.socketService.socket?.off(`cancelled-${this.restaurantId}`, this.socketOnCancelled);
+        this.socketService.socket?.off(`completed-${this.restaurantId}`, this.socketOnCompleted);
+        this.socketService.socket?.off(`accepted-${this.restaurantId}`, this.socketOnAccepted);                
+        this.socketService.socket?.off(`deleted-${this.restaurantId}`, this.socketOnDeleted);
     }
 
     private initAuthCheck(): void {

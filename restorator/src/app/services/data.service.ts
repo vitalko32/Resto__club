@@ -26,11 +26,11 @@ import { IPathable } from "../model/dto/pathable.interface";
 import { Order } from "../model/orm/order.model";
 import { IOrderAccept } from "../model/dto/order.accept.interface";
 import { IServing } from "../model/orm/serving.interface";
-import { Table } from "../model/orm/table.model";
 import { IWSServer } from "../model/orm/wsserver.interface";
 import { IGetMonthStats } from "../model/dto/stats/get.month.stats.interface";
 import { ITableSum } from "../model/dto/stats/table.sum.interface";
 import { IEmployeeSum } from "../model/dto/stats/employee.sum.interface";
+import { IGetYearStats } from "../model/dto/stats/get.year.stats.interface";
 
 @Injectable()
 export class DataService {
@@ -106,8 +106,10 @@ export class DataService {
 
     public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
 
-    public statsTables(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/tables", dto, true);}
-    public statsEmployees(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employees", dto, true);}
+    public statsTableSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/table-sums-monthly", dto, true);}
+    public statsEmployeeSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employee-sums-monthly", dto, true);}
+    public statsSumsYearly(dto: IGetYearStats): Observable<IAnswer<number[]>> {return this.sendRequest("stats/sums-yearly", dto, true);}
+    public statsOrdersYearly(dto: IGetYearStats): Observable<IAnswer<number[]>> {return this.sendRequest("stats/orders-yearly", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

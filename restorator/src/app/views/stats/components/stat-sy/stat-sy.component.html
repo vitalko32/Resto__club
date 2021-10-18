@@ -1,0 +1,18 @@
+<div class="stat-sy">
+    <div class="ss-title">{{words['restorator-stats']['stat-sy'][currentLang.slug]}}</div>
+    <div class="ss-graph">
+        <svg viewBox="0 0 110 100" preserveAspectRatio="none">
+            <polyline [attr.points]="points()" />
+        </svg>
+    </div>
+    <div class="ss-date">        
+        <div class="ssd-item">
+            <span>{{words['common']['year'][currentLang.slug]}}:&nbsp;</span>
+            <div class="ssd-selectwrap">
+                <select [(ngModel)]="currentYear" (change)="initStats()">
+                    <option *ngFor="let y of years" [ngValue]="y">{{y}}</option>
+                </select>
+            </div>
+        </div>        
+    </div>
+</div>
