@@ -71,6 +71,8 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     set olFilterTableId(v: number) {this.orderRepository.filterTableId = v;}
     get olFilterEmployeeId(): number {return this.orderRepository.filterEmployeeId;}
     set olFilterEmployeeId(v: number) {this.orderRepository.filterEmployeeId = v;}
+    get olFilterStatus(): OrderStatus {return this.orderRepository.filterStatus;}
+    set olFilterStatus(v: OrderStatus) {this.orderRepository.filterStatus = v;}
     get hl(): Hall[] {return this.hallRepository.xlAll;}
     get tl(): Table[] {return this.hl.find(h => h.id === this.olFilterHallId)?.tables || [];}
     get el(): Employee[] {return this.employeeRepository.xlAll;}

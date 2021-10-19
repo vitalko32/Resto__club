@@ -39,7 +39,16 @@
                         </select>
                     </div>
                 </td>
-                <td></td>
+                <td>
+                    <div class="dld-selectwrap">
+                        <select [(ngModel)]="olFilterStatus" (ngModelChange)="initOrders();">
+                            <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
+                            <option [ngValue]="statusActive">{{words['restorator-orders']['status-active'][currentLang.slug]}}</option>
+                            <option [ngValue]="statusCompleted">{{words['restorator-orders']['status-completed'][currentLang.slug]}}</option>
+                            <option [ngValue]="statusCancelled">{{words['restorator-orders']['status-cancelled'][currentLang.slug]}}</option>
+                        </select>
+                    </div>
+                </td>
                 <td></td>
                 <td></td>
             </tr>

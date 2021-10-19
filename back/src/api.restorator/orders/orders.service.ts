@@ -212,7 +212,11 @@ export class OrdersService extends APIService {
 
             if (dto.filter.employee_id) {
                 filter += ` AND orders.employee_id = '${dto.filter.employee_id}'`;
-            }            
+            } 
+            
+            if (dto.filter.status) {
+                filter += ` AND orders.status = '${dto.filter.status}'`;
+            } 
 
             const query = this.orderRepository.createQueryBuilder("orders").where(filter);
             const data: Order[] = await query

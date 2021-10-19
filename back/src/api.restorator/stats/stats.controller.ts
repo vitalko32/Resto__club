@@ -25,17 +25,10 @@ export class StatsController {
         return this.statsService.employeeSumsMonthly(dto);
     }
 
-    // yearly income
+    // yearly income or orders qty
     @UseGuards(EmployeesGuard)
-    @Post("sums-yearly")
-    public sumsYearly(@Body() dto: IGetYearStats): Promise<IAnswer<number[]>> {
-        return this.statsService.sumsYearly(dto);
-    }
-
-    // yearly sales
-    @UseGuards(EmployeesGuard)
-    @Post("orders-yearly")
-    public ordersYearly(@Body() dto: IGetYearStats): Promise<IAnswer<number[]>> {
-        return this.statsService.ordersYearly(dto);
-    }
+    @Post("yearly")
+    public yearly(@Body() dto: IGetYearStats): Promise<IAnswer<number[]>> {
+        return this.statsService.yearly(dto);
+    }    
 }

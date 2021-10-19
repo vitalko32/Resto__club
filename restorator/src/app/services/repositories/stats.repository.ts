@@ -31,25 +31,14 @@ export class StatsRepository {
         });
     }
 
-    public loadSumsYearly(restaurant_id: number, year: number): Promise<number[]> {
+    public loadYearly(restaurant_id: number, year: number, mode: string): Promise<number[]> {
         return new Promise((resolve, reject) => {
-            const dto: IGetYearStats = {restaurant_id, year};
+            const dto: IGetYearStats = {restaurant_id, year, mode};
             this.dataService
-                .statsSumsYearly(dto)
+                .statsYearly(dto)
                 .subscribe(
                     res => res.statusCode === 200 ? resolve(res.data) : reject(res.error), 
                     err => reject(err.message));
         });
-    }
-
-    public loadOrdersYearly(restaurant_id: number, year: number): Promise<number[]> {
-        return new Promise((resolve, reject) => {
-            const dto: IGetYearStats = {restaurant_id, year};
-            this.dataService
-                .statsOrdersYearly(dto)
-                .subscribe(
-                    res => res.statusCode === 200 ? resolve(res.data) : reject(res.error), 
-                    err => reject(err.message));
-        });
-    }
+    }    
 }

@@ -35,7 +35,7 @@ export class StatsService extends APIService {
             const data: ITableSum[] = [];            
 
             for (let t of tables) {
-                const filter = `orders.table_id='${t.id}' AND EXTRACT(MONTH FROM orders.completed_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
+                const filter = `orders.table_id='${t.id}' AND EXTRACT(MONTH FROM orders.created_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.created_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
                 const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);       
                 data.push({no: t.no, sum});
             }
@@ -54,7 +54,7 @@ export class StatsService extends APIService {
             const data: IEmployeeSum[] = [];
 
             for (let e of employees) {
-                const filter = `orders.employee_id='${e.id}' AND EXTRACT(MONTH FROM orders.completed_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
+                const filter = `orders.employee_id='${e.id}' AND EXTRACT(MONTH FROM orders.created_at)='${dto.month}' AND EXTRACT(YEAR FROM orders.created_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
                 const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);                
                 data.push({name: e.name, sum});
             }
@@ -67,39 +67,32 @@ export class StatsService extends APIService {
         }
     }
 
-    public async sumsYearly(dto: IGetYearStats): Promise<IAnswer<number[]>> {
+    public async yearly(dto: IGetYearStats): Promise<IAnswer<number[]>> {
         try {            
-            const data: number[] = [];
+            if (dto.mode !== "sums" && dto.mode !== "orders") {
+                return {statusCode: 400, error: "invalid mode"};
+            }
+            
+            const xl: number[] = [];
 
             for (let month = 1; month <= 12; month++) {
-                const filter = `orders.restaurant_id='${dto.restaurant_id}' AND EXTRACT(MONTH FROM orders.completed_at)='${month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
-                const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);                       
-                data.push(sum);                
+                const filter = `orders.restaurant_id='${dto.restaurant_id}' AND EXTRACT(MONTH FROM orders.created_at)='${month}' AND EXTRACT(YEAR FROM orders.created_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;
+                let x: number;
+
+                if (dto.mode === "sums") {
+                    x = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);                       
+                } else {
+                    x = await this.orderRepository.createQueryBuilder("orders").where(filter).getCount();         
+                }               
+                
+                xl.push(x);                
             }
 
-            return {statusCode: 200, data};
+            return {statusCode: 200, data: xl};
         } catch (err) {
             const errTxt: string = `Error in StatsService.sumsYearly: ${String(err)}`;
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    }
-
-    public async ordersYearly(dto: IGetYearStats): Promise<IAnswer<number[]>> {
-        try {
-            const data: number[] = [];            
-
-            for (let month = 1; month <= 12; month++) {
-                const filter = `orders.restaurant_id='${dto.restaurant_id}' AND EXTRACT(MONTH FROM orders.completed_at)='${month}' AND EXTRACT(YEAR FROM orders.completed_at)='${dto.year}' AND orders.status='${OrderStatus.Completed}'`;                
-                const q = await this.orderRepository.createQueryBuilder("orders").where(filter).getCount();                
-                data.push(q);
-            }
-
-            return {statusCode: 200, data};
-        } catch (err) {
-            const errTxt: string = `Error in StatsService.ordersYearly: ${String(err)}`;
-            console.log(errTxt);
-            return {statusCode: 500, error: errTxt};
-        }
-    }
+    }    
 }

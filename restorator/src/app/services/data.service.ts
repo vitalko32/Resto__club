@@ -107,9 +107,8 @@ export class DataService {
     public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
 
     public statsTableSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/table-sums-monthly", dto, true);}
-    public statsEmployeeSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employee-sums-monthly", dto, true);}
-    public statsSumsYearly(dto: IGetYearStats): Observable<IAnswer<number[]>> {return this.sendRequest("stats/sums-yearly", dto, true);}
-    public statsOrdersYearly(dto: IGetYearStats): Observable<IAnswer<number[]>> {return this.sendRequest("stats/orders-yearly", dto, true);}
+    public statsEmployeeSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employee-sums-monthly", dto, true);}    
+    public statsYearly(dto: IGetYearStats): Observable<IAnswer<number[]>> {return this.sendRequest("stats/yearly", dto, true);}
     
     private sendRequest (url: string, body: Object = {}, authNeeded: boolean = false, withProgress: boolean = false): Observable<any> | null {        
         let headers: HttpHeaders | null = null;

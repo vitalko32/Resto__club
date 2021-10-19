@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Repository } from './_repository';
-import { Order } from '../../model/orm/order.model';
+import { Order, OrderStatus } from '../../model/orm/order.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 
@@ -11,6 +11,7 @@ export class OrderRepository extends Repository<Order> {
     public filterTableId: number = null;    
     public filterEmployeeId: number = null;    
     public filterCreatedAt: Date[] = [null, null];      
+    public filterStatus: OrderStatus = null;
     
     constructor(protected dataService: DataService) {
         super(dataService);        
@@ -32,6 +33,7 @@ export class OrderRepository extends Repository<Order> {
                     table_id: this.filterTableId,
                     employee_id: this.filterEmployeeId,
                     created_at: this.filterCreatedAt,
+                    status: this.filterStatus,
                 }
             };
             this.dataService.ordersChunk(dto).subscribe(res => {
