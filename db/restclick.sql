@@ -3084,7 +3084,9 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 52	\N	\N	21	9	t	f	cancelled	5	1045	2021-10-07 00:20:26.761395	t	test1	test2	cash	2021-10-07 00:55:34.553	\N
 55	\N	\N	21	\N	f	f	cancelled	0	100	2021-10-07 23:28:06.971823	f			cash	\N	\N
 54	\N	\N	21	\N	f	f	cancelled	0	100	2021-10-07 17:33:24.301754	f			cash	\N	\N
+187	83	18	21	9	f	f	cancelled	0	0	2021-10-20 03:17:40.841679	f			cash	\N	\N
 59	81	18	21	9	f	f	cancelled	0	200	2021-10-10 22:05:20.12121	f			cash	2021-10-10 22:05:26.924	\N
+184	81	18	21	9	f	f	cancelled	0	0	2021-10-20 03:05:59.250106	f			cash	\N	\N
 118	81	18	21	\N	f	f	cancelled	0	305	2021-10-13 02:11:46.005398	f			cash	\N	\N
 82	82	18	21	9	f	f	completed	0	800	2021-10-11 14:32:15.093806	f			cash	2021-10-11 14:32:20.013	2021-10-11 15:06:57.94
 61	81	18	21	9	f	f	cancelled	0	700	2021-10-10 22:11:17.388393	t			cash	2021-10-10 22:11:41.517	\N
@@ -3116,9 +3118,15 @@ COPY "default".vne_orders (id, table_id, hall_id, restaurant_id, employee_id, ne
 23	\N	\N	21	36	t	f	cancelled	0	\N	2021-10-02 00:43:00.9371	f	<div>03.10.2021 23:09 несите быстрее</div><div>03.10.2021 23:09 заверните с собой</div><div>04.10.2021 02:15 какое-то пожелание</div>	надо принести что-нибудь	cash	\N	\N
 177	81	18	21	48	f	f	completed	0	12700	2021-10-17 21:01:23.292541	f			cash	2021-10-17 21:01:27.458	2021-10-17 21:01:29.717
 182	61	2	21	36	f	f	completed	0	40200	2021-10-18 02:39:34.86932	f			cash	2021-10-18 02:39:50.889	2021-10-18 02:39:53.369
+188	83	18	21	9	f	f	cancelled	0	0	2021-10-20 03:23:25.02292	f			cash	\N	\N
+185	81	18	21	9	f	f	cancelled	0	0	2021-10-20 03:06:13.120154	f			cash	\N	\N
+190	62	2	21	9	f	f	cancelled	0	0	2021-10-20 03:24:02.970242	f			cash	\N	\N
 178	81	18	21	51	f	f	completed	0	8700	2021-09-17 22:45:49.696038	f			cash	2021-09-17 22:45:55.02	2021-09-17 22:45:57.529
 179	81	18	21	52	f	f	completed	0	24800	2021-10-17 22:54:03.338912	f			cash	2021-10-17 22:54:07.314	2021-10-17 22:54:09.845
+189	61	2	21	9	f	f	cancelled	0	0	2021-10-20 03:23:40.070836	f			cash	\N	\N
 180	62	2	21	51	f	f	completed	0	12100	2021-10-18 02:35:29.217937	f			cash	2021-10-18 02:35:59.558	2021-10-18 02:36:02.639
+186	82	18	21	9	f	f	cancelled	0	0	2021-10-20 03:17:25.598754	f			cash	\N	\N
+183	81	18	21	9	f	f	cancelled	0	0	2021-10-20 03:00:56.053527	f			cash	\N	\N
 \.
 
 
@@ -3462,8 +3470,8 @@ COPY "default".vne_products (id, cat_id, name, weight, cal, "time", about, pos, 
 COPY "default".vne_restaurants (id, currency_id, name, domain, ownername, phone, address, inn, ogrn, comment, created_at, lang_id, money, active) FROM stdin;
 13	2	Ромашка	test11	Свинкин Олег Иванович	+3806778945612	ул. Ленина, 2	999666333	888999999	тестовый камент	2021-08-27 00:26:35.018103	2	0	f
 2	2	Рога и копыта	roga	Андрей Рыбкин	+38 067 0000000	Москва, ул. Собачкина, 2	111222	333555	еще один тестовый ресторан	2021-08-26 20:52:31.021727	1	0	t
-21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9850	t
 6	1	Привет из 90-х	test4	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:57.598572	1	0	t
+21	1	Пушкинский	https://push.ru	Курочкин Иван Кузьмич	+38 097 456789987	Москва	456	654	\N	2021-08-28 11:12:59.882811	1	9800	t
 4	1	Шашлычная №1	test2	\N	\N	\N	\N	\N	\N	2021-08-27 00:24:10.543446	1	0	t
 3	1	Одарка	test1	\N	\N	\N	\N	\N	\N	2021-08-27 00:23:50.454941	1	0	t
 7	1	National	test5	\N	\N	\N	\N	\N	\N	2021-08-27 00:25:04.843937	1	0	t
@@ -4629,6 +4637,7 @@ COPY "default".vne_transactions (id, restaurant_id, amount, created_at, type) FR
 1162	21	-30	2021-10-17 01:00:00.008592	auto
 1163	21	-50	2021-10-18 01:00:00.024941	auto
 1164	21	-50	2021-10-19 01:00:00.01731	auto
+1165	21	-50	2021-10-20 01:00:00.019234	auto
 \.
 
 
@@ -5255,6 +5264,8 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1084	348	2	Orders qty by months of the year
 1081	347	1	Доход по месяцам года
 1082	347	2	Income by months of the year
+1085	349	1	Экспорт
+1086	349	2	Export
 \.
 
 
@@ -5602,6 +5613,7 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 346	22	2	stat-esm	\N
 347	22	3	stat-sy	\N
 348	22	4	stat-oy	\N
+349	21	139	export	\N
 \.
 
 
@@ -5730,7 +5742,7 @@ SELECT pg_catalog.setval('"default".vne_order_products_id_seq', 346, true);
 -- Name: vne_orders_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_orders_id_seq', 182, true);
+SELECT pg_catalog.setval('"default".vne_orders_id_seq', 190, true);
 
 
 --
@@ -5786,14 +5798,14 @@ SELECT pg_catalog.setval('"default".vne_tables_id_seq', 89, true);
 -- Name: vne_transactions_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1164, true);
+SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1165, true);
 
 
 --
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1084, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1086, true);
 
 
 --
@@ -5807,7 +5819,7 @@ SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 22, true);
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 348, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 349, true);
 
 
 --

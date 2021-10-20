@@ -17,6 +17,9 @@ import { IOrderAccept } from "./dto/order.accept.interface";
 import { IOrderCreate } from "./dto/order.create.interface";
 import { IOrder } from "./dto/order.interface";
 import { IOrderUpdate } from "./dto/order.update.interface";
+import * as ExcelJS from "exceljs";
+import { Wordbook } from "src/model/orm/wordbook.entity";
+import { Words } from "src/model/words.type";
 
 @Injectable()
 export class OrdersService extends APIService {
@@ -24,6 +27,7 @@ export class OrdersService extends APIService {
         @InjectRepository(Order) private orderRepository: Repository<Order>,
         @InjectRepository(Employee) private employeeRepository: Repository<Employee>,
         @InjectRepository(Lang) private langRepository: Repository<Lang>,
+        @InjectRepository(Wordbook) private wordbookRepository: Repository<Wordbook>,
         private servingsService: ServingsService,
         private socketService: SocketService,
     ) {
@@ -190,34 +194,7 @@ export class OrdersService extends APIService {
             const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
             const from: number = dto.from;
             const q: number = dto.q;
-            let filter: string = "TRUE"; 
-
-            if (dto.filter.created_at[0]) {
-                const from: string = this.mysqlDate(new Date(dto.filter.created_at[0]));
-                const to: string = dto.filter.created_at[1] ? this.mysqlDate(new Date(dto.filter.created_at[1])) : from;
-                filter += ` AND orders.created_at BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
-            }
-
-            if (dto.filter.restaurant_id) {
-                filter += ` AND orders.restaurant_id = '${dto.filter.restaurant_id}'`;
-            }
-
-            if (dto.filter.hall_id) {
-                filter += ` AND orders.hall_id = '${dto.filter.hall_id}'`;
-            }
-
-            if (dto.filter.table_id) {
-                filter += ` AND orders.table_id = '${dto.filter.table_id}'`;
-            }
-
-            if (dto.filter.employee_id) {
-                filter += ` AND orders.employee_id = '${dto.filter.employee_id}'`;
-            } 
-            
-            if (dto.filter.status) {
-                filter += ` AND orders.status = '${dto.filter.status}'`;
-            } 
-
+            const filter = this.buildFilter(dto.filter);
             const query = this.orderRepository.createQueryBuilder("orders").where(filter);
             const data: Order[] = await query
                 .leftJoinAndSelect("orders.table", "table")
@@ -228,8 +205,7 @@ export class OrdersService extends APIService {
                 .skip(from)
                 .getMany();
             const allLength: number = await query.getCount();
-            const sumRes = await getManager().query(`SELECT SUM(sum) AS sum FROM ${db_name}.${db_schema}.vne_orders AS orders WHERE ${filter}`);            
-            const sum: number = sumRes[0].sum ? parseFloat(sumRes[0].sum) : 0;            
+            const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);              
 
             return {statusCode: 200, data, allLength, sum};
         } catch (err) {
@@ -237,7 +213,30 @@ export class OrdersService extends APIService {
             console.log(errTxt);
             return {statusCode: 500, error: errTxt};
         }
-    } 
+    }
+    
+    public async export(dto: IGetAll): Promise<ExcelJS.Buffer> {
+        try {
+            const sortBy: string = dto.sortBy;
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
+            const filter = this.buildFilter(dto.filter);
+            const query = this.orderRepository.createQueryBuilder("orders").where(filter);
+            const orders: Order[] = await query
+                .leftJoinAndSelect("orders.table", "table")
+                .leftJoinAndSelect("orders.employee", "employee")
+                .leftJoinAndSelect("orders.hall", "hall")
+                .orderBy({[`orders.${sortBy}`]: sortDir})
+                .getMany();            
+            const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);               
+            const words = await this.buildWords(dto.lang_id);            
+            const buffer = await this.buildExcel(orders, sum, words);            
+            return buffer;
+        } catch (err) {
+            const errTxt: string = `Error in OrdersService.export: ${String(err)}`;
+            console.log(errTxt);
+            return null;
+        }
+    }
 
     public async delete(id: number): Promise<IAnswer<void>> {
         try {
@@ -278,4 +277,95 @@ export class OrdersService extends APIService {
             return {statusCode: 500, error: errTxt};
         }
     }
+
+    private buildFilter(o: any): string {
+        let filter: string = "TRUE"; 
+
+        if (o.created_at[0]) {
+            const from: string = this.mysqlDate(new Date(o.created_at[0]));
+            const to: string = o.created_at[1] ? this.mysqlDate(new Date(o.created_at[1])) : from;
+            filter += ` AND orders.created_at BETWEEN '${from} 00:00:00' AND '${to} 23:59:59'`;
+        }
+
+        if (o.restaurant_id) {
+            filter += ` AND orders.restaurant_id = '${o.restaurant_id}'`;
+        }
+
+        if (o.hall_id) {
+            filter += ` AND orders.hall_id = '${o.hall_id}'`;
+        }
+
+        if (o.table_id) {
+            filter += ` AND orders.table_id = '${o.table_id}'`;
+        }
+
+        if (o.employee_id) {
+            filter += ` AND orders.employee_id = '${o.employee_id}'`;
+        } 
+        
+        if (o.status) {
+            filter += ` AND orders.status = '${o.status}'`;
+        } 
+
+        return filter;
+    }
+
+    private async buildWords(lang_id: number): Promise<Words> {                        
+        let words = {};
+        let wbl = await this.wordbookRepository.find({relations: ["words", "words.translations"]});            
+        
+        for (let wb of wbl) {
+            words[wb.name] = {};
+
+            for (let w of wb.words) {                
+                words[wb.name][w.mark] = w.translations.find(t => t.lang_id === lang_id)?.text;                    
+            }
+        }        
+        
+        return words;
+    }
+
+    private async buildExcel(orders: Order[], sum: number, words: Words): Promise<ExcelJS.Buffer> {        
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('orders');
+        worksheet.columns = [
+            {width: 20},
+            {width: 20},
+            {width: 20},
+            {width: 20},
+            {width: 20},
+            {width: 20},
+            {width: 20},            
+        ];            
+        let row = worksheet.getRow(1);
+        row.values = [
+            words["restorator-orders"]["created-at"],
+            words["restorator-orders"]["no"],
+            words["restorator-orders"]["hall"],
+            words["restorator-orders"]["table2"],
+            words["restorator-orders"]["employee"],
+            words["restorator-orders"]["sum"],
+            words["restorator-orders"]["status"],
+        ];
+        row.eachCell((cell, no) => cell.font = {bold: true});
+        
+        for (let i = 0; i < orders.length; i++) {
+            const o = orders[i];
+            row = worksheet.getRow(i + 2);
+            row.getCell(1).value = new Date(Date.UTC(o.created_at.getFullYear(), o.created_at.getMonth(), o.created_at.getDate(), o.created_at.getHours(), o.created_at.getMinutes(), o.created_at.getSeconds()));
+            row.getCell(1).numFmt = 'hh:mm dd/mm/yyyy';
+            row.getCell(2).value = o.id;
+            row.getCell(3).value = o.hall?.name;
+            row.getCell(4).value = o.table?.no;
+            row.getCell(5).value = o.employee?.name;
+            row.getCell(6).value = o.sum;
+            row.getCell(7).value = words["restorator-orders"][`status-${o.status}`];            
+        }
+
+        row = worksheet.getRow(orders.length + 2);
+        row.values = ["","","","","",sum,""];
+
+        const buffer = await workbook.xlsx.writeBuffer();
+        return buffer;
+    }    
 }

@@ -101,6 +101,7 @@ export class DataService {
     public ordersUpdate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/update", x, true);}  
     public ordersCreate(x: Order): Observable<IAnswer<void>> {return this.sendRequest("orders/create", x, true);}  
     public ordersDelete(id: number): Observable<IAnswer<void>> {return this.sendRequest(`orders/delete/${id}`, null, true);} 
+    public ordersExport(dto: IGetAll): void {this.sendDownloadRequest("orders/export", dto, true, "orders.xlsx");}
 
     public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}    
 
@@ -119,12 +120,31 @@ export class DataService {
         
         if (withProgress) {
             return this.http
-                .post (`${this.root}/${url}`, body, {headers, observe: "events", reportProgress: true})
+                .post(`${this.root}/${url}`, body, {headers, observe: "events", reportProgress: true})
                 .pipe(filter(res => this.errorService.processResponse(res)));
         } else {
             return this.http
-                .post (`${this.root}/${url}`, body, {headers})
+                .post(`${this.root}/${url}`, body, {headers})
                 .pipe(filter(res => this.errorService.processResponse(res)));                    
         }                  
-    }   
+    }
+    
+    private sendDownloadRequest(url: string, body: Object = {}, authNeeded: boolean = false, filename: string): void {
+        let headers: HttpHeaders | null = null;
+
+        if (authNeeded) {
+            headers = new HttpHeaders({token: this.authData.value.token});
+        }
+
+        this.http.post(`${this.root}/${url}`, body, {headers, responseType: 'blob'}).subscribe(response => {
+            let dataType = response.type;
+            let binaryData = [];
+            binaryData.push(response);
+            let downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+            downloadLink.setAttribute('download', filename);
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        });
+    }
 }

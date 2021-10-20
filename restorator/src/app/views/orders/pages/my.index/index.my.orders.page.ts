@@ -167,7 +167,7 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
 
     // сообщения сокетов
     private async socketOnCreated(data: Order): Promise<void> {                
-        if (data.employee_id === this.employee.id) {
+        if (data.employee_id === this.employee.id && this.ol.findIndex(o => o.id === data.id) === -1) {
             const order = new Order().build(data);
             order._highlight = true;
             this.ol.unshift(order);

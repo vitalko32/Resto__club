@@ -1,4 +1,4 @@
-import { Controller, Param, Post, Body, UseGuards } from "@nestjs/common";
+import { Controller, Param, Post, Body, UseGuards, Res } from "@nestjs/common";
 import { IAnswer } from 'src/model/dto/answer.interface';
 import { OrdersService } from "./orders.service";
 import { Order } from "../../model/orm/order.entity";
@@ -9,6 +9,7 @@ import { IOrder } from "./dto/order.interface";
 import { IOrderUpdate } from "./dto/order.update.interface";
 import { IOrderCreate } from "./dto/order.create.interface";
 import { IGetChunk } from "src/model/dto/getchunk.interface";
+import { Response } from "express";
 
 @Controller('api/restorator/orders')
 export class OrdersController {
@@ -83,4 +84,14 @@ export class OrdersController {
     public delete(@Param("id") id: string): Promise<IAnswer<void>> {
         return this.ordersService.delete(parseInt(id));
     }
+
+    // export to Excel file
+    @UseGuards(EmployeesGuard)
+    @Post("export")
+    public async export(@Body() dto: IGetAll, @Res() res: Response): Promise<void> {
+        const buffer = await this.ordersService.export(dto);
+        res.set("Content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        res.set("Content-Disposition", "attachment; filename=orders.xlsx");
+        res.end(buffer);
+    }   
 }

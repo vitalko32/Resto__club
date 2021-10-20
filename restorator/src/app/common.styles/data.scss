@@ -28,6 +28,16 @@
                     select {width: 100%; height: 100%; appearance: none; background: none; border:none; padding: 0 25px 0 10px; color: black;}        
                 }
             }            
+        }
+        .dld-summary {
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px var(--color-grey) solid; padding-bottom: 10px; 
+            .dlds-export {
+                height: 30px; padding: 0 30px; display: flex; align-items: center; border-radius: 15px; background-color: var(--color-bg); box-shadow: var(--block-shadow); color: var(--color-txt); font-weight: bold; user-select: none; cursor: pointer;
+                span {
+                    display: flex; align-items: center;
+                    &::before {font-family: "fa-solid"; margin-right: 10px; font-size: 18px; content: "\f1c3";}
+                }                
+            }
         }        
     }
     .datalist-mobile {

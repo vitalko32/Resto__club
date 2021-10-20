@@ -5,6 +5,7 @@ import { CommonModule } from "src/common/common.module";
 import { Employee } from "src/model/orm/employee.entity";
 import { Lang } from "src/model/orm/lang.entity";
 import { Order } from "src/model/orm/order.entity";
+import { Wordbook } from "src/model/orm/wordbook.entity";
 import { jwtConstants } from "../../common/auth.constants";
 import { ServingsModule } from "../servings/servings.module";
 import { OrdersController } from "./orders.controller";
@@ -16,6 +17,7 @@ import { OrdersService } from "./orders.service";
             Order,            
             Employee,
             Lang,
+            Wordbook,
         ]),
         JwtModule.register(jwtConstants),
         ServingsModule,

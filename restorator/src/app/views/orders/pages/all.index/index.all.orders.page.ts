@@ -13,6 +13,7 @@ import { Hall } from "src/app/model/orm/hall.model";
 import { Table } from "src/app/model/orm/table.model";
 import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
 import { Employee } from "src/app/model/orm/employee.model";
+import { Restaurant } from "src/app/model/orm/restaurant.model";
 
 @Component({
     selector: "index-all-orders-page",
@@ -150,7 +151,6 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     public getStatusName(status: OrderStatus): string {
         return this.words["restorator-orders"][`status-${status}`][this.currentLang.slug];
     }
-
     
     public olOnDelete(o: Order): void {
         this.olDeleteId = o.id;
@@ -222,5 +222,9 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
             this.appService.showError(err);
             this.olLoading = false;
         }        
+    }
+
+    public olExport(): void {
+        this.orderRepository.export(this.currentLang.id);
     }
 }

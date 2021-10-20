@@ -5,13 +5,16 @@
     <!-- desktop -->    
     <div class="datalist-desktop">
         <div class="datalist-overlay" [class.active]="olLoading"></div>
-        <table>            
-            <tr>
-                <td colspan="8" class="borderedbottom">                    
-                    <div>{{words['restorator-orders']['orders-q'][currentLang.slug]}}: <strong>{{olAllLength}}</strong></div>
-                    <div>{{words['restorator-orders']['sum'][currentLang.slug]}}: <strong>{{olSum | number:'1.2-2'}}</strong></div>
-                </td>
-            </tr> 
+        <div class="dld-summary">
+            <div>
+                <div>{{words['restorator-orders']['orders-q'][currentLang.slug]}}: <strong>{{olAllLength}}</strong></div>
+                <div>{{words['restorator-orders']['sum'][currentLang.slug]}}: <strong>{{olSum | number:'1.2-2'}}</strong></div>
+            </div>
+            <div>
+                <div class="dlds-export" (click)="olExport()"><span>{{words['restorator-orders']['export'][currentLang.slug]}}</span></div>
+            </div>
+        </div>
+        <table>                         
             <tr>
                 <td><dateperiod-picker [(value)]="olFilterCreatedAt" (valueChange)="initOrders()"></dateperiod-picker></td>
                 <td></td>
@@ -39,6 +42,7 @@
                         </select>
                     </div>
                 </td>
+                <td></td>
                 <td>
                     <div class="dld-selectwrap">
                         <select [(ngModel)]="olFilterStatus" (ngModelChange)="initOrders();">
@@ -49,7 +53,6 @@
                         </select>
                     </div>
                 </td>
-                <td></td>
                 <td></td>
             </tr>
             <tr>                
@@ -130,6 +133,17 @@
                     <select [(ngModel)]="olFilterEmployeeId" (ngModelChange)="initOrders();">
                         <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
                         <option *ngFor="let e of el" [ngValue]="e.id">{{e.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="dlmd-param">
+                <div class="dlmd-title">{{words['restorator-orders']['status'][currentLang.slug]}}:</div>
+                <div class="dlmd-selectwrap">
+                    <select [(ngModel)]="olFilterStatus" (ngModelChange)="initOrders();">
+                        <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
+                        <option [ngValue]="statusActive">{{words['restorator-orders']['status-active'][currentLang.slug]}}</option>
+                        <option [ngValue]="statusCompleted">{{words['restorator-orders']['status-completed'][currentLang.slug]}}</option>
+                        <option [ngValue]="statusCancelled">{{words['restorator-orders']['status-cancelled'][currentLang.slug]}}</option>
                     </select>
                 </div>
             </div>
