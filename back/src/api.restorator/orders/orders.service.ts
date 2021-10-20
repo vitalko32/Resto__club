@@ -352,14 +352,15 @@ export class OrdersService extends APIService {
         for (let i = 0; i < orders.length; i++) {
             const o = orders[i];
             row = worksheet.getRow(i + 2);
-            row.getCell(1).value = new Date(Date.UTC(o.created_at.getFullYear(), o.created_at.getMonth(), o.created_at.getDate(), o.created_at.getHours(), o.created_at.getMinutes(), o.created_at.getSeconds()));
-            row.getCell(1).numFmt = 'hh:mm dd/mm/yyyy';
-            row.getCell(2).value = o.id;
-            row.getCell(3).value = o.hall?.name;
-            row.getCell(4).value = o.table?.no;
-            row.getCell(5).value = o.employee?.name;
-            row.getCell(6).value = o.sum;
-            row.getCell(7).value = words["restorator-orders"][`status-${o.status}`];            
+            row.values = [
+                this.humanDatetime(o.created_at),
+                o.id,
+                o.hall?.name,
+                o.table?.no,
+                o.employee?.name,
+                o.sum,
+                words["restorator-orders"][`status-${o.status}`],
+            ];            
         }
 
         row = worksheet.getRow(orders.length + 2);

@@ -103,6 +103,9 @@
                 <div class="dlmd-title">{{words['restorator-orders']['sum'][currentLang.slug]}}:</div>
                 <div class="dlmd-inputwrap">{{olSum | number:'1.2-2'}}</div>
             </div>
+            <div class="dlmd-param">
+                <div class="dlmd-export" (click)="olExport()"><span>{{words['restorator-orders']['export'][currentLang.slug]}}</span></div>
+            </div>
             <!-- filter -->
             <div class="dlmd-head">{{words['common']['filter'][currentLang.slug]}}</div>
             <div class="dlmd-param">
