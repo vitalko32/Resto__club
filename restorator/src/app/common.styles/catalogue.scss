@@ -40,6 +40,7 @@
             .pi-param {                
                 &.right {text-align: right;}
                 &.time {span::before {font-family: "fa-regular"; content: "\f017"; margin-right: 5px;}}
+                &.alc {span::before {font-family: "fa-regular"; content: "\f57b"; margin-right: 5px;}}
             }
         }
         .pi-dash {

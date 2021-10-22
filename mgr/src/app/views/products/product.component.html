@@ -34,11 +34,25 @@
         <div class="df-title" [class.required]="isRequired('weight')">{{currentLang.phrases['workspace-products-weight']}}:</div>
         <div class="df-inputwrap"><input type="number" class="small" [(ngModel)]="x.weight"></div>
 
+        <div class="df-title" [class.required]="isRequired('unit')">{{currentLang.phrases['workspace-products-unit']}}:</div>
+        <div class="df-inputwrap">
+            <select [(ngModel)]="x.unit">
+                <option [ngValue]="unitG">{{unitG}}</option>
+                <option [ngValue]="unitMl">{{unitMl}}</option>
+            </select>
+        </div>
+
         <div class="df-title" [class.required]="isRequired('cal')">{{currentLang.phrases['workspace-products-cal']}}:</div>
         <div class="df-inputwrap"><input type="number" class="small" [(ngModel)]="x.cal"></div>
 
         <div class="df-title" [class.required]="isRequired('time')">{{currentLang.phrases['workspace-products-time']}}:</div>
         <div class="df-inputwrap"><input type="text" [(ngModel)]="x.time"></div>
+
+        <div class="df-title" [class.required]="isRequired('alc')">{{currentLang.phrases['workspace-products-alc']}}:</div>
+        <div class="df-inputwrap"><checkbox-slider [(value)]="x.alc"></checkbox-slider></div>
+        
+        <div class="df-title" [class.required]="isRequired('alc_percent')">{{currentLang.phrases['workspace-products-alc-percent']}}:</div>
+        <div class="df-inputwrap"><input type="number" class="small" [(ngModel)]="x.alc_percent" [disabled]="!x.alc"></div>                
 
         <div class="df-title" [class.required]="isRequired('about')">{{currentLang.phrases['workspace-products-about']}}:</div>
         <div class="df-inputwrap"><textarea [(ngModel)]="x.about"></textarea></div>        

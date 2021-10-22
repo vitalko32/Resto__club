@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ICat } from "src/app/model/orm/cat.interface";
-import { IProduct } from "src/app/model/orm/product.interface";
+import { IProduct, ProductUnit } from "src/app/model/orm/product.interface";
 import { ITable } from "src/app/model/orm/table.interface";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -82,5 +82,17 @@ export class ProductMenuPage implements OnInit {
 
         await this.appService.pause(300);
         this.appService.headCartHighlight = false;
+    }
+
+    public getUnitName(unit: ProductUnit): string {
+        if (unit === ProductUnit.g) return this.words['customer-menu']['g'];
+        if (unit === ProductUnit.ml) return this.words['customer-menu']['ml'];
+        return "";
+    }
+
+    public getMeasureName(unit: ProductUnit): string {
+        if (unit === ProductUnit.g) return this.words['customer-menu']['weight'];
+        if (unit === ProductUnit.ml) return this.words['customer-menu']['volume'];
+        return "";
     }
 }

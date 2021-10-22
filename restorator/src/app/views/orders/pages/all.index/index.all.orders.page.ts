@@ -225,6 +225,6 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     }
 
     public olExport(): void {
-        //this.orderRepository.export(this.currentLang.id);
+        this.orderRepository.export(this.currentLang.id);
     }
 }

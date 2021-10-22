@@ -24,6 +24,17 @@
         </div>
     </div>
     <div class="de-row">
+        <div class="de-title">{{words['restorator-products']['unit'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-selectwrap">
+                <select name="unit" [(ngModel)]="x.unit">
+                    <option [ngValue]="unitG">{{words['restorator-products']['g'][this.currentLang.slug]}}</option>
+                    <option [ngValue]="unitMl">{{words['restorator-products']['ml'][this.currentLang.slug]}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="de-row">
         <div class="de-title">{{words['restorator-products']['cal'][currentLang.slug]}}:</div>
         <div class="de-value">
             <div class="de-inputwrap"><input type="number" name="cal" [(ngModel)]="x.cal"></div>
@@ -33,6 +44,18 @@
         <div class="de-title">{{words['restorator-products']['time'][currentLang.slug]}}:</div>
         <div class="de-value">
             <div class="de-inputwrap"><input type="text" name="time" [(ngModel)]="x.time"></div>
+        </div>
+    </div> 
+    <div class="de-row">
+        <div class="de-title">{{words['restorator-products']['alc'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-inputwrap"><checkbox-slider [(value)]="x.alc"></checkbox-slider></div>
+        </div>
+    </div>  
+    <div class="de-row" *ngIf="x.alc">
+        <div class="de-title">{{words['restorator-products']['alc-percent'][currentLang.slug]}}:</div>
+        <div class="de-value">
+            <div class="de-inputwrap"><input type="number" name="alc_percent" [(ngModel)]="x.alc_percent"></div>
         </div>
     </div> 
     <div class="de-row">

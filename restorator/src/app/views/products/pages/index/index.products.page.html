@@ -28,11 +28,12 @@
                 <div class="pi-params">
                     <div>
                         <div class="pi-param">{{words['restorator-products']['price'][currentLang.slug]}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
-                        <div class="pi-param" *ngIf="p.weight">{{p.weight}} {{words['restorator-products']['g'][currentLang.slug]}}</div>
+                        <div class="pi-param" *ngIf="p.weight">{{p.weight}} {{getUnitName(p.unit)}}</div>
                     </div>
                     <div>
-                        <div class="pi-param right" *ngIf="p.cal">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
-                        <div class="pi-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>
+                        <div class="pi-param right" *ngIf="!p.alc && p.cal">{{p.cal}} {{words['restorator-products']['kcal'][currentLang.slug]}}</div>
+                        <div class="pi-param right alc" *ngIf="p.alc"><span>{{p.alc_percent}}%</span></div>
+                        <div class="pi-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>                        
                     </div>
                 </div>
                 <div class="pi-dash">

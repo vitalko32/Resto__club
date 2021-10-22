@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { IProduct } from "src/app/model/orm/product.interface";
+import { IProduct, ProductUnit } from "src/app/model/orm/product.interface";
 import { ITable } from "src/app/model/orm/table.interface";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
@@ -59,5 +59,11 @@ export class ProductListMenuPage implements OnDestroy {
 
         await this.appService.pause(300);
         this.appService.headCartHighlight = false;
+    }
+
+    public getUnitName(unit: ProductUnit): string {
+        if (unit === ProductUnit.g) return this.words['customer-menu']['g'];
+        if (unit === ProductUnit.ml) return this.words['customer-menu']['ml'];
+        return "";
     }
 }

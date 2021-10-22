@@ -10,7 +10,7 @@ import { IHTMLInputEvent } from "src/app/model/htmlinputevent.interface";
 import { Ingredient } from "src/app/model/orm/ingredient.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { ProductImage } from "src/app/model/orm/product.image.model";
-import { Product } from "src/app/model/orm/product.model";
+import { Product, ProductUnit } from "src/app/model/orm/product.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { FilesService } from "src/app/services/files.service";
@@ -29,6 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     private cmdSaveSubscription: Subscription = null;
     public errorName: boolean = false;    
+    public unitG: ProductUnit = ProductUnit.g;
+    public unitMl: ProductUnit = ProductUnit.ml;
     
     constructor(
         protected appService: AppService,
@@ -66,7 +68,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
         return !error;
     }
-
+    
     // images
     @ViewChild("imgupload") imgUploadElementRef: ElementRef;
     public imgLoading: boolean = false;    

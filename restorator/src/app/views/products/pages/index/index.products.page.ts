@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { SortableOptions } from "sortablejs";
 import { Cat } from "src/app/model/orm/cat.model";
 import { Lang } from "src/app/model/orm/lang.model";
-import { Product } from "src/app/model/orm/product.model";
+import { Product, ProductUnit } from "src/app/model/orm/product.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
@@ -129,5 +129,11 @@ export class IndexProductsPage implements OnInit, OnDestroy {
         } catch (err) {
             this.appService.showError(err);
         }
+    }
+
+    public getUnitName(unit: ProductUnit): string {
+        if (unit === ProductUnit.g) return this.words['restorator-products']['g'][this.currentLang.slug];
+        if (unit === ProductUnit.ml) return this.words['restorator-products']['ml'][this.currentLang.slug];
+        return "";
     }
 }

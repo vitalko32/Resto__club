@@ -5,7 +5,7 @@ import { IHTMLInputEvent } from 'src/app/model/htmlinputevent.interface';
 import { Cat } from 'src/app/model/orm/cat.model';
 import { Ingredient } from 'src/app/model/orm/ingredient.model';
 import { ProductImage } from 'src/app/model/orm/product.image.model';
-import { Product } from 'src/app/model/orm/product.model';
+import { Product, ProductUnit } from 'src/app/model/orm/product.model';
 import { Restaurant } from 'src/app/model/orm/restaurant.model';
 import { IPathable } from 'src/app/model/pathable.interface';
 import { ObjectComponent } from '../_object.component';
@@ -16,7 +16,11 @@ import { ObjectComponent } from '../_object.component';
 })
 export class ProductComponent extends ObjectComponent<Product> {        
     @Input() rl: Restaurant[] = [];    
+    
     public tab: number = 1;    
+    public unitG: ProductUnit = ProductUnit.g;
+    public unitMl: ProductUnit = ProductUnit.ml;
+
     get cl(): Cat[] {return this.rl.find(r => r.id === this.x.restaurant_id)?.cats || [];}    
     
     // ingredients

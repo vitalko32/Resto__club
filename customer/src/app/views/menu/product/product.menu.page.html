@@ -17,18 +17,20 @@
         <div class="p-params-mobile">
             <div>
                 <div class="ppm-param">{{words['customer-menu']['price']}}: {{product.price | number:'1.2-2'}} {{currencySymbol}}</div>
-                <div class="ppm-param" *ngIf="product.weight">{{product.weight}} {{words['customer-menu']['g']}}</div>
+                <div class="ppm-param" *ngIf="product.weight">{{product.weight}} {{getUnitName(product.unit)}}</div>
             </div>
             <div>
-                <div class="ppm-param right" *ngIf="product.cal">{{product.cal}} {{words['customer-menu']['kcal']}}</div>
+                <div class="ppm-param right" *ngIf="!product.alc && product.cal">{{product.cal}} {{words['customer-menu']['kcal']}}</div>
+                <div class="ppm-param right alc" *ngIf="product.alc"><span>{{product.alc_percent}}%</span></div>
                 <div class="ppm-param right time" *ngIf="product.time"><span>{{product.time}}</span></div>
             </div>
         </div> 
         <div class="p-params-desktop">
             <table>
                 <tr><td>{{words['customer-menu']['price']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.price | number:'1.2-2'}} {{currencySymbol}}</strong></td></tr>
-                <tr *ngIf="product.weight"><td>{{words['customer-menu']['weight']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.weight}} {{words['customer-menu']['g']}}</strong></td></tr>
-                <tr *ngIf="product.cal"><td>{{words['customer-menu']['cal']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.cal}} {{words['customer-menu']['kcal']}}</strong></td></tr>
+                <tr *ngIf="product.weight"><td>{{getMeasureName(product.unit)}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.weight}} {{getUnitName(product.unit)}}</strong></td></tr>
+                <tr *ngIf="!product.alc && product.cal"><td>{{words['customer-menu']['cal']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.cal}} {{words['customer-menu']['kcal']}}</strong></td></tr>
+                <tr *ngIf="product.alc"><td>{{words['customer-menu']['alc']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.alc_percent}}%</strong></td></tr>
                 <tr *ngIf="product.time"><td>{{words['customer-menu']['time']}}:</td><td>&nbsp;&nbsp;</td><td><strong>{{product.time}}</strong></td></tr>
             </table>
         </div>

@@ -4,6 +4,11 @@ import { Ingredient } from "./ingredient.entity";
 import { ProductImage } from "./product.image.entity";
 import { Restaurant } from "./restaurant.entity";
 
+export enum ProductUnit {
+    g = "g",
+    ml = "ml",
+}
+
 @Entity({name: "vne_products"})
 export class Product {
     @PrimaryGeneratedColumn()
@@ -26,14 +31,17 @@ export class Product {
     @Column({nullable: false, default: 0, type: "float"})
     price: number;
 
-    @Column({nullable: false, default: 0})
+    @Column({nullable: false, default: 0}) // используется как вес или объем
     weight: number;
+    
+    @Column({type: "enum", enum: ProductUnit, nullable: false, default: ProductUnit.g})
+    unit: ProductUnit;    
 
     @Column({nullable: false, default: 0})
     cal: number;
 
     @Column({nullable: true, default: null})
-    time: string;
+    time: string;    
 
     @Column({nullable: true, default: null, type: "text"})
     about: string;    
@@ -49,6 +57,12 @@ export class Product {
 
     @Column({nullable: false, default: 0})
     likes: number;
+
+    @Column({nullable: false, default: false})
+    alc: boolean;
+
+    @Column({nullable: false, default: 0})
+    alc_percent: number;
 
     // relations
     @ManyToOne(type => Restaurant, {onDelete: "CASCADE", onUpdate: "CASCADE"})
