@@ -53,7 +53,9 @@
         </div>
         <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>
     </ng-container>
-    <ng-container *ngIf="!plReady">{{words['common']['loading'][currentLang.slug]}}</ng-container>
+    <ng-container *ngIf="!plReady">
+        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    </ng-container>    
 </div>
 
 <the-confirm [(active)]="deleteConfirmActive" [msg]="deleteConfirmMsg" (confirmed)="delete()"></the-confirm>

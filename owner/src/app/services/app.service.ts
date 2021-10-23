@@ -17,8 +17,7 @@ export class AppService {
     
     constructor(private titleService: Title) {}    
 
-    public initLang(langs: Lang[]): void {
-        // set current lang
+    public initLang(langs: Lang[]): void {        
         let langslug: string = localStorage.getItem("lang");        
 
         if (langslug) {

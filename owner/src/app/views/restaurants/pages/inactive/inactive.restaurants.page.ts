@@ -1,7 +1,4 @@
 import { Component } from "@angular/core";
-import { AppService } from "src/app/services/app.service";
-import { RestaurantInactiveRepository } from "src/app/services/repositories/restaurant.inactive.repository";
-import { WordRepository } from "src/app/services/repositories/word.repository";
 import { RestaurantsListPage } from "../restaurants.list.page";
 
 @Component({
@@ -11,12 +8,5 @@ import { RestaurantsListPage } from "../restaurants.list.page";
 })
 export class InactiveRestaurantsPage extends RestaurantsListPage {
     public type: string = "inactive";
-
-    constructor(
-        protected appService: AppService,
-        protected wordRepository: WordRepository,
-        protected restaurantRepository: RestaurantInactiveRepository,
-    ) {
-        super(appService, wordRepository, restaurantRepository);
-    }
+    public rlFilterActive: boolean = false;    
 }

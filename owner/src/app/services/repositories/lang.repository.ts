@@ -6,7 +6,9 @@ import { IGetAll } from 'src/app/model/dto/getall.interface';
 import { Repository } from './_repository';
 
 @Injectable()
-export class LangRepository extends Repository<Lang> {    
+export class LangRepository extends Repository {    
+    public langs: Lang[] = [];
+
     constructor(protected dataService: DataService) {
         super();
         this.allSortBy = "pos";
@@ -16,8 +18,8 @@ export class LangRepository extends Repository<Lang> {
         return new Promise((resolve, reject) => {
             const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
             this.dataService.langsAll(dto).subscribe(res => {                    
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Lang().build(d)) : [];                          
+                if (res.statusCode === 200) {                    
+                    this.langs = res.data.map(d => new Lang().build(d));
                     resolve();
                 } else {                        
                     reject(res.statusCode+": "+res.error);

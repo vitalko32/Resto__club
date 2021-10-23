@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { IAdminAuthData } from './model/dto/admin.authdata.interface';
 import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
 import { LangRepository } from './services/repositories/lang.repository';
@@ -14,7 +13,7 @@ import { WordRepository } from './services/repositories/word.repository';
 	styleUrls: ['./app.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {	
 	public langsReady: boolean = false;
 	public wordsReady: boolean = false;
 	public settingsReady: boolean = false;		
@@ -48,7 +47,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	private async initLangs(): Promise<void> {
 		try {
 			await this.langRepository.loadAll();			
-			this.appService.initLang(this.langRepository.xlAll);			
+			this.appService.initLang(this.langRepository.langs);			
 			this.langsReady = true;		
 		} catch (err) {
 			this.appService.showError(err);			

@@ -1,26 +1,22 @@
 import { Injectable } from "@angular/core";
+import { IChunk } from "src/app/model/chunk.interface";
 import { IGetChunk } from "src/app/model/dto/getchunk.interface";
-import { Transaction, TransactionType } from "src/app/model/orm/transaction.model";
+import { Transaction } from "src/app/model/orm/transaction.model";
 import { DataService } from "../data.service";
 import { Repository } from "./_repository";
 
 @Injectable()
-export class TransactionRepository extends Repository<Transaction> {
-    public filterRestaurantId: number = null;  
-    public filterCreatedAt: Date[] = [null, null];     
-    public filterType: TransactionType = null; 
-
+export class TransactionRepository extends Repository {
     constructor(protected dataService: DataService) {
         super();
         this.chunkSortBy = "created_at";
         this.chunkSortDir = -1;
     }    
 
-    public loadChunk(): Promise<void> {
-        return new Promise((resolve, reject) => {            
-            let filter: any = {restaurant_id: this.filterRestaurantId, created_at: this.filterCreatedAt, type: this.filterType};            
+    public loadChunk(part: number, filter: any = {}): Promise<IChunk<Transaction>> {
+        return new Promise((resolve, reject) => {                        
             const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
+                from: part * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,
                 sortDir: this.chunkSortDir, 
@@ -28,10 +24,8 @@ export class TransactionRepository extends Repository<Transaction> {
             };
             this.dataService.transactionsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Transaction().build(d)) : [];
-                    this.allLength = res.allLength;     
-                    this.sum = res.sum;       
-                    resolve();
+                    const chunk: IChunk<Transaction> = {data: res.data.map(d => new Transaction().build(d)), allLength: res.allLength, sum: res.sum};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    

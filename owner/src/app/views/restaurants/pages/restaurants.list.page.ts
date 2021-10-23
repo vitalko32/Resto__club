@@ -1,5 +1,6 @@
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { Component, Directive, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
+import { IChunk } from "src/app/model/chunk.interface";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Restaurant } from "src/app/model/orm/restaurant.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -7,13 +8,19 @@ import { AppService } from "src/app/services/app.service";
 import { RestaurantRepository } from "src/app/services/repositories/restaurant.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 
-@Injectable()
+@Directive()
 export abstract class RestaurantsListPage implements OnInit, OnDestroy {
-    public type: string = "";
-    public langSubscription: Subscription = null;    
-    public rlLoading: boolean = false;    
+    public ready: boolean = false;
+    public rlChunk: IChunk<Restaurant> = null;    
+    public rlCurrentPart: number = 0;    
+    public rlLoading: boolean = false;        
+    public rlFilterName: string = "";
+    public rlFilterDaysleft: string = "";
+    public abstract rlFilterActive: boolean;
     public rlSortingVariants: any[][] = // для мобильной верстки
-        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1], ["daysleft", 1], ["daysleft", -1]];    
+        [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1], ["daysleft", 1], ["daysleft", -1]];        
+    public abstract type: string;
+    public langSubscription: Subscription = null;        
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
@@ -27,24 +34,21 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get rl(): Restaurant[] {return this.restaurantRepository.xlChunk;}
-    get rlCurrentPart(): number {return this.restaurantRepository.chunkCurrentPart;}
-    set rlCurrentPart(v: number) {this.restaurantRepository.chunkCurrentPart = v;}
-    get rlAllLength(): number {return this.restaurantRepository.allLength;}  
-    get rlLength(): number {return this.restaurantRepository.chunkLength;}   
-    get rlFilterName(): string {return this.restaurantRepository.filterName;}  
-    set rlFilterName(v: string) {this.restaurantRepository.filterName = v;}
-    get rlFilterDaysleft(): string {return this.restaurantRepository.filterDaysleft;}  
-    set rlFilterDaysleft(v: string) {this.restaurantRepository.filterDaysleft = v;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}       
+    get rl(): Restaurant[] {return this.rlChunk.data;}
+    get rlAllLength(): number {return this.rlChunk.allLength;}    
+    get rlLength(): number {return this.restaurantRepository.chunkLength;}       
     get rlSortBy(): string {return this.restaurantRepository.chunkSortBy;}
     get rlSortDir(): number {return this.restaurantRepository.chunkSortDir;}
     set rlSortBy(v: string) {this.restaurantRepository.chunkSortBy = v;}
     set rlSortDir(v: number) {this.restaurantRepository.chunkSortDir = v;}
+    get rlFilter() {return {active: this.rlFilterActive, name: this.rlFilterName, daysleft: this.rlFilterDaysleft};}
 
-    public ngOnInit(): void {        
+    public async ngOnInit(): Promise<void> {        
         this.initTitle();
-        this.initRestaurants();
+        await this.initRestaurants();
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -58,16 +62,15 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     
     public async initRestaurants(): Promise<void> {		                
         try {
-            this.rlLoading = true;
-            await this.restaurantRepository.loadChunk();            
+            this.rlLoading = true;            
+            this.rlChunk = await this.restaurantRepository.loadChunk(this.rlCurrentPart, this.rlFilter);            
                     
             if (this.rlCurrentPart > 0 && this.rlCurrentPart > Math.ceil(this.rlAllLength / this.rlLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
                 this.rlCurrentPart = 0;
                 this.initRestaurants();
-            } else {
-                await this.appService.pause(500);
-                this.rlLoading = false;
-            }      
+            } else {                
+                setTimeout(() => this.rlLoading = false, 500);                
+            }            
         } catch (err) {
             this.appService.showError(err);
             this.rlLoading = false;

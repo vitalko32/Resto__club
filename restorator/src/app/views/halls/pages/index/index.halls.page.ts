@@ -15,6 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../../../common.styles/data.scss"],
 })
 export class IndexHallsPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public hlLoading: boolean = false;
@@ -44,10 +45,12 @@ export class IndexHallsPage implements OnInit, OnDestroy {
     set hlSortBy(v: string) {this.hallRepository.chunkSortBy = v;}
     set hlSortDir(v: number) {this.hallRepository.chunkSortDir = v;}
 
-    public ngOnInit(): void {        
+    public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();   
-        this.initHalls();   
+        await this.initHalls();   
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -69,8 +72,7 @@ export class IndexHallsPage implements OnInit, OnDestroy {
             this.hlLoading = true;
             this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
             await this.hallRepository.loadChunk();                     
-            await this.appService.pause(500);
-            this.hlLoading = false;       
+            setTimeout(() => this.hlLoading = false, 500);            
         } catch (err) {
             this.appService.showError(err);
         }

@@ -6,19 +6,18 @@ import { IGetAll } from 'src/app/model/dto/getall.interface';
 import { Repository } from './_repository';
 
 @Injectable()
-export class CurrencyRepository extends Repository<Currency> {    
+export class CurrencyRepository extends Repository {    
     constructor(protected dataService: DataService) {
         super();
         this.allSortBy = "pos";
     }
     
-    public loadAll(): Promise<void> {
+    public loadAll(): Promise<Currency[]> {
         return new Promise((resolve, reject) => {
             const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
             this.dataService.currenciesAll(dto).subscribe(res => {                    
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Currency().build(d)) : [];                          
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data.map(d => new Currency().build(d)));
                 } else {                        
                     reject(res.statusCode+": "+res.error);
                 }

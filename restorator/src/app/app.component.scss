@@ -59,7 +59,8 @@ html {
 							@media (min-width:0) {width: 100%;}
 							@media (min-width:1200px) {width: 80%;}							
 						}
-						@import "./common.styles/dash.scss";						
+						@import "./common.styles/dash.scss";	
+						.loading {span::before {font-family: "fa-solid"; margin-right: 5px; content:"\f3f4"; display: inline-block; animation-name: rotation; animation-iteration-count: infinite; animation-duration: 1s;}}											
 					}					
 				}
 			}			

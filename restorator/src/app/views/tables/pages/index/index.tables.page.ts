@@ -19,6 +19,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["index.tables.page.scss", "../../../../common.styles/data.scss"],
 })
 export class IndexTablesPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public currentHall: Hall = null;
@@ -51,7 +52,9 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         this.initAuthCheck();  
         await this.initHalls();    
         this.initCurrentHall();    
-        this.initPlaces();        
+        this.initPlaces();    
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {

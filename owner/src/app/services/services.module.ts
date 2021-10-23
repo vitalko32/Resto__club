@@ -9,8 +9,6 @@ import { GoogleService } from './google.service';
 import { CurrencyRepository } from './repositories/currency.repository';
 import { LangRepository } from './repositories/lang.repository';
 import { OrderRepository } from './repositories/order.repository';
-import { RestaurantActiveRepository } from './repositories/restaurant.active.repository';
-import { RestaurantInactiveRepository } from './repositories/restaurant.inactive.repository';
 import { RestaurantRepository } from './repositories/restaurant.repository';
 import { SettingRepository } from './repositories/setting.repository';
 import { TransactionRepository } from './repositories/transaction.repository';
@@ -31,8 +29,8 @@ import { WordRepository } from './repositories/word.repository';
         WordRepository,
         SettingRepository,  
         RestaurantRepository,     
-        RestaurantActiveRepository,
-        RestaurantInactiveRepository,
+        //RestaurantActiveRepository,
+        //RestaurantInactiveRepository,
         CurrencyRepository,
         TransactionRepository,
         OrderRepository,

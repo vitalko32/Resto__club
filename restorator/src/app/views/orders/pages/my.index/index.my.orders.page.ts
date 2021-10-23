@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Subscription } from "rxjs";
-import { Socket } from "socket.io-client";
+import { Subscription } from "rxjs";
 import { IOrderNeedProducts } from "src/app/model/dto/order.need.products.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
@@ -19,10 +18,10 @@ import { SocketService } from "src/app/services/socket.service";
     styleUrls: ["../../styles/orders.scss"],
 })
 export class IndexMyOrdersPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;   
-    private socketSubscription: Subscription = null;    
-    public olReady: boolean = false;
+    private socketSubscription: Subscription = null;        
     public olOrderCancelId: number = null;
     public olCancelConfirmActive: boolean = false; 
     public olOrderCompleteId: number = null;
@@ -47,7 +46,7 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     get employee(): Employee {return this.authService.authData.value.employee;}  
     get restaurantId(): number {return this.employee.restaurant_id;}
     
-    public ngOnInit(): void {   
+    public async ngOnInit(): Promise<void> {   
         this.socketOnCreated = this.socketOnCreated.bind(this);
         this.socketOnUpdated = this.socketOnUpdated.bind(this);
         this.socketOnNeedWaiter = this.socketOnNeedWaiter.bind(this);
@@ -57,9 +56,11 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
         this.socketOnCompleted = this.socketOnCompleted.bind(this);
         this.socketOnDeleted = this.socketOnDeleted.bind(this);
         this.initAuthCheck();           
-        this.initTitle();   
-        this.initOrders();     
+        this.initTitle();           
         this.initSocket();        
+        await this.initOrders();     
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -88,8 +89,7 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     private async initOrders(): Promise<void> {
         try {                                    
             this.orderRepository.filterEmployeeId = this.employee.id;
-            this.orderRepository.loadAll();               
-            this.olReady = true;
+            await this.orderRepository.loadAll();                           
         } catch (err) {
             this.appService.showError(err);
         }

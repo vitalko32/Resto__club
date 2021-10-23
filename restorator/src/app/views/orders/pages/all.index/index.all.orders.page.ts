@@ -21,6 +21,7 @@ import { Restaurant } from "src/app/model/orm/restaurant.model";
     styleUrls: ["../../../../common.styles/data.scss"],
 })
 export class IndexAllOrdersPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public olLoading: boolean = false;
@@ -78,12 +79,14 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     get tl(): Table[] {return this.hl.find(h => h.id === this.olFilterHallId)?.tables || [];}
     get el(): Employee[] {return this.employeeRepository.xlAll;}
 
-    public ngOnInit(): void {        
+    public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();   
-        this.initOrders();   
         this.initHalls();
         this.initEmployees();
+        await this.initOrders();           
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -104,9 +107,8 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         try {
             this.olLoading = true;
             this.orderRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.orderRepository.loadChunk();                     
-            await this.appService.pause(500);
-            this.olLoading = false;       
+            await this.orderRepository.loadChunk();  
+            setTimeout(() => this.olLoading = false, 500);                               
         } catch (err) {
             this.appService.showError(err);
         }

@@ -18,6 +18,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     encapsulation: ViewEncapsulation.None, 
 })
 export class EditRestaurantsPage implements OnInit, OnDestroy {    
+    public cl: Currency[] = [];    
     public langSubscription: Subscription = null;          
     public restaurant: Restaurant = null;
     public formLoading: boolean = false;     
@@ -35,13 +36,12 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get cl(): Currency[] {return this.currencyRepository.xlAll;}
-    get ll(): Lang[] {return this.langRepository.xlAll;}
     get type(): string {return this.route.snapshot.params["type"];}
+    get ll(): Lang[] {return this.langRepository.langs;}
     
     public ngOnInit(): void {
         this.initTitle();    
-        this.initCurrencies();
+        this.initCurrencies();        
         this.initRestaurant();
     }
 
@@ -65,11 +65,11 @@ export class EditRestaurantsPage implements OnInit, OnDestroy {
 
     private async initCurrencies(): Promise<void> {
         try {
-            this.currencyRepository.loadAll();
+            this.cl = await this.currencyRepository.loadAll();
         } catch (err) {
             this.appService.showError(err);
         }
-    }
+    }    
     
     public async update(): Promise<void> {
         try {            

@@ -90,7 +90,8 @@ export class IndexProductsPage implements OnInit, OnDestroy {
         try {            
             this.plReady = false;
             this.productRepository.filterNameCode = this.plSearch;            
-            await this.productRepository.loadAll();      
+            await this.productRepository.loadAll();   
+            await this.appService.pause(500);   
             this.plReady = true;
         } catch (err) {
             this.appService.showError(err);

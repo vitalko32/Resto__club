@@ -37,3 +37,8 @@ html.classic {
 	--block-shadow: -17px -16px 28px #FFFFFFA8, 14px 12px 36px #00000029;
 	--activebtn-shadow: inset 0px 3px 38px #00000026, 14px 12px 36px #00000029;
 }
+
+@keyframes rotation {
+	0% {transform: rotate(0);}
+	100% {transform: rotate(360deg);}
+}

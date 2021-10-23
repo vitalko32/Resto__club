@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { IChunk } from "src/app/model/chunk.interface";
 import { IGetChunk } from "src/app/model/dto/getchunk.interface";
 import { IRestaurantRecharge } from "src/app/model/dto/restaurant.recharge.interface";
 import { Restaurant } from "src/app/model/orm/restaurant.model";
@@ -6,22 +7,17 @@ import { DataService } from "../data.service";
 import { Repository } from "./_repository";
 
 @Injectable()
-export class RestaurantRepository extends Repository<Restaurant> {
-    public filterActive: boolean;
-    public filterName: string;
-    public filterDaysleft: string;    
-
+export class RestaurantRepository extends Repository {    
     constructor(protected dataService: DataService) {
         super();
         this.chunkSortBy = "created_at";
         this.chunkSortDir = -1;
     }    
 
-    public loadChunk(): Promise<void> {
-        return new Promise((resolve, reject) => {            
-            let filter: any = {active: this.filterActive, name: this.filterName, daysleft: this.filterDaysleft};
+    public loadChunk(part: number, filter: any = {}): Promise<IChunk<Restaurant>> {
+        return new Promise((resolve, reject) => {                        
             const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
+                from: part * this.chunkLength,
                 q: this.chunkLength,
                 sortBy: this.chunkSortBy,
                 sortDir: this.chunkSortDir, 
@@ -29,9 +25,8 @@ export class RestaurantRepository extends Repository<Restaurant> {
             };
             this.dataService.restaurantsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Restaurant().build(d)) : [];
-                    this.allLength = res.allLength;            
-                    resolve();
+                    const chunk: IChunk<Restaurant> = {data: res.data.map(d => new Restaurant().build(d)), allLength: res.allLength};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    

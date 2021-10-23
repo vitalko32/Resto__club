@@ -15,6 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../../../common.styles/data.scss"],
 })
 export class IndexEmployeesPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public elLoading: boolean = false;
@@ -48,10 +49,12 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
     set elSortBy(v: string) {this.employeeRepository.chunkSortBy = v;}
     set elSortDir(v: number) {this.employeeRepository.chunkSortDir = v;}
 
-    public ngOnInit(): void {        
+    public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();      
-        this.initEmployees();
+        await this.initEmployees();
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -73,8 +76,7 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
             this.elLoading = true;
             this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
             await this.employeeRepository.loadChunk();                     
-            await this.appService.pause(500);
-            this.elLoading = false;       
+            setTimeout(() => this.elLoading = false, 500);            
         } catch (err) {
             this.appService.showError(err);
         }

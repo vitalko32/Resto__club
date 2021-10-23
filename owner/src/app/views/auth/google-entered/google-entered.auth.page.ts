@@ -14,8 +14,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 })
 export class GoogleEnteredAuthPage implements OnInit {
     constructor(
-        private wordRepository: WordRepository,  
-        private langRepository: LangRepository,
+        private wordRepository: WordRepository,          
         private appService: AppService,        
         private googleService: GoogleService,
         private authService: AuthService,  
@@ -23,8 +22,7 @@ export class GoogleEnteredAuthPage implements OnInit {
     ) {}
 
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get words(): Words {return this.wordRepository.words;}
-    get langs(): Lang[] {return this.langRepository.xlAll;}
+    get words(): Words {return this.wordRepository.words;}    
 
     public ngOnInit(): void {        
         this.processGoogleData();           

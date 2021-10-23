@@ -15,6 +15,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../../../common.styles/data.scss"]
 })
 export class IndexCatsPage implements OnInit, OnDestroy {
+    public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public clLoading: boolean = false;    
@@ -44,10 +45,12 @@ export class IndexCatsPage implements OnInit, OnDestroy {
     set clSortBy(v: string) {this.catRepository.chunkSortBy = v;}
     set clSortDir(v: number) {this.catRepository.chunkSortDir = v;}
 
-    public ngOnInit(): void {        
+    public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();     
-        this.initCats();         
+        await this.initCats();   
+        await this.appService.pause(500);
+        this.ready = true;
     }
 
     public ngOnDestroy(): void {
@@ -69,8 +72,7 @@ export class IndexCatsPage implements OnInit, OnDestroy {
             this.clLoading = true;
             this.catRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
             await this.catRepository.loadChunk();                     
-            await this.appService.pause(500);
-            this.clLoading = false;       
+            setTimeout(() => this.clLoading = false, 500);            
         } catch (err) {
             this.appService.showError(err);
         }

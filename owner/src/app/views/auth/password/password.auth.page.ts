@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { IAdminUpdatePassword } from "src/app/model/dto/admin.updatepassword.interface";
 import { Admin } from "src/app/model/orm/admin.model";
