@@ -32,7 +32,7 @@
                     <td class="align-center nowrap">
                         <a class="datalist-btn recharge" (click)="onRecharge(r)" [title]="words['owner-restaurants']['recharge'][currentLang.slug]"><span></span></a>
                         <!--<a class="datalist-btn transactions" [routerLink]="'/restaurants/'+type+'/transactions/'+r.id" [title]="words['owner-restaurants']['transactions'][currentLang.slug]"><span></span></a>-->
-                        <!--<a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>-->
+                        <a class="datalist-btn history" [routerLink]="'/restaurants/'+type+'/orders/'+r.id" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
                         <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>
                         <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                     </td>
@@ -96,7 +96,7 @@
                 <div class="dlmi-actions">
                     <a class="datalist-btn recharge" (click)="onRecharge(r)" [title]="words['owner-restaurants']['recharge'][currentLang.slug]"><span></span></a>
                     <!--<a class="datalist-btn transactions" [routerLink]="'/restaurants/'+type+'/transactions/'+r.id" [title]="words['owner-restaurants']['transactions'][currentLang.slug]"><span></span></a>-->
-                    <!--<a *ngIf="type === 'active'" class="datalist-btn history" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>-->
+                    <a class="datalist-btn history" [routerLink]="'/restaurants/'+type+'/orders/'+r.id" [title]="words['owner-restaurants']['history'][currentLang.slug]"><span></span></a>
                     <a class="datalist-btn edit" [routerLink]="'/restaurants/'+type+'/edit/'+r.id" [title]="words['common']['edit'][currentLang.slug]"><span></span></a>                    
                     <a class="datalist-btn delete" (click)="onDelete(r)" [title]="words['common']['delete'][currentLang.slug]"><span></span></a>
                 </div>            

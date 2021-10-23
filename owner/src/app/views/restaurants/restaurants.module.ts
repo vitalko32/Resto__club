@@ -9,6 +9,7 @@ import { ActiveRestaurantsPage } from "./pages/active/active.restaurants.page";
 import { CreateRestaurantsPage } from "./pages/create/create.restaurants.page";
 import { EditRestaurantsPage } from "./pages/edit/edit.restaurants.page";
 import { InactiveRestaurantsPage } from "./pages/inactive/inactive.restaurants.page";
+import { OrdersRestaurantsPage } from "./pages/orders/orders.restaurants.page";
 import { TransactionsRestaurantsPage } from "./pages/transactions/transactions.restaurants.page";
 
 let routes = RouterModule.forChild ([            
@@ -17,6 +18,7 @@ let routes = RouterModule.forChild ([
 	{path: ":type/create", component: CreateRestaurantsPage, pathMatch: "full"},
 	{path: ":type/edit/:id", component: EditRestaurantsPage},
 	{path: ":type/transactions/:id", component: TransactionsRestaurantsPage},
+	{path: ":type/orders/:id", component: OrdersRestaurantsPage},
 	{path: "**", redirectTo: "/restaurants/active"},
 ]);
 
@@ -24,8 +26,7 @@ let routes = RouterModule.forChild ([
     imports: [	
 		CommonModule,
 		RouterModule,
-        FormsModule,
-        
+        FormsModule,        
         routes,
 		CCModule,
 	],
@@ -35,6 +36,7 @@ let routes = RouterModule.forChild ([
 		CreateRestaurantsPage,
 		EditRestaurantsPage,
 		TransactionsRestaurantsPage,
+		OrdersRestaurantsPage,
 		RestaurantComponent,
 		RechargeComponent,
 	],    		    

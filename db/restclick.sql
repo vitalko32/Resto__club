@@ -5359,6 +5359,26 @@ COPY "default".vne_word_translations (id, word_id, lang_id, text) FROM stdin;
 1098	355	2	Volume
 1099	356	1	Алкоголь
 1100	356	2	Alcohol
+1101	357	1	История заказов
+1102	357	2	Order history
+1103	358	1	Дата создания
+1104	358	2	Created at
+1105	359	1	Сумма
+1106	359	2	Amount
+1107	360	1	Статус
+1108	360	2	Status
+1109	361	1	завершен
+1110	361	2	completed
+1111	362	1	активен
+1112	362	2	active
+1113	363	1	отменен
+1114	363	2	cancelled
+1115	364	1	Ресторан
+1116	364	2	Restaurant
+1117	365	1	Кол-во заказов
+1118	365	2	Orders qty
+1119	366	1	Сводка
+1120	366	2	Summary
 \.
 
 
@@ -5372,23 +5392,24 @@ COPY "default".vne_wordbooks (id, name, pos) FROM stdin;
 3	owner-login	3
 1	owner-restaurants	4
 4	owner-password	6
-7	restorator-common	7
-6	restorator-login	8
 8	owner-transactions	5
-9	restorator-home	10
-10	restorator-employees	11
-11	restorator-password	9
-12	restorator-tables	13
-13	restorator-halls	12
-14	restorator-cats	14
-15	restorator-products	15
-21	restorator-orders	16
-18	customer-common	18
-16	customer-home	19
-17	customer-menu	20
-19	customer-cart	21
-20	customer-invoice	22
-22	restorator-stats	17
+7	restorator-common	8
+6	restorator-login	9
+11	restorator-password	10
+9	restorator-home	11
+10	restorator-employees	12
+13	restorator-halls	13
+12	restorator-tables	14
+14	restorator-cats	15
+15	restorator-products	16
+21	restorator-orders	17
+22	restorator-stats	18
+18	customer-common	19
+16	customer-home	20
+17	customer-menu	21
+19	customer-cart	22
+20	customer-invoice	23
+23	owner-orders	7
 \.
 
 
@@ -5714,6 +5735,16 @@ COPY "default".vne_words (id, wordbook_id, pos, mark, note) FROM stdin;
 354	17	3	ml	\N
 355	17	9	volume	\N
 356	17	16	alc	\N
+357	23	1	title	\N
+358	23	2	created-at	\N
+359	23	3	sum	\N
+360	23	4	status	\N
+361	23	5	status-completed	\N
+362	23	6	status-active	\N
+363	23	7	status-cancelled	\N
+364	23	8	restaurant	\N
+365	23	9	q	\N
+366	23	10	summary	\N
 \.
 
 
@@ -5905,21 +5936,21 @@ SELECT pg_catalog.setval('"default".vne_transactions_id_seq', 1166, true);
 -- Name: vne_word_translations_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1100, true);
+SELECT pg_catalog.setval('"default".vne_word_translations_id_seq', 1120, true);
 
 
 --
 -- Name: vne_wordbooks_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 22, true);
+SELECT pg_catalog.setval('"default".vne_wordbooks_id_seq', 23, true);
 
 
 --
 -- Name: vne_words_id_seq; Type: SEQUENCE SET; Schema: default; Owner: vio
 --
 
-SELECT pg_catalog.setval('"default".vne_words_id_seq', 356, true);
+SELECT pg_catalog.setval('"default".vne_words_id_seq', 366, true);
 
 
 --

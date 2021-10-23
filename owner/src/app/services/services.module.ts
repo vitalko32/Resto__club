@@ -8,6 +8,7 @@ import { ErrorService } from './error.service';
 import { GoogleService } from './google.service';
 import { CurrencyRepository } from './repositories/currency.repository';
 import { LangRepository } from './repositories/lang.repository';
+import { OrderRepository } from './repositories/order.repository';
 import { RestaurantActiveRepository } from './repositories/restaurant.active.repository';
 import { RestaurantInactiveRepository } from './repositories/restaurant.inactive.repository';
 import { RestaurantRepository } from './repositories/restaurant.repository';
@@ -34,6 +35,7 @@ import { WordRepository } from './repositories/word.repository';
         RestaurantInactiveRepository,
         CurrencyRepository,
         TransactionRepository,
+        OrderRepository,
     ],
 })
 export class ServicesModule {}

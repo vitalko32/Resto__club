@@ -34,6 +34,7 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     get currentLang(): Lang {return this.appService.currentLang.value;}    
     get type(): string {return this.route.snapshot.params["type"];}
     get tl(): Transaction[] {return this.transactionRepository.xlChunk;}
+    set tl(v: Transaction[]) {this.transactionRepository.xlChunk = v;}
     get tlCurrentPart(): number {return this.transactionRepository.chunkCurrentPart;}
     set tlCurrentPart(v: number) {this.transactionRepository.chunkCurrentPart = v;}
     get tlAllLength(): number {return this.transactionRepository.allLength;}  
@@ -51,6 +52,8 @@ export class TransactionsRestaurantsPage implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.initTitle();            
         this.initRestaurant();
+        this.tl = [];
+        this.tlCurrentPart = 0;
         this.initTransactions();
     }
 
