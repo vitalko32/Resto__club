@@ -14,7 +14,7 @@
 <div class="products">
     <div class="p-search">
         <div class="ps-title">{{words['restorator-products']['filter'][currentLang.slug]}}:</div>
-        <div class="ps-input"><input-search [(value)]="plSearch" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
+        <div class="ps-input"><input-search [(value)]="plFilterNameCode" cssClass="inline-block" [placeholder]="words['restorator-products']['name-code'][currentLang.slug]" (apply)="initProducts();"></input-search></div>
     </div>
     <ng-container *ngIf="plReady">
         <div class="p-items" *ngIf="pl.length" [sortablejs]="pl" [sortablejsOptions]="sortableOptions">
@@ -54,7 +54,7 @@
         <div *ngIf="!pl.length">{{words['common']['none'][currentLang.slug]}}</div>
     </ng-container>
     <ng-container *ngIf="!plReady">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+        <div class="loading"><span></span></div>        
     </ng-container>    
 </div>
 

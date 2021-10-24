@@ -6,9 +6,11 @@ import { CCModule } from "src/app/common.components/cc.module";
 import { RechargeComponent } from "./components/recharge/recharge.component";
 import { RestaurantComponent } from "./components/restaurant/restaurant.component";
 import { ActiveRestaurantsPage } from "./pages/active/active.restaurants.page";
+import { ActiveRestaurantsService } from "./pages/active/active.restaurants.service";
 import { CreateRestaurantsPage } from "./pages/create/create.restaurants.page";
 import { EditRestaurantsPage } from "./pages/edit/edit.restaurants.page";
 import { InactiveRestaurantsPage } from "./pages/inactive/inactive.restaurants.page";
+import { InactiveRestaurantsService } from "./pages/inactive/inactive.restaurants.service";
 import { OrdersRestaurantsPage } from "./pages/orders/orders.restaurants.page";
 import { TransactionsRestaurantsPage } from "./pages/transactions/transactions.restaurants.page";
 
@@ -39,6 +41,10 @@ let routes = RouterModule.forChild ([
 		OrdersRestaurantsPage,
 		RestaurantComponent,
 		RechargeComponent,
-	],    		    
+	],  
+	providers: [
+		ActiveRestaurantsService,
+		InactiveRestaurantsService,
+	],  		    
 })
 export class RestaurantsModule {}

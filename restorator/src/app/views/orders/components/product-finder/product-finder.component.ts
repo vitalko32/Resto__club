@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { Cat } from "src/app/model/orm/cat.model";
+import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Order } from "src/app/model/orm/order.model";
 import { IOrderProduct } from "src/app/model/orm/order.product.interface";
@@ -23,7 +24,10 @@ export class ProductFinderComponent implements OnInit, OnChanges {
     @Input() active: boolean = false;
     @Input() order: Order;
     @Output() activeChange: EventEmitter<boolean> = new EventEmitter();
-    public plSearch: string = "";
+    public cl: Cat[] = [];
+    public pl: Product[] = [];
+    public plFilterCatId: number = null;
+    public plFilterNameCode: string = "";
     public plReady: boolean = false;
 
     constructor(
@@ -36,13 +40,11 @@ export class ProductFinderComponent implements OnInit, OnChanges {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}    
-    get cl(): Cat[] {return this.catRepository.xlAll;}
-    get pl(): Product[] {return this.productRepository.xlAll;}
-    get plFilterCatId(): number {return this.productRepository.filterCatId;}
-    set plFilterCatId(v: number) {this.productRepository.filterCatId = v;}
-    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}      
-
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}        
+    get plFilter(): any {return {cat_id: this.plFilterCatId, nameCode: this.plFilterNameCode};}
+    
     public async ngOnInit(): Promise<void> {        
         await this.initCats();      
         this.initProducts();          
@@ -55,9 +57,8 @@ export class ProductFinderComponent implements OnInit, OnChanges {
     }
 
     private async initCats(): Promise<void> {
-        try {
-            this.catRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.catRepository.loadAll();             
+        try {            
+            this.cl = await this.catRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
             this.plFilterCatId = this.cl[0].id;            
         } catch (err) {
             this.appService.showError(err);
@@ -66,9 +67,8 @@ export class ProductFinderComponent implements OnInit, OnChanges {
 
     public async initProducts(): Promise<void> {
         try {            
-            this.plReady = false;
-            this.productRepository.filterNameCode = this.plSearch;            
-            await this.productRepository.loadAll();  
+            this.plReady = false;            
+            this.pl = await this.productRepository.loadAll("pos", 1, this.plFilter);  
             
             for (let p of this.pl) {
                 p._q = 1;

@@ -2,7 +2,7 @@
     <a class="dash-btn create" routerLink="/kitchen/cats/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="data">
-    <ng-container *ngIf="ready">
+    <ng-container *ngIf="clChunk">
         <!-- desktop -->
         <div class="datalist-desktop">
             <div class="datalist-overlay" [class.active]="clLoading"></div>
@@ -81,8 +81,8 @@
         <!-- paging -->
         <pagination [allLength]="clAllLength" [length]="clLength" [current]="clCurrentPart" (currentChanged)="clCurrentPart = $event; initCats();"></pagination>
     </ng-container>
-    <ng-container *ngIf="!ready">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    <ng-container *ngIf="!clChunk">
+        <div class="loading"><span></span></div>        
     </ng-container>  
 </div>
 

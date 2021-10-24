@@ -3,7 +3,7 @@
     <a class="dash-btn back" [routerLink]="'/restaurants/'+type"><span>{{words['common']['back'][currentLang.slug]}}</span></a>    
 </div>
 <div class="data">  
-    <ng-container *ngIf="ready">
+    <ng-container *ngIf="olChunk">
         <!-- desktop -->  
         <div class="datalist-desktop">
             <div class="datalist-overlay" [class.active]="olLoading"></div>              
@@ -87,7 +87,7 @@
         <!-- paging -->
         <pagination [allLength]="olAllLength" [length]="olLength" [current]="olCurrentPart" (currentChanged)="olCurrentPart = $event; initOrders();"></pagination>
     </ng-container>
-    <ng-container *ngIf="!ready">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    <ng-container *ngIf="!olChunk">
+        <div class="loading"><span></span></div>        
     </ng-container>
 </div>

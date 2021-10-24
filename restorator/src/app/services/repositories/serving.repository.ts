@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Repository } from './_repository';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
 import { IServing } from 'src/app/model/orm/serving.interface';
+import { Repository2 } from './_repository2';
 
 @Injectable()
-export class ServingRepository extends Repository<IServing> {    
+export class ServingRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
-        super(dataService);        
-        this.allSortBy = "pos";        
+        super(dataService);                
     }        
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "pos", sortDir: number = 1): Promise<IServing[]> {
         return new Promise((resolve, reject) => {    
-            const dto: IGetAll = {
-                sortBy: this.allSortBy,
-                sortDir: this.allSortDir,                
-            };
+            const dto: IGetAll = {sortBy, sortDir};
             this.dataService.servingsAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data;
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data);
                 } else {                        
                     reject(res.error);
                 }

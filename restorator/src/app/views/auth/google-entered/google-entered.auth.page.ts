@@ -7,6 +7,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { GoogleService } from "src/app/services/google.service";
 import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "google-entered-auth-page",
@@ -19,12 +20,13 @@ export class GoogleEnteredAuthPage implements OnInit {
         private appService: AppService,        
         private googleService: GoogleService,
         private authService: AuthService,  
+        private socketService: SocketService,
         private router: Router,        
     ) {}
 
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get words(): Words {return this.wordRepository.words;}
-    get langs(): Lang[] {return this.langRepository.xlAll;}
+    get langs(): Lang[] {return this.langRepository.langs;}
 
     public ngOnInit(): void {        
         this.processGoogleData();           
@@ -39,6 +41,7 @@ export class GoogleEnteredAuthPage implements OnInit {
             if (statusCode === 200) {
                 let lang = this.langs.find(l => l.id === this.authService.authData.value.employee.restaurant.lang_id);                    
                 lang ? this.appService.setLang(lang) : null;
+                this.socketService.connect();
                 this.router.navigateByUrl("/");                            
             } else if (statusCode === 401) {
                 //this.appService.showError(this.words['common']['error-401'][this.currentLang.slug]);	

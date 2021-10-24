@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { IChunk } from "src/app/model/chunk.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -8,6 +9,7 @@ import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { IndexEmployeesService } from "./index.employees.service";
 
 @Component({
     selector: "index-employees-page",
@@ -15,7 +17,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../../../common.styles/data.scss"],
 })
 export class IndexEmployeesPage implements OnInit, OnDestroy {
-    public ready: boolean = false;
+    public elChunk: IChunk<Employee> = null;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public elLoading: boolean = false;
@@ -29,32 +31,34 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
         private appService: AppService,        
         private wordRepository: WordRepository,    
         private employeeRepository: EmployeeRepository,   
-        private authService: AuthService,         
+        private authService: AuthService,      
+        private listService: IndexEmployeesService,   
         private router: Router,      
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get el(): Employee[] {return this.employeeRepository.xlChunk;}
-    get elCurrentPart(): number {return this.employeeRepository.chunkCurrentPart;}
-    set elCurrentPart(v: number) {this.employeeRepository.chunkCurrentPart = v;}
-    get elAllLength(): number {return this.employeeRepository.allLength;}  
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get el(): Employee[] {return this.elChunk.data;}
+    get elAllLength(): number {return this.elChunk.allLength;}  
+    get elCurrentPart(): number {return this.listService.currentPart;}
+    set elCurrentPart(v: number) {this.listService.currentPart = v;}    
     get elLength(): number {return this.employeeRepository.chunkLength;}   
-    get elFilterCreatedAt(): Date[] {return this.employeeRepository.filterCreatedAt;}  
-    set elFilterCreatedAt(v: Date[]) {this.employeeRepository.filterCreatedAt = v;}
-    get elFilterName(): string {return this.employeeRepository.filterName;}
-    set elFilterName(v: string) {this.employeeRepository.filterName = v;}
-    get elSortBy(): string {return this.employeeRepository.chunkSortBy;}
-    get elSortDir(): number {return this.employeeRepository.chunkSortDir;}
-    set elSortBy(v: string) {this.employeeRepository.chunkSortBy = v;}
-    set elSortDir(v: number) {this.employeeRepository.chunkSortDir = v;}
+    get elFilterCreatedAt(): Date[] {return this.listService.filterCreatedAt;}  
+    set elFilterCreatedAt(v: Date[]) {this.listService.filterCreatedAt = v;}
+    get elFilterName(): string {return this.listService.filterName;}
+    set elFilterName(v: string) {this.listService.filterName = v;}
+    get elFilter(): any {return {restaurant_id: this.restaurantId, created_at: this.elFilterCreatedAt, name: this.elFilterName};}
+    get elSortBy(): string {return this.listService.sortBy;}
+    set elSortBy(v: string) {this.listService.sortBy = v;}
+    get elSortDir(): number {return this.listService.sortDir;}    
+    set elSortDir(v: number) {this.listService.sortDir = v;}
 
-    public async ngOnInit(): Promise<void> {        
+    public ngOnInit(): void {        
         this.initTitle();  
         this.initAuthCheck();      
-        await this.initEmployees();
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initEmployees();        
     }
 
     public ngOnDestroy(): void {
@@ -73,10 +77,16 @@ export class IndexEmployeesPage implements OnInit, OnDestroy {
 
     public async initEmployees(): Promise<void> {
         try {
-            this.elLoading = true;
-            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.employeeRepository.loadChunk();                     
-            setTimeout(() => this.elLoading = false, 500);            
+            this.elLoading = true;            
+            this.elChunk = await this.employeeRepository.loadChunk(this.elCurrentPart, this.elSortBy, this.elSortDir, this.elFilter);                                   
+
+            if (this.elCurrentPart > 0 && this.elCurrentPart > Math.ceil(this.elAllLength / this.elLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
+                this.elCurrentPart = 0;
+                this.initEmployees();
+            } else {    
+                await this.appService.pause(500);
+                this.elLoading = false;                
+            }
         } catch (err) {
             this.appService.showError(err);
         }

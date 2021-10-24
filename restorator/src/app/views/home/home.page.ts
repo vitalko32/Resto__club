@@ -16,6 +16,7 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     styleUrls: ["../../common.styles/data.scss"],
 })
 export class HomePage implements OnInit, OnDestroy {
+    public esl: EmployeeStatus[] = [];
     public langSubscription: Subscription = null;
     public localPayTime: string = "";
 
@@ -30,8 +31,7 @@ export class HomePage implements OnInit, OnDestroy {
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get employee(): Employee {return this.authService.authData.value.employee;}
-    get payTime(): string {return this.settingRepository.settings['pay-time'];}   
-    get esl(): EmployeeStatus[] {return this.employeeStatusRepository.xlAll;}
+    get payTime(): string {return this.settingRepository.settings['pay-time'];}       
 
     public ngOnInit(): void {        
         this.initTitle();
@@ -59,7 +59,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     private async initEmployeeStatuses(): Promise<void> {
         try {
-            this.employeeStatusRepository.loadAll();
+            this.esl = await this.employeeStatusRepository.loadAll();
         } catch (err) {
             this.appService.showError(err);
         }

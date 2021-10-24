@@ -1,27 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Repository } from './_repository';
 import { Order } from '../../model/orm/order.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { IChunk } from 'src/app/model/chunk.interface';
+import { Repository2 } from './_repository2';
 
 @Injectable()
-export class OrderRepository extends Repository {              
+export class OrderRepository extends Repository2 {              
     constructor(protected dataService: DataService) {
-        super();                
-        this.chunkSortBy = "created_at";
-        this.chunkSortDir = -1;
+        super(dataService);        
     }    
 
-    public loadChunk(part: number, filter: any = {}): Promise<IChunk<Order>> {
+    public loadChunk(part: number, sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): Promise<IChunk<Order>> {
         return new Promise((resolve, reject) => {                        
-            const dto: IGetChunk = {
-                from: part * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
-                filter,
-            };
+            const dto: IGetChunk = {from: part * this.chunkLength, q: this.chunkLength, sortBy, sortDir, filter};
             this.dataService.ordersChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
                     const chunk: IChunk<Order> = {data: res.data.map(d => new Order().build(d)), allLength: res.allLength, sum: res.sum};

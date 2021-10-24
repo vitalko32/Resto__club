@@ -9,6 +9,7 @@ import { ProductComponent } from "./components/product/product.component";
 import { CreateProductsPage } from "./pages/create/create.products.page";
 import { EditProductsPage } from "./pages/edit/edit.products.page";
 import { IndexProductsPage } from "./pages/index/index.products.page";
+import { IndexProductsService } from "./pages/index/index.products.service";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexProductsPage, pathMatch: "full"},
@@ -33,6 +34,9 @@ let routes = RouterModule.forChild ([
 		CreateProductsPage,
 		EditProductsPage,
 		ProductComponent,
-	],    		    
+	],  
+	providers: [
+		IndexProductsService,
+	],
 })
 export class ProductsModule {}

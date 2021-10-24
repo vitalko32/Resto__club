@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ICoord } from "src/app/model/coord.interface";
+import { Employee } from "src/app/model/orm/employee.model";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Table } from "src/app/model/orm/table.model";
@@ -10,8 +11,9 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
-import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { IndexAllOrdersService } from "src/app/views/orders/pages/all.index/index.all.orders.service";
+import { IndexTableService } from "./index.tables.service";
 
 @Component({
     selector: "index-tables-page",
@@ -22,6 +24,7 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     public ready: boolean = false;
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
+    public hl: Hall[] = [];
     public currentHall: Hall = null;
     public places: ICoord[] = [];
     public tableCreatePanelActive: boolean = false;
@@ -36,25 +39,25 @@ export class IndexTablesPage implements OnInit, OnDestroy {
         private appService: AppService,        
         private wordRepository: WordRepository,
         private hallRepository: HallRepository,      
-        private orderRepository: OrderRepository,      
-        private authService: AuthService,         
+        private indexAllOrdersService: IndexAllOrdersService,
+        private authService: AuthService,        
+        private listService: IndexTableService, 
         private router: Router,      
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}
-    get hl(): Hall[] {return this.hallRepository.xlAll;}
-    get currentHallId(): number {return this.hallRepository.currentId;}
-    set currentHallId(v: number) {this.hallRepository.currentId = v;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}    
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get currentHallId(): number {return this.listService.currentHallId;}
+    set currentHallId(v: number) {this.listService.currentHallId = v;}
     
     public async ngOnInit(): Promise<void> {        
         this.initTitle();  
         this.initAuthCheck();  
         await this.initHalls();    
         this.initCurrentHall();    
-        this.initPlaces();    
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initPlaces();            
     }
 
     public ngOnDestroy(): void {
@@ -72,9 +75,8 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     }
 
     private async initHalls(): Promise<void> {
-        try {
-            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.hallRepository.loadAll();             
+        try {            
+            this.hl = await this.hallRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
         } catch (err) {
             this.appService.showError(err);
         }
@@ -168,8 +170,11 @@ export class IndexTablesPage implements OnInit, OnDestroy {
     }
 
     public tableOnHistory(t: Table): void {
-        this.orderRepository.filterHallId = this.currentHallId;
-        this.orderRepository.filterTableId = t.id;
+        this.indexAllOrdersService.filterHallId = this.currentHallId;
+        this.indexAllOrdersService.filterTableId = t.id;
+        this.indexAllOrdersService.filterCreatedAt = [null, null];
+        this.indexAllOrdersService.filterEmployeeId = null;
+        this.indexAllOrdersService.filterStatus = null;
         this.router.navigateByUrl("/orders/all");
     }
 }

@@ -10,7 +10,7 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
-import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { ServingRepository } from "src/app/services/repositories/serving.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 import { SocketService } from "src/app/services/socket.service";
@@ -26,26 +26,26 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;  
     public formLoading: boolean = false;
     public order: Order = null;    
+    public hl: Hall[] = [];
+    public sl: IServing[] = [];
     public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);       
     
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
-        private orderRepository: OrderMyRepository,
+        private orderRepository: OrderRepository,
         private hallRepository: HallRepository,  
         private servingRepository: ServingRepository,     
         private authService: AuthService,     
         private socketService: SocketService,    
-        private router: Router,    
-        private route: ActivatedRoute,  
+        private router: Router,            
     ) {}    
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
     get employee(): Employee {return this.authService.authData.value.employee;} 
-    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}  
-    get hl(): Hall[] {return this.hallRepository.xlAll;} 
-    get sl(): IServing[] {return this.servingRepository.xlAll;} 
+    get restaurantId(): number {return this.employee.restaurant_id;} 
+    get currency_symbol(): string {return this.employee.restaurant.currency.symbol;}          
     
     public ngOnInit(): void {        
         this.initAuthCheck();     
@@ -74,22 +74,21 @@ export class CreateMyOrdersPage implements OnInit, OnDestroy {
         this.order = new Order().init(this.employee.restaurant_id, this.employee.id);
     }   
 
-    private initHalls(): void {
-        try {
-            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            this.hallRepository.loadAll();             
+    private async initHalls(): Promise<void> {
+        try {            
+            this.hl = await this.hallRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
         } catch (err) {
             this.appService.showError(err);
         }
     }
 
-    private initServings(): void {
+    private async initServings(): Promise<void> {
         try {            
-            this.servingRepository.loadAll();
+            this.sl = await this.servingRepository.loadAll();
         } catch (err) {
             this.appService.showError(err);
         }
-    }  
+    }
     
     private async initSocket(): Promise<void> {
         await this.appService.pause(1);

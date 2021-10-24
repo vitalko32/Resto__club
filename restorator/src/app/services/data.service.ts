@@ -105,7 +105,7 @@ export class DataService {
 
     public servingsAll(dto: IGetAll): Observable<IAnswer<IServing[]>> {return this.sendRequest("servings/all", dto, true);}    
 
-    public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto, true);}    
+    public wsserversAll(dto: IGetAll): Observable<IAnswer<IWSServer[]>> {return this.sendRequest("wsservers/all", dto);}    
 
     public statsTableSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<ITableSum[]>> {return this.sendRequest("stats/table-sums-monthly", dto, true);}
     public statsEmployeeSumsMonthly(dto: IGetMonthStats): Observable<IAnswer<IEmployeeSum[]>> {return this.sendRequest("stats/employee-sums-monthly", dto, true);}    

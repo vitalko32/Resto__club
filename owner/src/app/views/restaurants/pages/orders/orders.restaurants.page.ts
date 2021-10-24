@@ -16,10 +16,11 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
     templateUrl: "orders.restaurants.page.html",   
     styleUrls: ["../../../../common.styles/data.scss"],    
 })
-export class OrdersRestaurantsPage implements OnInit, OnDestroy {    
-    public ready: boolean = false;
+export class OrdersRestaurantsPage implements OnInit, OnDestroy {        
     public olChunk: IChunk<Order> = null;    
     public olCurrentPart: number = 0;
+    public olSortBy: string = "created_at";
+    public olSortDir: number = -1;
     public olLoading: boolean = false;       
     public olFilterCreatedAt: Date[] = [null, null];
     public olFilterRestaurantId: number = null;
@@ -43,18 +44,12 @@ export class OrdersRestaurantsPage implements OnInit, OnDestroy {
     get olAllLength(): number {return this.olChunk.allLength;}
     get olSum(): number {return this.olChunk.sum;}
     get olLength(): number {return this.orderRepository.chunkLength;}   
-    get olSortBy(): string {return this.orderRepository.chunkSortBy;}
-    get olSortDir(): number {return this.orderRepository.chunkSortDir;}
-    set olSortBy(v: string) {this.orderRepository.chunkSortBy = v;}
-    set olSortDir(v: number) {this.orderRepository.chunkSortDir = v;}  
     get olFilter() {return {restaurant_id: parseInt(this.route.snapshot.params["id"]), created_at: this.olFilterCreatedAt};}      
         
-    public async ngOnInit(): Promise<void> {
+    public ngOnInit(): void {
         this.initTitle();    
-        await this.initRestaurant();  
-        await this.initOrders();      
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initRestaurant();  
+        this.initOrders();                      
     }
 
     public ngOnDestroy(): void {
@@ -78,13 +73,14 @@ export class OrdersRestaurantsPage implements OnInit, OnDestroy {
     public async initOrders(): Promise<void> {		                
         try {
             this.olLoading = true;            
-            this.olChunk = await this.orderRepository.loadChunk(this.olCurrentPart, this.olFilter);                        
+            this.olChunk = await this.orderRepository.loadChunk(this.olCurrentPart, this.olSortBy, this.olSortDir, this.olFilter);                        
             
             if (this.olCurrentPart > 0 && this.olCurrentPart > Math.ceil(this.olAllLength / this.olLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
                 this.olCurrentPart = 0;
                 this.initOrders();
             } else {
-                setTimeout(() => this.olLoading = false, 500);                
+                await this.appService.pause(500);
+                this.olLoading = false;                
             } 
         } catch (err) {
             this.appService.showError(err);

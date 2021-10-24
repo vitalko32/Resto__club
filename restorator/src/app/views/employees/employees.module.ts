@@ -7,6 +7,7 @@ import { EmployeeComponent } from "./components/employee/employee.component";
 import { CreateEmployeesPage } from "./pages/create/create.employees.page";
 import { EditEmployeesPage } from "./pages/edit/edit.employees.page";
 import { IndexEmployeesPage } from "./pages/index/index.employees.page";
+import { IndexEmployeesService } from "./pages/index/index.employees.service";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexEmployeesPage, pathMatch: "full"},
@@ -29,6 +30,9 @@ let routes = RouterModule.forChild ([
 		CreateEmployeesPage,
 		EditEmployeesPage,
 		EmployeeComponent,
-	],    		    
+	],    
+	providers: [
+		IndexEmployeesService,
+	]		    
 })
 export class EmployeesModule {}

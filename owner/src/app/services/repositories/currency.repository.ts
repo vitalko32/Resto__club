@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-
 import { Currency } from '../../model/orm/currency.model';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
-import { Repository } from './_repository';
+import { Repository2 } from './_repository2';
 
 @Injectable()
-export class CurrencyRepository extends Repository {    
+export class CurrencyRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
-        super();
-        this.allSortBy = "pos";
+        super(dataService);        
     }
     
-    public loadAll(): Promise<Currency[]> {
+    public loadAll(sortBy: string = "pos", sortDir: number = -1): Promise<Currency[]> {
         return new Promise((resolve, reject) => {
-            const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
+            const dto: IGetAll = {sortBy, sortDir};
             this.dataService.currenciesAll(dto).subscribe(res => {                    
                 if (res.statusCode === 200) {                    
                     resolve(res.data.map(d => new Currency().build(d)));

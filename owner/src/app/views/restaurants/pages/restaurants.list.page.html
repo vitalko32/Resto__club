@@ -2,7 +2,7 @@
     <a class="dash-btn create" [routerLink]="'/restaurants/'+type+'/create'"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="data">
-    <ng-container *ngIf="ready">
+    <ng-container *ngIf="rlChunk">
         <!-- desktop -->
         <div class="datalist-desktop">
             <div class="datalist-overlay" [class.active]="rlLoading"></div>
@@ -110,8 +110,8 @@
         <!-- paging -->
         <pagination [allLength]="rlAllLength" [length]="rlLength" [current]="rlCurrentPart" (currentChanged)="rlCurrentPart = $event; initRestaurants();"></pagination>
     </ng-container> 
-    <ng-container *ngIf="!ready">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    <ng-container *ngIf="!rlChunk">
+        <div class="loading"><span></span></div>        
     </ng-container>   
 </div>    
 

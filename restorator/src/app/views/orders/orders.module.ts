@@ -12,6 +12,7 @@ import { ProductFinderComponent } from "./components/product-finder/product-find
 import { CreateAllOrdersPage } from "./pages/all.create/create.all.orders.page";
 import { EditAllOrdersPage } from "./pages/all.edit/edit.all.orders.page";
 import { IndexAllOrdersPage } from "./pages/all.index/index.all.orders.page";
+import { IndexAllOrdersService } from "./pages/all.index/index.all.orders.service";
 import { CreateMyOrdersPage } from "./pages/my.create/create.my.orders.page";
 import { EditMyOrdersPage } from "./pages/my.edit/edit.my.orders.page";
 import { IndexMyOrdersPage } from "./pages/my.index/index.my.orders.page";
@@ -52,6 +53,6 @@ let routes = RouterModule.forChild ([
 		OrderProductComponent,	
 		OrderProductEditableComponent,	
 		ProductFinderComponent,
-	],    		    
+	],    	
 })
 export class OrdersModule {}

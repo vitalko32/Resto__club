@@ -13,17 +13,18 @@ import { Hall } from "src/app/model/orm/hall.model";
 import { Table } from "src/app/model/orm/table.model";
 import { EmployeeRepository } from "src/app/services/repositories/employee.repository";
 import { Employee } from "src/app/model/orm/employee.model";
-import { Restaurant } from "src/app/model/orm/restaurant.model";
+import { IChunk } from "src/app/model/chunk.interface";
+import { IndexAllOrdersService } from "./index.all.orders.service";
 
 @Component({
     selector: "index-all-orders-page",
     templateUrl: "index.all.orders.page.html",
     styleUrls: ["../../../../common.styles/data.scss"],
 })
-export class IndexAllOrdersPage implements OnInit, OnDestroy {
-    public ready: boolean = false;
+export class IndexAllOrdersPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
+    public olChunk: IChunk<Order> = null;    
     public olLoading: boolean = false;
     public olSortingVariants: any[][] = // для мобильной верстки
         [["created_at", 1], ["created_at", -1], ["sum", 1], ["sum", -1]];   
@@ -39,6 +40,8 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
     public olActivateId: number = null;
     public olActivateConfirmActive: boolean = false; 
     public olActivateConfirmMsg: string = "";
+    public el: Employee[] = [];
+    public hl: Hall[] = [];
     public statusActive: OrderStatus = OrderStatus.Active;
     public statusCompleted: OrderStatus = OrderStatus.Completed;
     public statusCancelled: OrderStatus = OrderStatus.Cancelled;
@@ -50,43 +53,50 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
         private hallRepository: HallRepository,
         private employeeRepository: EmployeeRepository,
         private authService: AuthService,         
-        private router: Router,      
+        private listService: IndexAllOrdersService,  
+        private router: Router,            
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get ol(): Order[] {return this.orderRepository.xlChunk;}
-    get olSum(): number {return this.orderRepository.sum;}
-    get olCurrentPart(): number {return this.orderRepository.chunkCurrentPart;}
-    set olCurrentPart(v: number) {this.orderRepository.chunkCurrentPart = v;}
-    get olAllLength(): number {return this.orderRepository.allLength;}  
-    get olLength(): number {return this.orderRepository.chunkLength;}   
-    get olSortBy(): string {return this.orderRepository.chunkSortBy;}
-    get olSortDir(): number {return this.orderRepository.chunkSortDir;}
-    set olSortBy(v: string) {this.orderRepository.chunkSortBy = v;}
-    set olSortDir(v: number) {this.orderRepository.chunkSortDir = v;}
-    get olFilterCreatedAt(): Date[] {return this.orderRepository.filterCreatedAt;}
-    set olFilterCreatedAt(v: Date[]) {this.orderRepository.filterCreatedAt = v;}
-    get olFilterHallId(): number {return this.orderRepository.filterHallId;}
-    set olFilterHallId(v: number) {this.orderRepository.filterHallId = v;}
-    get olFilterTableId(): number {return this.orderRepository.filterTableId;}
-    set olFilterTableId(v: number) {this.orderRepository.filterTableId = v;}
-    get olFilterEmployeeId(): number {return this.orderRepository.filterEmployeeId;}
-    set olFilterEmployeeId(v: number) {this.orderRepository.filterEmployeeId = v;}
-    get olFilterStatus(): OrderStatus {return this.orderRepository.filterStatus;}
-    set olFilterStatus(v: OrderStatus) {this.orderRepository.filterStatus = v;}
-    get hl(): Hall[] {return this.hallRepository.xlAll;}
-    get tl(): Table[] {return this.hl.find(h => h.id === this.olFilterHallId)?.tables || [];}
-    get el(): Employee[] {return this.employeeRepository.xlAll;}
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get ol(): Order[] {return this.olChunk.data;}    
+    get olSum(): number {return this.olChunk.sum;}
+    get olAllLength(): number {return this.olChunk.allLength;}  
+    get olLength(): number {return this.orderRepository.chunkLength;}
+    get olCurrentPart(): number {return this.listService.currentPart;}
+    set olCurrentPart(v: number) {this.listService.currentPart = v;}        
+    get olSortBy(): string {return this.listService.sortBy;}
+    set olSortBy(v: string) {this.listService.sortBy = v;}
+    get olSortDir(): number {return this.listService.sortDir;}    
+    set olSortDir(v: number) {this.listService.sortDir = v;}
+    get olFilterCreatedAt(): Date[] {return this.listService.filterCreatedAt;}
+    set olFilterCreatedAt(v: Date[]) {this.listService.filterCreatedAt = v;}
+    get olFilterHallId(): number {return this.listService.filterHallId;}
+    set olFilterHallId(v: number) {this.listService.filterHallId = v;}
+    get olFilterTableId(): number {return this.listService.filterTableId;}
+    set olFilterTableId(v: number) {this.listService.filterTableId = v;}
+    get olFilterEmployeeId(): number {return this.listService.filterEmployeeId;}
+    set olFilterEmployeeId(v: number) {this.listService.filterEmployeeId = v;}
+    get olFilterStatus(): OrderStatus {return this.listService.filterStatus;}
+    set olFilterStatus(v: OrderStatus) {this.listService.filterStatus = v;}
+    get olFilter(): any {return {
+        restaurant_id: this.restaurantId, 
+        hall_id: this.olFilterHallId,
+        table_id: this.olFilterTableId,
+        employee_id: this.olFilterEmployeeId,
+        created_at: this.olFilterCreatedAt,
+        status: this.olFilterStatus,
+    };}    
+    get tl(): Table[] {return this.hl.find(h => h.id === this.olFilterHallId)?.tables || [];}        
 
-    public async ngOnInit(): Promise<void> {        
+    public ngOnInit(): void {        
         this.initTitle();  
         this.initAuthCheck();   
         this.initHalls();
         this.initEmployees();
-        await this.initOrders();           
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initOrders();        
     }
 
     public ngOnDestroy(): void {
@@ -105,28 +115,32 @@ export class IndexAllOrdersPage implements OnInit, OnDestroy {
 
     public async initOrders(): Promise<void> {
         try {
-            this.olLoading = true;
-            this.orderRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.orderRepository.loadChunk();  
-            setTimeout(() => this.olLoading = false, 500);                               
+            this.olLoading = true;            
+            this.olChunk = await this.orderRepository.loadChunk(this.olCurrentPart, this.olSortBy, this.olSortDir, this.olFilter);  
+
+            if (this.olCurrentPart > 0 && this.olCurrentPart > Math.ceil(this.olAllLength / this.olLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
+                this.olCurrentPart = 0;
+                this.initOrders();
+            } else {                
+                await this.appService.pause(500);
+                this.olLoading = false;                
+            }            
         } catch (err) {
             this.appService.showError(err);
         }
     }
 
-    public initHalls(): void {
-        try {
-            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            this.hallRepository.loadAll();     
+    private async initHalls(): Promise<void> {
+        try {            
+            this.hl = await this.hallRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
         } catch (err) {
             this.appService.showError(err);
         }
     }
 
-    public initEmployees(): void {
-        try {
-            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            this.employeeRepository.loadAll();     
+    public async initEmployees(): Promise<void> {
+        try {            
+            this.el = await this.employeeRepository.loadAll("name", 1, {restaurant_id: this.restaurantId});     
         } catch (err) {
             this.appService.showError(err);
         }

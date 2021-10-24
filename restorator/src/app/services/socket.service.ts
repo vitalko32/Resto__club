@@ -38,6 +38,12 @@ export class SocketService {
         }        
     }
 
+    public disconnect(): void {
+        this.socket.off();
+        this.socket.disconnect();
+        console.log("socket disconnected");
+    }
+
     private initEvents(): void {        
         this.socket.on("connect", () => {            
             console.log("socket connected");
@@ -54,9 +60,9 @@ export class SocketService {
     }
 
     // если не удалось соединиться с сокет-сервером - отключаемся, делаем паузу и пробуем соединиться со следующим сервером из списка
-    private async reconnect(): Promise<void> {        
+    private async reconnect(): Promise<void> {            
         this.socketConnected.next(false);
-        this.socket.disconnect();        
+        this.disconnect();
         this.appService.showError("reconnecting socket...");        
         await this.appService.pause(5000);
         this.serverIndex = this.serverIndex < this.servers.length - 1 ? this.serverIndex + 1 : 0;

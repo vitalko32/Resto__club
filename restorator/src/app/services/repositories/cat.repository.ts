@@ -1,35 +1,24 @@
 import { Injectable } from '@angular/core';
-
-import { Repository } from './_repository';
 import { Cat } from '../../model/orm/cat.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository2 } from './_repository2';
+import { IChunk } from 'src/app/model/chunk.interface';
 
 @Injectable()
-export class CatRepository extends Repository<Cat> {
-    public filterRestaurantId: number = null;    
-    
+export class CatRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
         super(dataService);
-        this.schema = "cat";
-        this.allSortBy = "pos";
-        this.chunkSortBy = "pos";
+        this.schema = "cat";        
     }        
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "pos", sortDir: number = 1, filter: any = {}): Promise<Cat[]> {
         return new Promise((resolve, reject) => {    
-            let filter: any = {};
-            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;        
-            const dto: IGetAll = {
-                sortBy: this.allSortBy,
-                sortDir: this.allSortDir,
-                filter,                    
-            };
+            const dto: IGetAll = {sortBy, sortDir, filter};
             this.dataService.catsAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Cat().build(d)) : [];                                    
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data.map(d => new Cat().build(d)));
                 } else {                        
                     reject(res.error);
                 }
@@ -39,22 +28,13 @@ export class CatRepository extends Repository<Cat> {
         });
     }
 
-    public loadChunk(): Promise<void> {
+    public loadChunk(part: number, sortBy: string = "pos", sortDir: number = 1, filter: any = {}): Promise<IChunk<Cat>> {
         return new Promise((resolve, reject) => {            
-            let filter: any = {};
-            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;
-            const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
-                filter,                        
-            };
+            const dto: IGetChunk = {from: part * this.chunkLength, q: this.chunkLength, sortBy, sortDir, filter};
             this.dataService.catsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Cat().build(d)) : [];
-                    this.allLength = res.allLength;            
-                    resolve();
+                    const chunk: IChunk<Cat> = {data: res.data.map(d => new Cat().build(d)), allLength: res.allLength};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    

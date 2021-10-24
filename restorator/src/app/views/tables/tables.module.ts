@@ -8,6 +8,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CreateTableComponent } from "./components/create-table/create-table.component";
 import { QRPanelComponent } from "./components/qr-panel/qr-panel.component";
 import { TableComponent } from "./components/table/table.component";
+import { IndexTableService } from "./pages/index/index.tables.service";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexTablesPage, pathMatch: "full"},
@@ -22,13 +23,16 @@ let routes = RouterModule.forChild ([
 		DragDropModule,
         
         routes,
-		CCModule,
+		CCModule,		
 	],
 	declarations: [
 		IndexTablesPage,	
 		CreateTableComponent,			
 		QRPanelComponent,
 		TableComponent,
-	],    		    
+	],  
+	providers: [
+		IndexTableService,
+	],
 })
 export class TablesModule {}

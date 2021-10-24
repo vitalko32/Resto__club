@@ -42,9 +42,8 @@ html {
 			
 			// main structure
 			.win {
-				@media (min-width:0) {background: none; box-shadow: none; padding: 75px 15px 15px 15px;}
-				@media (min-width:1200px) {background: linear-gradient(128deg, var(--color-bg) 0%, var(--color-bg-light) 100%); box-shadow: var(--block-shadow); padding: 45px; }
-				border-radius: 60px; 
+				@media (min-width:0) {padding: 75px 15px 15px 15px;}
+				@media (min-width:1200px) {padding: 15px;}				
 				.content {
 					display: flex; 					 
 					aside {
@@ -59,7 +58,7 @@ html {
 							@media (min-width:1200px) {width: 80%;}							
 						}
 						@import "./common.styles/dash.scss";
-						.loading {span::before {font-family: "fa-solid"; margin-right: 5px; content:"\f3f4"; display: inline-block; animation-name: rotation; animation-iteration-count: infinite; animation-duration: 1s;}}						
+						.loading {span::before {font-family: "fa-solid"; margin-right: 5px; content:"\f3f4"; display: inline-block; animation-name: rotation; animation-iteration-count: infinite; animation-duration: 3s;}}						
 					}					
 				}
 			}			

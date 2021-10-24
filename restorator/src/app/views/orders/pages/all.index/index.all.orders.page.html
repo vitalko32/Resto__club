@@ -2,7 +2,7 @@
     <a class="dash-btn create" routerLink="/orders/all/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="data">
-    <ng-container *ngIf="ready">
+    <ng-container *ngIf="olChunk">
         <!-- desktop -->    
         <div class="datalist-desktop">
             <div class="datalist-overlay" [class.active]="olLoading"></div>
@@ -35,7 +35,7 @@
                             </select>
                         </div>
                     </td>
-                        <td class="align-center">
+                    <td class="align-center">
                         <div class="dld-selectwrap">
                             <select [(ngModel)]="olFilterEmployeeId" (ngModelChange)="initOrders();">
                                 <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
@@ -44,7 +44,7 @@
                         </div>
                     </td>
                     <td></td>
-                    <td>
+                    <td class="align-center">
                         <div class="dld-selectwrap">
                             <select [(ngModel)]="olFilterStatus" (ngModelChange)="initOrders();">
                                 <option [ngValue]="null">{{words['common']['any'][currentLang.slug]}}</option>
@@ -211,8 +211,8 @@
         <!-- paging -->
         <pagination [allLength]="olAllLength" [length]="olLength" [current]="olCurrentPart" (currentChanged)="olCurrentPart = $event; initOrders();"></pagination>
     </ng-container>    
-    <ng-container *ngIf="!ready">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    <ng-container *ngIf="!olChunk">
+        <div class="loading"><span></span></div>        
     </ng-container>    
 </div>
 

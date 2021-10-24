@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Repository } from './_repository';
 import { Icon } from '../../model/orm/icon.model';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository2 } from './_repository2';
 
 @Injectable()
-export class IconRepository extends Repository<Icon> {    
+export class IconRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
         super(dataService);        
-        this.allSortBy = "pos";        
     }        
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "pos", sortDir: number = 1): Promise<Icon[]> {
         return new Promise((resolve, reject) => {    
-            const dto: IGetAll = {
-                sortBy: this.allSortBy,
-                sortDir: this.allSortDir,                
-            };
+            const dto: IGetAll = {sortBy, sortDir};
             this.dataService.iconsAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Icon().build(d)) : [];                                    
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data.map(d => new Icon().build(d)));
                 } else {                        
                     reject(res.error);
                 }

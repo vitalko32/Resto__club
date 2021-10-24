@@ -19,7 +19,7 @@ export class LangPanelComponent {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xlAll;}
+    get langs(): Lang[] {return this.langRepository.langs;}
     get active(): boolean {return this.appService.langPanelActive;}
     set active(v: boolean) {this.appService.langPanelActive = v;}
 

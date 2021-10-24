@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { SortableOptions } from "sortablejs";
 import { Cat } from "src/app/model/orm/cat.model";
+import { Employee } from "src/app/model/orm/employee.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Product, ProductUnit } from "src/app/model/orm/product.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -11,6 +12,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { CatRepository } from "src/app/services/repositories/cat.repository";
 import { ProductRepository } from "src/app/services/repositories/product.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { IndexProductsService } from "./index.products.service";
 
 @Component({
     selector: "index-products-page",
@@ -20,8 +22,9 @@ import { WordRepository } from "src/app/services/repositories/word.repository";
 export class IndexProductsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;                   
-    public plSearch: string = "";
+    public pl: Product[] = [];    
     public plReady: boolean = false;
+    public cl: Cat[] = [];
     public deleteConfirmActive: boolean = false;
     public deleteConfirmMsg: string = "";
     private deleteId: number = null;
@@ -37,17 +40,20 @@ export class IndexProductsPage implements OnInit, OnDestroy {
         private catRepository: CatRepository,
         private productRepository: ProductRepository,
         private authService: AuthService,         
+        private listService: IndexProductsService,
         private router: Router,      
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}    
-    get cl(): Cat[] {return this.catRepository.xlAll;}
-    get pl(): Product[] {return this.productRepository.xlAll;}
-    get plFilterCatId(): number {return this.productRepository.filterCatId;}
-    set plFilterCatId(v: number) {this.productRepository.filterCatId = v;}
-    get plFilterNameCode(): string {return this.productRepository.filterNameCode;}        
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get currencySymbol(): string {return this.authService.authData.value.employee?.restaurant?.currency?.symbol;}            
+    get plFilterCatId(): number {return this.listService.filterCatId;}
+    set plFilterCatId(v: number) {this.listService.filterCatId = v;}
+    get plFilterNameCode(): string {return this.listService.filterNameCode;}        
+    set plFilterNameCode(v: string) {this.listService.filterNameCode = v;}
+    get plFilter(): any {return {cat_id: this.plFilterCatId, nameCode: this.plFilterNameCode};}
 
     public async ngOnInit(): Promise<void> {        
         this.initTitle();  
@@ -71,9 +77,8 @@ export class IndexProductsPage implements OnInit, OnDestroy {
     }
 
     private async initCats(): Promise<void> {
-        try {
-            this.catRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.catRepository.loadAll();             
+        try {            
+            this.cl = await this.catRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
 
             if (!this.plFilterCatId) {
                 this.plFilterCatId = this.cl[0].id;
@@ -88,10 +93,8 @@ export class IndexProductsPage implements OnInit, OnDestroy {
 
     public async initProducts(): Promise<void> {
         try {            
-            this.plReady = false;
-            this.productRepository.filterNameCode = this.plSearch;            
-            await this.productRepository.loadAll();   
-            await this.appService.pause(500);   
+            this.plReady = false;            
+            this.pl = await this.productRepository.loadAll("pos", 1, this.plFilter);               
             this.plReady = true;
         } catch (err) {
             this.appService.showError(err);

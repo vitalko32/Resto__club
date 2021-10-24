@@ -1,35 +1,23 @@
 import { Injectable } from "@angular/core";
+import { IChunk } from "src/app/model/chunk.interface";
 import { IGetAll } from "src/app/model/dto/getall.interface";
 import { IGetChunk } from "src/app/model/dto/getchunk.interface";
 import { Employee } from "src/app/model/orm/employee.model";
 import { DataService } from "../data.service";
-import { Repository } from "./_repository";
+import { Repository2 } from "./_repository2";
 
 @Injectable()
-export class EmployeeRepository extends Repository<Employee> {    
-    public filterRestaurantId = null;
-    public filterName: string = "";
-    public filterCreatedAt: Date[] = [null, null];         
-
+export class EmployeeRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
-        super(dataService);
-        this.chunkSortBy = "created_at";
-        this.chunkSortDir = 1;
+        super(dataService);        
     } 
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "name", sortDir: number = 1, filter: any = {}): Promise<Employee[]> {
         return new Promise((resolve, reject) => {            
-            const dto: IGetAll = {
-                sortBy: this.allSortBy,
-                sortDir: this.allSortDir,      
-                filter: {
-                    restaurant_id: this.filterRestaurantId,
-                }              
-            };
+            const dto: IGetAll = {sortDir, sortBy, filter};
             this.dataService.employeesAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Employee().build(d)) : [];                                    
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data.map(d => new Employee().build(d)));
                 } else {                        
                     reject(res.error);
                 }
@@ -39,24 +27,13 @@ export class EmployeeRepository extends Repository<Employee> {
         });
     }
 
-    public loadChunk(): Promise<void> {
-        return new Promise((resolve, reject) => {                        
-            const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir, 
-                filter: {
-                    name: this.filterName, 
-                    created_at: this.filterCreatedAt, 
-                    restaurant_id: this.filterRestaurantId,
-                },                               
-            };
+    public loadChunk(part: number, sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): Promise<IChunk<Employee>> {
+        return new Promise((resolve, reject) => {                                    
+            const dto: IGetChunk = {from: part * this.chunkLength, q: this.chunkLength, sortDir, sortBy, filter};
             this.dataService.employeesChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Employee().build(d)) : [];
-                    this.allLength = res.allLength;            
-                    resolve();
+                    const chunk: IChunk<Employee> = {data: res.data.map(d => new Employee().build(d)), allLength: res.allLength};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    

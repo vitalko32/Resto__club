@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { IChunk } from "src/app/model/chunk.interface";
+import { Employee } from "src/app/model/orm/employee.model";
 import { Hall } from "src/app/model/orm/hall.model";
 import { Lang } from "src/app/model/orm/lang.model";
 import { Words } from "src/app/model/orm/words.type";
@@ -8,16 +10,17 @@ import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
 import { HallRepository } from "src/app/services/repositories/hall.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { IndexHallsService } from "./index.halls.service";
 
 @Component({
     selector: "index-halls-page",
     templateUrl: "index.halls.page.html",
     styleUrls: ["../../../../common.styles/data.scss"],
 })
-export class IndexHallsPage implements OnInit, OnDestroy {
-    public ready: boolean = false;
+export class IndexHallsPage implements OnInit, OnDestroy {    
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
+    public hlChunk: IChunk<Hall> = null;
     public hlLoading: boolean = false;
     public hlSortingVariants: any[][] = // для мобильной верстки
         [["name", 1], ["name", -1], ["pos", 1], ["pos", -1]];   
@@ -29,28 +32,30 @@ export class IndexHallsPage implements OnInit, OnDestroy {
         private appService: AppService,        
         private wordRepository: WordRepository,   
         private hallRepository: HallRepository,         
-        private authService: AuthService,         
+        private authService: AuthService,     
+        private listService: IndexHallsService,    
         private router: Router,      
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get hl(): Hall[] {return this.hallRepository.xlChunk;}
-    get hlCurrentPart(): number {return this.hallRepository.chunkCurrentPart;}
-    set hlCurrentPart(v: number) {this.hallRepository.chunkCurrentPart = v;}
-    get hlAllLength(): number {return this.hallRepository.allLength;}  
+    get employee(): Employee {return this.authService.authData.value.employee;}  
+    get restaurantId(): number {return this.employee.restaurant_id;}
+    get hl(): Hall[] {return this.hlChunk.data;}
+    get hlAllLength(): number {return this.hlChunk.allLength;}  
+    get hlCurrentPart(): number {return this.listService.currentPart;}
+    set hlCurrentPart(v: number) {this.listService.currentPart = v;}    
     get hlLength(): number {return this.hallRepository.chunkLength;}   
-    get hlSortBy(): string {return this.hallRepository.chunkSortBy;}
-    get hlSortDir(): number {return this.hallRepository.chunkSortDir;}
-    set hlSortBy(v: string) {this.hallRepository.chunkSortBy = v;}
-    set hlSortDir(v: number) {this.hallRepository.chunkSortDir = v;}
+    get hlSortBy(): string {return this.listService.sortBy;}
+    set hlSortBy(v: string) {this.listService.sortBy = v;}
+    get hlSortDir(): number {return this.listService.sortDir;}    
+    set hlSortDir(v: number) {this.listService.sortDir = v;}
+    get hlFilter(): any {return {restaurant_id: this.restaurantId};}
 
-    public async ngOnInit(): Promise<void> {        
+    public ngOnInit(): void {        
         this.initTitle();  
         this.initAuthCheck();   
-        await this.initHalls();   
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initHalls();           
     }
 
     public ngOnDestroy(): void {
@@ -69,10 +74,16 @@ export class IndexHallsPage implements OnInit, OnDestroy {
 
     public async initHalls(): Promise<void> {
         try {
-            this.hlLoading = true;
-            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            await this.hallRepository.loadChunk();                     
-            setTimeout(() => this.hlLoading = false, 500);            
+            this.hlLoading = true;            
+            this.hlChunk = await this.hallRepository.loadChunk(this.hlCurrentPart, this.hlSortBy, this.hlSortDir, this.hlFilter);                     
+            
+            if (this.hlCurrentPart > 0 && this.hlCurrentPart > Math.ceil(this.hlAllLength / this.hlLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
+                this.hlCurrentPart = 0;
+                this.initHalls();
+            } else {                
+                await this.appService.pause(500);
+                this.hlLoading = false;                
+            }            
         } catch (err) {
             this.appService.showError(err);
         }

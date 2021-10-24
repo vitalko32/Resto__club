@@ -1,48 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Repository } from './_repository';
 import { Order, OrderStatus } from '../../model/orm/order.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository2 } from './_repository2';
+import { IChunk } from 'src/app/model/chunk.interface';
+import { IOrderAccept } from 'src/app/model/dto/order.accept.interface';
 
 @Injectable()
-export class OrderRepository extends Repository<Order> {              
-    public filterRestaurantId: number = null;    
-    public filterHallId: number = null;    
-    public filterTableId: number = null;    
-    public filterEmployeeId: number = null;    
-    public filterCreatedAt: Date[] = [null, null];      
-    public filterStatus: OrderStatus = null;
-    
+export class OrderRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
         super(dataService);        
-        this.schema = "order";  
-        this.chunkSortBy = "created_at";
-        this.chunkSortDir = -1;
-    }    
+        this.schema = "order";          
+    }  
+    
+    public loadAll(sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): Promise<Order[]> {
+        return new Promise((resolve, reject) => {            
+            const dto: IGetAll = {sortBy, sortDir, filter};
+            this.dataService.ordersAll(dto).subscribe(res => {
+                if (res.statusCode === 200) {                                                            
+                    resolve(res.data.map(d => new Order().build(d)));
+                } else {                        
+                    reject(res.error);
+                }                    
+            }, err => {
+                reject(err.message);                
+            });            
+        });
+    } 
 
-    public loadChunk(): Promise<void> {
+    public loadChunk(part: number, sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): Promise<IChunk<Order>> {
         return new Promise((resolve, reject) => {                        
-            const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
-                filter: {
-                    restaurant_id: this.filterRestaurantId, 
-                    hall_id: this.filterHallId,
-                    table_id: this.filterTableId,
-                    employee_id: this.filterEmployeeId,
-                    created_at: this.filterCreatedAt,
-                    status: this.filterStatus,
-                }
-            };
+            const dto: IGetChunk = {from: part * this.chunkLength, q: this.chunkLength, sortBy, sortDir, filter};
             this.dataService.ordersChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Order().build(d)) : [];
-                    this.sum = res.sum;
-                    this.allLength = res.allLength;            
-                    resolve();
+                    const chunk: IChunk<Order> = {data: res.data.map(d => new Order().build(d)), allLength: res.allLength, sum: res.sum};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    
@@ -52,20 +45,8 @@ export class OrderRepository extends Repository<Order> {
         });
     }  
 
-    public export(lang_id: number): void {
-        const dto: IGetAll = {
-            sortBy: this.chunkSortBy,
-            sortDir: this.chunkSortDir,        
-            filter: {
-                restaurant_id: this.filterRestaurantId, 
-                hall_id: this.filterHallId,
-                table_id: this.filterTableId,
-                employee_id: this.filterEmployeeId,
-                created_at: this.filterCreatedAt,
-                status: this.filterStatus,                
-            },
-            lang_id,
-        };
+    public export(lang_id: number, sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): void {
+        const dto: IGetAll = {sortBy, sortDir, filter, lang_id};
         this.dataService.ordersExport(dto);  
     }
     
@@ -95,5 +76,12 @@ export class OrderRepository extends Repository<Order> {
 
     public cancel(id: number): Promise<void> {
         return new Promise((resolve, reject) => this.dataService.ordersCancel(id).subscribe(res => res.statusCode === 200 ? resolve() : reject(res.data), err => reject(err.message)));
+    }
+
+    public accept(order_id: number, employee_id: number, employee_comment: string = ""): Promise<number> {
+        return new Promise((resolve, reject) => {
+            const dto: IOrderAccept = {order_id, employee_id, employee_comment};
+            this.dataService.ordersAccept(dto).subscribe(res => resolve(res.statusCode), err => reject(err.message));
+        });
     }
 }

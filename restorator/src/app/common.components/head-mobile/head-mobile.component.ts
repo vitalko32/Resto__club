@@ -34,7 +34,7 @@ export class HeadMobileComponent implements AfterViewInit {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xlAll;}
+    get langs(): Lang[] {return this.langRepository.langs;}
     get url(): string[] {return this.appService.url;}
     get title(): string {return this.appService.title;}
     get showMenuBtn(): boolean {return this.authService.authData.value !== null;}   

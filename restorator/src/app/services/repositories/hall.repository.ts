@@ -1,35 +1,23 @@
 import { Injectable } from '@angular/core';
-
-import { Repository } from './_repository';
 import { Hall } from '../../model/orm/hall.model';
 import { IGetChunk } from '../../model/dto/getchunk.interface';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
+import { Repository2 } from './_repository2';
+import { IChunk } from 'src/app/model/chunk.interface';
 
 @Injectable()
-export class HallRepository extends Repository<Hall> {    
-    public filterRestaurantId: number = null;   
-    public currentId: number = null;
-    
+export class HallRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
-        super(dataService);
-        this.allSortBy = "pos";
-        this.chunkSortBy = "pos";
+        super(dataService);        
     }        
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "pos", sortDir: number = 1, filter: any = {}): Promise<Hall[]> {
         return new Promise((resolve, reject) => {            
-            let filter: any = {};
-            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;
-            const dto: IGetAll = {
-                sortBy: this.allSortBy,
-                sortDir: this.allSortDir,      
-                filter,              
-            };
+            const dto: IGetAll = {sortBy, sortDir, filter};
             this.dataService.hallsAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data.length ? res.data.map(d => new Hall().build(d)) : [];                                    
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data.map(d => new Hall().build(d)));
                 } else {                        
                     reject(res.error);
                 }
@@ -39,22 +27,13 @@ export class HallRepository extends Repository<Hall> {
         });
     }
 
-    public loadChunk(): Promise<void> {
+    public loadChunk(part: number, sortBy: string = "pos", sortDir: number = 1, filter: any = {}): Promise<IChunk<Hall>> {
         return new Promise((resolve, reject) => {            
-            let filter: any = {};
-            this.filterRestaurantId ? filter.restaurant_id = this.filterRestaurantId : null;
-            const dto: IGetChunk = {
-                from: this.chunkCurrentPart * this.chunkLength,
-                q: this.chunkLength,
-                sortBy: this.chunkSortBy,
-                sortDir: this.chunkSortDir,        
-                filter,                        
-            };
+            const dto: IGetChunk = {from: part * this.chunkLength, q: this.chunkLength, sortBy, sortDir, filter};
             this.dataService.hallsChunk(dto).subscribe(res => {
                 if (res.statusCode === 200) {                                        
-                    this.xlChunk = res.data.length ? res.data.map(d => new Hall().build(d)) : [];
-                    this.allLength = res.allLength;            
-                    resolve();
+                    const chunk: IChunk<Hall> = {data: res.data.map(d => new Hall().build(d)), allLength: res.allLength};
+                    resolve(chunk);
                 } else {                        
                     reject(res.error);
                 }                    

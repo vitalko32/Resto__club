@@ -7,16 +7,12 @@ import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { RestaurantRepository } from "src/app/services/repositories/restaurant.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { RestaurantsListService } from "./restaurants.list.service";
 
 @Directive()
-export abstract class RestaurantsListPage implements OnInit, OnDestroy {
-    public ready: boolean = false;
-    public rlChunk: IChunk<Restaurant> = null;    
-    public rlCurrentPart: number = 0;    
-    public rlLoading: boolean = false;        
-    public rlFilterName: string = "";
-    public rlFilterDaysleft: string = "";
-    public abstract rlFilterActive: boolean;
+export abstract class RestaurantsListPage implements OnInit, OnDestroy {    
+    public rlChunk: IChunk<Restaurant> = null;        
+    public rlLoading: boolean = false;                
     public rlSortingVariants: any[][] = // для мобильной верстки
         [["created_at", 1], ["created_at", -1], ["name", 1], ["name", -1], ["money", 1], ["money", -1], ["daysleft", 1], ["daysleft", -1]];        
     public abstract type: string;
@@ -31,6 +27,7 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
         protected appService: AppService,
         protected wordRepository: WordRepository,
         protected restaurantRepository: RestaurantRepository,
+        protected listService: RestaurantsListService,
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
@@ -38,17 +35,22 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     get rl(): Restaurant[] {return this.rlChunk.data;}
     get rlAllLength(): number {return this.rlChunk.allLength;}    
     get rlLength(): number {return this.restaurantRepository.chunkLength;}       
-    get rlSortBy(): string {return this.restaurantRepository.chunkSortBy;}
-    get rlSortDir(): number {return this.restaurantRepository.chunkSortDir;}
-    set rlSortBy(v: string) {this.restaurantRepository.chunkSortBy = v;}
-    set rlSortDir(v: number) {this.restaurantRepository.chunkSortDir = v;}
+    get rlCurrentPart(): number {return this.listService.currentPart;}
+    set rlCurrentPart(v: number) {this.listService.currentPart = v;}
+    get rlSortBy(): string {return this.listService.sortBy;}
+    set rlSortBy(v: string) {this.listService.sortBy = v;}
+    get rlSortDir(): number {return this.listService.sortDir;}    
+    set rlSortDir(v: number) {this.listService.sortDir = v;}
+    get rlFilterName(): string {return this.listService.filterName;}
+    set rlFilterName(v: string) {this.listService.filterName = v;}
+    get rlFilterDaysleft(): string {return this.listService.filterDaysleft;}
+    set rlFilterDaysleft(v: string) {this.listService.filterDaysleft = v;}
+    get rlFilterActive(): boolean {return this.listService.filterActive;}
     get rlFilter() {return {active: this.rlFilterActive, name: this.rlFilterName, daysleft: this.rlFilterDaysleft};}
 
-    public async ngOnInit(): Promise<void> {        
+    public ngOnInit(): void {        
         this.initTitle();
-        await this.initRestaurants();
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initRestaurants();        
     }
 
     public ngOnDestroy(): void {
@@ -63,13 +65,14 @@ export abstract class RestaurantsListPage implements OnInit, OnDestroy {
     public async initRestaurants(): Promise<void> {		                
         try {
             this.rlLoading = true;            
-            this.rlChunk = await this.restaurantRepository.loadChunk(this.rlCurrentPart, this.rlFilter);            
+            this.rlChunk = await this.restaurantRepository.loadChunk(this.rlCurrentPart, this.rlSortBy, this.rlSortDir, this.rlFilter);            
                     
             if (this.rlCurrentPart > 0 && this.rlCurrentPart > Math.ceil(this.rlAllLength / this.rlLength) - 1) { // after deleting or filtering may be currentPart is out of possible diapason, then decrease and reload again            
                 this.rlCurrentPart = 0;
                 this.initRestaurants();
             } else {                
-                setTimeout(() => this.rlLoading = false, 500);                
+                await this.appService.pause(500);
+                this.rlLoading = false;                
             }            
         } catch (err) {
             this.appService.showError(err);

@@ -9,6 +9,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { GoogleService } from "src/app/services/google.service";
 import { LangRepository } from "src/app/services/repositories/lang.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
+import { SocketService } from "src/app/services/socket.service";
 
 @Component({
     selector: "login-auth-page",
@@ -25,6 +26,7 @@ export class LoginAuthPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,
         private authService: AuthService,
+        private socketService: SocketService,
         private googleService: GoogleService,
         private wordRepository: WordRepository,
         private langRepository: LangRepository,
@@ -33,7 +35,7 @@ export class LoginAuthPage implements OnInit, OnDestroy {
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get langs(): Lang[] {return this.langRepository.xlAll;}
+    get langs(): Lang[] {return this.langRepository.langs;}
 
     public ngOnInit(): void {
         this.authService.authData.value !== null ? this.router.navigateByUrl("/") : null;
@@ -61,7 +63,8 @@ export class LoginAuthPage implements OnInit, OnDestroy {
                 if (statusCode === 200) {
                     let lang = this.langs.find(l => l.id === this.authService.authData.value.employee.restaurant.lang_id);                    
                     lang ? this.appService.setLang(lang) : null;
-                    this.router.navigateByUrl("/");                    
+                    this.router.navigateByUrl("/");  
+                    this.socketService.connect();                  
                 } else if (statusCode === 401) {
                     this.formErrorDenied = true;                    
                 } else {

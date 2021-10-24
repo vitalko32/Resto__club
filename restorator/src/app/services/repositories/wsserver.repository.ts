@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Repository } from './_repository';
 import { DataService } from '../data.service';
 import { IGetAll } from 'src/app/model/dto/getall.interface';
 import { IWSServer } from 'src/app/model/orm/wsserver.interface';
+import { Repository2 } from './_repository2';
 
 @Injectable()
-export class WSServerRepository extends Repository<IWSServer> {    
+export class WSServerRepository extends Repository2 {    
     constructor(protected dataService: DataService) {
-        super(dataService);        
-        this.allSortBy = "pos";        
+        super(dataService);                
     }        
     
-    public loadAll(): Promise<void> {
+    public loadAll(sortBy: string = "pos", sortDir: number = 1): Promise<IWSServer[]> {
         return new Promise((resolve, reject) => {    
-            const dto: IGetAll = {sortBy: this.allSortBy, sortDir: this.allSortDir};
+            const dto: IGetAll = {sortBy, sortDir};
             this.dataService.wsserversAll(dto).subscribe(res => {
-                if (res.statusCode === 200) {
-                    this.xlAll = res.data;
-                    resolve();
+                if (res.statusCode === 200) {                    
+                    resolve(res.data);
                 } else {                        
                     reject(res.error);
                 }

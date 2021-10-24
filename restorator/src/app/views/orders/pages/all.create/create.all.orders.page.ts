@@ -26,6 +26,9 @@ export class CreateAllOrdersPage implements OnInit, OnDestroy {
     public authSubscription: Subscription = null;  
     public formLoading: boolean = false;
     public order: Order = null;     
+    public el: Employee[] = [];
+    public hl: Hall[] = [];
+    public sl: IServing[] = [];
     public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);       
     
     constructor(
@@ -36,16 +39,13 @@ export class CreateAllOrdersPage implements OnInit, OnDestroy {
         private employeeRepository: EmployeeRepository,
         private servingRepository: ServingRepository,     
         private authService: AuthService,         
-        private router: Router,    
-        private route: ActivatedRoute,  
+        private router: Router,            
     ) {}    
 
     get words(): Words {return this.wordRepository.words;}
     get currentLang(): Lang {return this.appService.currentLang.value;}
-    get employee(): Employee {return this.authService.authData.value.employee;} 
-    get hl(): Hall[] {return this.hallRepository.xlAll;} 
-    get sl(): IServing[] {return this.servingRepository.xlAll;} 
-    get el(): Employee[] {return this.employeeRepository.xlAll;} 
+    get employee(): Employee {return this.authService.authData.value.employee;}     
+    get restaurantId(): number {return this.employee.restaurant_id;}        
     
     public ngOnInit(): void {        
         this.initAuthCheck();     
@@ -74,27 +74,25 @@ export class CreateAllOrdersPage implements OnInit, OnDestroy {
         this.order = new Order().init(this.employee.restaurant_id, null);
     }   
 
-    private initHalls(): void {
-        try {
-            this.hallRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            this.hallRepository.loadAll();             
-        } catch (err) {
-            this.appService.showError(err);
-        }
-    }
-
-    private initServings(): void {
+    private async initHalls(): Promise<void> {
         try {            
-            this.servingRepository.loadAll();
+            this.hl = await this.hallRepository.loadAll("pos", 1, {restaurant_id: this.restaurantId});             
         } catch (err) {
             this.appService.showError(err);
         }
     }
 
-    public initEmployees(): void {
-        try {
-            this.employeeRepository.filterRestaurantId = this.authService.authData.value.employee.restaurant_id;
-            this.employeeRepository.loadAll();     
+    private async initServings(): Promise<void> {
+        try {            
+            this.sl = await this.servingRepository.loadAll();
+        } catch (err) {
+            this.appService.showError(err);
+        }
+    }
+
+    public async initEmployees(): Promise<void> {
+        try {            
+            this.el = await this.employeeRepository.loadAll("name", 1, {restaurant_id: this.restaurantId});     
         } catch (err) {
             this.appService.showError(err);
         }

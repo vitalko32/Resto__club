@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { IndexAllOrdersService } from '../views/orders/pages/all.index/index.all.orders.service';
 import { AdminGuard } from './admin.guard';
 import { AppService } from './app.service';
 import { AuthGuard } from './auth.guard';
@@ -14,8 +15,6 @@ import { EmployeeStatusRepository } from './repositories/employee.status.reposit
 import { HallRepository } from './repositories/hall.repository';
 import { IconRepository } from './repositories/icon.repository';
 import { LangRepository } from './repositories/lang.repository';
-import { OrderMyRepository } from './repositories/order.my.repository';
-import { OrderNewRepository } from './repositories/order.new.repository';
 import { OrderRepository } from './repositories/order.repository';
 import { ProductRepository } from './repositories/product.repository';
 import { ServingRepository } from './repositories/serving.repository';
@@ -51,12 +50,12 @@ import { SoundService } from './sound.service';
         CatRepository,
         IconRepository,
         ProductRepository,
-        OrderNewRepository,
-        OrderMyRepository,
         OrderRepository,
         ServingRepository,    
         WSServerRepository,    
         StatsRepository,
+
+        IndexAllOrdersService, // этот сервис будет использоваться  в разных модулях, поэтому включим его в модуль, который подключается в главный модуль приложения и один раз
     ],
 })
 export class ServicesModule {}

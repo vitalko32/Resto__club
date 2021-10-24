@@ -21,6 +21,7 @@ export class EditCatsPage implements OnInit, OnDestroy {
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;
     public cat: Cat = null;
+    public il: Icon[] = [];
     public formLoading: boolean = false; 
     public cmdSave: BehaviorSubject<boolean> = new BehaviorSubject(false);    
 
@@ -35,8 +36,7 @@ export class EditCatsPage implements OnInit, OnDestroy {
     ) {}
 
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}
-    get il(): Icon[] {return this.iconRepository.xlAll;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}    
 
     public ngOnInit(): void {        
         this.initTitle();  
@@ -67,9 +67,9 @@ export class EditCatsPage implements OnInit, OnDestroy {
         }        
     }   
     
-    private initIcons(): void {
+    private async initIcons(): Promise<void> {
         try {
-            this.iconRepository.loadAll();
+            this.il = await this.iconRepository.loadAll();
         } catch (err) {
             this.appService.showError(err);
         }

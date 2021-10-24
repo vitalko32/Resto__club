@@ -39,6 +39,7 @@ html.classic {
 }
 
 @keyframes rotation {
-	0% {transform: rotate(0);}
-	100% {transform: rotate(360deg);}
+	0% {transform: rotate(0); opacity: 0;}
+	50% {transform: rotate(180deg); opacity: 1;}
+	100% {transform: rotate(360deg); opacity: 0;}
 }

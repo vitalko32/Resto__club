@@ -10,7 +10,7 @@ import { Order, Paymethod } from "src/app/model/orm/order.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
-import { OrderNewRepository } from "src/app/services/repositories/order.new.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 import { SocketService } from "src/app/services/socket.service";
 
@@ -34,7 +34,7 @@ export class ViewNewOrdersPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,           
-        private orderRepository: OrderNewRepository,
+        private orderRepository: OrderRepository,
         private authService: AuthService,   
         private socketService: SocketService,           
         private router: Router,    

@@ -7,6 +7,7 @@ import { HallComponent } from "./components/hall/hall.component";
 import { CreateHallsPage } from "./pages/create/create.halls.page";
 import { EditHallsPage } from "./pages/edit/edit.halls.page";
 import { IndexHallsPage } from "./pages/index/index.halls.page";
+import { IndexHallsService } from "./pages/index/index.halls.service";
 
 let routes = RouterModule.forChild ([            
 	{path: "", component: IndexHallsPage, pathMatch: "full"},
@@ -29,6 +30,9 @@ let routes = RouterModule.forChild ([
 		CreateHallsPage,
 		EditHallsPage,
 		HallComponent,
-	],    		    
+	],    
+	providers: [
+		IndexHallsService,
+	],
 })
 export class HallsModule {}

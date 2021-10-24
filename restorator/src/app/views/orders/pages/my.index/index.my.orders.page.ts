@@ -8,7 +8,7 @@ import { Order, OrderStatus } from "src/app/model/orm/order.model";
 import { Words } from "src/app/model/orm/words.type";
 import { AppService } from "src/app/services/app.service";
 import { AuthService } from "src/app/services/auth.service";
-import { OrderMyRepository } from "src/app/services/repositories/order.my.repository";
+import { OrderRepository } from "src/app/services/repositories/order.repository";
 import { WordRepository } from "src/app/services/repositories/word.repository";
 import { SocketService } from "src/app/services/socket.service";
 
@@ -17,11 +17,12 @@ import { SocketService } from "src/app/services/socket.service";
     templateUrl: "index.my.orders.page.html",
     styleUrls: ["../../styles/orders.scss"],
 })
-export class IndexMyOrdersPage implements OnInit, OnDestroy {
-    public ready: boolean = false;
+export class IndexMyOrdersPage implements OnInit, OnDestroy {        
     public langSubscription: Subscription = null;
     public authSubscription: Subscription = null;   
-    private socketSubscription: Subscription = null;        
+    private socketSubscription: Subscription = null;            
+    public ol: Order[] = [];    
+    public olReady: boolean = false;
     public olOrderCancelId: number = null;
     public olCancelConfirmActive: boolean = false; 
     public olOrderCompleteId: number = null;
@@ -34,19 +35,19 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     constructor(
         private appService: AppService,        
         private wordRepository: WordRepository,                   
-        private orderRepository: OrderMyRepository,
+        private orderRepository: OrderRepository,
         private authService: AuthService,      
         private socketService: SocketService,      
         private router: Router,      
     ) {}   
     
     get words(): Words {return this.wordRepository.words;}
-    get currentLang(): Lang {return this.appService.currentLang.value;}    
-    get ol(): Order[] {return this.orderRepository.xlAll;}
+    get currentLang(): Lang {return this.appService.currentLang.value;}        
     get employee(): Employee {return this.authService.authData.value.employee;}  
     get restaurantId(): number {return this.employee.restaurant_id;}
+    get olFilter(): any {return {status: OrderStatus.Active, employee_id: this.employee.id};}
     
-    public async ngOnInit(): Promise<void> {   
+    public ngOnInit(): void {   
         this.socketOnCreated = this.socketOnCreated.bind(this);
         this.socketOnUpdated = this.socketOnUpdated.bind(this);
         this.socketOnNeedWaiter = this.socketOnNeedWaiter.bind(this);
@@ -58,9 +59,7 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
         this.initAuthCheck();           
         this.initTitle();           
         this.initSocket();        
-        await this.initOrders();     
-        await this.appService.pause(500);
-        this.ready = true;
+        this.initOrders();                     
     }
 
     public ngOnDestroy(): void {
@@ -87,9 +86,9 @@ export class IndexMyOrdersPage implements OnInit, OnDestroy {
     }
 
     private async initOrders(): Promise<void> {
-        try {                                    
-            this.orderRepository.filterEmployeeId = this.employee.id;
-            await this.orderRepository.loadAll();                           
+        try {            
+            this.ol = await this.orderRepository.loadAll("created_at", -1, this.olFilter);      
+            this.olReady = true;            
         } catch (err) {
             this.appService.showError(err);
         }

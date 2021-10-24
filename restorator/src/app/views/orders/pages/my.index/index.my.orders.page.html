@@ -2,7 +2,7 @@
     <a class="dash-btn create" routerLink="/orders/my/create"><span>{{words['common']['create'][currentLang.slug]}}</span></a>
 </div>
 <div class="orders">
-    <ng-container *ngIf="ready">        
+    <ng-container *ngIf="olReady">        
         <ng-container *ngIf="ol.length">
             <div class="order" *ngFor="let o of ol">
                 <div class="o-date">{{o.formattedCreatedAt}}</div>
@@ -31,8 +31,8 @@
         </ng-container>
         <ng-container *ngIf="!ol.length">{{words['common']['none'][currentLang.slug]}}</ng-container>
     </ng-container>
-    <ng-container *ngIf="!ready">
-        <div class="loading"><span>{{words['common']['loading'][currentLang.slug]}}</span></div>        
+    <ng-container *ngIf="!olReady">
+        <div class="loading"><span></span></div>        
     </ng-container>  
 </div>
 

@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	public langsReady: boolean = false;
 	public wordsReady: boolean = false;
 	public settingsReady: boolean = false;		
+	public socketReady: boolean = false;
 
 	constructor(
 		private langRepository: LangRepository,	
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 		private soundService: SoundService,
 	) {}
 
-	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady;}	
+	get ready(): boolean {return this.langsReady && this.wordsReady && this.settingsReady && this.socketReady;}	
 	get showSidebar(): boolean {return this.authService.authData.value !== null;}	
 
 	public ngOnInit(): void {
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	private async initLangs(): Promise<void> {
 		try {
 			await this.langRepository.loadAll();			
-			this.appService.initLang(this.langRepository.xlAll);			
+			this.appService.initLang(this.langRepository.langs);			
 			this.langsReady = true;		
 		} catch (err) {
 			this.appService.showError(err);			
@@ -92,10 +93,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	private async initSocket(): Promise<void> {
-		try {
-			await this.wsserverRepository.loadAll();
-			this.socketService.servers = this.wsserverRepository.xlAll;
-			this.socketService.connect();			
+		try {			
+			this.socketService.servers = await this.wsserverRepository.loadAll();
+			this.authService.authData.value ? this.socketService.connect() : null; // если авторизован, то коннектимся сразу, если нет, то коннект будет после авторизации			
+			this.socketReady = true;
 		} catch (err) {
 			this.appService.showError(err);		
 		}
