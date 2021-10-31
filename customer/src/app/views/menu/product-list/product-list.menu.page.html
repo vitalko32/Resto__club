@@ -8,10 +8,10 @@
             <div class="p-params">
                 <div>
                     <div class="p-param">{{words['customer-menu']['price']}}: {{p.price | number:'1.2-2'}} {{currencySymbol}}</div>
-                    <div class="p-param" *ngIf="p.weight">{{p.weight}} {{getUnitName(p.unit)}}</div>
+                    <div class="p-param" *ngIf="p.weight">~{{p.weight}} {{getUnitName(p.unit)}}</div>
                 </div>
                 <div>
-                    <div class="p-param right" *ngIf="!p.alc && p.cal">{{p.cal}} {{words['customer-menu']['kcal']}}</div>
+                    <div class="p-param right" *ngIf="!p.alc && p.cal">~{{p.cal}} {{words['customer-menu']['kcal']}}</div>
                     <div class="p-param right alc" *ngIf="p.alc"><span>{{p.alc_percent}}%</span></div>
                     <div class="p-param right time" *ngIf="p.time"><span>{{p.time}}</span></div>
                 </div>
