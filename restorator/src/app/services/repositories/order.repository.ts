@@ -46,7 +46,7 @@ export class OrderRepository extends Repository2 {
     }  
 
     public export(lang_id: number, sortBy: string = "created_at", sortDir: number = -1, filter: any = {}): void {
-        const dto: IGetAll = {sortBy, sortDir, filter, lang_id};
+        const dto: IGetAll = {sortBy, sortDir, filter, lang_id};        
         this.dataService.ordersExport(dto);  
     }
     

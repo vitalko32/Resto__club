@@ -194,7 +194,7 @@ export class OrdersService extends APIService {
             const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
             const from: number = dto.from;
             const q: number = dto.q;
-            const filter = this.buildFilter(dto.filter);
+            const filter = this.buildFilter(dto.filter);            
             const query = this.orderRepository.createQueryBuilder("orders").where(filter);
             const data: Order[] = await query
                 .leftJoinAndSelect("orders.table", "table")
@@ -218,16 +218,16 @@ export class OrdersService extends APIService {
     public async export(dto: IGetAll): Promise<ExcelJS.Buffer> {
         try {
             const sortBy: string = dto.sortBy;
-            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";
-            const filter = this.buildFilter(dto.filter);
-            const query = this.orderRepository.createQueryBuilder("orders").where(filter);
+            const sortDir: Sortdir = dto.sortDir === 1 ? "ASC" : "DESC";              
+            const filter = this.buildFilter(dto.filter);            
+            const query = this.orderRepository.createQueryBuilder("orders").where(filter);            
             const orders: Order[] = await query
                 .leftJoinAndSelect("orders.table", "table")
                 .leftJoinAndSelect("orders.employee", "employee")
                 .leftJoinAndSelect("orders.hall", "hall")
                 .orderBy({[`orders.${sortBy}`]: sortDir})
-                .getMany();            
-            const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);               
+                .getMany();                        
+            const sum = Number((await this.orderRepository.createQueryBuilder("orders").select("SUM(orders.sum)", "sum").where(filter).getRawOne()).sum);              
             const words = await this.buildWords(dto.lang_id);            
             const buffer = await this.buildExcel(orders, sum, words);            
             return buffer;
@@ -279,7 +279,7 @@ export class OrdersService extends APIService {
     }
 
     private buildFilter(o: any): string {
-        let filter: string = "TRUE"; 
+        let filter: string = "TRUE";         
 
         if (o.created_at[0]) {
             const from: string = this.mysqlDate(new Date(o.created_at[0]));
@@ -325,7 +325,7 @@ export class OrdersService extends APIService {
         return words;
     }
 
-    private async buildExcel(orders: Order[], sum: number, words: Words): Promise<ExcelJS.Buffer> {        
+    private async buildExcel(orders: Order[], sum: number, words: Words): Promise<ExcelJS.Buffer> {                
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('orders');
         worksheet.columns = [
@@ -336,7 +336,7 @@ export class OrdersService extends APIService {
             {width: 20},
             {width: 20},
             {width: 20},            
-        ];            
+        ];                    
         let row = worksheet.getRow(1);
         row.values = [
             words["restorator-orders"]["created-at"],
@@ -347,10 +347,10 @@ export class OrdersService extends APIService {
             words["restorator-orders"]["sum"],
             words["restorator-orders"]["status"],
         ];
-        row.eachCell((cell, no) => cell.font = {bold: true});
+        row.eachCell((cell, no) => cell.font = {bold: true});        
         
         for (let i = 0; i < orders.length; i++) {
-            const o = orders[i];
+            const o = orders[i];            
             row = worksheet.getRow(i + 2);
             row.values = [
                 this.humanDatetime(o.created_at),
