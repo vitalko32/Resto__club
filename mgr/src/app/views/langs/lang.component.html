@@ -5,7 +5,7 @@
         <div [class]="isRequired('title') ? 'df-title required' : 'df-title'">{{currentLang.phrases['workspace-langs-title']}}:</div>
         <div class="df-inputwrap"><input type="text" [(ngModel)]="x.title"></div>
     
-        <div [class]="isRequired('name') ? 'df-title required' : 'df-title'">{{currentLang.phrases['workspace-langs-shorttitle']}}:</div>
+        <div [class]="isRequired('shorttitle') ? 'df-title required' : 'df-title'">{{currentLang.phrases['workspace-langs-shorttitle']}}:</div>
         <div class="df-inputwrap"><input type="text" [(ngModel)]="x.shorttitle"></div>        
     
         <div [class]="isRequired('img') ? 'df-title required' : 'df-title'">{{currentLang.phrases['workspace-langs-img']}}:</div>
