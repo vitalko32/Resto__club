@@ -22,7 +22,7 @@ import { Order } from "../model/orm/order.model";
 @Injectable()
 export class DataService {
     public authData: IAdminAuthData = null;
-    private root: string = "https://back.restclick.vio.net.ua/api/owner"; 
+    private root: string = "https://back.resto-club.com/api/owner"; 
     //private root: string = "https://back.melink.to/api/front"; 
     
     constructor (

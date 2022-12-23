@@ -35,7 +35,7 @@ import { IGetYearStats } from "../model/dto/stats/get.year.stats.interface";
 @Injectable()
 export class DataService {
     public authData: BehaviorSubject<IEmployeeAuthData> = new BehaviorSubject(null);
-    private root: string = "https://back.restclick.vio.net.ua/api/restorator";     
+    private root: string = "https://back.resto-club.com/api/restorator";     
     
     constructor (
         private http: HttpClient,

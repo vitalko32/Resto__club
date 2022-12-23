@@ -17,7 +17,7 @@ import { IOrderCallWaiter } from "../model/dto/order.callwaiter.interface";
 
 @Injectable()
 export class DataService {    
-    private root: string = "https://back.restclick.vio.net.ua/api/customer";     
+    private root: string = "https://back.resto-club.com/api/customer";     
     
     constructor (private http: HttpClient) {}
     

@@ -32,7 +32,7 @@ import { WSServer } from "../model/orm/wsserver.model";
 @Injectable()
 export class DataService {
     public authData: IAuthData = null;
-    private root: string = "https://back.restclick.vio.net.ua/api/admin";      
+    private root: string = "https://back.resto-club.com/api/admin";      
     
     constructor (
         private http: HttpClient,
